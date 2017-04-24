@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idemia:AgentModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:idemia="utn.frsf.cidisi">
+  <Environment name="AmbienteCiudad">
+    <EnvironmentState name="EstadoAmbiente">
+      <DataStructure name="mapa" type="Other"/>
+      <DataStructure name="posicionAgente" type="Other"/>
+      <DataStructure name="orientacionAgente" type="Other"/>
+    </EnvironmentState>
+  </Environment>
+  <Agent name="Patrullero">
+    <Strategy xsi:type="idemia:Search"/>
+    <Goal name="ObjetivoPatrullero" value=" posicion = incidente"/>
+    <AgentState name="EstadoPatrullero">
+      <DataStructure name="mapa" type="Other"/>
+      <DataStructure name="posicion" type="Other"/>
+      <DataStructure name="incidente" type="Other"/>
+      <DataStructure name="orientacion" type="Other"/>
+    </AgentState>
+  </Agent>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="Avanzar"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="CambiarOrientacion"/>
+  <Perceptions perceived_on="//@Environment" perceived_by="//@Agent" name="obstaculos_detectables"/>
+</idemia:AgentModel>
