@@ -26,6 +26,7 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.simulator.events.EventType;
 import frsf.cidisi.faia.simulator.events.SimulatorEventNotifier;
 import frsf.cidisi.faia.solver.Solve;
+import frsf.cidisi.faia.solver.SolveParam;
 import frsf.cidisi.faia.util.GraphvizTree;
 import frsf.cidisi.faia.util.LatexOutput;
 import frsf.cidisi.faia.util.TreeMLWriter;
@@ -46,11 +47,11 @@ public class Search extends Solve {
 
 	/*
 	 * public Search(){
-	 * 
+	 *
 	 * }
 	 */
 	/**
-	 * 
+	 *
 	 * @param strategy
 	 * @param p
 	 */
@@ -63,7 +64,7 @@ public class Search extends Solve {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param s
 	 */
 	public void setStrategy(Strategy s) {
@@ -71,13 +72,13 @@ public class Search extends Solve {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param problem
 	 */
 	@Override
-	public SearchAction solve(Object[] params) {
+	public SearchAction solve(SolveParam params) {
 
-		Problem problem = (Problem) params[0];
+		Problem problem = ((SearchSolveParam) params).getProblem();
 
 		Vector<SearchAction> actionList = problem.getActions();
 		SearchBasedAgentState agentState = problem.getAgentState();//.clone();
@@ -111,10 +112,10 @@ public class Search extends Solve {
 				for(int i = 0; i < actionList.size(); i++){
 					// The state of the selected node must be cloned to assure consistence.-
 					SearchBasedAgentState ast = firstNode.getAgentState().clone();
-					// This is the action that can generate a new node.- 
+					// This is the action that can generate a new node.-
 					SearchAction action = actionList.elementAt(i);
 					ast = action.execute(ast);
-					// TODO: HAY QUE VER SI CONVIENE QUE CUANDO EL OPERADOR NO PUEDA SER 
+					// TODO: HAY QUE VER SI CONVIENE QUE CUANDO EL OPERADOR NO PUEDA SER
 					// EJECUTADO DEVUELVA UN OBJETO EN LUGAR DE NULL.
 					if(ast != null){ // If the action was correctly executed.-
 						NTree n = new NTree(firstNode, actionList.elementAt(i), ast, nodeIdx);
@@ -127,7 +128,7 @@ public class Search extends Solve {
 						}
 					}
 				}
-				// The nodes are added to the queue of "nodes to expand", 
+				// The nodes are added to the queue of "nodes to expand",
 				// so they can be expanded in the next cycles.-
 				searchStrategy.addNodesToExpand(firstNode.getSons());
 			}
@@ -148,8 +149,8 @@ public class Search extends Solve {
 	private boolean existsNode(NTree node, NTree parent) {
 		NTree p = parent;//.clone();
 
-		// This is an iteration through the node's parent (and ancestors) looking for a repeated node 
-		// in the same branch of the Search Tree.-  
+		// This is an iteration through the node's parent (and ancestors) looking for a repeated node
+		// in the same branch of the Search Tree.-
 		while(p != null){
 			// If node already exists in the actual branch then the function return true.-
 			if(node.equals(p)){
@@ -160,7 +161,7 @@ public class Search extends Solve {
 			//	p = (NTree)p.clone();
 		}
 
-		// At this point it's sure that the node does not exists in the branch of the Search Tree.-  
+		// At this point it's sure that the node does not exists in the branch of the Search Tree.-
 		return false;
 	}
 
@@ -170,7 +171,7 @@ public class Search extends Solve {
 		NTree node = goalNode;//.clone();
 
 		// This iteration will occur until the branch's top is reached.
-		// The branch's top is not the root node of the tree. This is because there is no action 
+		// The branch's top is not the root node of the tree. This is because there is no action
 		// associated with the root node. So, the branch's top is a son of the root node.-
 		while(node.getParent() != null){
 			// I insert every node at the first position, therefore I get the path from rootNode to lastNode

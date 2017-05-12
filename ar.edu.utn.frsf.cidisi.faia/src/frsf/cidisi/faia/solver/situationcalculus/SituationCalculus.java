@@ -23,6 +23,7 @@ import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.situationcalculus.KnowledgeBase;
 import frsf.cidisi.faia.exceptions.SituationCalculusException;
 import frsf.cidisi.faia.solver.Solve;
+import frsf.cidisi.faia.solver.SolveParam;
 
 public class SituationCalculus extends Solve {
 
@@ -32,8 +33,8 @@ public class SituationCalculus extends Solve {
 	}
 
 	@Override
-	public Action solve(Object[] params) throws SituationCalculusException {
-		KnowledgeBase kb = (KnowledgeBase) params[0];
+	public Action solve(SolveParam params) throws SituationCalculusException {
+		KnowledgeBase kb = ((SituationCalculusSolveParam) params).getKnowledgeBase();
 
 		// Query the knowledge base for the best action in the current situation.
 		Hashtable<?, ?>[] results =
