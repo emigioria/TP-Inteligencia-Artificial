@@ -36,4 +36,9 @@ public class Interseccion extends Lugar {
 	public void setSalientes(List<Arista> salientes) {
 		this.salientes = salientes;
 	}
+
+	@Override
+	public boolean sosInterseccion() {
+		return true;
+	}
 }

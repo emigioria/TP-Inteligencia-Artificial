@@ -1,15 +1,13 @@
 package frsf.cidisi.exercise.patrullero.search.modelo;
 
-import java.util.Date;
-
 public abstract class Obstaculo {
 	private NombreObstaculo nombre;
-	private Date tiempoInicio;
-	private Date tiempoFin;
+	private Double tiempoInicio;
+	private Double tiempoFin;
 	private Visibilidad visibilidad;
 	private Lugar lugar;
 
-	public Obstaculo(NombreObstaculo nombre, Date tiempoInicio, Date tiempoFin, Visibilidad visibilidad, Lugar lugar) {
+	public Obstaculo(NombreObstaculo nombre, Double tiempoInicio, Double tiempoFin, Visibilidad visibilidad, Lugar lugar) {
 		super();
 		this.nombre = nombre;
 		this.tiempoInicio = tiempoInicio;
@@ -26,19 +24,19 @@ public abstract class Obstaculo {
 		this.nombre = nombre;
 	}
 
-	public Date getTiempoInicio() {
+	public Double getTiempoInicio() {
 		return tiempoInicio;
 	}
 
-	public void setTiempoInicio(Date tiempoInicio) {
+	public void setTiempoInicio(Double tiempoInicio) {
 		this.tiempoInicio = tiempoInicio;
 	}
 
-	public Date getTiempoFin() {
+	public Double getTiempoFin() {
 		return tiempoFin;
 	}
 
-	public void setTiempoFin(Date tiempoFin) {
+	public void setTiempoFin(Double tiempoFin) {
 		this.tiempoFin = tiempoFin;
 	}
 
@@ -64,5 +62,9 @@ public abstract class Obstaculo {
 			return peso;
 		}
 		return null;
+	}
+
+	public Boolean sosVisible(Interseccion posicionAgente) {
+		return visibilidad.soyVisible(this, posicionAgente);
 	}
 }

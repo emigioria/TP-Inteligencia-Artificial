@@ -45,4 +45,9 @@ public class Arista extends Lugar {
 	public void setCalle(Calle calle) {
 		this.calle = calle;
 	}
+
+	@Override
+	public boolean sosArista() {
+		return true;
+	}
 }

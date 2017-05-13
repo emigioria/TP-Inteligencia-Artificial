@@ -1,5 +1,7 @@
 package frsf.cidisi.exercise.patrullero.search.modelo;
 
-public class Visibilidad {
+public abstract class Visibilidad {
+
+	public abstract Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente);
 
 }

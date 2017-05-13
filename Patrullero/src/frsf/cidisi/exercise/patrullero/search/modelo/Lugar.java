@@ -17,4 +17,12 @@ public abstract class Lugar {
 	public void setObstaculos(List<Obstaculo> obstaculos) {
 		this.obstaculos = obstaculos;
 	}
+
+	public boolean sosArista() {
+		return false;
+	}
+
+	public boolean sosInterseccion() {
+		return false;
+	}
 }

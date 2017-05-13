@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 
 import frsf.cidisi.exercise.patrullero.search.actions.Avanzar;
 import frsf.cidisi.exercise.patrullero.search.actions.CambiarOrientacion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
@@ -17,13 +19,13 @@ import frsf.cidisi.faia.solver.search.SearchSolveParam;
 
 public class Patrullero extends SearchBasedAgent {
 
-	public Patrullero() {
+	public Patrullero(Mapa mapa, Interseccion posicionPatrullero, Interseccion posicionIncidente) {
 
 		// The Agent Goal
 		ObjetivoPatrullero agGoal = new ObjetivoPatrullero();
 
 		// The Agent State
-		EstadoPatrullero agState = new EstadoPatrullero();
+		EstadoPatrullero agState = new EstadoPatrullero(mapa, posicionPatrullero, posicionIncidente);
 		this.setAgentState(agState);
 
 		// Create the operators
@@ -74,7 +76,7 @@ public class Patrullero extends SearchBasedAgent {
 	/**
 	 * This method is executed by the simulator to give the agent a perception.
 	 * Then it updates its state.
-	 * 
+	 *
 	 * @param p
 	 */
 	@Override

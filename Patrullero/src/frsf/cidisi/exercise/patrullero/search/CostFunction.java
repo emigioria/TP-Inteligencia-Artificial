@@ -9,14 +9,11 @@ import frsf.cidisi.faia.solver.search.NTree;
  */
 public class CostFunction implements IStepCostFunction {
 
-    /**
-     * This method calculates the cost of the given NTree node.
-     */
-    @Override
-    public double calculateCost(NTree node) {
-        
-        //TODO: Complete Method
-        
-        return 0;
-    }
+	/**
+	 * This method calculates the cost of the given NTree node.
+	 */
+	@Override
+	public double calculateCost(NTree node) {
+		return node.getAction().getCost(node.getAgentState());
+	}
 }

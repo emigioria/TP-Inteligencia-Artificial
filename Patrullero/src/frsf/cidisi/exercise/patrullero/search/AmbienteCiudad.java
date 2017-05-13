@@ -1,55 +1,49 @@
 package frsf.cidisi.exercise.patrullero.search;
 
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import frsf.cidisi.faia.agent.Action;
-import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 public class AmbienteCiudad extends Environment {
 
-    public AmbienteCiudad() {
-        // Create the environment state
-        this.environmentState = new EstadoAmbiente();
-    }
+	public AmbienteCiudad(Mapa mapa, Interseccion posicionAgente) {
+		// Create the environment state
+		this.environmentState = new EstadoAmbiente(mapa, posicionAgente);
+	}
 
-    public EstadoAmbiente getEnvironmentState() {
-        return (EstadoAmbiente) super.getEnvironmentState();
-    }
+	@Override
+	public EstadoAmbiente getEnvironmentState() {
+		return (EstadoAmbiente) super.getEnvironmentState();
+	}
 
-    /**
-     * This method is called by the simulator. Given the Agent, it creates
-     * a new perception reading, for example, the agent position.
-     * @param agent
-     * @return A perception that will be given to the agent by the simulator.
-     */
-    @Override
-    public  PatrulleroPerception getPercept() {
-        // Create a new perception to return
-         PatrulleroPerception perception = new PatrulleroPerception();
-		
-		//TODO : Set the perceptions sensors
-        
-        // Return the perception
-        return perception;
-    }
+	/**
+	 * This method is called by the simulator. Given the Agent, it creates
+	 * a new perception reading, for example, the agent position.
+	 *
+	 * @param agent
+	 * @return A perception that will be given to the agent by the simulator.
+	 */
+	@Override
+	public PatrulleroPerception getPercept() {
+		// Create a new perception to return
+		PatrulleroPerception perception = new PatrulleroPerception();
+		perception.getobstaculos_detectables().addAll(this.getEnvironmentState().getObstaculosVisiblesAgente());
 
-    
-    public String toString() {
-        return environmentState.toString();
-    }
+		// Return the perception
+		return perception;
+	}
 
-    
-    public boolean agentFailed(Action actionReturned) {
+	@Override
+	public String toString() {
+		return environmentState.toString();
+	}
 
-        EstadoAmbiente envState =
-                this.getEnvironmentState();
+	@Override
+	public boolean agentFailed(Action actionReturned) {
+		return this.getEnvironmentState().estaAgenteEnCorteTotal();
+	}
 
-        // TODO: Complete Method        
+	// The following methods are agent-specific:
 
-        return false;
-    }
-
-	//TODO: Complete this section with agent-specific methods
-    // The following methods are agent-specific:
-    
-    
 }
