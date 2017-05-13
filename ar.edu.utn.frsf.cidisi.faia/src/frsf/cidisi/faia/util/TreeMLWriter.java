@@ -7,22 +7,23 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 import frsf.cidisi.faia.solver.search.NTree;
 
 public class TreeMLWriter {
 
-	private static final HashMap<Class<?>, String> TYPES = new HashMap<>();
+	private static final HashMap<Class<?>, Constante> TYPES = new HashMap<>();
 	static{
-		TYPES.put(int.class, Constantes.INT);
-		TYPES.put(Integer.class, Constantes.INTEGER);
-		TYPES.put(Long.class, Constantes.LONG);
-		TYPES.put(Float.class, Constantes.FLOAT);
-		TYPES.put(Double.class, Constantes.DOUBLE);
-		TYPES.put(boolean.class, Constantes.BOOLEAN);
-		TYPES.put(String.class, Constantes.STRING);
-		TYPES.put(Date.class, Constantes.DATE);
+		TYPES.put(int.class, Constante.INT);
+		TYPES.put(Integer.class, Constante.INTEGER);
+		TYPES.put(Long.class, Constante.LONG);
+		TYPES.put(Float.class, Constante.FLOAT);
+		TYPES.put(Double.class, Constante.DOUBLE);
+		TYPES.put(boolean.class, Constante.BOOLEAN);
+		TYPES.put(String.class, Constante.STRING);
+		TYPES.put(Date.class, Constante.DATE);
 	}
 
 	private static int fileIdx = 0;
@@ -56,21 +57,11 @@ public class TreeMLWriter {
 				node = node.getParent();
 			}
 
-			Vector<NTree> nodos = new Vector<>();
+			List<NTree> nodos = node.getSonsTotal();
 			nodos.add(node);
-			nodos.addAll(node.getSonsTotal());
 
-			int totalNodes = nodos.size();
-
-			for(int i = 0; i < totalNodes; i++){
-				NTree nodo = nodos.get(i);
-				escribirNodo(nodo, xml);
-			}
-
-			for(int i = 0; i < totalNodes; i++){
-				NTree nodo = nodos.get(i);
-				escribirEnlaces(nodo, xml);
-			}
+			nodos.forEach(nodo -> escribirNodo(nodo, xml));
+			nodos.forEach(nodo -> escribirEnlaces(nodo, xml));
 
 			xml.end();
 			xml.finish();
@@ -78,14 +69,14 @@ public class TreeMLWriter {
 	}
 
 	private static void escribirNodo(NTree tree, XMLWriter xml) {
-		String tag = Constantes.NODE;
+		String tag = Constante.NODE.toString();
 		ArrayList<String> names = new ArrayList<>();
 		ArrayList<String> values = new ArrayList<>();
 
-		names.add(Constantes.ID);
-		names.add(Constantes.ACTION);
-		names.add(Constantes.COST);
-		names.add(Constantes.AGENT_STATE);
+		names.add(Constante.ID.toString());
+		names.add(Constante.ACTION.toString());
+		names.add(Constante.COST.toString());
+		names.add(Constante.AGENT_STATE.toString());
 
 		Integer i = new Integer(tree.getExecutionOrder());
 		values.add(i.toString());
@@ -104,23 +95,23 @@ public class TreeMLWriter {
 	}
 
 	private static void escribirEnlaces(NTree tree, XMLWriter xml) {
-		String tag = Constantes.EDGE;
+		String tag = Constante.EDGE.toString();
 		ArrayList<String> names = new ArrayList<>();
 		ArrayList<String> values = new ArrayList<>();
 
 		NTree s = (NTree) tree.clone();
 		Vector<NTree> ts = s.getSons();
 
-		for(int i = 0; i < ts.size(); i++){
-			names.add(Constantes.SOURCE);
-			names.add(Constantes.TARGET);
+		ts.forEach(son -> {
+			names.add(Constante.SOURCE.toString());
+			names.add(Constante.TARGET.toString());
 
 			values.add(new Integer(s.getExecutionOrder()).toString());
-			values.add(new Integer(ts.get(i).getExecutionOrder()).toString());
+			values.add(new Integer(son.getExecutionOrder()).toString());
 
-			xml.tag(tag, names, values, 2);
+			xml.tag(tag, names, values, names.size());
 			names.clear();
 			values.clear();
-		}
+		});
 	}
 }

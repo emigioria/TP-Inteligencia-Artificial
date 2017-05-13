@@ -34,16 +34,14 @@ import frsf.cidisi.faia.util.XmlTree;
 
 public class Search extends Solve {
 
-	public static final int WHITHOUT_TREE = 0;
-	public static final int XML_TREE = 1;
-	public static final int PDF_TREE = 2;
-	public static final int GRAPHICAL_TREE = 3;
-	public static final int GRAPHVIZ_TREE = 4;
-	public static final int EFAIA_TREE = 5;
+	public enum TipoArbol {
+		WHITHOUT_TREE, XML_TREE, PDF_TREE, GRAPHICAL_TREE, GRAPHVIZ_TREE, EFAIA_TREE
+	}
+
 	private NTree tree;
 	private NTree goalNode;
 	private Strategy searchStrategy;
-	private int visibleTree = Search.WHITHOUT_TREE;
+	private TipoArbol visibleTree = TipoArbol.WHITHOUT_TREE;
 
 	/*
 	 * public Search(){
@@ -109,16 +107,15 @@ public class Search extends Solve {
 			else{ // If the actual node is not a goal node then it must be expanded.-
 
 				// Every item in the action list represents a possible son for the actual node.-
-				for(int i = 0; i < actionList.size(); i++){
+				for(SearchAction action: actionList){
 					// The state of the selected node must be cloned to assure consistence.-
 					SearchBasedAgentState ast = firstNode.getAgentState().clone();
 					// This is the action that can generate a new node.-
-					SearchAction action = actionList.elementAt(i);
 					ast = action.execute(ast);
 					// TODO: HAY QUE VER SI CONVIENE QUE CUANDO EL OPERADOR NO PUEDA SER
 					// EJECUTADO DEVUELVA UN OBJETO EN LUGAR DE NULL.
 					if(ast != null){ // If the action was correctly executed.-
-						NTree n = new NTree(firstNode, actionList.elementAt(i), ast, nodeIdx);
+						NTree n = new NTree(firstNode, action, ast, nodeIdx);
 						// If the node is not repeated in his search's tree branch
 						// then it can be added to the end of the branch.-
 						if(!existsNode(n, n.getParent())){
@@ -147,22 +144,18 @@ public class Search extends Solve {
 	}
 
 	private boolean existsNode(NTree node, NTree parent) {
-		NTree p = parent;//.clone();
-
 		// This is an iteration through the node's parent (and ancestors) looking for a repeated node
 		// in the same branch of the Search Tree.-
-		while(p != null){
-			// If node already exists in the actual branch then the function return true.-
-			if(node.equals(p)){
-				return true;
-			}
-			p = p.getParent();
-			//if (p!=null)
-			//	p = (NTree)p.clone();
+		while(parent != null && !node.equals(parent)){
+			parent = parent.getParent();
 		}
-
-		// At this point it's sure that the node does not exists in the branch of the Search Tree.-
-		return false;
+		;
+		if(parent == null){
+			// At this point it's sure that the node does not exists in the branch of the Search Tree.-
+			return false;
+		}
+		// If node already exists in the actual branch then the function return true.-
+		return true;
 	}
 
 	private Vector<NTree> getBestPath() {
@@ -184,9 +177,9 @@ public class Search extends Solve {
 
 	public void showTree() {
 		switch(visibleTree) {
-		case Search.WHITHOUT_TREE:
+		case WHITHOUT_TREE:
 			break;
-		case Search.XML_TREE:
+		case XML_TREE:
 			XmlTree.printFile(tree);
 			/*
 			 * String arbol = this.toXml();
@@ -194,15 +187,15 @@ public class Search extends Solve {
 			 * System.out.println(arbol);
 			 */
 			break;
-		case Search.PDF_TREE:
+		case PDF_TREE:
 			LatexOutput.getInstance().printFile(tree, this.searchStrategy.getStrategyName());
 			break;
-		case Search.GRAPHICAL_TREE:
+		case GRAPHICAL_TREE:
 			break;
-		case Search.GRAPHVIZ_TREE:
+		case GRAPHVIZ_TREE:
 			GraphvizTree.printFile(tree);
 			break;
-		case Search.EFAIA_TREE:
+		case EFAIA_TREE:
 			TreeMLWriter.printFile(tree);
 			break;
 		}
@@ -216,15 +209,15 @@ public class Search extends Solve {
 		return tree.toXml();
 	}
 
-	public int getVisibleTree() {
+	public TipoArbol getVisibleTree() {
 		return visibleTree;
 	}
 
-	public void setVisibleTree(int visibleTree) {
+	public void setVisibleTree(TipoArbol visibleTree) {
 		// Remove all objects subscribed to simulator events
 		//        SimulatorEventNotifier.CleanEventHandlers();
 
-		if(visibleTree == Search.PDF_TREE){
+		if(visibleTree == TipoArbol.PDF_TREE){
 			SimulatorEventNotifier.SubscribeEventHandler(EventType.SimulationFinished,
 					LatexOutput.getInstance());
 		}

@@ -17,7 +17,10 @@
  */
 package frsf.cidisi.faia.solver.search;
 
+import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
@@ -55,7 +58,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param son
 	 */
 	public void addSon(NTree son) {
@@ -109,17 +112,10 @@ public class NTree implements Cloneable, Comparable<NTree> {
 		return sons;
 	}
 
-	public Vector<NTree> getSonsTotal() {
-		Vector<NTree> temp = new Vector<>();
-
-		// Agrego primero mis hijos
-		temp.addAll(this.sons);
-
-		// Agrego después los hijos de mis hijos recursivamente
-		for(NTree hijo: this.getSons()){
-			temp.addAll(hijo.getSonsTotal());
-		}
-		return temp;
+	public List<NTree> getSonsTotal() {
+		return Stream.concat(this.getSons().stream(),
+				this.getSons().stream().map(hijo -> hijo.getSonsTotal()).flatMap(List::stream))
+				.collect(Collectors.toList());
 	}
 
 	public SearchBasedAgentState getAgentState() {
@@ -127,7 +123,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	public void setAction(SearchAction action) {
@@ -135,7 +131,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param cost
 	 */
 	public void setCost(double cost) {
@@ -143,7 +139,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param deep
 	 */
 	public void setDeep(int deep) {
@@ -151,7 +147,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param father
 	 */
 	public void setParent(NTree parent) {
@@ -159,7 +155,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param sons
 	 */
 	public void setSons(Vector<NTree> sons) {
@@ -167,7 +163,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param state
 	 */
 	public void setAgentState(SearchBasedAgentState state) {
@@ -182,7 +178,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	public String toString() {
 		String eo = "Id=\"" + executionOrder + "\" ";
 		String ac = "Action=\"" + action + "\" ";
-		//TODO: FALTA VER COMO HACEMOS CUANDO HAY FUNCIONES DE COSTO O HEURISTICAS.- 
+		//TODO: FALTA VER COMO HACEMOS CUANDO HAY FUNCIONES DE COSTO O HEURISTICAS.-
 		//		String hf = "Heu: " + getHeuristicFunction() + " ";
 		//		String cf = "Cst: " + getCostFunction() + " ";
 
@@ -190,26 +186,25 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	public String toGraphviz() {
-		String str = "";
-		str = "nodo" + this.executionOrder +
+		final StringBuilder str = new StringBuilder();
+		str.append("nodo" + this.executionOrder +
 				"[label=\"{EO: " + this.executionOrder + "|" +
 				"cost: " + this.cost + "|" +
-				"A: " + this.getAction();
+				"A: " + this.getAction());
 
 		if(this.getParent() != null){
 			if(this.getParent().getParent() != null){
-				str += "|" + this.getParent().getAgentState().toString().replace(",", "").replace("[", "").replace("]", "").replace(" ", "\\n");
+				str.append("|" + this.getParent().getAgentState().toString().replace(",", "").replace("[", "").replace("]", "").replace(" ", "\\n"));
 			}
 		}
-		str += "}\"]";
-		str = str + "\n";
-		for(int i = 0; i < getSons().size(); i++){
-			str = str + sons.elementAt(i).toGraphviz();
-			str += "nodo" + this.executionOrder + " -> " +
-					"nodo" + sons.elementAt(i).executionOrder + ";\n";
-		}
-		str = str + "\n";
-		return str;
+		str.append("}\"]\n");
+		sons.forEach(son -> {
+			str.append(str + son.toGraphviz())
+					.append("nodo" + this.executionOrder + " -> " +
+							"nodo" + son.executionOrder + ";\n");
+		});
+		str.append("\n");
+		return str.toString();
 	}
 
 	public int getExecutionOrder() {
@@ -217,28 +212,19 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	}
 
 	public String toXml() {
+		StringBuffer str = new StringBuffer().append("<Nodo" + action + ">" + toString() + agentState.toString());
 
-		String str = "";
+		this.getSons().forEach(son -> str.append(son.toXml()));
 
-		str = "<Nodo" + action;
-		str = str + ">";
-		//		str = str + "\n";
-		str = str + toString();
-		str = str + agentState.toString();
-		for(int i = 0; i < getSons().size(); i++){
-			str = str + sons.elementAt(i).toXml();
-		}
-		str = str + "</Nodo" + action + ">";
-		//		str = str + "\n";
-
-		return str;
+		str.append("</Nodo" + action + ">");
+		return str.toString();
 	}
 	//	public String toLatex() {
 	//		StringBuffer str = new StringBuffer();
-	//		
+	//
 	//	    // Clase del documento y opciones generales
 	//	    str.append("\\documentclass[a0,landscale]{a0poster}\n");
-	//	   
+	//
 	//	    // Paquetes utilizados
 	//	    str.append("\\usepackage{mathptmx}\n");
 	//	    str.append("\\usepackage[scaled=.90]{helvet}\n");
@@ -247,7 +233,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 	//	    str.append("\\usepackage{nodo}\n");
 	//	    str.append("\\usepackage[spanish]{babel}\n");
 	//	    str.append("\\usepackage[utf8]{inputenc}\n");
-	//	   
+	//
 	//	    str.append("\\title{Arbol de ejecucion - Estrategia: " +
 	//	        "NO SETEADA" + "}\n");
 	//	    str.append("\\author{}\n");
@@ -263,9 +249,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 		resultado.append("[." + this.toLatex() + " ");
 		//resultado.append("\\Tree [." + this.toLatex() + " ");
 
-		for(int i = 0; i < getSons().size(); i++){
-			resultado.append(sons.elementAt(i).toLatex() + " ");
-		}
+		sons.forEach(son -> resultado.append(son.toLatex() + " "));
 		//		for (NTree hijo : this.sons) {
 		//			resultado.append(hijo.toLatex() + " ");
 		//		}
