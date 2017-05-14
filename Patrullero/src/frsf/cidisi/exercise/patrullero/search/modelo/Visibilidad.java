@@ -1,33 +1,42 @@
 package frsf.cidisi.exercise.patrullero.search.modelo;
 
-public abstract class Visibilidad {
-
-	public abstract Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista);
-
-	@Override
-	public boolean equals(Object obj) {
-		if(this == obj){
+public enum Visibilidad {
+	INFORMADO {
+		@Override
+		public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista) {
 			return true;
 		}
-		if(obj == null){
+	},
+	VISIBLE {
+		@Override
+		public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista) {
+			if(obstaculo.getLugar().sosArista()){
+				Arista aristaObstaculo = (Arista) obstaculo.getLugar();
+				return posicionAgente.equals(aristaObstaculo.getDestino()) || posicionAgente.equals(aristaObstaculo.getOrigen());
+			}
+			else if(obstaculo.getLugar().sosInterseccion()){
+				Interseccion interseccionObstaculo = (Interseccion) obstaculo.getLugar();
+				return posicionAgente.getSalientes().stream().anyMatch(salida -> salida.getDestino().equals(interseccionObstaculo)) ||
+						posicionAgente.getEntrantes().stream().anyMatch(salida -> salida.getOrigen().equals(interseccionObstaculo));
+			}
 			return false;
 		}
-		if(getClass() != obj.getClass()){
+	},
+	INVISIBLE {
+		@Override
+		public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista) {
+			if(obstaculo.getLugar().sosArista()){
+				Arista aristaObstaculo = (Arista) obstaculo.getLugar();
+				return ulArista.equals(aristaObstaculo);
+			}
+			else if(obstaculo.getLugar().sosInterseccion()){
+				Interseccion interseccionObstaculo = (Interseccion) obstaculo.getLugar();
+				return posicionAgente.equals(interseccionObstaculo);
+			}
 			return false;
 		}
-		return true;
-	}
+	};
 
-	public Boolean sosInformado() {
-		return false;
-	}
-
-	public Boolean sosInvisible() {
-		return false;
-	}
-
-	public Boolean sosVisible() {
-		return false;
-	}
+	public abstract Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista);
 
 }

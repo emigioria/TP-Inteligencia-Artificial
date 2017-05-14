@@ -63,7 +63,8 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 		PatrulleroPerception patrulleroPerception = (PatrulleroPerception) p;
 		Map<Visibilidad, Set<Obstaculo>> obstaculosPercibidosPorVisibilidad = patrulleroPerception.getobstaculos_detectables().stream().collect(Collectors.groupingBy(Obstaculo::getVisibilidad, Collectors.toSet()));
 		for(Visibilidad visibilidad: obstaculosPercibidosPorVisibilidad.keySet()){
-			if(visibilidad.sosInformado()){
+			switch(visibilidad) {
+			case INFORMADO:
 				Set<Obstaculo> obstaculosInformadosViejos = obstaculos.get(visibilidad);
 				Set<Obstaculo> obstaculosInformadosNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
 				obstaculosInformadosViejos.stream().filter(obs -> !obstaculosInformadosNuevos.contains(obs)).forEach(obs -> {
@@ -76,14 +77,14 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 					lugarObstaculo.getObstaculos().add(obs);
 					obs.setLugar(lugarObstaculo);
 				});
-			}
-			else if(visibilidad.sosVisible()){
+				break;
+			case VISIBLE:
 				Set<Obstaculo> obstaculosVisiblesViejos = obstaculos.get(visibilidad);
 				Set<Obstaculo> obstaculosVisiblesNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
 				Set<Lugar> lugaresVisibles = posicion.getLugaresVisibles();
 				lugaresVisibles.stream().forEach(l -> {
 					l.getObstaculos().removeIf(obs -> {
-						if(obs.getVisibilidad().sosVisible()){
+						if(obs.getVisibilidad().equals(Visibilidad.VISIBLE)){
 							obstaculosVisiblesViejos.remove(obs);
 							return true;
 						}
@@ -98,8 +99,8 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 					lugarObstaculo.getObstaculos().add(obs);
 					obs.setLugar(lugarObstaculo);
 				});
-			}
-			else if(visibilidad.sosInvisible()){
+				break;
+			case INVISIBLE:
 				Set<Obstaculo> obstaculosInvisiblesViejos = obstaculos.get(visibilidad);
 				Set<Obstaculo> obstaculosInvisiblesNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
 
@@ -111,7 +112,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 
 				lugaresInvisibles.stream().forEach(l -> {
 					l.getObstaculos().removeIf(obs -> {
-						if(obs.getVisibilidad().sosInvisible()){
+						if(obs.getVisibilidad().equals(Visibilidad.INVISIBLE)){
 							obstaculosInvisiblesViejos.remove(obs);
 							return true;
 						}
@@ -126,6 +127,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 					lugarObstaculo.getObstaculos().add(obs);
 					obs.setLugar(lugarObstaculo);
 				});
+				break;
 			}
 		}
 	}
