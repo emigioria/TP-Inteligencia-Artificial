@@ -5,6 +5,8 @@ import java.util.Iterator;
 import frsf.cidisi.exercise.patrullero.search.EstadoAmbiente;
 import frsf.cidisi.exercise.patrullero.search.EstadoPatrullero;
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -62,8 +64,17 @@ public class Avanzar extends SearchAction {
 	@Override
 	public Double getCost(SearchBasedAgentState sbs) {
 		EstadoPatrullero estadoPatrullero = ((EstadoPatrullero) sbs);
-		//TODO costo de avanzar
-		return new Double(0);
+		Interseccion posicion = estadoPatrullero.getPosicion();
+		Arista salida = posicion.getSalientes().get(estadoPatrullero.getOrientacion().nextIndex());
+		Long pesoArista = salida.getPeso();
+		for(Obstaculo obs: salida.getObstaculos()){
+			pesoArista = obs.getPeso(pesoArista);
+		}
+		Long pesoObstaculo = salida.getDestino().getPeso();
+		for(Obstaculo obs: salida.getDestino().getObstaculos()){
+			pesoObstaculo = obs.getPeso(pesoObstaculo);
+		}
+		return (double) (pesoArista + pesoObstaculo);
 	}
 
 	/**
