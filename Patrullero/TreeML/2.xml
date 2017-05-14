@@ -1,0 +1,5 @@
+<tree id="2" edgedefault="directed">
+<node Id="1" Action="Avanzar" Cost="-1.0" Estado_Agente=""/>
+<node Id="0" Action="null" Cost="0.0" Estado_Agente=""/>
+<edge source="0" target="1"/>
+</tree>

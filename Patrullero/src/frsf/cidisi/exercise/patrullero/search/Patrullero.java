@@ -54,7 +54,7 @@ public class Patrullero extends SearchBasedAgent {
 		 * Generate an XML file with the search tree. It can also be generated
 		 * in other formats like PDF with PDF_TREE
 		 */
-		searchSolver.setVisibleTree(Search.TipoArbol.GRAPHVIZ_TREE);
+		searchSolver.setVisibleTree(Search.TipoArbol.EFAIA_TREE);
 
 		// Set the Search searchSolver.
 		this.setSolver(searchSolver);

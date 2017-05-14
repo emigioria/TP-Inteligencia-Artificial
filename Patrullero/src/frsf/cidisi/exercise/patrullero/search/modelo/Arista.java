@@ -1,23 +1,24 @@
 package frsf.cidisi.exercise.patrullero.search.modelo;
 
 public class Arista extends Lugar {
-	private Interseccion destino;
 	private Interseccion origen;
+	private Interseccion destino;
 	private Calle calle;
 
-	public Arista(Long id, Long peso, Interseccion destino, Interseccion origen, Calle calle) {
+	public Arista(Long id, Long peso, Interseccion origen, Interseccion destino, Calle calle) {
 		super(id, peso);
-		this.destino = destino;
 		this.origen = origen;
-		this.calle = calle;
-	}
-
-	public Interseccion getDestino() {
-		return destino;
-	}
-
-	public void setDestino(Interseccion destino) {
+		if(origen != null){
+			origen.getSalientes().add(this);
+		}
 		this.destino = destino;
+		if(origen != null){
+			destino.getEntrantes().add(this);
+		}
+		this.calle = calle;
+		if(calle != null){
+			calle.getTramos().add(this);
+		}
 	}
 
 	public Interseccion getOrigen() {
@@ -26,6 +27,14 @@ public class Arista extends Lugar {
 
 	public void setOrigen(Interseccion origen) {
 		this.origen = origen;
+	}
+
+	public Interseccion getDestino() {
+		return destino;
+	}
+
+	public void setDestino(Interseccion destino) {
+		this.destino = destino;
 	}
 
 	public Calle getCalle() {
