@@ -65,6 +65,7 @@ public abstract class GoalBasedAgentSimulator extends Simulator {
 		 * This works even when the agent starts with a goal state (see agentSucceeded
 		 * method in the SearchBasedAgentSimulator).
 		 */
+		System.out.println("Goal: " + agent.getGoalString());
 		do{
 
 			System.out.println("------------------------------------");
