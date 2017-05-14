@@ -83,4 +83,9 @@ public class Patrullero extends SearchBasedAgent {
 	public void see(Perception p) {
 		this.getAgentState().updateState(p);
 	}
+
+	@Override
+	public String getGoalString() {
+		return "Incidente en " + ((EstadoPatrullero) getAgentState()).getIncidente() + ". Enviando patrullero.";
+	}
 }

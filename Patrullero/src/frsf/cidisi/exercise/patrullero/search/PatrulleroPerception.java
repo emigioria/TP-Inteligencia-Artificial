@@ -32,11 +32,12 @@ public class PatrulleroPerception extends Perception {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer();
-		for(Obstaculo obs: obstaculos_detectables){
-			str.append("Nombre: ").append(obs.getNombre()).append(". Lugar: ").append(obs.getLugar()).append(".\n");
+		StringBuffer str = new StringBuffer("\n\tObstáculos:\n");
+		obstaculos_detectables.stream().forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
+		if(obstaculos_detectables.isEmpty()){
+			str.append("\t\tNo hay obstaculos percibidos.\n");
 		}
-		return str.toString();
+		return str.substring(0, str.length() - 1);
 	}
 
 	// The following methods are agent-specific:

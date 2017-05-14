@@ -46,6 +46,11 @@ public class Arista extends Lugar {
 	}
 
 	@Override
+	public String toString() {
+		return calle.getNombre();
+	}
+
+	@Override
 	public boolean sosArista() {
 		return true;
 	}

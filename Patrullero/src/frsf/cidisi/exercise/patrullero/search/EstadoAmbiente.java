@@ -45,9 +45,16 @@ public class EstadoAmbiente extends EnvironmentState {
 	 */
 	@Override
 	public String toString() {
-		String str = "";
-		//TODO: Complete Method toString
-		return str;
+		StringBuffer str = new StringBuffer("\n\tTiempo: " + hora + "\n");
+		str.append("\tObstáculos de ahora:\n");
+		obstaculos.stream().filter(obs -> obs.getTiempoInicio() < hora && obs.getTiempoFin() > hora).forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
+		if(obstaculos.isEmpty()){
+			str.append("\t\tNo hay obstaculos a esta hora.\n");
+		}
+		if(agenteEnCorteTotal){
+			str.append("\tEl agente se ha encontrado con un corte total!\n");
+		}
+		return str.substring(0, str.length() - 1);
 	}
 
 	public Collection<? extends Obstaculo> getObstaculosVisiblesAgente() {

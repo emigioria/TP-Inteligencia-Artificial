@@ -140,11 +140,21 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	 */
 	@Override
 	public String toString() {
-		String str = "";
-
-		//TODO: Complete Method toString
-
-		return str;
+		StringBuffer str = new StringBuffer("\n\t");
+		if(ultimaCalleRecorrida != null){
+			str.append("Viniendo de: " + ultimaCalleRecorrida + "\n");
+		}
+		else{
+			str.append("Arrancando patrullero.\n");
+		}
+		str.append("\tPosición: " + posicion + "\n");
+		str.append("\tApuntando a: " + posicion.getSalientes().get(orientacion.nextIndex()) + "\n");
+		str.append("\tObstáculos:\n");
+		obstaculos.values().stream().flatMap(Collection::stream).forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
+		if(obstaculos.isEmpty()){
+			str.append("\t\tNo hay obstaculos.\n");
+		}
+		return str.substring(0, str.length() - 1);
 	}
 
 	/**
