@@ -70,11 +70,11 @@ public class Avanzar extends SearchAction {
 		for(Obstaculo obs: salida.getObstaculos()){
 			pesoArista = obs.getPeso(pesoArista);
 		}
-		Long pesoObstaculo = salida.getDestino().getPeso();
+		Long pesoInterseccion = salida.getDestino().getPeso();
 		for(Obstaculo obs: salida.getDestino().getObstaculos()){
-			pesoObstaculo = obs.getPeso(pesoObstaculo);
+			pesoInterseccion = obs.getPeso(pesoInterseccion);
 		}
-		return (double) (pesoArista + pesoObstaculo);
+		return (double) (pesoArista + pesoInterseccion);
 	}
 
 	/**
