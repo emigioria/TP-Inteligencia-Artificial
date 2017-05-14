@@ -176,6 +176,14 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 		else if(!posicion.equals(other.posicion)){
 			return false;
 		}
+		if(ultimaCalleRecorrida == null){
+			if(other.ultimaCalleRecorrida != null){
+				return false;
+			}
+		}
+		else if(!ultimaCalleRecorrida.equals(other.ultimaCalleRecorrida)){
+			return false;
+		}
 		return true;
 	}
 

@@ -26,7 +26,9 @@ public class Avanzar extends SearchAction {
 		// PreConditions: que la calle apuntada no esté cerrada y que se esté apuntando a una salida
 		if(getCostAvanzar(s) > 0 && orientacionAgente.hasNext()){
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
-			estadoPatrullero.setPosicion(orientacionAgente.next().getDestino());
+			Arista aristaElegida = orientacionAgente.next();
+			estadoPatrullero.setUltimaCalleRecorrida(aristaElegida);
+			estadoPatrullero.setPosicion(aristaElegida.getDestino());
 			estadoPatrullero.initOrientacion();
 			return estadoPatrullero;
 		}
@@ -52,13 +54,19 @@ public class Avanzar extends SearchAction {
 
 			// Update the agent state
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
-			estadoPatrullero.setPosicion(orientacionAgentePatrullero.next().getDestino());
+			Arista aristaElegidaPatrullero = orientacionAgentePatrullero.next();
+			estadoPatrullero.setUltimaCalleRecorrida(aristaElegidaPatrullero);
+			estadoPatrullero.setPosicion(aristaElegidaPatrullero.getDestino());
 			estadoPatrullero.initOrientacion();
 
 			// Update the real world
 			// PostConditions: actualizar el mundo real moviendo el agente a la siguiente esquina y apuntando a la primera calle saliente de la misma
-			estadoAmbiente.setPosicionAgente(orientacionAgenteAmbiente.next().getDestino());
+			Arista aristaElegidaAmbiente = orientacionAgenteAmbiente.next();
+			estadoPatrullero.setUltimaCalleRecorrida(aristaElegidaAmbiente);
+			estadoAmbiente.setPosicionAgente(aristaElegidaAmbiente.getDestino());
 			estadoAmbiente.initOrientacion();
+
+			//Actualizo la hora y si chocó con un obstaculo total
 			estadoAmbiente.addHora(tiempo);
 			if(corteTotalEncontrado){
 				estadoAmbiente.setAgenteEnCorteTotal(true);
