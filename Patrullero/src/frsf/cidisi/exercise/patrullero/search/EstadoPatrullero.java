@@ -134,7 +134,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	public String toString() {
 		String str = "";
 
-		//TODO: Complete Method
+		//TODO: Complete Method toString
 
 		return str;
 	}

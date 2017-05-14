@@ -58,13 +58,7 @@ public abstract class Obstaculo implements Cloneable {
 		this.lugar = lugar;
 	}
 
-	public Long getPeso(Long peso) {
-		// TODO Auto-generated method stub
-		if(peso < 0){
-			return peso;
-		}
-		return null;
-	}
+	public abstract Long getPeso(Long peso);
 
 	public Long getId() {
 		return id;
