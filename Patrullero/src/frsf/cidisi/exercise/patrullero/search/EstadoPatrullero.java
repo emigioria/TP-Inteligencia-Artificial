@@ -1,5 +1,6 @@
 package frsf.cidisi.exercise.patrullero.search;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
@@ -27,6 +28,8 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	private Interseccion incidente;
 	private ListIterator<Arista> orientacion;
 	private Map<Visibilidad, Set<Obstaculo>> obstaculos = new HashMap<>();
+
+	private Collection<Interseccion> interseccionesVisitadas = new HashSet<>();
 
 	public EstadoPatrullero(Mapa mapa, Interseccion posicionAgente, Interseccion posicionIncidente) {
 		this.mapa = mapa;
@@ -238,6 +241,14 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 
 	public void setUltimaCalleRecorrida(Arista ultimaCalleRecorrida) {
 		this.ultimaCalleRecorrida = ultimaCalleRecorrida;
+	}
+
+	public Collection<Interseccion> getInterseccionesVisitadas() {
+		return interseccionesVisitadas;
+	}
+
+	public void setInterseccionesVisitadas(Collection<Interseccion> interseccionesVisitadas) {
+		this.interseccionesVisitadas = interseccionesVisitadas;
 	}
 
 }
