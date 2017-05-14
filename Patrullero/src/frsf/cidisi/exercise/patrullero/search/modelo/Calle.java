@@ -8,8 +8,9 @@ public class Calle {
 	private List<Arista> tramos = new ArrayList<>();
 	private String nombre;
 
-	public Calle(String nombre) {
+	public Calle(Long id, String nombre) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 	}
 
