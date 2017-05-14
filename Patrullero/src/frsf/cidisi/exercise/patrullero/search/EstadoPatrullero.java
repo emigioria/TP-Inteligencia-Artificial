@@ -165,7 +165,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 				return false;
 			}
 		}
-		else if(!orientacion.equals(other.orientacion)){
+		else if(orientacion.nextIndex() != other.orientacion.nextIndex()){
 			return false;
 		}
 		if(posicion == null){
