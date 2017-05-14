@@ -3,7 +3,6 @@ package frsf.cidisi.exercise.patrullero.search;
 import java.util.HashSet;
 import java.util.Set;
 
-import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
@@ -12,7 +11,6 @@ import frsf.cidisi.faia.environment.Environment;
 public class PatrulleroPerception extends Perception {
 
 	private Set<Obstaculo> obstaculos_detectables = new HashSet<>();
-	private Arista ultimaCalleRecorridaPorElAgente;
 
 	public PatrulleroPerception() {
 
@@ -50,11 +48,4 @@ public class PatrulleroPerception extends Perception {
 		this.obstaculos_detectables = arg;
 	}
 
-	public void setUltimaCalleRecorridaPorElAgente(Arista ultimaCalleRecorridaPorElAgente) {
-		this.ultimaCalleRecorridaPorElAgente = ultimaCalleRecorridaPorElAgente;
-	}
-
-	public Arista getUltimaCalleRecorridaPorElAgente() {
-		return ultimaCalleRecorridaPorElAgente;
-	}
 }

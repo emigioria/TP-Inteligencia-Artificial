@@ -116,4 +116,8 @@ public class EstadoAmbiente extends EnvironmentState {
 	public Arista getUltimaCalleRecorridaPorElAgente() {
 		return ultimaCalleRecorridaPorElAgente;
 	}
+
+	public void setUltimaCalleRecorridaPorElAgente(Arista ultimaCalleRecorridaPorElAgente) {
+		this.ultimaCalleRecorridaPorElAgente = ultimaCalleRecorridaPorElAgente;
+	}
 }

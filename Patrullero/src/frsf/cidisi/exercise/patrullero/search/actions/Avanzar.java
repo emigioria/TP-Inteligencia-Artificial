@@ -58,23 +58,35 @@ public class Avanzar extends SearchAction {
 		return null;
 	}
 
+	private Long getCostAvanzar(SearchBasedAgentState sbs) {
+		EstadoPatrullero estadoPatrullero = ((EstadoPatrullero) sbs);
+		Interseccion posicion = estadoPatrullero.getPosicion();
+		Arista salida = posicion.getSalientes().get(estadoPatrullero.getOrientacion().nextIndex());
+		return getCosto(salida.getDestino(), salida);
+	}
+
+	private Long getCosto(Interseccion interseccion, Arista arista) {
+		Long pesoArista = arista.getPeso();
+		for(Obstaculo obs: arista.getObstaculos()){
+			pesoArista = obs.getPeso(pesoArista);
+		}
+		Long pesoInterseccion = interseccion.getPeso();
+		for(Obstaculo obs: arista.getDestino().getObstaculos()){
+			pesoInterseccion = obs.getPeso(pesoInterseccion);
+		}
+		return (pesoArista < 0 || pesoInterseccion < 0) ? (-1) : (1) * (Math.abs(pesoArista) + Math.abs(pesoInterseccion));
+	}
+
 	/**
 	 * This method returns the action cost.
 	 */
+	//Costo después de ejecutar la acción
 	@Override
 	public Double getCost(SearchBasedAgentState sbs) {
 		EstadoPatrullero estadoPatrullero = ((EstadoPatrullero) sbs);
 		Interseccion posicion = estadoPatrullero.getPosicion();
-		Arista salida = posicion.getSalientes().get(estadoPatrullero.getOrientacion().nextIndex());
-		Long pesoArista = salida.getPeso();
-		for(Obstaculo obs: salida.getObstaculos()){
-			pesoArista = obs.getPeso(pesoArista);
-		}
-		Long pesoInterseccion = salida.getDestino().getPeso();
-		for(Obstaculo obs: salida.getDestino().getObstaculos()){
-			pesoInterseccion = obs.getPeso(pesoInterseccion);
-		}
-		return (double) (pesoArista + pesoInterseccion);
+		Arista entrada = estadoPatrullero.getUltimaCalleRecorrida();
+		return getCosto(posicion, entrada).doubleValue();
 	}
 
 	/**

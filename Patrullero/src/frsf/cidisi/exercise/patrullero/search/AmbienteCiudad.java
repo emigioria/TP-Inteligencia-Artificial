@@ -29,7 +29,6 @@ public class AmbienteCiudad extends Environment {
 		// Create a new perception to return
 		PatrulleroPerception perception = new PatrulleroPerception();
 		perception.getobstaculos_detectables().addAll(this.getEnvironmentState().getObstaculosVisiblesAgente());
-		perception.setUltimaCalleRecorridaPorElAgente(this.getEnvironmentState().getUltimaCalleRecorridaPorElAgente());
 
 		// Return the perception
 		return perception;

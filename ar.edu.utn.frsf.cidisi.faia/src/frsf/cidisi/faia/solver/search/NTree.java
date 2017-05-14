@@ -42,6 +42,7 @@ public class NTree implements Cloneable, Comparable<NTree> {
 
 	public NTree() {
 		this.deep = 0;
+		this.cost = 0D;
 		this.parent = null;
 		this.sons = new Vector<>();
 		this.agentState = null;

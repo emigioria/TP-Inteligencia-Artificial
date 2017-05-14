@@ -22,6 +22,7 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 public class EstadoPatrullero extends SearchBasedAgentState {
 
 	private Mapa mapa;
+	private Arista ultimaCalleRecorrida = null;
 	private Interseccion posicion;
 	private Interseccion incidente;
 	private ListIterator<Arista> orientacion;
@@ -104,7 +105,9 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 
 				Set<Lugar> lugaresInvisibles = new HashSet<>();
 				lugaresInvisibles.add(posicion);
-				lugaresInvisibles.add(patrulleroPerception.getUltimaCalleRecorridaPorElAgente());
+				if(ultimaCalleRecorrida != null){
+					lugaresInvisibles.add(ultimaCalleRecorrida);
+				}
 
 				lugaresInvisibles.stream().forEach(l -> {
 					l.getObstaculos().removeIf(obs -> {
@@ -218,4 +221,13 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	public void setObstaculos(Map<Visibilidad, Set<Obstaculo>> obstaculos) {
 		this.obstaculos = obstaculos;
 	}
+
+	public Arista getUltimaCalleRecorrida() {
+		return ultimaCalleRecorrida;
+	}
+
+	public void setUltimaCalleRecorrida(Arista ultimaCalleRecorrida) {
+		this.ultimaCalleRecorrida = ultimaCalleRecorrida;
+	}
+
 }
