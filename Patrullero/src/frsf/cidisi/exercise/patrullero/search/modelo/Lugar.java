@@ -29,14 +29,6 @@ public abstract class Lugar {
 		this.obstaculos = obstaculos;
 	}
 
-	public boolean sosArista() {
-		return false;
-	}
-
-	public boolean sosInterseccion() {
-		return false;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -71,4 +63,11 @@ public abstract class Lugar {
 		return false;
 	}
 
+	public boolean sosArista() {
+		return false;
+	}
+
+	public boolean sosInterseccion() {
+		return false;
+	}
 }

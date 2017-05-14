@@ -58,8 +58,6 @@ public abstract class Obstaculo implements Cloneable {
 		this.lugar = lugar;
 	}
 
-	public abstract Long getPeso(Long peso);
-
 	public Long getId() {
 		return id;
 	}
@@ -94,10 +92,12 @@ public abstract class Obstaculo implements Cloneable {
 		return false;
 	}
 
-	public Boolean sosVisible(Interseccion posicionAgente, Arista ulArista) {
-		return visibilidad.soyVisible(this, posicionAgente, ulArista);
-	}
+	public abstract Long getPeso(Long peso);
 
 	@Override
 	public abstract Obstaculo clone();
+
+	public Boolean sosVisible(Interseccion posicionAgente, Arista ulArista) {
+		return visibilidad.soyVisible(this, posicionAgente, ulArista);
+	}
 }
