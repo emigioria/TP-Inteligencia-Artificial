@@ -1,10 +1,18 @@
 package frsf.cidisi.exercise.patrullero.search;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
+import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
+import frsf.cidisi.exercise.patrullero.search.modelo.Visibilidad;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 
@@ -17,6 +25,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	private Interseccion posicion;
 	private Interseccion incidente;
 	private ListIterator<Arista> orientacion;
+	private Map<Visibilidad, Set<Obstaculo>> obstaculos = new HashMap<>();
 
 	public EstadoPatrullero(Mapa mapa, Interseccion posicionAgente, Interseccion posicionIncidente) {
 		this.mapa = mapa;
@@ -50,8 +59,72 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	 */
 	@Override
 	public void updateState(Perception p) {
-		//Poner los obstaculos nuevos en el mapa y ver como borrar los viejos
-		//TODO: Complete Method
+		PatrulleroPerception patrulleroPerception = (PatrulleroPerception) p;
+		Map<Visibilidad, Set<Obstaculo>> obstaculosPercibidosPorVisibilidad = patrulleroPerception.getobstaculos_detectables().stream().collect(Collectors.groupingBy(Obstaculo::getVisibilidad, Collectors.toSet()));
+		for(Visibilidad visibilidad: obstaculosPercibidosPorVisibilidad.keySet()){
+			if(visibilidad.sosInformado()){
+				Set<Obstaculo> obstaculosInformadosViejos = obstaculos.get(visibilidad);
+				Set<Obstaculo> obstaculosInformadosNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
+				obstaculosInformadosViejos.stream().filter(obs -> !obstaculosInformadosNuevos.contains(obs)).forEach(obs -> {
+					obstaculosInformadosViejos.remove(obs);
+					obs.getLugar().getObstaculos().remove(obs);
+				});
+				obstaculosInformadosNuevos.stream().filter(obs -> !obstaculosInformadosViejos.contains(obs)).forEach(obs -> {
+					obstaculosInformadosViejos.add(obs);
+					Lugar lugarObstaculo = mapa.getLugar(obs.getLugar());
+					lugarObstaculo.getObstaculos().add(obs);
+					obs.setLugar(lugarObstaculo);
+				});
+			}
+			else if(visibilidad.sosVisible()){
+				Set<Obstaculo> obstaculosVisiblesViejos = obstaculos.get(visibilidad);
+				Set<Obstaculo> obstaculosVisiblesNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
+				Set<Lugar> lugaresVisibles = posicion.getLugaresVisibles();
+				lugaresVisibles.stream().forEach(l -> {
+					l.getObstaculos().removeIf(obs -> {
+						if(obs.getVisibilidad().sosVisible()){
+							obstaculosVisiblesViejos.remove(obs);
+							return true;
+						}
+						else{
+							return false;
+						}
+					});
+				});
+				obstaculosVisiblesNuevos.stream().forEach(obs -> {
+					obstaculosVisiblesViejos.add(obs);
+					Lugar lugarObstaculo = lugaresVisibles.stream().filter(l -> l.equals(obs.getLugar())).findFirst().get();
+					lugarObstaculo.getObstaculos().add(obs);
+					obs.setLugar(lugarObstaculo);
+				});
+			}
+			else if(visibilidad.sosInvisible()){
+				Set<Obstaculo> obstaculosInvisiblesViejos = obstaculos.get(visibilidad);
+				Set<Obstaculo> obstaculosInvisiblesNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
+
+				Set<Lugar> lugaresInvisibles = new HashSet<>();
+				lugaresInvisibles.add(posicion);
+				lugaresInvisibles.add(patrulleroPerception.getUltimaCalleRecorridaPorElAgente());
+
+				lugaresInvisibles.stream().forEach(l -> {
+					l.getObstaculos().removeIf(obs -> {
+						if(obs.getVisibilidad().sosInvisible()){
+							obstaculosInvisiblesViejos.remove(obs);
+							return true;
+						}
+						else{
+							return false;
+						}
+					});
+				});
+				obstaculosInvisiblesNuevos.stream().forEach(obs -> {
+					obstaculosInvisiblesViejos.add(obs);
+					Lugar lugarObstaculo = lugaresInvisibles.stream().filter(l -> l.equals(obs.getLugar())).findFirst().get();
+					lugarObstaculo.getObstaculos().add(obs);
+					obs.setLugar(lugarObstaculo);
+				});
+			}
+		}
 	}
 
 	/**
@@ -136,5 +209,13 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 
 	public void initOrientacion() {
 		this.orientacion = posicion.getSalientes().listIterator();
+	}
+
+	public Map<Visibilidad, Set<Obstaculo>> getObstaculos() {
+		return obstaculos;
+	}
+
+	public void setObstaculos(Map<Visibilidad, Set<Obstaculo>> obstaculos) {
+		this.obstaculos = obstaculos;
 	}
 }

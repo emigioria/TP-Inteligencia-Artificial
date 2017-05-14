@@ -49,7 +49,7 @@ public class Avanzar extends SearchAction {
 			// Update the real world
 			estadoAmbiente.setPosicionAgente(estadoPatrullero.getPosicion());
 			estadoAmbiente.initOrientacion();
-			estadoAmbiente.addHora(getCost(estadoPatrullero));
+			estadoAmbiente.addHora(getCost(estadoPatrullero).longValue());
 			return estadoAmbiente;
 		}
 

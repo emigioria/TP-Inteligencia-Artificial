@@ -1,14 +1,16 @@
 package frsf.cidisi.exercise.patrullero.search.modelo;
 
-public abstract class Obstaculo {
+public abstract class Obstaculo implements Cloneable {
+	private Long id;
 	private NombreObstaculo nombre;
-	private Double tiempoInicio;
-	private Double tiempoFin;
+	private Long tiempoInicio;
+	private Long tiempoFin;
 	private Visibilidad visibilidad;
 	private Lugar lugar;
 
-	public Obstaculo(NombreObstaculo nombre, Double tiempoInicio, Double tiempoFin, Visibilidad visibilidad, Lugar lugar) {
+	public Obstaculo(Long id, NombreObstaculo nombre, Long tiempoInicio, Long tiempoFin, Visibilidad visibilidad, Lugar lugar) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.tiempoInicio = tiempoInicio;
 		this.tiempoFin = tiempoFin;
@@ -24,19 +26,19 @@ public abstract class Obstaculo {
 		this.nombre = nombre;
 	}
 
-	public Double getTiempoInicio() {
+	public Long getTiempoInicio() {
 		return tiempoInicio;
 	}
 
-	public void setTiempoInicio(Double tiempoInicio) {
+	public void setTiempoInicio(Long tiempoInicio) {
 		this.tiempoInicio = tiempoInicio;
 	}
 
-	public Double getTiempoFin() {
+	public Long getTiempoFin() {
 		return tiempoFin;
 	}
 
-	public void setTiempoFin(Double tiempoFin) {
+	public void setTiempoFin(Long tiempoFin) {
 		this.tiempoFin = tiempoFin;
 	}
 
@@ -56,7 +58,7 @@ public abstract class Obstaculo {
 		this.lugar = lugar;
 	}
 
-	public Double getPeso(Double peso) {
+	public Long getPeso(Long peso) {
 		// TODO Auto-generated method stub
 		if(peso < 0){
 			return peso;
@@ -64,7 +66,44 @@ public abstract class Obstaculo {
 		return null;
 	}
 
-	public Boolean sosVisible(Interseccion posicionAgente) {
-		return visibilidad.soyVisible(this, posicionAgente);
+	public Long getId() {
+		return id;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj){
+			return true;
+		}
+		if(obj == null){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		Obstaculo other = (Obstaculo) obj;
+		if(id != null && id.equals(other.id)){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean sosVisible(Interseccion posicionAgente, Arista ulArista) {
+		return visibilidad.soyVisible(this, posicionAgente, ulArista);
+	}
+
+	@Override
+	public abstract Obstaculo clone();
 }

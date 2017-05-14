@@ -3,7 +3,7 @@ package frsf.cidisi.exercise.patrullero.search.modelo;
 public class Visible extends Visibilidad {
 
 	@Override
-	public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente) {
+	public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista) {
 		if(obstaculo.getLugar().sosArista()){
 			Arista aristaObstaculo = (Arista) obstaculo.getLugar();
 			return posicionAgente.equals(aristaObstaculo.getDestino()) || posicionAgente.equals(aristaObstaculo.getOrigen());
@@ -16,4 +16,8 @@ public class Visible extends Visibilidad {
 		return false;
 	}
 
+	@Override
+	public Boolean sosVisible() {
+		return true;
+	}
 }

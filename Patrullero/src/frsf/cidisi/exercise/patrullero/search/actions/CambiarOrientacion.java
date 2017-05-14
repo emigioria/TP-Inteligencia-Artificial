@@ -51,7 +51,7 @@ public class CambiarOrientacion extends SearchAction {
 			// PostConditions: actualizar el mundo real con la nueva orientacion del agente
 			// Update the real world
 			estadoAmbiente.getOrientacionAgente().next();
-			estadoAmbiente.addHora(getCost(estadoPatrullero));
+			estadoAmbiente.addHora(getCost(estadoPatrullero).longValue());
 			return estadoAmbiente;
 		}
 

@@ -17,10 +17,11 @@ import frsf.cidisi.faia.state.EnvironmentState;
 public class EstadoAmbiente extends EnvironmentState {
 
 	private Mapa mapa;
+	private Arista ultimaCalleRecorridaPorElAgente = null;
 	private Interseccion posicionAgente;
 	private ListIterator<Arista> orientacionAgente;
 	private Set<Obstaculo> obstaculos;
-	private Double hora; //TODO ver
+	private Long hora = 0L;
 	private boolean agenteEnCorteTotal = false;
 
 	public EstadoAmbiente(Mapa mapa, Interseccion posicionAgente) {
@@ -37,7 +38,6 @@ public class EstadoAmbiente extends EnvironmentState {
 	public void initState() {
 		initOrientacion();
 		this.obstaculos = mapa.getObstaculos();
-		hora = 0D;
 	}
 
 	/**
@@ -51,8 +51,9 @@ public class EstadoAmbiente extends EnvironmentState {
 	}
 
 	public Collection<? extends Obstaculo> getObstaculosVisiblesAgente() {
-		//TODO falta quitar los obstaculos según el tiempo
-		return obstaculos.stream().filter(obs -> obs.sosVisible(posicionAgente)).collect(Collectors.toSet());
+		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() < hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaPorElAgente))
+				.map(obs -> obs.clone())
+				.collect(Collectors.toSet());
 	}
 
 	// The following methods are agent-specific:
@@ -88,15 +89,15 @@ public class EstadoAmbiente extends EnvironmentState {
 		this.obstaculos = obstaculos;
 	}
 
-	public Double getHora() {
+	public Long getHora() {
 		return hora;
 	}
 
-	public void setHora(Double hora) {
+	public void setHora(Long hora) {
 		this.hora = hora;
 	}
 
-	public void addHora(Double cost) {
+	public void addHora(Long cost) {
 		hora += cost;
 	}
 
@@ -110,5 +111,9 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	public boolean estaAgenteEnCorteTotal() {
 		return agenteEnCorteTotal;
+	}
+
+	public Arista getUltimaCalleRecorridaPorElAgente() {
+		return ultimaCalleRecorridaPorElAgente;
 	}
 }

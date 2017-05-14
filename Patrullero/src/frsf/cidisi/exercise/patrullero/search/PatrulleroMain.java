@@ -9,14 +9,16 @@ public class PatrulleroMain {
 
 	public static void main(String[] args) throws PrologConnectorException {
 		//TODO crear mapa y posicion agente e incidente
-		Mapa mapa = null;
-		Mapa mapaAgenteSinObstaculos = null;
-		Interseccion posicionAgente = null;
+		Mapa mapaAmbiente = null;
+		Interseccion posicionAgenteAmbiente = null;
+
+		Mapa mapaPatrullero = null;
+		Interseccion posicionAgentePatrullero = null;
 		Interseccion posicionIncidente = null;
 
-		Patrullero agent = new Patrullero(mapaAgenteSinObstaculos, posicionAgente, posicionIncidente);
+		Patrullero agent = new Patrullero(mapaPatrullero, posicionAgentePatrullero, posicionIncidente);
 
-		AmbienteCiudad environment = new AmbienteCiudad(mapa, posicionAgente);
+		AmbienteCiudad environment = new AmbienteCiudad(mapaAmbiente, posicionAgenteAmbiente);
 
 		SearchBasedAgentSimulator simulator =
 				new SearchBasedAgentSimulator(environment, agent);
