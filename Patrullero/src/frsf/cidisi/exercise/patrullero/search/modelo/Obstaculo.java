@@ -16,6 +16,9 @@ public abstract class Obstaculo implements Cloneable {
 		this.tiempoFin = tiempoFin;
 		this.visibilidad = visibilidad;
 		this.lugar = lugar;
+		if(lugar != null){
+			lugar.getObstaculos().add(this);
+		}
 	}
 
 	public NombreObstaculo getNombre() {
