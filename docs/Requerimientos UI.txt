@@ -1,0 +1,12 @@
+ABM mapa:
+crear/eliminar/mover interseccion
+crear/eliminar arista
+crear/eliminar calle (no gráfico)
+guardar/cargar mapa en/de archivo JSON
+
+ABM caso de prueba:
+agregar/quitar obstáculo a intersección
+agregar/quitar obstáculo a arista
+agregar incidente
+agregar posición inicial agente
+guardar/cargar caso de prueba en/de archivo JSON
