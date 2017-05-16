@@ -11,7 +11,7 @@ public class Interseccion extends Lugar {
 	private List<Arista> entrantes = new ArrayList<>();
 	private List<Arista> salientes = new ArrayList<>();
 
-	public Interseccion(Long id, Long peso) {
+	public Interseccion(Long id, Integer peso) {
 		super(id, peso);
 	}
 

@@ -7,7 +7,7 @@ public class ObstaculoTotal extends Obstaculo {
 	}
 
 	@Override
-	public Long getPeso(Long peso) {
+	public Integer getPeso(Integer peso) {
 		if(peso > 0){
 			return -1 * peso;
 		}

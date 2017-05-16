@@ -100,7 +100,7 @@ public abstract class Obstaculo implements Cloneable {
 		return "Nombre: " + this.getNombre() + ". Lugar: " + this.getLugar() + ".";
 	}
 
-	public abstract Long getPeso(Long peso);
+	public abstract Integer getPeso(Integer peso);
 
 	@Override
 	public abstract Obstaculo clone();

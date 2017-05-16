@@ -5,8 +5,11 @@ public class Arista extends Lugar {
 	private Interseccion destino;
 	private Calle calle;
 
-	public Arista(Long id, Long peso, Interseccion origen, Interseccion destino, Calle calle) {
+	public Arista(Long id, Integer peso, Interseccion origen, Interseccion destino, Calle calle) throws Exception {
 		super(id, peso);
+		if(origen.getSalientes().stream().anyMatch(a -> a.getDestino().equals(destino))){
+			throw new Exception();
+		}
 		this.origen = origen;
 		if(origen != null){
 			origen.getSalientes().add(this);

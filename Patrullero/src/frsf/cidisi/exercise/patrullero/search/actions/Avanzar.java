@@ -79,19 +79,19 @@ public class Avanzar extends SearchAction {
 		return null;
 	}
 
-	private Long getCostAvanzar(SearchBasedAgentState sbs) {
+	private Integer getCostAvanzar(SearchBasedAgentState sbs) {
 		EstadoPatrullero estadoPatrullero = ((EstadoPatrullero) sbs);
 		Interseccion posicion = estadoPatrullero.getPosicion();
 		Arista salida = posicion.getSalientes().get(estadoPatrullero.getOrientacion().nextIndex());
 		return getCosto(salida.getDestino(), salida);
 	}
 
-	private Long getCosto(Interseccion interseccion, Arista arista) {
-		Long pesoArista = arista.getPeso();
+	private Integer getCosto(Interseccion interseccion, Arista arista) {
+		Integer pesoArista = arista.getPeso();
 		for(Obstaculo obs: arista.getObstaculos()){
 			pesoArista = obs.getPeso(pesoArista);
 		}
-		Long pesoInterseccion = interseccion.getPeso();
+		Integer pesoInterseccion = interseccion.getPeso();
 		for(Obstaculo obs: arista.getDestino().getObstaculos()){
 			pesoInterseccion = obs.getPeso(pesoInterseccion);
 		}

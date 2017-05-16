@@ -13,10 +13,10 @@ public class PatrulleroMain {
 		//Crear mapa y posicion agente e incidente
 		//Mapa ambiente
 		Mapa mapaAmbiente = new Mapa();
-		Interseccion i1 = new Interseccion(1L, 1L);
-		Interseccion i2 = new Interseccion(2L, 1L);
-		Interseccion i3 = new Interseccion(3L, 1L);
-		Interseccion i4 = new Interseccion(4L, 1L);
+		Interseccion i1 = new Interseccion(1L, 1);
+		Interseccion i2 = new Interseccion(2L, 1);
+		Interseccion i3 = new Interseccion(3L, 1);
+		Interseccion i4 = new Interseccion(4L, 1);
 		mapaAmbiente.getEsquinas().add(i1);
 		mapaAmbiente.getEsquinas().add(i2);
 		mapaAmbiente.getEsquinas().add(i3);
@@ -29,19 +29,22 @@ public class PatrulleroMain {
 		mapaAmbiente.getCalles().add(c2);
 		mapaAmbiente.getCalles().add(c3);
 		mapaAmbiente.getCalles().add(c4);
-		new Arista(1L, 10L, i1, i2, c1);
-		new Arista(2L, 10L, i2, i3, c2);
-		new Arista(3L, 10L, i3, i4, c3);
-		new Arista(4L, 10L, i4, i1, c4);
+		try{
+			new Arista(1L, 10, i1, i2, c1);
+			new Arista(2L, 10, i2, i3, c2);
+			new Arista(3L, 10, i3, i4, c3);
+			new Arista(4L, 10, i4, i1, c4);
+		} catch(Exception e){
+		}
 
 		Interseccion posicionAgenteAmbiente = i1;
 
 		//Mapa patrullero
 		Mapa mapaPatrullero = new Mapa();
-		i1 = new Interseccion(1L, 1L);
-		i2 = new Interseccion(2L, 1L);
-		i3 = new Interseccion(3L, 1L);
-		i4 = new Interseccion(4L, 1L);
+		i1 = new Interseccion(1L, 1);
+		i2 = new Interseccion(2L, 1);
+		i3 = new Interseccion(3L, 1);
+		i4 = new Interseccion(4L, 1);
 		mapaPatrullero.getEsquinas().add(i1);
 		mapaPatrullero.getEsquinas().add(i2);
 		mapaPatrullero.getEsquinas().add(i3);
@@ -54,10 +57,13 @@ public class PatrulleroMain {
 		mapaPatrullero.getCalles().add(c2);
 		mapaPatrullero.getCalles().add(c3);
 		mapaPatrullero.getCalles().add(c4);
-		new Arista(1L, 10L, i1, i2, c1);
-		new Arista(2L, 10L, i2, i3, c2);
-		new Arista(3L, 10L, i3, i4, c3);
-		new Arista(4L, 10L, i4, i1, c4);
+		try{
+			new Arista(1L, 10, i1, i2, c1);
+			new Arista(2L, 10, i2, i3, c2);
+			new Arista(3L, 10, i3, i4, c3);
+			new Arista(4L, 10, i4, i1, c4);
+		} catch(Exception e){
+		}
 
 		Interseccion posicionAgentePatrullero = i1;
 		Interseccion posicionIncidente = i4;

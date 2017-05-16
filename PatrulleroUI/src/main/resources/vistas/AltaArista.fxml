@@ -5,21 +5,34 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="350.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaAristaController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+   </rowConstraints>
    <children>
+      <Button mnemonicParsing="false" onAction="#guardar" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+      <Spinner fx:id="spPeso" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cbCalle" editable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ComboBox fx:id="cbDestino" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ComboBox fx:id="cbOrigen" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" />
       <Label text="Origen" />
-      <ComboBox prefWidth="150.0" />
-      <Label text="Destino" />
-      <ComboBox prefWidth="150.0" />
-      <Label text="Calle" />
-      <ComboBox editable="true" prefWidth="150.0" />
-      <Label text="Peso" />
-      <Spinner editable="true" />
-      <Button mnemonicParsing="false" text="Guardar" />
+      <Label text="Destino" GridPane.rowIndex="1" />
+      <Label text="Calle" GridPane.rowIndex="2" />
+      <Label text="Peso" GridPane.rowIndex="3" />
    </children>
    <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
-</VBox>
+</GridPane>

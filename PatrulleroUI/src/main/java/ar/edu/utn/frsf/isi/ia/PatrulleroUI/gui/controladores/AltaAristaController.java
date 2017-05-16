@@ -1,0 +1,128 @@
+package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CalleGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
+import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
+import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.IntegerStringConverter;
+
+public class AltaAristaController extends ControladorDialogo {
+
+	public static final String URL_VISTA = "vistas/AltaArista.fxml";
+
+	@FXML
+	private ComboBox<InterseccionGUI> cbOrigen;
+
+	@FXML
+	private ComboBox<InterseccionGUI> cbDestino;
+
+	@FXML
+	private ComboBox<Calle> cbCalle;
+
+	@FXML
+	private Spinner<Integer> spPeso;
+
+	private AristaGUI aristaGUI;
+
+	@FXML
+	private void guardar() {
+		InterseccionGUI origen = cbOrigen.getValue();
+		InterseccionGUI destino = cbDestino.getValue();
+		String calleStr = cbCalle.getEditor().getText();
+
+		Optional<Calle> a = cbCalle.getItems().stream().filter(c -> c.getNombre().equals(calleStr)).findFirst();
+		Calle calle;
+		if(a.isPresent()){
+			calle = a.get();
+		}
+		else{
+			calle = new Calle(++CalleGUI.ultimoIdAsignado, calleStr);
+		}
+
+		if(origen == null || destino == null || calle == null || origen.getInterseccion().equals(destino.getInterseccion())){
+			return;
+		}
+		Arista arista;
+		try{
+			arista = new Arista(++AristaGUI.ultimoIdAsignado, spPeso.getValue(), origen.getInterseccion(), destino.getInterseccion(), calle);
+		} catch(Exception e){
+			return;
+		}
+		aristaGUI = new AristaGUI(arista, origen, destino);
+
+		salir();
+	}
+
+	@Override
+	protected void inicializar() {
+		stage.setTitle("Nueva arista");
+		stage.setResizable(false);
+
+		spPeso.getEditor().setTextFormatter(new TextFormatter<>(
+				new IntegerStringConverter(), 0,
+				c -> {
+					if(c.isContentChange()){
+						Integer numeroIngresado = null;
+						try{
+							numeroIngresado = new Integer(c.getControlNewText());
+						} catch(Exception e){
+							//No ingreso un entero;
+						}
+						if(numeroIngresado == null){
+							return null;
+						}
+					}
+					return c;
+				}));
+		spPeso.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000, 5));
+		spPeso.focusedProperty().addListener((obs, oldV, newV) -> {
+			spPeso.increment(0);
+		});
+
+		cbOrigen.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+			if(oldV != null){
+				cbDestino.getItems().add(oldV);
+			}
+			if(newV != null){
+				cbDestino.getItems().remove(newV);
+			}
+		});
+		cbDestino.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+			if(oldV != null){
+				cbOrigen.getItems().add(oldV);
+			}
+			if(newV != null){
+				cbOrigen.getItems().remove(newV);
+			}
+		});
+	}
+
+	public void inicializarCon(List<InterseccionGUI> intersecciones, Collection<Calle> calles) {
+		cbOrigen.getItems().addAll(intersecciones);
+		cbDestino.getItems().addAll(intersecciones);
+		cbCalle.getItems().addAll(calles);
+	}
+
+	public void setOrigen(InterseccionGUI origen) {
+		Platform.runLater(() -> {
+			cbOrigen.setDisable(true);
+			cbOrigen.getSelectionModel().select(origen);
+		});
+	}
+
+	public AristaGUI getResultado() {
+		return aristaGUI;
+	}
+}

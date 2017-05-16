@@ -9,6 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui;
 import java.util.List;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaMapaController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -41,7 +42,7 @@ public class Main extends Application {
 
 		//Setear icono y titulo de aplicacion
 		primaryStage.getIcons().add(new IconoAplicacion());
-		primaryStage.setTitle("Aplicacion Romano");
+		primaryStage.setTitle("Inteligencia Artificial - Simulación Patrullero");
 
 		//Setear acción de cierre
 		primaryStage.setOnCloseRequest((e) -> {
@@ -54,7 +55,7 @@ public class Main extends Application {
 	}
 
 	private void iniciar() {
-		apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(primaryStage, "");
+		apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(primaryStage, AltaMapaController.URL_VISTA);
 	}
 
 	private void verParametros(List<String> raw) {

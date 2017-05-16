@@ -5,19 +5,19 @@ import java.util.List;
 
 public abstract class Lugar {
 	private Long id;
-	private Long peso;
+	private Integer peso;
 	private List<Obstaculo> obstaculos = new ArrayList<>();
 
-	public Lugar(Long id, Long peso) {
+	public Lugar(Long id, Integer peso) {
 		this.id = id;
 		this.peso = peso;
 	}
 
-	public Long getPeso() {
+	public Integer getPeso() {
 		return peso;
 	}
 
-	public void setPeso(Long peso) {
+	public void setPeso(Integer peso) {
 		this.peso = peso;
 	}
 
