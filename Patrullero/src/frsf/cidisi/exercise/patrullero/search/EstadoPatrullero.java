@@ -54,6 +54,8 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	public EstadoPatrullero clone() {
 		EstadoPatrullero estadoPatrullero = new EstadoPatrullero(mapa, posicion, incidente);
 		estadoPatrullero.orientacion = estadoPatrullero.posicion.getSalientes().listIterator(orientacion.nextIndex());
+		estadoPatrullero.ultimaCalleRecorrida = this.ultimaCalleRecorrida;
+		estadoPatrullero.obstaculos = this.obstaculos;
 		return estadoPatrullero;
 	}
 
