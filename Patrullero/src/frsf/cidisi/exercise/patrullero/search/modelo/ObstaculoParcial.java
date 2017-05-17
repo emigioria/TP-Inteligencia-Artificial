@@ -10,7 +10,9 @@ public class ObstaculoParcial extends Obstaculo {
 
 	@Override
 	public ObstaculoParcial clone() {
-		return new ObstaculoParcial(getId(), getNombre(), getTiempoInicio(), getTiempoFin(), getVisibilidad(), getLugar(), retardoMultiplicativo);
+		ObstaculoParcial clon = new ObstaculoParcial(getId(), getNombre(), getTiempoInicio(), getTiempoFin(), getVisibilidad(), null, retardoMultiplicativo);
+		clon.setLugar(this.getLugar());
+		return clon;
 	}
 
 	@Override

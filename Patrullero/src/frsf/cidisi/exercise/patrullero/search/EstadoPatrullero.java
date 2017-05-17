@@ -56,6 +56,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 		estadoPatrullero.orientacion = estadoPatrullero.posicion.getSalientes().listIterator(orientacion.nextIndex());
 		estadoPatrullero.ultimaCalleRecorrida = this.ultimaCalleRecorrida;
 		estadoPatrullero.obstaculos = this.obstaculos;
+		estadoPatrullero.interseccionesVisitadas.addAll(interseccionesVisitadas);
 		return estadoPatrullero;
 	}
 

@@ -16,7 +16,9 @@ public class ObstaculoTotal extends Obstaculo {
 
 	@Override
 	public ObstaculoTotal clone() {
-		return new ObstaculoTotal(getId(), getNombre(), getTiempoInicio(), getTiempoFin(), getVisibilidad(), getLugar());
+		ObstaculoTotal clon = new ObstaculoTotal(getId(), getNombre(), getTiempoInicio(), getTiempoFin(), getVisibilidad(), getLugar());
+		clon.setLugar(this.getLugar());
+		return clon;
 	}
 
 }
