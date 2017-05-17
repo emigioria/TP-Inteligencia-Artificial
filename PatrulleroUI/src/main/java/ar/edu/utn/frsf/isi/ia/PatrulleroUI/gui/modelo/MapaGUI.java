@@ -18,6 +18,7 @@ public class MapaGUI {
 
 	public MapaGUI() {
 		super();
+		mapaPanel.getStyleClass().add("mapaPanel");
 	}
 
 	public List<InterseccionGUI> getIntersecciones() {
