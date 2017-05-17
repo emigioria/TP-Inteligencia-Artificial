@@ -1,7 +1,10 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
+import java.io.File;
+
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ManejadorArchivos;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.MouseGesturesAdder;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
@@ -27,7 +30,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	public static final String URL_VISTA = "vistas/AltaMapa.fxml";
 
-	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos(stage);
+	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
 	@FXML
 	private ScrollPane scrollMapaPanel;
@@ -216,7 +219,8 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private void cargarMapa() {
 		//Cargar mapa
-		this.mapa = manejadorArchivos.cargarMapa();
+		File archivoMapa = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
+		this.mapa = manejadorArchivos.cargarMapa(archivoMapa);
 		scrollMapaPanel.setContent(mapa.getNode());
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
@@ -228,6 +232,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	@FXML
 	private void guardarMapa() {
-		manejadorArchivos.guardarMapa(mapa);
+		File archivoMapa = presentadorVentanas.solicitarArchivoGuardado(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
+		manejadorArchivos.guardarMapa(mapa, archivoMapa);
 	}
 }

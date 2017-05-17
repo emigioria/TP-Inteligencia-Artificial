@@ -6,6 +6,9 @@
  */
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas;
 
+import java.io.File;
+
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -47,5 +50,21 @@ public class PresentadorVentanas {
 
 	public void presentarToast(String mensaje, Window padre) {
 		presentarToast(mensaje, padre, 20);
+	}
+
+	public File solicitarArchivoCarga(FileChooser archivoSeleccionado, Stage stage) {
+		File retorno = archivoSeleccionado.showOpenDialog(stage);
+		if(retorno != null){
+			retorno = new File(retorno.toString());
+		}
+		return retorno;
+	}
+
+	public File solicitarArchivoGuardado(FileChooser archivoSeleccionado, Stage stage) {
+		File retorno = archivoSeleccionado.showSaveDialog(stage);
+		if(retorno != null){
+			retorno = new File(retorno.toString());
+		}
+		return retorno;
 	}
 }
