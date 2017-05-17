@@ -6,7 +6,6 @@
  */
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui;
 
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ConversorTiempos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.FormateadorString;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Platform;
@@ -16,8 +15,6 @@ import javafx.stage.Stage;
 public abstract class ControladorJavaFX {
 
 	protected Stage stage;
-
-	protected ConversorTiempos conversorTiempos = new ConversorTiempos();
 
 	protected FormateadorString formateadorString = new FormateadorString();
 

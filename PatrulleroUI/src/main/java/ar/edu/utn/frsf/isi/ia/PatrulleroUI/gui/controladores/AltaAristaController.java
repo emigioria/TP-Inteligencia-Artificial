@@ -49,7 +49,7 @@ public class AltaAristaController extends ControladorDialogo {
 			calle = a.get();
 		}
 		else{
-			calle = new Calle(++MapaGUI.ultimoIdAsignadoCalle, calleStr);
+			calle = new Calle(++MapaGUI.ultimoIdAsignadoCalle, formateadorString.nombrePropio(calleStr));
 		}
 
 		if(origen == null || destino == null || calle == null || origen.getInterseccion().equals(destino.getInterseccion())){
