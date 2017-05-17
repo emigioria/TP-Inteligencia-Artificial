@@ -5,7 +5,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -146,14 +145,6 @@ public class AristaGUI {
 
 	public void setDestino(InterseccionGUI destino) {
 		this.destino = destino;
-	}
-
-	public void desactivarArista(Pane mapaPanel) {
-		this.getArista().getOrigen().getSalientes().remove(this.getArista());
-		this.getArista().getDestino().getEntrantes().remove(this.getArista());
-		this.getOrigen().getSalientes().remove(this);
-		this.getDestino().getEntrantes().remove(this);
-		mapaPanel.getChildren().remove(this.getNode());
 	}
 
 	@Override

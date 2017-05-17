@@ -1,13 +1,11 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CalleGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
 import javafx.application.Platform;
@@ -42,13 +40,16 @@ public class AltaAristaController extends ControladorDialogo {
 		InterseccionGUI destino = cbDestino.getValue();
 		String calleStr = cbCalle.getEditor().getText();
 
+		if(calleStr.isEmpty()){
+			return;
+		}
 		Optional<Calle> a = cbCalle.getItems().stream().filter(c -> c.getNombre().equals(calleStr)).findFirst();
 		Calle calle;
 		if(a.isPresent()){
 			calle = a.get();
 		}
 		else{
-			calle = new Calle(++CalleGUI.ultimoIdAsignado, calleStr);
+			calle = new Calle(++MapaGUI.ultimoIdAsignadoCalle, calleStr);
 		}
 
 		if(origen == null || destino == null || calle == null || origen.getInterseccion().equals(destino.getInterseccion())){
@@ -109,10 +110,10 @@ public class AltaAristaController extends ControladorDialogo {
 		});
 	}
 
-	public void inicializarCon(List<InterseccionGUI> intersecciones, Collection<Calle> calles) {
-		cbOrigen.getItems().addAll(intersecciones);
-		cbDestino.getItems().addAll(intersecciones);
-		cbCalle.getItems().addAll(calles);
+	public void inicializarCon(MapaGUI mapa) {
+		cbOrigen.getItems().addAll(mapa.getIntersecciones());
+		cbDestino.getItems().addAll(mapa.getIntersecciones());
+		cbCalle.getItems().addAll(mapa.getMapa().getCalles());
 	}
 
 	public void setOrigen(InterseccionGUI origen) {
