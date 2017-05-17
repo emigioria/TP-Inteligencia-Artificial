@@ -10,6 +10,7 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.MouseGesturesAdder;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CalleGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
@@ -33,13 +34,13 @@ public class AltaMapaController extends ControladorPatrullero {
 	public static final String URL_VISTA = "vistas/AltaMapa.fxml";
 
 	@FXML
-	private Pane root;
-
-	@FXML
 	private Pane mapaPanel;
 
 	@FXML
 	private ScrollPane scrollMapaPanel;
+
+	@FXML
+	private GridPane panelDerecho;
 
 	@FXML
 	private Label InterseccionLabel;
@@ -59,9 +60,6 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private TableColumn<AristaGUI, Number> columnaPeso;
 
-	@FXML
-	private GridPane panelDerecho;
-
 	private List<InterseccionGUI> intersecciones = new ArrayList<>();
 
 	private MouseGesturesAdder mga;
@@ -72,7 +70,17 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	@FXML
 	private void nuevoMapa() {
+		mapaPanel.getChildren().clear();
+		mapaPanel.setPrefHeight(0);
+		mapaPanel.setPrefWidth(0);
+		panelDerecho.setVisible(false);
+		intersecciones.clear();
+		interseccionActual = null;
+		calles.clear();
 
+		InterseccionGUI.ultimoIdAsignado = 0L;
+		AristaGUI.ultimoIdAsignado = 0L;
+		CalleGUI.ultimoIdAsignado = 0L;
 	}
 
 	@FXML
