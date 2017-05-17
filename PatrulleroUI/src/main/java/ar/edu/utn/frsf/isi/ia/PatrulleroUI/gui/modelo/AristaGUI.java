@@ -12,19 +12,19 @@ import javafx.scene.shape.Polygon;
 
 public class AristaGUI {
 
+	public static Long ultimoIdAsignado = 0L;
+
 	private static final Double ANCHO_FLECHA = 10.0;
 
 	private static final Double ALTO_FLECHA = 5.0;
 
-	public static Long ultimoIdAsignado = 0L;
-
 	private Arista arista;
+
+	private Group node;
 
 	private InterseccionGUI origen;
 
 	private InterseccionGUI destino;
-
-	private Group node;
 
 	private ObjectProperty<Color> colorArista = new SimpleObjectProperty<>(Color.BLACK);
 

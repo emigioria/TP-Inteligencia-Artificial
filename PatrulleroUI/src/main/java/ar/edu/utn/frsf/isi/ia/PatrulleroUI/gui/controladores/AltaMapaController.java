@@ -12,6 +12,7 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPerso
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -86,7 +87,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	@FXML
 	private void nuevaInterseccion() {
-		InterseccionGUI nuevaInterseccion = new InterseccionGUI();
+		InterseccionGUI nuevaInterseccion = new InterseccionGUI(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1));
 		mapaPanel.getChildren().add(nuevaInterseccion.getNode());
 		mga.makeDraggable(nuevaInterseccion.getNode());
 		intersecciones.add(nuevaInterseccion);

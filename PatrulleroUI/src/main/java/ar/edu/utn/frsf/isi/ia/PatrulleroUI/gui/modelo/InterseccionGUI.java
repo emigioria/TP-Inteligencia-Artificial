@@ -18,13 +18,9 @@ public class InterseccionGUI {
 
 	public static final Integer RADIO = 20;
 
-	private Circle circulo;
-
-	private Text textoId;
-
-	private StackPaneWithTag<InterseccionGUI> layout;
-
 	private Interseccion interseccion;
+
+	private StackPaneWithTag<InterseccionGUI> node;
 
 	private List<AristaGUI> entrantes = new ArrayList<>();
 
@@ -34,27 +30,30 @@ public class InterseccionGUI {
 
 	private ObjectProperty<Color> colorInterseccion = new SimpleObjectProperty<>(Color.CYAN);
 
-	public InterseccionGUI() {
-		Long id = ++ultimoIdAsignado;
+	public InterseccionGUI(Interseccion interseccion) {
+		this.interseccion = interseccion;
 
-		interseccion = new Interseccion(id, 1);
+		node = new StackPaneWithTag<>();
+		node.setTag(this);
 
-		textoId = new Text();
-		textoId.setText(id.toString());
+		dibujarInterseccion();
+	}
+
+	private void dibujarInterseccion() {
+		Text textoId = new Text();
+		textoId.setText(interseccion.getId().toString());
 
 		textoId.fillProperty().bind(colorTexto);
 
-		circulo = new Circle();
+		Circle circulo = new Circle();
 		circulo.fillProperty().bind(colorInterseccion);
 		circulo.setRadius(RADIO);
 
-		layout = new StackPaneWithTag<>();
-		layout.getChildren().addAll(circulo, textoId);
-		layout.setTag(this);
+		node.getChildren().addAll(circulo, textoId);
 	}
 
 	public Node getNode() {
-		return layout;
+		return node;
 	}
 
 	public Interseccion getInterseccion() {
