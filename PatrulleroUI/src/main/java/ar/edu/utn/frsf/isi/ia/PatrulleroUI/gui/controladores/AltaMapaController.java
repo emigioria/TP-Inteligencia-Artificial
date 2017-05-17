@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.MouseGesturesAdder;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
@@ -25,6 +26,8 @@ import javafx.util.converter.IntegerStringConverter;
 public class AltaMapaController extends ControladorPatrullero {
 
 	public static final String URL_VISTA = "vistas/AltaMapa.fxml";
+
+	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos(stage);
 
 	@FXML
 	private ScrollPane scrollMapaPanel;
@@ -69,8 +72,7 @@ public class AltaMapaController extends ControladorPatrullero {
 			return;
 		}
 		mapa.quitarInterseccionGUI(interseccionActual);
-		interseccionActual = null;
-		panelDerecho.setVisible(false);
+		sacarPanelDerecho();
 	}
 
 	@FXML
@@ -110,7 +112,7 @@ public class AltaMapaController extends ControladorPatrullero {
 	@Override
 	protected void inicializar() {
 		scrollMapaPanel.setOnMousePressed(t -> {
-			panelDerecho.setVisible(false);
+			sacarPanelDerecho();
 		});
 
 		spPeso.getEditor().setTextFormatter(new TextFormatter<>(
@@ -173,6 +175,11 @@ public class AltaMapaController extends ControladorPatrullero {
 		tablaAristas.getItems().addAll(interseccion.getSalientes());
 	}
 
+	private void sacarPanelDerecho() {
+		interseccionActual = null;
+		panelDerecho.setVisible(false);
+	}
+
 	@FXML
 	private void nuevoMapa() {
 		//Crear nuevo mapa
@@ -180,6 +187,18 @@ public class AltaMapaController extends ControladorPatrullero {
 		scrollMapaPanel.setContent(mapa.getNode());
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
+		crearMouseGesturesAdder();
+
+		//Sacar panel derecho
+		sacarPanelDerecho();
+
+		//Resetear IDs
+		InterseccionGUI.ultimoIdAsignado = 0L;
+		AristaGUI.ultimoIdAsignado = 0L;
+		MapaGUI.ultimoIdAsignadoCalle = 0L;
+	}
+
+	private void crearMouseGesturesAdder() {
 		mga = new MouseGesturesAdder(mapa.getNode());
 		mga.setOnMousePressed(t -> {
 			if(t.getSource() instanceof StackPaneWithTag){
@@ -192,24 +211,23 @@ public class AltaMapaController extends ControladorPatrullero {
 				t.consume();
 			}
 		});
-
-		//Sacar panel derecho
-		interseccionActual = null;
-		panelDerecho.setVisible(false);
-
-		//Resetear IDs
-		InterseccionGUI.ultimoIdAsignado = 0L;
-		AristaGUI.ultimoIdAsignado = 0L;
-		MapaGUI.ultimoIdAsignadoCalle = 0L;
 	}
 
 	@FXML
 	private void cargarMapa() {
+		//Cargar mapa
+		this.mapa = manejadorArchivos.cargarMapa();
+		scrollMapaPanel.setContent(mapa.getNode());
 
+		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
+		crearMouseGesturesAdder();
+
+		//Sacar panel derecho
+		sacarPanelDerecho();
 	}
 
 	@FXML
 	private void guardarMapa() {
-
+		manejadorArchivos.guardarMapa(mapa);
 	}
 }
