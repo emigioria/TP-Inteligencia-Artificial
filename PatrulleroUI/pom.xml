@@ -49,8 +49,8 @@
 						<fxml>XML_STYLE</fxml>
 					</mapping>
 					<properties>
-						<owner>Emiliano Gioria - Andres Leonel Rico</owner>
-						<inceptionYear>2016</inceptionYear>
+						<owner>Emiliano Gioria - Andres Leonel Rico - Esteban Javier Rebechi</owner>
+						<inceptionYear>2017</inceptionYear>
 					</properties>
 					<basedir>src</basedir>
 				</configuration>
