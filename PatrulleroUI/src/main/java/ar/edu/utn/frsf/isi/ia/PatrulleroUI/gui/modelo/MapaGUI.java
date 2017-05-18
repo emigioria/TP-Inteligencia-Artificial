@@ -89,6 +89,7 @@ public class MapaGUI {
 	}
 
 	public void desactivarArista(AristaGUI arista) {
+		arista.getArista().getCalle().getTramos().remove(arista.getArista());
 		arista.getArista().getOrigen().getSalientes().remove(arista.getArista());
 		arista.getArista().getDestino().getEntrantes().remove(arista.getArista());
 		arista.getOrigen().getSalientes().remove(this);

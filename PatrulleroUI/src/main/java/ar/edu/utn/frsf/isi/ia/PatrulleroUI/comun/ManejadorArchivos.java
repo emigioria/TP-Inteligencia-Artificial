@@ -21,12 +21,19 @@ import java.nio.charset.StandardCharsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.AristaGsonAdapter;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.CalleGsonAdapter;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.InterseccionGsonAdapter;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.MapaGsonAdapter;
+import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
+import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 
 public class ManejadorArchivos {
 
 	public Mapa cargarMapa(File archivoMapa) throws IOException {
-		Gson gson = new Gson();
+		Gson gson = crearGson();
 		InputStream is = new FileInputStream(archivoMapa);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		Mapa retorno = gson.fromJson(bufferedReader, Mapa.class);
@@ -35,12 +42,21 @@ public class ManejadorArchivos {
 		return retorno;
 	}
 
+	private Gson crearGson() {
+		return new GsonBuilder().setPrettyPrinting()
+				.registerTypeAdapter(Mapa.class, new MapaGsonAdapter())
+				.registerTypeAdapter(Interseccion.class, new InterseccionGsonAdapter())
+				.registerTypeAdapter(Calle.class, new CalleGsonAdapter())
+				.registerTypeAdapter(Arista.class, new AristaGsonAdapter())
+				.create();
+	}
+
 	public void guardarMapa(Mapa mapa, File archivoMapa) throws IOException {
 		if(archivoMapa.exists()){
 			archivoMapa.delete();
 		}
 		archivoMapa.createNewFile();
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = crearGson();
 		OutputStream os = new FileOutputStream(archivoMapa);
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 		bufferedWriter.write(gson.toJson(mapa));
