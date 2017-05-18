@@ -55,7 +55,7 @@ public class AltaAristaController extends ControladorDialogo {
 			calle = a.get();
 		}
 		else{
-			calle = new Calle(++MapaGUI.ultimoIdAsignadoCalle, formateadorString.nombrePropio(calleStr));
+			calle = MapaGUI.crearCalle(formateadorString.nombrePropio(calleStr));
 		}
 
 		if(origen == null || destino == null || calle == null || origen.getInterseccion().equals(destino.getInterseccion())){
@@ -63,7 +63,7 @@ public class AltaAristaController extends ControladorDialogo {
 		}
 		Arista arista;
 		try{
-			arista = new Arista(++AristaGUI.ultimoIdAsignado, spPeso.getValue(), origen.getInterseccion(), destino.getInterseccion(), calle);
+			arista = AristaGUI.crearArista(spPeso.getValue(), origen.getInterseccion(), destino.getInterseccion(), calle);
 		} catch(Exception e){
 			return;
 		}

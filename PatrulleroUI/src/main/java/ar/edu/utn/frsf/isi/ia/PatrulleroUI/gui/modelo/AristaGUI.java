@@ -6,7 +6,11 @@
  */
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
+import java.util.List;
+
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
+import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
@@ -17,7 +21,7 @@ import javafx.scene.shape.Polygon;
 
 public class AristaGUI {
 
-	public static Long ultimoIdAsignado = 0L;
+	protected static Long ultimoIdAsignado = 0L;
 
 	private static final Double ANCHO_FLECHA = 10.0;
 
@@ -32,6 +36,14 @@ public class AristaGUI {
 	private InterseccionGUI destino;
 
 	private ObjectProperty<Color> colorArista = new SimpleObjectProperty<>(Color.BLACK);
+
+	public AristaGUI(Arista arista, List<InterseccionGUI> intersecciones) {
+		this(arista, findInterseccionGUI(arista.getOrigen(), intersecciones), findInterseccionGUI(arista.getDestino(), intersecciones));
+	}
+
+	private static InterseccionGUI findInterseccionGUI(Interseccion interseccion, List<InterseccionGUI> intersecciones) {
+		return intersecciones.stream().filter(i -> i.getInterseccion().equals(interseccion)).findFirst().get();
+	}
 
 	public AristaGUI(Arista arista, InterseccionGUI origen, InterseccionGUI destino) {
 		this.origen = origen;
@@ -156,5 +168,9 @@ public class AristaGUI {
 	@Override
 	public String toString() {
 		return arista.toString();
+	}
+
+	public static Arista crearArista(Integer peso, Interseccion origen, Interseccion destino, Calle calle) throws Exception {
+		return new Arista(++AristaGUI.ultimoIdAsignado, peso, origen, destino, calle);
 	}
 }

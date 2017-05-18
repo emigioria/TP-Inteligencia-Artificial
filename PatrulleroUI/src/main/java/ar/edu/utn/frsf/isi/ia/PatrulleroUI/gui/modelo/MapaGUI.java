@@ -8,13 +8,17 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
+import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import javafx.scene.layout.Pane;
 
 public class MapaGUI {
-	public static Long ultimoIdAsignadoCalle = 0L;
+
+	protected static Long ultimoIdAsignadoCalle = 0L;
 
 	private List<InterseccionGUI> intersecciones = new ArrayList<>();
 
@@ -25,6 +29,34 @@ public class MapaGUI {
 	public MapaGUI() {
 		super();
 		mapaPanel.getStyleClass().add("mapaPanel");
+		mapaPanel.prefHeightProperty().addListener((obs, oldV, newV) -> {
+			mapa.setAlto(newV.doubleValue());
+		});
+		mapaPanel.prefWidthProperty().addListener((obs, oldV, newV) -> {
+			mapa.setAncho(newV.doubleValue());
+		});
+
+		//Resetear IDs
+		InterseccionGUI.ultimoIdAsignado = 0L;
+		AristaGUI.ultimoIdAsignado = 0L;
+		MapaGUI.ultimoIdAsignadoCalle = 0L;
+	}
+
+	public MapaGUI(Mapa mapa) {
+		this();
+		this.mapa = mapa;
+		mapaPanel.setPrefHeight(mapa.getAlto());
+		mapaPanel.setPrefWidth(mapa.getAncho());
+		Stream<Interseccion> interseccionesStream = mapa.getEsquinas().stream();
+		interseccionesStream.forEach(i -> intersecciones.add(new InterseccionGUI(i)));
+		Stream<Calle> callesStream = mapa.getCalles().stream();
+		Stream<Arista> aristasStream = callesStream.map(c -> c.getTramos()).flatMap(List::stream);
+		aristasStream.forEach(a -> new AristaGUI(a, intersecciones));
+
+		//Setear IDs
+		InterseccionGUI.ultimoIdAsignado = interseccionesStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		AristaGUI.ultimoIdAsignado = aristasStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		MapaGUI.ultimoIdAsignadoCalle = callesStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
 	}
 
 	public List<InterseccionGUI> getIntersecciones() {
@@ -75,5 +107,9 @@ public class MapaGUI {
 
 	public Pane getNode() {
 		return mapaPanel;
+	}
+
+	public static Calle crearCalle(String nombrePropio) {
+		return new Calle(++MapaGUI.ultimoIdAsignadoCalle, nombrePropio);
 	}
 }

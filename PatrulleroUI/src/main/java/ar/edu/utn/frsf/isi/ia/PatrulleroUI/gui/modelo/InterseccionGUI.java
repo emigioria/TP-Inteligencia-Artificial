@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 
 public class InterseccionGUI {
 
-	public static Long ultimoIdAsignado = 0L;
+	protected static Long ultimoIdAsignado = 0L;
 
 	public static final Integer RADIO = 20;
 
@@ -35,6 +35,10 @@ public class InterseccionGUI {
 	private ObjectProperty<Color> colorTexto = new SimpleObjectProperty<>(Color.BLACK);
 
 	private ObjectProperty<Color> colorInterseccion = new SimpleObjectProperty<>(Color.CYAN);
+
+	public InterseccionGUI() {
+		this(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1));
+	}
 
 	public InterseccionGUI(Interseccion interseccion) {
 		this.interseccion = interseccion;
@@ -54,6 +58,16 @@ public class InterseccionGUI {
 		Circle circulo = new Circle();
 		circulo.fillProperty().bind(colorInterseccion);
 		circulo.setRadius(RADIO);
+
+		circulo.translateXProperty().addListener((obs, oldV, newV) -> {
+			interseccion.setCoordenadaX(newV.doubleValue());
+		});
+		circulo.setTranslateX(interseccion.getCoordenadaX());
+
+		circulo.translateYProperty().addListener((obs, oldV, newV) -> {
+			interseccion.setCoordenadaY(newV.doubleValue());
+		});
+		circulo.setTranslateY(interseccion.getCoordenadaY());
 
 		node.getChildren().addAll(circulo, textoId);
 	}

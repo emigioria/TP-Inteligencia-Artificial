@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Mapa {
+	private Double alto = 0.0;
+	private Double ancho = 0.0;
+
 	private List<Interseccion> esquinas = new ArrayList<>();
 	private List<Calle> calles = new ArrayList<>();
 
@@ -29,6 +32,22 @@ public class Mapa {
 
 	public void setCalles(List<Calle> calles) {
 		this.calles = calles;
+	}
+
+	public Double getAlto() {
+		return alto;
+	}
+
+	public void setAlto(Double alto) {
+		this.alto = alto;
+	}
+
+	public Double getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(Double ancho) {
+		this.ancho = ancho;
 	}
 
 	public Set<Obstaculo> getObstaculos() {

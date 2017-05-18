@@ -17,7 +17,6 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPerso
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
-import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -70,7 +69,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	@FXML
 	private void nuevaInterseccion() {
-		InterseccionGUI nuevaInterseccion = new InterseccionGUI(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1));
+		InterseccionGUI nuevaInterseccion = new InterseccionGUI();
 		mapa.agregarInterseccionGUI(nuevaInterseccion);
 		mga.makeDraggable(nuevaInterseccion.getNode());
 	}
@@ -200,11 +199,6 @@ public class AltaMapaController extends ControladorPatrullero {
 
 		//Sacar panel derecho
 		sacarPanelDerecho();
-
-		//Resetear IDs
-		InterseccionGUI.ultimoIdAsignado = 0L;
-		AristaGUI.ultimoIdAsignado = 0L;
-		MapaGUI.ultimoIdAsignadoCalle = 0L;
 	}
 
 	private void crearMouseGesturesAdder() {
@@ -226,7 +220,11 @@ public class AltaMapaController extends ControladorPatrullero {
 	private void cargarMapa() {
 		//Cargar mapa
 		File archivoMapa = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
-		this.mapa = manejadorArchivos.cargarMapa(archivoMapa);
+		try{
+			this.mapa = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
+		} catch(Exception e){
+			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+		}
 		scrollMapaPanel.setContent(mapa.getNode());
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
@@ -239,6 +237,10 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private void guardarMapa() {
 		File archivoMapa = presentadorVentanas.solicitarArchivoGuardado(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
-		manejadorArchivos.guardarMapa(mapa, archivoMapa);
+		try{
+			manejadorArchivos.guardarMapa(mapa.getMapa(), archivoMapa);
+		} catch(Exception e){
+			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+		}
 	}
 }

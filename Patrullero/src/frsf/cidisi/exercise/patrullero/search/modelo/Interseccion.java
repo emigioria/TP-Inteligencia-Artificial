@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Interseccion extends Lugar {
+	private Double coordenadaX = 0.0;
+
+	private Double coordenadaY = 0.0;
+
 	private List<Arista> entrantes = new ArrayList<>();
 	private List<Arista> salientes = new ArrayList<>();
 
@@ -29,6 +33,22 @@ public class Interseccion extends Lugar {
 
 	public void setSalientes(List<Arista> salientes) {
 		this.salientes = salientes;
+	}
+
+	public Double getCoordenadaX() {
+		return coordenadaX;
+	}
+
+	public void setCoordenadaX(Double coordenadaX) {
+		this.coordenadaX = coordenadaX;
+	}
+
+	public Double getCoordenadaY() {
+		return coordenadaY;
+	}
+
+	public void setCoordenadaY(Double coordenadaY) {
+		this.coordenadaY = coordenadaY;
 	}
 
 	@Override
