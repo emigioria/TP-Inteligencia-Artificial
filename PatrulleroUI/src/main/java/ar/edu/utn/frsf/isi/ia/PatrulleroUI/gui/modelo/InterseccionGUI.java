@@ -11,6 +11,7 @@ import java.util.List;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
@@ -22,7 +23,7 @@ public class InterseccionGUI {
 
 	protected static Long ultimoIdAsignado = 0L;
 
-	public static final Integer RADIO = 20;
+	public static final Double RADIO = 20.0;
 
 	private Interseccion interseccion;
 
@@ -37,7 +38,7 @@ public class InterseccionGUI {
 	private ObjectProperty<Color> colorInterseccion = new SimpleObjectProperty<>(Color.CYAN);
 
 	public InterseccionGUI() {
-		this(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1));
+		this(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1, RADIO, RADIO));
 	}
 
 	public InterseccionGUI(Interseccion interseccion) {
@@ -46,7 +47,21 @@ public class InterseccionGUI {
 		node = new StackPaneWithTag<>();
 		node.setTag(this);
 
+		node.translateXProperty().addListener((obs, oldV, newV) -> {
+			interseccion.setCoordenadaX(newV.doubleValue() + RADIO);
+		});
+
+		node.translateYProperty().addListener((obs, oldV, newV) -> {
+			interseccion.setCoordenadaY(newV.doubleValue() + RADIO);
+		});
+
 		dibujarInterseccion();
+
+		Platform.runLater(() -> {
+			//Solo se puede transformar despues de dibujarse
+			node.setTranslateX(interseccion.getCoordenadaX() - RADIO);
+			node.setTranslateY(interseccion.getCoordenadaY() - RADIO);
+		});
 	}
 
 	private void dibujarInterseccion() {
@@ -58,16 +73,6 @@ public class InterseccionGUI {
 		Circle circulo = new Circle();
 		circulo.fillProperty().bind(colorInterseccion);
 		circulo.setRadius(RADIO);
-
-		circulo.translateXProperty().addListener((obs, oldV, newV) -> {
-			interseccion.setCoordenadaX(newV.doubleValue());
-		});
-		circulo.setTranslateX(interseccion.getCoordenadaX());
-
-		circulo.translateYProperty().addListener((obs, oldV, newV) -> {
-			interseccion.setCoordenadaY(newV.doubleValue());
-		});
-		circulo.setTranslateY(interseccion.getCoordenadaY());
 
 		node.getChildren().addAll(circulo, textoId);
 	}

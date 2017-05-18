@@ -19,6 +19,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 
@@ -39,7 +40,7 @@ public class ManejadorArchivos {
 			archivoMapa.delete();
 		}
 		archivoMapa.createNewFile();
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		OutputStream os = new FileOutputStream(archivoMapa);
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 		bufferedWriter.write(gson.toJson(mapa));

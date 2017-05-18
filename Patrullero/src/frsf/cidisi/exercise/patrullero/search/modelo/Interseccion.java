@@ -8,15 +8,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Interseccion extends Lugar {
-	private Double coordenadaX = 0.0;
-
-	private Double coordenadaY = 0.0;
-
+	private Double coordenadaX;
+	private Double coordenadaY;
 	private List<Arista> entrantes = new ArrayList<>();
 	private List<Arista> salientes = new ArrayList<>();
 
-	public Interseccion(Long id, Integer peso) {
+	public Interseccion(Long id, Integer peso, Double coordenadaX, Double coordenadaY) {
 		super(id, peso);
+		this.coordenadaX = coordenadaX;
+		this.coordenadaY = coordenadaY;
 	}
 
 	public List<Arista> getEntrantes() {

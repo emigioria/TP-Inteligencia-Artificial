@@ -13,10 +13,10 @@ public class PatrulleroMain {
 		//Crear mapa y posicion agente e incidente
 		//Mapa ambiente
 		Mapa mapaAmbiente = new Mapa();
-		Interseccion i1 = new Interseccion(1L, 1);
-		Interseccion i2 = new Interseccion(2L, 1);
-		Interseccion i3 = new Interseccion(3L, 1);
-		Interseccion i4 = new Interseccion(4L, 1);
+		Interseccion i1 = new Interseccion(1L, 1, 0.0, 0.0);
+		Interseccion i2 = new Interseccion(2L, 1, 0.0, 0.0);
+		Interseccion i3 = new Interseccion(3L, 1, 0.0, 0.0);
+		Interseccion i4 = new Interseccion(4L, 1, 0.0, 0.0);
 		mapaAmbiente.getEsquinas().add(i1);
 		mapaAmbiente.getEsquinas().add(i2);
 		mapaAmbiente.getEsquinas().add(i3);
@@ -41,10 +41,10 @@ public class PatrulleroMain {
 
 		//Mapa patrullero
 		Mapa mapaPatrullero = new Mapa();
-		i1 = new Interseccion(1L, 1);
-		i2 = new Interseccion(2L, 1);
-		i3 = new Interseccion(3L, 1);
-		i4 = new Interseccion(4L, 1);
+		i1 = new Interseccion(1L, 1, 0.0, 0.0);
+		i2 = new Interseccion(2L, 1, 0.0, 0.0);
+		i3 = new Interseccion(3L, 1, 0.0, 0.0);
+		i4 = new Interseccion(4L, 1, 0.0, 0.0);
 		mapaPatrullero.getEsquinas().add(i1);
 		mapaPatrullero.getEsquinas().add(i2);
 		mapaPatrullero.getEsquinas().add(i3);

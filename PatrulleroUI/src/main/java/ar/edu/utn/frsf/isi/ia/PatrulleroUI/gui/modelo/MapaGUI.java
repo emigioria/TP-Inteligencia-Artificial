@@ -8,11 +8,9 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.NoSuchElementException;
 
-import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
-import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import javafx.scene.layout.Pane;
 
@@ -47,16 +45,29 @@ public class MapaGUI {
 		this.mapa = mapa;
 		mapaPanel.setPrefHeight(mapa.getAlto());
 		mapaPanel.setPrefWidth(mapa.getAncho());
-		Stream<Interseccion> interseccionesStream = mapa.getEsquinas().stream();
-		interseccionesStream.forEach(i -> intersecciones.add(new InterseccionGUI(i)));
-		Stream<Calle> callesStream = mapa.getCalles().stream();
-		Stream<Arista> aristasStream = callesStream.map(c -> c.getTramos()).flatMap(List::stream);
-		aristasStream.forEach(a -> new AristaGUI(a, intersecciones));
+		mapa.getEsquinas().stream().forEach(i -> {
+			InterseccionGUI nuevaInterseccion = new InterseccionGUI(i);
+			intersecciones.add(nuevaInterseccion);
+			mapaPanel.getChildren().add(nuevaInterseccion.getNode());
+		});
+		mapa.getCalles().stream().map(c -> c.getTramos()).flatMap(List::stream).forEach(a -> mapaPanel.getChildren().add(new AristaGUI(a, intersecciones).getNode()));
 
 		//Setear IDs
-		InterseccionGUI.ultimoIdAsignado = interseccionesStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
-		AristaGUI.ultimoIdAsignado = aristasStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
-		MapaGUI.ultimoIdAsignadoCalle = callesStream.max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		try{
+			InterseccionGUI.ultimoIdAsignado = mapa.getEsquinas().stream().max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		} catch(NoSuchElementException e){
+
+		}
+		try{
+			AristaGUI.ultimoIdAsignado = mapa.getCalles().stream().map(c -> c.getTramos()).flatMap(List::stream).max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		} catch(NoSuchElementException e){
+
+		}
+		try{
+			MapaGUI.ultimoIdAsignadoCalle = mapa.getCalles().stream().max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		} catch(NoSuchElementException e){
+
+		}
 	}
 
 	public List<InterseccionGUI> getIntersecciones() {

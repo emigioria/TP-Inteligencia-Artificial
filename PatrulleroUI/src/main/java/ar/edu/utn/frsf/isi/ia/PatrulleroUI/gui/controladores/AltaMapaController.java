@@ -220,6 +220,9 @@ public class AltaMapaController extends ControladorPatrullero {
 	private void cargarMapa() {
 		//Cargar mapa
 		File archivoMapa = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
+		if(archivoMapa == null){
+			return;
+		}
 		try{
 			this.mapa = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
 		} catch(Exception e){
@@ -229,6 +232,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
 		crearMouseGesturesAdder();
+		mapa.getIntersecciones().stream().forEach(i -> mga.makeDraggable(i.getNode()));
 
 		//Sacar panel derecho
 		sacarPanelDerecho();
@@ -237,6 +241,9 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private void guardarMapa() {
 		File archivoMapa = presentadorVentanas.solicitarArchivoGuardado(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
+		if(archivoMapa == null){
+			return;
+		}
 		try{
 			manejadorArchivos.guardarMapa(mapa.getMapa(), archivoMapa);
 		} catch(Exception e){
