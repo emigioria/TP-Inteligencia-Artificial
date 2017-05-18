@@ -1,7 +1,7 @@
 ABM mapa:
 crear/eliminar/mover interseccion
 crear/eliminar arista
-crear/eliminar calle (no gráfico)
+crear calle (no gráfico)
 guardar/cargar mapa en/de archivo JSON
 
 ABM caso de prueba:

@@ -47,6 +47,21 @@ public class Interseccion extends Lugar {
 		return coordenadaY;
 	}
 
+	@Override
+	public String toString() {
+		Set<String> nombresCalles = Stream.concat(
+				entrantes.stream().map(e -> e.toString()),
+				salientes.stream().map(s -> s.toString()))
+				.collect(Collectors.toSet());
+		StringBuffer str = new StringBuffer();
+		nombresCalles.stream().forEach(calle -> str.append(calle + " # "));
+		str.delete(str.length() - 3, str.length());
+		if(nombresCalles.size() == 1){
+			str.append(" (Callejón sin salida)");
+		}
+		return str.toString();
+	}
+
 	public void setCoordenadaY(Double coordenadaY) {
 		this.coordenadaY = coordenadaY;
 	}
@@ -66,18 +81,4 @@ public class Interseccion extends Lugar {
 		return lugaresVisibles;
 	}
 
-	@Override
-	public String toString() {
-		Set<String> nombresCalles = Stream.concat(
-				entrantes.stream().map(e -> e.toString()),
-				salientes.stream().map(s -> s.toString()))
-				.collect(Collectors.toSet());
-		StringBuffer str = new StringBuffer();
-		nombresCalles.stream().forEach(calle -> str.append(calle + " # "));
-		str.delete(str.length() - 3, str.length());
-		if(nombresCalles.size() == 1){
-			str.append(" (Callejón sin salida)");
-		}
-		return str.toString();
-	}
 }
