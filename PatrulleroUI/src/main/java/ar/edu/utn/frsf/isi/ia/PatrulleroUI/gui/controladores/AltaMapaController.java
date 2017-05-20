@@ -28,6 +28,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -67,11 +68,13 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	private InterseccionGUI interseccionActual;
 
+	private InterseccionGUI ultimaInterseccionAgregada;
+
 	@FXML
 	private void nuevaInterseccion() {
-		InterseccionGUI nuevaInterseccion = new InterseccionGUI();
-		mapa.agregarInterseccionGUI(nuevaInterseccion);
-		mga.makeDraggable(nuevaInterseccion.getNode());
+		ultimaInterseccionAgregada = new InterseccionGUI();
+		mapa.agregarInterseccionGUI(ultimaInterseccionAgregada);
+		mga.makeDraggable(ultimaInterseccionAgregada.getNode());
 	}
 
 	@FXML
@@ -212,6 +215,13 @@ public class AltaMapaController extends ControladorPatrullero {
 					actualizarPanelDerecho(interseccion);
 				}
 				t.consume();
+			}
+		});
+		mapa.getNode().setOnMousePressed(t -> {
+			if(t.getButton().compareTo(MouseButton.SECONDARY) == 0){
+				nuevaInterseccion();
+				ultimaInterseccionAgregada.getInterseccion().setCoordenadaX(t.getX());
+				ultimaInterseccionAgregada.getInterseccion().setCoordenadaY(t.getY());
 			}
 		});
 	}
