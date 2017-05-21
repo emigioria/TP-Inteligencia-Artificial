@@ -27,10 +27,20 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.InterseccionGsonAdapter;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gson.MapaGsonAdapter;
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 
 public class ManejadorArchivos {
+
+	private Gson crearGson() {
+		return new GsonBuilder().setPrettyPrinting()
+				.registerTypeAdapter(Mapa.class, new MapaGsonAdapter())
+				.registerTypeAdapter(Interseccion.class, new InterseccionGsonAdapter())
+				.registerTypeAdapter(Calle.class, new CalleGsonAdapter())
+				.registerTypeAdapter(Arista.class, new AristaGsonAdapter())
+				.create();
+	}
 
 	public Mapa cargarMapa(File archivoMapa) throws IOException {
 		Gson gson = crearGson();
@@ -40,15 +50,6 @@ public class ManejadorArchivos {
 		is.close();
 		bufferedReader.close();
 		return retorno;
-	}
-
-	private Gson crearGson() {
-		return new GsonBuilder().setPrettyPrinting()
-				.registerTypeAdapter(Mapa.class, new MapaGsonAdapter())
-				.registerTypeAdapter(Interseccion.class, new InterseccionGsonAdapter())
-				.registerTypeAdapter(Calle.class, new CalleGsonAdapter())
-				.registerTypeAdapter(Arista.class, new AristaGsonAdapter())
-				.create();
 	}
 
 	public void guardarMapa(Mapa mapa, File archivoMapa) throws IOException {
@@ -62,5 +63,15 @@ public class ManejadorArchivos {
 		bufferedWriter.write(gson.toJson(mapa));
 		bufferedWriter.close();
 		os.close();
+	}
+
+	public CasoDePrueba cargarCasoDePrueba(File archivoCasoDePrueba) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void guardarCasoDePrueba(CasoDePrueba casoDePrueba, File archivoCasoDePrueba) {
+		// TODO Auto-generated method stub
+
 	}
 }

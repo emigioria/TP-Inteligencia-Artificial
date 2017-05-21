@@ -265,4 +265,9 @@ public class AltaMapaController extends ControladorPatrullero {
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}
 	}
+
+	@Override
+	public Boolean sePuedeSalir() {
+		return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los cambios no guardados ¿Seguro que desea salir?", stage).acepta();
+	}
 }

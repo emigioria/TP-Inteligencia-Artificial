@@ -1,24 +1,46 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
-import java.util.List;
+import java.util.NoSuchElementException;
 
-import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.NombreObstaculo;
-import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial;
 import frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal;
 import frsf.cidisi.exercise.patrullero.search.modelo.Visibilidad;
 
-public class CasoDePrueba {
+public class CasoDePruebaGUI {
 
 	protected static Long ultimoIdAsignadoObstaculo = 0L;
 
-	private List<Obstaculo> obstaculos;
+	private CasoDePrueba casoDePrueba;
 
-	private Interseccion posicionInicialPatrullero;
+	public CasoDePruebaGUI() {
+		super();
 
-	private Interseccion posicionIncidente;
+		//Resetear IDs
+		CasoDePruebaGUI.ultimoIdAsignadoObstaculo = 0L;
+	}
+
+	public CasoDePruebaGUI(CasoDePrueba casoDePrueba) {
+		this();
+		this.casoDePrueba = casoDePrueba;
+
+		//Setear IDs
+		try{
+			CasoDePruebaGUI.ultimoIdAsignadoObstaculo = casoDePrueba.getObstaculos().stream().max((x, y) -> x.getId().compareTo(y.getId())).get().getId();
+		} catch(NoSuchElementException e){
+
+		}
+	}
+
+	public CasoDePrueba getCasoDePrueba() {
+		return casoDePrueba;
+	}
+
+	public void setCasoDePrueba(CasoDePrueba casoDePrueba) {
+		this.casoDePrueba = casoDePrueba;
+	}
 
 	public static ObstaculoParcial crearObstaculoParcial(NombreObstaculo nombre, Integer tiempoInicio, Integer tiempoFin, Visibilidad visibilidad, Lugar lugar, Integer retardoMultiplicativo) {
 		return new ObstaculoParcial(++ultimoIdAsignadoObstaculo, nombre, tiempoInicio, tiempoFin, visibilidad, lugar, retardoMultiplicativo);

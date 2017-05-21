@@ -7,7 +7,7 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePrueba;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
 import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.NombreObstaculo;
 import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
@@ -65,10 +65,10 @@ public class AltaObstaculoController extends ControladorDialogo {
 		Integer horaFin = spHoraFin.getValue();
 
 		if(rbParcial.isSelected()){
-			obstaculo = CasoDePrueba.crearObstaculoParcial(nombreObstaculo, horaInicio, horaFin, visibilidad, lugar, retardo);
+			obstaculo = CasoDePruebaGUI.crearObstaculoParcial(nombreObstaculo, horaInicio, horaFin, visibilidad, lugar, retardo);
 		}
 		else if(rbTotal.isSelected()){
-			obstaculo = CasoDePrueba.crearObstaculoTotal(nombreObstaculo, horaInicio, horaFin, visibilidad, lugar);
+			obstaculo = CasoDePruebaGUI.crearObstaculoTotal(nombreObstaculo, horaInicio, horaFin, visibilidad, lugar);
 		}
 		else{
 			return;

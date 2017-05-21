@@ -38,7 +38,7 @@ public class MapaGUI {
 		InterseccionGUI.ultimoIdAsignado = 0L;
 		AristaGUI.ultimoIdAsignado = 0L;
 		MapaGUI.ultimoIdAsignadoCalle = 0L;
-		CasoDePrueba.ultimoIdAsignadoObstaculo = 0L;
+		CasoDePruebaGUI.ultimoIdAsignadoObstaculo = 0L;
 	}
 
 	public MapaGUI(Mapa mapa) {
