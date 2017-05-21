@@ -54,7 +54,7 @@ public class Arista extends Lugar {
 	}
 
 	@Override
-	public boolean sosArista() {
+	public Boolean sosArista() {
 		return true;
 	}
 

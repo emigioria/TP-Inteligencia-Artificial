@@ -63,11 +63,11 @@ public abstract class Lugar {
 		return false;
 	}
 
-	public boolean sosArista() {
+	public Boolean sosArista() {
 		return false;
 	}
 
-	public boolean sosInterseccion() {
+	public Boolean sosInterseccion() {
 		return false;
 	}
 }

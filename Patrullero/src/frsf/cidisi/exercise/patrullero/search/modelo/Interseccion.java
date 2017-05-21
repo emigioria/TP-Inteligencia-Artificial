@@ -67,7 +67,7 @@ public class Interseccion extends Lugar {
 	}
 
 	@Override
-	public boolean sosInterseccion() {
+	public Boolean sosInterseccion() {
 		return true;
 	}
 
