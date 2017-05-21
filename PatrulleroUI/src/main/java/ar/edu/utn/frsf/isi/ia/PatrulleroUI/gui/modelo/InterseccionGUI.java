@@ -106,11 +106,11 @@ public class InterseccionGUI {
 		else{
 			if(interseccion.getObstaculos().stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
 				colorTexto.set(Color.WHITE);
-				colorInterseccion.set(Color.BLACK);
+				colorInterseccion.set(Color.RED);
 			}
 			else{
 				colorTexto.set(Color.WHITE);
-				colorInterseccion.set(Color.RED);
+				colorInterseccion.set(Color.ORANGE);
 			}
 		}
 	}
