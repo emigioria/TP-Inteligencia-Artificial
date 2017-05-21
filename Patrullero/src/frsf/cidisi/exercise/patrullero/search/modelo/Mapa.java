@@ -2,7 +2,6 @@ package frsf.cidisi.exercise.patrullero.search.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,10 +57,14 @@ public class Mapa {
 	}
 
 	public Lugar getLugar(Lugar lugar) {
-		try{
+		if(lugar.sosInterseccion()){
 			return esquinas.stream().filter(l -> l.equals(lugar)).findFirst().get();
-		} catch(NoSuchElementException e){
+		}
+		else if(lugar.sosArista()){
 			return calles.stream().map(t -> t.getTramos()).flatMap(List::stream).filter(l -> l.equals(lugar)).findFirst().get();
+		}
+		else{
+			return null;
 		}
 	}
 }
