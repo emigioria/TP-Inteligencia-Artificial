@@ -263,161 +263,6 @@
   -fx-opacity: 1.0;
 }
 
-/* Botones ver tareas */
-.ver-tarea-grid .button {
-  -fx-background-color: transparent;
-  -fx-border-color: transparent;
-}
-
-.ver-tarea-grid .button:hover {
-  -fx-opacity: 0.8;
-}
-
-.button-play {
-  -fx-graphic: url('../imagenes/boton_play.png');
-}
-
-.button-play:pressed {
-  -fx-graphic: url('../imagenes/boton_play_selected.png');
-}
-
-.button-pause {
-  -fx-graphic: url('../imagenes/boton_pausa.png');
-}
-
-.button-pause:pressed {
-  -fx-graphic: url('../imagenes/boton_pausa_selected.png');
-}
-
-.button-stop {
-  -fx-graphic: url('../imagenes/boton_detener.png');
-}
-
-.button-stop:pressed {
-  -fx-graphic: url('../imagenes/boton_detener_selected.png');
-}
-
-.button-cancel {
-  -fx-graphic: url('../imagenes/boton_cancelar.png');
-}
-
-.button-cancel:pressed {
-  -fx-graphic: url('../imagenes/boton_cancelar_selected.png');
-}
-
-/* Botones ver historial de tareas */
-.button-left {
-  -fx-graphic: url('../imagenes/flecha_izquierda.png');
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-.button-right {
-  -fx-graphic: url('../imagenes/flecha_derecha.png');
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-.button-left:focused, .button-right:focused {
-  -fx-opacity: 1.0;
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-.button-left:focus, .button-right:focus {
-  -fx-opacity: 0.7;
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-.button-left:hover:focus, .button-right:hover:focus {
-  -fx-opacity: 0.7;
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-.button-left:hover, .button-right:hover {
-  -fx-opacity: 0.5;
-  -fx-border-color: transparent;
-  -fx-background-color: transparent;
-}
-
-/* Topbar */
-.topbar {
-  -fx-border-color: transparent;
-  -fx-background-color: #37474F ;
-}
-
-.topbar .label {
-  -fx-font-weight: bold;
-  -fx-text-fill: white;
-}
-
-.topbar .toggle-button {
-  -fx-background-color: transparent;
-}
-
-.topbar .toggle-button:hover {
-  -fx-opacity: 0.5;
-}
-
-/* Botones topbar */
-.toggle-button-comentario {
-  -fx-graphic: url('../imagenes/boton_comentario.png');
-}
-
-.toggle-button-comentario:selected {
-  -fx-graphic: url('../imagenes/boton_comentario_selected.png');
-}
-
-.toggle-button-material {
-  -fx-graphic: url('../imagenes/boton_material.png');
-}
-
-.toggle-button-material:selected {
-  -fx-graphic: url('../imagenes/boton_material_selected.png');
-}
-
-.toggle-button-herramienta {
-  -fx-graphic: url('../imagenes/boton_herramienta.png');
-}
-
-.toggle-button-herramienta:selected {
-  -fx-graphic: url('../imagenes/boton_herramienta_selected.png');
-}
-
-.toggle-button-operario {
-  -fx-graphic: url('../imagenes/boton_operario.png');
-}
-
-.toggle-button-operario:selected {
-  -fx-graphic: url('../imagenes/boton_operario_selected.png');
-}
-
-.toggle-button-maquina {
-  -fx-graphic: url('../imagenes/boton_maquina.png');
-}
-
-.toggle-button-maquina:selected {
-  -fx-graphic: url('../imagenes/boton_maquina_selected.png');
-}
-
-.toggle-button-proceso {
-  -fx-graphic: url('../imagenes/boton_proceso.png');
-}
-
-.toggle-button-proceso:selected {
-  -fx-graphic: url('../imagenes/boton_proceso_selected.png');
-}
-
-.toggle-button-tarea {
-  -fx-graphic: url('../imagenes/boton_tarea.png');
-}
-
-.toggle-button-tarea:selected {
-  -fx-graphic: url('../imagenes/boton_tarea_selected.png');
-}
-
 /* Diálogos */
 .choice-dialog.dialog-pane {
 /*  -fx-graphic: url('../imagenes/imagen.png');    para cambiar imagen ventana confirmacion*/
@@ -436,6 +281,34 @@
 
 .alert.warning.dialog-pane {
 /*  -fx-graphic: url('../imagenes/imagen.png');    para cambiar imagen ventana advertencia*/
+}
+
+/* Leftbar */
+.leftbar {
+  -fx-border-color: transparent;
+  -fx-background-color: #37474F ;
+}
+
+.leftbar .label {
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+.leftbar .toggle-button {
+  -fx-background-color: transparent;
+}
+
+.leftbar .toggle-button:hover {
+  -fx-opacity: 0.5;
+}
+
+/* Botones topbar */
+.toggle-button-comentario {
+  -fx-graphic: url('../imagenes/boton_comentario.png');
+}
+
+.toggle-button-comentario:selected {
+  -fx-graphic: url('../imagenes/boton_comentario_selected.png');
 }
 
 /* Mapa */
