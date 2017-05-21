@@ -20,7 +20,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <GridPane hgap="10.0" vgap="15.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaObstaculoController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" />
@@ -39,22 +38,22 @@
       <RowConstraints vgrow="NEVER" />
    </rowConstraints>
    <children>
-      <Label text="Obstaculo en Intersección 1" GridPane.columnSpan="2" />
+      <Label fx:id="lbLugar" text="Obstaculo en Intersección 1" GridPane.columnSpan="2" />
       <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       <Label text="Nombre" GridPane.rowIndex="2" />
       <Label text="Visibilidad" GridPane.rowIndex="3" />
-      <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cbNombre" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ComboBox fx:id="cbVisibilidad" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Label text="Tipo" GridPane.rowIndex="4" />
-      <RadioButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Parcial" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <RadioButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Total" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <RadioButton fx:id="rbParcial" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Parcial" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <RadioButton fx:id="rbTotal" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Total" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Label text="Retardo multiplicativo" GridPane.rowIndex="6" />
-      <Spinner editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Spinner fx:id="spRetardo" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label text="Hora inicio" GridPane.rowIndex="7" />
       <Label text="Hora fin" GridPane.rowIndex="8" />
-      <Spinner editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Spinner editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <Button mnemonicParsing="false" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+      <Spinner fx:id="spHoraInicio" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Spinner fx:id="spHoraFin" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <Button mnemonicParsing="false" onAction="#guardar" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
