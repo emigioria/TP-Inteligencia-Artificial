@@ -92,8 +92,8 @@ public class MapaGUI {
 		arista.getArista().getCalle().getTramos().remove(arista.getArista());
 		arista.getArista().getOrigen().getSalientes().remove(arista.getArista());
 		arista.getArista().getDestino().getEntrantes().remove(arista.getArista());
-		arista.getOrigen().getSalientes().remove(this);
-		arista.getDestino().getEntrantes().remove(this);
+		arista.getOrigen().getSalientes().remove(arista);
+		arista.getDestino().getEntrantes().remove(arista);
 		mapaPanel.getChildren().remove(arista.getNode());
 	}
 
