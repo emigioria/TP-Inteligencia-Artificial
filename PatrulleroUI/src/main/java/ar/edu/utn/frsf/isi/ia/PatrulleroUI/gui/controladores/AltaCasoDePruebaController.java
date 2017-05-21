@@ -73,6 +73,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			else{
 				actualizarPanelDerecho(interseccionActual);
 			}
+			mapa.actualizarObstaculos(lugar);
 		}
 	}
 
@@ -94,6 +95,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		else{
 			actualizarPanelDerecho(interseccionActual);
 		}
+		mapa.actualizarObstaculos(obstaculo.getLugar());
 	}
 
 	@Override
@@ -178,6 +180,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		//Sacar lugar del panel derecho
 		if(mapa != null){
 			iniciarPanelDerecho();
+			mapa.actualizarObstaculos();
 		}
 	}
 
@@ -240,6 +243,8 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		cbPatrullero.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero());
 		cbIncidente.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionIncidente());
 		iniciarPanelDerecho();
+
+		mapa.actualizarObstaculos();
 	}
 
 	@FXML

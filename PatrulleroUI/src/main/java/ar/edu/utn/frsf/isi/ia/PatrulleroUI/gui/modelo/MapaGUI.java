@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import javafx.scene.layout.Pane;
 
@@ -124,5 +125,19 @@ public class MapaGUI {
 
 	public static Calle crearCalle(String nombrePropio) {
 		return new Calle(++MapaGUI.ultimoIdAsignadoCalle, nombrePropio);
+	}
+
+	public void actualizarObstaculos(Lugar lugar) {
+		if(lugar.sosInterseccion()){
+			intersecciones.stream().filter(i -> i.getInterseccion().equals(lugar)).findFirst().orElse(null).actualizarObstaculos();
+		}
+		else if(lugar.sosArista()){
+			intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).filter(a -> a.getArista().equals(lugar)).findFirst().orElse(null).actualizarObstaculos();
+		}
+	}
+
+	public void actualizarObstaculos() {
+		intersecciones.stream().forEach(i -> i.actualizarObstaculos());
+		intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).forEach(a -> a.actualizarObstaculos());
 	}
 }

@@ -27,4 +27,9 @@ public class ObstaculoParcial extends Obstaculo {
 	public Integer getPeso(Integer peso) {
 		return peso * retardoMultiplicativo;
 	}
+
+	@Override
+	public String toString() {
+		return "Tipo: Parcial. " + super.toString();
+	}
 }

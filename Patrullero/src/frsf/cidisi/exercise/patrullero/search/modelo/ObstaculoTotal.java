@@ -21,4 +21,8 @@ public class ObstaculoTotal extends Obstaculo {
 		return clon;
 	}
 
+	@Override
+	public String toString() {
+		return "Tipo: Total. " + super.toString();
+	}
 }

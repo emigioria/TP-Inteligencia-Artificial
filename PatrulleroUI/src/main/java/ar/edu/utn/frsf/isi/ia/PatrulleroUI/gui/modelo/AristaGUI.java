@@ -170,7 +170,22 @@ public class AristaGUI {
 		return arista.toString();
 	}
 
+	public void actualizarObstaculos() {
+		if(arista.getObstaculos().isEmpty()){
+			colorArista.set(Color.BLACK);
+		}
+		else{
+			if(arista.getObstaculos().stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
+				colorArista.set(Color.RED);
+			}
+			else{
+				colorArista.set(Color.ORANGE);
+			}
+		}
+	}
+
 	public static Arista crearArista(Integer peso, Interseccion origen, Interseccion destino, Calle calle) throws Exception {
 		return new Arista(++AristaGUI.ultimoIdAsignado, peso, origen, destino, calle);
 	}
+
 }

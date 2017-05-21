@@ -97,4 +97,22 @@ public class InterseccionGUI {
 	public String toString() {
 		return interseccion.getId().toString();
 	}
+
+	public void actualizarObstaculos() {
+		if(interseccion.getObstaculos().isEmpty()){
+			colorTexto.set(Color.BLACK);
+			colorInterseccion.set(Color.CYAN);
+		}
+		else{
+			if(interseccion.getObstaculos().stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
+				colorTexto.set(Color.WHITE);
+				colorInterseccion.set(Color.BLACK);
+			}
+			else{
+				colorTexto.set(Color.WHITE);
+				colorInterseccion.set(Color.RED);
+			}
+		}
+	}
+
 }
