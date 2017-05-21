@@ -28,7 +28,6 @@ public class Avanzar extends SearchAction {
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
 			Arista aristaElegida = orientacionAgente.next();
 			estadoPatrullero.setUltimaCalleRecorrida(aristaElegida);
-			estadoPatrullero.getInterseccionesVisitadas().add(estadoPatrullero.getPosicion());
 			estadoPatrullero.setPosicion(aristaElegida.getDestino());
 			estadoPatrullero.initOrientacion();
 			return estadoPatrullero;
@@ -57,7 +56,6 @@ public class Avanzar extends SearchAction {
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
 			Arista aristaElegidaPatrullero = orientacionAgentePatrullero.next();
 			estadoPatrullero.setUltimaCalleRecorrida(aristaElegidaPatrullero);
-			estadoPatrullero.getInterseccionesVisitadas().add(estadoPatrullero.getPosicion());
 			estadoPatrullero.setPosicion(aristaElegidaPatrullero.getDestino());
 			estadoPatrullero.initOrientacion();
 

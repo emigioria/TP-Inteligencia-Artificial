@@ -29,8 +29,6 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	private ListIterator<Arista> orientacion;
 	private Map<Visibilidad, Set<Obstaculo>> obstaculos = new HashMap<>();
 
-	private Collection<Interseccion> interseccionesVisitadas = new HashSet<>();
-
 	public EstadoPatrullero(Mapa mapa, Interseccion posicionAgente, Interseccion posicionIncidente) {
 		this.mapa = mapa;
 		this.posicion = posicionAgente;
@@ -56,7 +54,6 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 		estadoPatrullero.orientacion = estadoPatrullero.posicion.getSalientes().listIterator(orientacion.nextIndex());
 		estadoPatrullero.ultimaCalleRecorrida = this.ultimaCalleRecorrida;
 		estadoPatrullero.obstaculos = this.obstaculos;
-		estadoPatrullero.interseccionesVisitadas.addAll(interseccionesVisitadas);
 		return estadoPatrullero;
 	}
 
@@ -254,14 +251,6 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 
 	public void setUltimaCalleRecorrida(Arista ultimaCalleRecorrida) {
 		this.ultimaCalleRecorrida = ultimaCalleRecorrida;
-	}
-
-	public Collection<Interseccion> getInterseccionesVisitadas() {
-		return interseccionesVisitadas;
-	}
-
-	public void setInterseccionesVisitadas(Collection<Interseccion> interseccionesVisitadas) {
-		this.interseccionesVisitadas = interseccionesVisitadas;
 	}
 
 }
