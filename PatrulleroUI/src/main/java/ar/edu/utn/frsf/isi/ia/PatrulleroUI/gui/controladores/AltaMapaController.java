@@ -108,6 +108,9 @@ public class AltaMapaController extends ControladorPatrullero {
 		AristaGUI resultado = controlador.getResultado();
 		if(resultado != null){
 			mapa.agregarAristaGUI(resultado);
+			if(origen != null){
+				actualizarPanelDerecho(origen);
+			}
 		}
 	}
 
@@ -117,7 +120,9 @@ public class AltaMapaController extends ControladorPatrullero {
 		if(aristaAQuitar == null){
 			return;
 		}
+		InterseccionGUI interseccion = aristaAQuitar.getOrigen();
 		mapa.quitarAristaGUI(aristaAQuitar);
+		actualizarPanelDerecho(interseccion);
 	}
 
 	@Override
