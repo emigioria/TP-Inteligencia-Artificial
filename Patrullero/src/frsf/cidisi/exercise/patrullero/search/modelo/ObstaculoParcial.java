@@ -15,6 +15,14 @@ public class ObstaculoParcial extends Obstaculo {
 		return clon;
 	}
 
+	public Integer getRetardoMultiplicativo() {
+		return retardoMultiplicativo;
+	}
+
+	public void setRetardoMultiplicativo(Integer retardoMultiplicativo) {
+		this.retardoMultiplicativo = retardoMultiplicativo;
+	}
+
 	@Override
 	public Integer getPeso(Integer peso) {
 		return peso * retardoMultiplicativo;

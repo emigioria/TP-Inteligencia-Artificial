@@ -3,7 +3,9 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 import java.util.NoSuchElementException;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
+import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import frsf.cidisi.exercise.patrullero.search.modelo.NombreObstaculo;
 import frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial;
 import frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal;
@@ -13,7 +15,7 @@ public class CasoDePruebaGUI {
 
 	protected static Long ultimoIdAsignadoObstaculo = 0L;
 
-	private CasoDePrueba casoDePrueba;
+	private CasoDePrueba casoDePrueba = new CasoDePrueba();
 
 	public CasoDePruebaGUI() {
 		super();
@@ -22,9 +24,18 @@ public class CasoDePruebaGUI {
 		CasoDePruebaGUI.ultimoIdAsignadoObstaculo = 0L;
 	}
 
-	public CasoDePruebaGUI(CasoDePrueba casoDePrueba) {
+	public CasoDePruebaGUI(CasoDePrueba casoDePrueba, Mapa mapa) {
 		this();
 		this.casoDePrueba = casoDePrueba;
+
+		casoDePrueba.getObstaculos().stream().forEach(o -> {
+			Lugar lugarEnMapa = mapa.getLugar(o.getLugar());
+			lugarEnMapa.getObstaculos().add(o);
+			o.setLugar(lugarEnMapa);
+		});
+
+		casoDePrueba.setPosicionInicialPatrullero((Interseccion) mapa.getLugar(casoDePrueba.getPosicionInicialPatrullero()));
+		casoDePrueba.setPosicionIncidente((Interseccion) mapa.getLugar(casoDePrueba.getPosicionIncidente()));
 
 		//Setear IDs
 		try{

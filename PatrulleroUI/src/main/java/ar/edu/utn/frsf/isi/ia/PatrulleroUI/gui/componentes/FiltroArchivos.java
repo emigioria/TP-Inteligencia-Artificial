@@ -34,13 +34,33 @@ public enum FiltroArchivos {
 	ARCHIVO_MAPA {
 		@Override
 		public FileChooser getFileChooser() {
-			return ARCHIVO_JSON.getFileChooser();
+			String tipo = "(*.json)";
+
+			ArrayList<String> tiposFiltro = new ArrayList<>();
+			tiposFiltro.add("*.json");
+
+			ExtensionFilter filtro = new ExtensionFilter("Archivo de mapa " + tipo, tiposFiltro);
+
+			FileChooser archivoSeleccionado = new FileChooser();
+			archivoSeleccionado.getExtensionFilters().add(filtro);
+
+			return archivoSeleccionado;
 		}
 	},
 	ARCHIVO_CASO_PRUEBA {
 		@Override
 		public FileChooser getFileChooser() {
-			return ARCHIVO_JSON.getFileChooser();
+			String tipo = "(*.json)";
+
+			ArrayList<String> tiposFiltro = new ArrayList<>();
+			tiposFiltro.add("*.json");
+
+			ExtensionFilter filtro = new ExtensionFilter("Archivo de caso de prueba " + tipo, tiposFiltro);
+
+			FileChooser archivoSeleccionado = new FileChooser();
+			archivoSeleccionado.getExtensionFilters().add(filtro);
+
+			return archivoSeleccionado;
 		}
 	},
 	ARCHIVO_IMAGEN {

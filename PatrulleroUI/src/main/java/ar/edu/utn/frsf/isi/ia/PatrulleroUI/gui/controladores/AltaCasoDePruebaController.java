@@ -107,6 +107,8 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		cbIncidente.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
 			casoDePrueba.getCasoDePrueba().setPosicionIncidente(newV);
 		});
+
+		nuevoCasoDePrueba();
 	}
 
 	private void actualizarPanelDerecho(InterseccionGUI interseccion) {
@@ -174,7 +176,9 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		cbIncidente.getSelectionModel().select(null);
 
 		//Sacar lugar del panel derecho
-		iniciarPanelDerecho();
+		if(mapa != null){
+			iniciarPanelDerecho();
+		}
 	}
 
 	@FXML
@@ -188,6 +192,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			this.mapa = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+			return;
 		}
 		scrollMapaPanel.setContent(mapa.getNode());
 
@@ -210,22 +215,39 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 	@FXML
 	private void cargarCasoDePrueba() {
+		if(mapa == null){
+			return;
+		}
+		CasoDePruebaGUI casoViejo = casoDePrueba;
+
 		//Cargar mapa
-		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
+		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_CASO_PRUEBA.getFileChooser(), stage);
 		if(archivoCasoDePrueba == null){
 			return;
 		}
 		try{
-			CasoDePruebaGUI casoNuevo = new CasoDePruebaGUI(manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba));
-			nuevoCasoDePrueba();
-			this.casoDePrueba = casoNuevo;
+			this.casoDePrueba = new CasoDePruebaGUI(manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba), mapa.getMapa());
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}
+
+		if(casoViejo != null){
+			//Borrar obstaculos viejos
+			casoViejo.getCasoDePrueba().getObstaculos().stream().forEach(o -> o.getLugar().getObstaculos().remove(o));
+		}
+
+		//Cargar interfaz
+		cbPatrullero.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero());
+		cbIncidente.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionIncidente());
+		iniciarPanelDerecho();
 	}
 
 	@FXML
 	private void guardarCasoDePrueba() {
+		if(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero() == null || casoDePrueba.getCasoDePrueba().getPosicionIncidente() == null){
+			presentadorVentanas.presentarError("Error al guardar", "Debe seleccionar un origen para el patrullero y para el incidente", stage);
+			return;
+		}
 		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoGuardado(FiltroArchivos.ARCHIVO_CASO_PRUEBA.getFileChooser(), stage);
 		if(archivoCasoDePrueba == null){
 			return;

@@ -15,6 +15,10 @@ public class CasoDePrueba {
 		return obstaculos;
 	}
 
+	public void setObstaculos(List<Obstaculo> obstaculos) {
+		this.obstaculos = obstaculos;
+	}
+
 	public Interseccion getPosicionInicialPatrullero() {
 		return posicionInicialPatrullero;
 	}

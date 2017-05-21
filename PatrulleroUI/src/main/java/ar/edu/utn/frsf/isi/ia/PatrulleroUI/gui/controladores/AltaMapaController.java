@@ -242,6 +242,7 @@ public class AltaMapaController extends ControladorPatrullero {
 			this.mapa = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+			return;
 		}
 		scrollMapaPanel.setContent(mapa.getNode());
 

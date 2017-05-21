@@ -7,20 +7,26 @@ public class Arista extends Lugar {
 
 	public Arista(Long id, Integer peso, Interseccion origen, Interseccion destino, Calle calle) throws Exception {
 		super(id, peso);
-		if(origen.getSalientes().stream().anyMatch(a -> a.getDestino().equals(destino))){
-			throw new Exception("Ya hay una arista entre origen y destino!");
-		}
 		this.origen = origen;
-		if(origen != null){
-			origen.getSalientes().add(this);
-		}
 		this.destino = destino;
-		if(origen != null){
-			destino.getEntrantes().add(this);
-		}
 		this.calle = calle;
 		if(calle != null){
 			calle.getTramos().add(this);
+		}
+		this.comprobarRepeticion();
+		if(origen != null){
+			origen.getSalientes().add(this);
+		}
+		if(destino != null){
+			destino.getEntrantes().add(this);
+		}
+	}
+
+	private void comprobarRepeticion() throws Exception {
+		if(origen != null && destino != null){
+			if(origen.getSalientes().stream().anyMatch(a -> a.getDestino().equals(destino))){
+				throw new Exception("Ya hay una arista entre origen y destino!");
+			}
 		}
 	}
 
@@ -28,16 +34,30 @@ public class Arista extends Lugar {
 		return origen;
 	}
 
-	public void setOrigen(Interseccion origen) {
+	public void setOrigen(Interseccion origen) throws Exception {
+		Interseccion origenViejo = origen;
 		this.origen = origen;
+		try{
+			comprobarRepeticion();
+		} catch(Exception e){
+			this.origen = origenViejo;
+			throw e;
+		}
 	}
 
 	public Interseccion getDestino() {
 		return destino;
 	}
 
-	public void setDestino(Interseccion destino) {
+	public void setDestino(Interseccion destino) throws Exception {
+		Interseccion destinoViejo = destino;
 		this.destino = destino;
+		try{
+			comprobarRepeticion();
+		} catch(Exception e){
+			this.destino = destinoViejo;
+			throw e;
+		}
 	}
 
 	public Calle getCalle() {
