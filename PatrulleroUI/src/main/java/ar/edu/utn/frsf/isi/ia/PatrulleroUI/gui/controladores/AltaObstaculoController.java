@@ -113,6 +113,7 @@ public class AltaObstaculoController extends ControladorDialogo {
 		spRetardo.focusedProperty().addListener((obs, oldV, newV) -> {
 			spRetardo.increment(0);
 		});
+		spRetardo.disableProperty().bind(rbParcial.selectedProperty().not());
 
 		spHoraInicio.getEditor().setTextFormatter(new TextFormatter<>(
 				new IntegerStringConverter(), 0,
