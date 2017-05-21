@@ -119,6 +119,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		TreeItem<Object> lugarItem = crearItemLugarTree(interseccion.getInterseccion());
 
 		tvLugaresObstaculos.setRoot(lugarItem);
+		tvLugaresObstaculos.getSelectionModel().select(lugarItem);
 	}
 
 	private TreeItem<Object> crearItemLugarTree(Interseccion interseccion) {
@@ -129,7 +130,13 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			TreeItem<Object> arista = new TreeItem<>(a);
 			aristasSalientes.getChildren().add(arista);
 
-			TreeItem<Object> obstaculos = new TreeItem<>("Obstaculos");
+			TreeItem<Object> obstaculos;
+			if(a.getObstaculos().isEmpty()){
+				obstaculos = new TreeItem<>("Sin Obstaculos");
+			}
+			else{
+				obstaculos = new TreeItem<>("Obstaculos");
+			}
 			a.getObstaculos().stream().forEach(o -> {
 				obstaculos.getChildren().add(new TreeItem<>(o));
 			});
@@ -137,7 +144,13 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		});
 		lugarItem.getChildren().add(aristasSalientes);
 
-		TreeItem<Object> obstaculos = new TreeItem<>("Obstaculos");
+		TreeItem<Object> obstaculos;
+		if(interseccion.getObstaculos().isEmpty()){
+			obstaculos = new TreeItem<>("Sin Obstaculos");
+		}
+		else{
+			obstaculos = new TreeItem<>("Obstaculos");
+		}
 		interseccion.getObstaculos().stream().forEach(o -> {
 			obstaculos.getChildren().add(new TreeItem<>(o));
 		});
