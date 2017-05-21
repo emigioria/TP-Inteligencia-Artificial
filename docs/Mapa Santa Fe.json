@@ -371,7 +371,7 @@
     {
       "id": 62,
       "peso": 1,
-      "coordenadaX": 1393.0,
+      "coordenadaX": 1394.0,
       "coordenadaY": 688.0
     },
     {
@@ -467,8 +467,8 @@
     {
       "id": 78,
       "peso": 1,
-      "coordenadaX": 891.0,
-      "coordenadaY": 813.0
+      "coordenadaX": 911.0,
+      "coordenadaY": 815.0
     },
     {
       "id": 79,
@@ -551,20 +551,20 @@
     {
       "id": 92,
       "peso": 1,
-      "coordenadaX": 559.0,
-      "coordenadaY": 859.0
+      "coordenadaX": 560.0,
+      "coordenadaY": 857.0
     },
     {
       "id": 93,
       "peso": 1,
-      "coordenadaX": 640.0,
-      "coordenadaY": 914.0
+      "coordenadaX": 648.0,
+      "coordenadaY": 906.0
     },
     {
       "id": 94,
       "peso": 1,
-      "coordenadaX": 769.0,
-      "coordenadaY": 966.0
+      "coordenadaX": 751.0,
+      "coordenadaY": 957.0
     },
     {
       "id": 95,
@@ -611,20 +611,20 @@
     {
       "id": 102,
       "peso": 1,
-      "coordenadaX": 697.0,
-      "coordenadaY": 1003.0
+      "coordenadaX": 699.0,
+      "coordenadaY": 997.0
     },
     {
       "id": 103,
       "peso": 1,
-      "coordenadaX": 737.0,
-      "coordenadaY": 1068.0
+      "coordenadaX": 740.0,
+      "coordenadaY": 1076.0
     },
     {
       "id": 104,
       "peso": 1,
-      "coordenadaX": 756.0,
-      "coordenadaY": 1020.0
+      "coordenadaX": 758.0,
+      "coordenadaY": 1018.0
     },
     {
       "id": 105,
@@ -653,8 +653,8 @@
     {
       "id": 109,
       "peso": 1,
-      "coordenadaX": 887.0,
-      "coordenadaY": 1094.0
+      "coordenadaX": 886.0,
+      "coordenadaY": 1092.0
     },
     {
       "id": 110,
@@ -701,8 +701,8 @@
     {
       "id": 117,
       "peso": 1,
-      "coordenadaX": 721.0,
-      "coordenadaY": 1129.0
+      "coordenadaX": 714.0,
+      "coordenadaY": 1134.0
     },
     {
       "id": 118,
@@ -1007,8 +1007,8 @@
     {
       "id": 168,
       "peso": 1,
-      "coordenadaX": 884.0,
-      "coordenadaY": 572.0
+      "coordenadaX": 883.0,
+      "coordenadaY": 571.0
     },
     {
       "id": 169,
@@ -1725,12 +1725,6 @@
       "nombre": "J. P. López",
       "tramos": [
         {
-          "id": 49,
-          "peso": 5,
-          "origen": 48,
-          "destino": 49
-        },
-        {
           "id": 50,
           "peso": 5,
           "origen": 49,
@@ -1837,6 +1831,60 @@
           "peso": 2,
           "origen": 168,
           "destino": 58
+        },
+        {
+          "id": 371,
+          "peso": 2,
+          "origen": 58,
+          "destino": 168
+        },
+        {
+          "id": 372,
+          "peso": 4,
+          "origen": 168,
+          "destino": 59
+        },
+        {
+          "id": 373,
+          "peso": 5,
+          "origen": 59,
+          "destino": 60
+        },
+        {
+          "id": 374,
+          "peso": 5,
+          "origen": 60,
+          "destino": 61
+        },
+        {
+          "id": 375,
+          "peso": 5,
+          "origen": 61,
+          "destino": 62
+        },
+        {
+          "id": 377,
+          "peso": 5,
+          "origen": 62,
+          "destino": 63
+        },
+        {
+          "id": 378,
+          "peso": 5,
+          "origen": 63,
+          "destino": 64
+        },
+        {
+          "id": 379,
+          "peso": 5,
+          "origen": 64,
+          "destino": 65
+        },
+        {
+          "id": 380,
+          "peso": 2,
+          "origen": 65,
+          "destino": 66
         }
       ]
     },
@@ -1941,15 +1989,21 @@
           "destino": 84
         },
         {
-          "id": 221,
-          "peso": 2,
-          "origen": 79,
-          "destino": 78
-        },
-        {
           "id": 222,
           "peso": 3,
           "origen": 78,
+          "destino": 77
+        },
+        {
+          "id": 394,
+          "peso": 3,
+          "origen": 77,
+          "destino": 78
+        },
+        {
+          "id": 395,
+          "peso": 5,
+          "origen": 76,
           "destino": 77
         }
       ]
@@ -2653,6 +2707,78 @@
           "peso": 3,
           "origen": 154,
           "destino": 162
+        },
+        {
+          "id": 382,
+          "peso": 3,
+          "origen": 162,
+          "destino": 154
+        },
+        {
+          "id": 383,
+          "peso": 5,
+          "origen": 154,
+          "destino": 145
+        },
+        {
+          "id": 384,
+          "peso": 5,
+          "origen": 145,
+          "destino": 135
+        },
+        {
+          "id": 385,
+          "peso": 5,
+          "origen": 135,
+          "destino": 126
+        },
+        {
+          "id": 386,
+          "peso": 5,
+          "origen": 126,
+          "destino": 117
+        },
+        {
+          "id": 387,
+          "peso": 4,
+          "origen": 117,
+          "destino": 103
+        },
+        {
+          "id": 388,
+          "peso": 1,
+          "origen": 103,
+          "destino": 104
+        },
+        {
+          "id": 389,
+          "peso": 2,
+          "origen": 104,
+          "destino": 94
+        },
+        {
+          "id": 390,
+          "peso": 3,
+          "origen": 94,
+          "destino": 88
+        },
+        {
+          "id": 391,
+          "peso": 5,
+          "origen": 88,
+          "destino": 77
+        },
+        {
+          "id": 392,
+          "peso": 5,
+          "origen": 77,
+          "destino": 68
+        },
+        {
+          "id": 393,
+          "peso": 5,
+          "origen": 68,
+          "destino": 168
         }
       ]
     },
