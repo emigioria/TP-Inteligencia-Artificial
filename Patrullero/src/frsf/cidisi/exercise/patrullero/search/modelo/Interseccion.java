@@ -50,10 +50,10 @@ public class Interseccion extends Lugar {
 	@Override
 	public String toString() {
 		Set<String> nombresCalles = Stream.concat(
-				entrantes.stream().map(e -> e.toString()),
-				salientes.stream().map(s -> s.toString()))
+				entrantes.stream().map(e -> e.getCalle().toString()),
+				salientes.stream().map(s -> s.getCalle().toString()))
 				.collect(Collectors.toSet());
-		StringBuffer str = new StringBuffer();
+		StringBuffer str = new StringBuffer(getId() + " - ");
 		nombresCalles.stream().forEach(calle -> str.append(calle + " # "));
 		str.delete(str.length() - 3, str.length());
 		if(nombresCalles.size() == 1){

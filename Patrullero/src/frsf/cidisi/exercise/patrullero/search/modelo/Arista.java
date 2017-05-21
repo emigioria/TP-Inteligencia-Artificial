@@ -70,7 +70,7 @@ public class Arista extends Lugar {
 
 	@Override
 	public String toString() {
-		return calle.getNombre();
+		return calle.getNombre() + " (Que va de " + origen.getId() + " a " + destino.getId() + ")";
 	}
 
 	@Override

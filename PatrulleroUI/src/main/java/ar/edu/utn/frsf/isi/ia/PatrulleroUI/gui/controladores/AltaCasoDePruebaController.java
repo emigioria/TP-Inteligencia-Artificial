@@ -117,6 +117,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		interseccionActual = interseccion;
 
 		TreeItem<Object> lugarItem = crearItemLugarTree(interseccion.getInterseccion());
+		lugarItem.setExpanded(true);
 
 		tvLugaresObstaculos.setRoot(lugarItem);
 		tvLugaresObstaculos.getSelectionModel().select(lugarItem);

@@ -1,20 +1,20 @@
 <tree id="1" edgedefault="directed">
 <node Id="1" Action="Avanzar" Cost="-1.0" Estado_Agente="
-	Viniendo de: Belgrano
-	Posici&#243;n: Belgrano # San Martin
-	Apuntando a: San Martin
+	Viniendo de: Belgrano (Que va de 2 a 3)
+	Posici&#243;n: 3 - Belgrano # San Martin
+	Apuntando a: San Martin (Que va de 3 a 4)
 	Obst&#225;culos:
 		No hay obstaculos."/>
 <node Id="2" Action="Avanzar" Cost="-2.0" Estado_Agente="
-	Viniendo de: San Martin
-	Posici&#243;n: San Martin # Sarmiento
-	Apuntando a: Sarmiento
+	Viniendo de: San Martin (Que va de 3 a 4)
+	Posici&#243;n: 4 - San Martin # Sarmiento
+	Apuntando a: Sarmiento (Que va de 4 a 1)
 	Obst&#225;culos:
 		No hay obstaculos."/>
 <node Id="0" Action="null" Cost="0.0" Estado_Agente="
-	Viniendo de: Belgrano
-	Posici&#243;n: Belgrano # San Martin
-	Apuntando a: San Martin
+	Viniendo de: Belgrano (Que va de 2 a 3)
+	Posici&#243;n: 3 - Belgrano # San Martin
+	Apuntando a: San Martin (Que va de 3 a 4)
 	Obst&#225;culos:
 		No hay obstaculos."/>
 <edge source="1" target="2"/>
