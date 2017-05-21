@@ -3,12 +3,12 @@ package frsf.cidisi.exercise.patrullero.search.modelo;
 public abstract class Obstaculo implements Cloneable {
 	private Long id;
 	private NombreObstaculo nombre;
-	private Long tiempoInicio;
-	private Long tiempoFin;
+	private Integer tiempoInicio;
+	private Integer tiempoFin;
 	private Visibilidad visibilidad;
 	private Lugar lugar;
 
-	public Obstaculo(Long id, NombreObstaculo nombre, Long tiempoInicio, Long tiempoFin, Visibilidad visibilidad, Lugar lugar) {
+	public Obstaculo(Long id, NombreObstaculo nombre, Integer tiempoInicio, Integer tiempoFin, Visibilidad visibilidad, Lugar lugar) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -29,19 +29,19 @@ public abstract class Obstaculo implements Cloneable {
 		this.nombre = nombre;
 	}
 
-	public Long getTiempoInicio() {
+	public Integer getTiempoInicio() {
 		return tiempoInicio;
 	}
 
-	public void setTiempoInicio(Long tiempoInicio) {
+	public void setTiempoInicio(Integer tiempoInicio) {
 		this.tiempoInicio = tiempoInicio;
 	}
 
-	public Long getTiempoFin() {
+	public Integer getTiempoFin() {
 		return tiempoFin;
 	}
 
-	public void setTiempoFin(Long tiempoFin) {
+	public void setTiempoFin(Integer tiempoFin) {
 		this.tiempoFin = tiempoFin;
 	}
 
