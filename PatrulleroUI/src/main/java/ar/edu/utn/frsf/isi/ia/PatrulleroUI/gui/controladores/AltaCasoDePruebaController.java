@@ -170,6 +170,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		interseccionActual = null;
 
 		TreeItem<Object> lugarRoot = new TreeItem<>("Lugares");
+		lugarRoot.setExpanded(true);
 		mapa.getIntersecciones().stream().forEach(i -> {
 			TreeItem<Object> lugarItem = crearItemLugarTree(i.getInterseccion());
 			lugarRoot.getChildren().add(lugarItem);
