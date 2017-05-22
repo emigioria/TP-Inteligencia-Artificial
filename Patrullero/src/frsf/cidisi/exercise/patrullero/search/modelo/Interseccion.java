@@ -75,10 +75,23 @@ public class Interseccion extends Lugar {
 		Set<Lugar> lugaresVisibles = new HashSet<>();
 		lugaresVisibles.addAll(this.getEntrantes());
 		lugaresVisibles.addAll(this.getSalientes());
-		lugaresVisibles.addAll(this.getEntrantes().stream().map(a -> a.getDestino()).collect(Collectors.toSet()));
-		lugaresVisibles.addAll(this.getSalientes().stream().map(a -> a.getOrigen()).collect(Collectors.toSet()));
+		lugaresVisibles.addAll(this.getEntrantes().stream().map(a -> a.getOrigen()).collect(Collectors.toSet()));
+		lugaresVisibles.addAll(this.getSalientes().stream().map(a -> a.getDestino()).collect(Collectors.toSet()));
 		lugaresVisibles.add(this);
 		return lugaresVisibles;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj){
+			return true;
+		}
+		if(obj == null){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		return super.equals(obj);
+	}
 }
