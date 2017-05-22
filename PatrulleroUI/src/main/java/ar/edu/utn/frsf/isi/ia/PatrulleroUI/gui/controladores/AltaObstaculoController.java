@@ -131,7 +131,7 @@ public class AltaObstaculoController extends ControladorDialogo {
 					}
 					return c;
 				}));
-		spHoraInicio.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000000, 1));
+		spHoraInicio.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000000, 0));
 		spHoraInicio.focusedProperty().addListener((obs, oldV, newV) -> {
 			spHoraInicio.increment(0);
 		});
@@ -152,7 +152,7 @@ public class AltaObstaculoController extends ControladorDialogo {
 					}
 					return c;
 				}));
-		spHoraFin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000000, 1));
+		spHoraFin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000000, 0));
 		spHoraFin.focusedProperty().addListener((obs, oldV, newV) -> {
 			spHoraFin.increment(0);
 		});
