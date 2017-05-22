@@ -41,10 +41,9 @@ public class MenuAdministracionController extends ControladorPatrullero {
 
 	@FXML
 	private void simular() {
-		//TODO hacer
-		//		if(this.nuevaScene("") == null){
-		//			botonAnteriormenteSeleccionado.setSelected(true);
-		//		}
+		if(this.nuevaScene(VerSimulacionController.URL_VISTA) == null){
+			botonAnteriormenteSeleccionado.setSelected(true);
+		}
 	}
 
 	@FXML
@@ -81,8 +80,8 @@ public class MenuAdministracionController extends ControladorPatrullero {
 		actualizar();
 
 		//Primera pantalla a mostrar
-		toggleButtonCargarMapa.setSelected(true);
-		cargarMapa();
+		toggleButtonSimular.setSelected(true);
+		simular();
 	}
 
 	private void agregarListenerSeleccionado(Toggle t) {
