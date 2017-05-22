@@ -1,5 +1,6 @@
 package frsf.cidisi.exercise.patrullero.search;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,6 +43,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 	@Override
 	public void initState() {
 		initOrientacion();
+		Arrays.stream(Visibilidad.values()).forEach(v -> obstaculos.put(v, new HashSet<>()));
 	}
 
 	/**
@@ -187,14 +189,6 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 			}
 		}
 		else if(!posicion.equals(other.posicion)){
-			return false;
-		}
-		if(ultimaCalleRecorrida == null){
-			if(other.ultimaCalleRecorrida != null){
-				return false;
-			}
-		}
-		else if(!ultimaCalleRecorrida.equals(other.ultimaCalleRecorrida)){
 			return false;
 		}
 		return true;

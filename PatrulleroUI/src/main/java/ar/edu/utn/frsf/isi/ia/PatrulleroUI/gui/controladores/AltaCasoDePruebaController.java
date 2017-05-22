@@ -244,7 +244,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		}
 		CasoDePruebaGUI casoViejo = casoDePrueba;
 
-		//Cargar mapa
+		//Cargar caso de prueba
 		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_CASO_PRUEBA.getFileChooser(), stage);
 		if(archivoCasoDePrueba == null){
 			return;

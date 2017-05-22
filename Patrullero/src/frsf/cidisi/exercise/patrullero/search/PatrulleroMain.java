@@ -68,14 +68,23 @@ public class PatrulleroMain {
 		Interseccion posicionAgentePatrullero = i1;
 		Interseccion posicionIncidente = i4;
 
+		new PatrulleroMain(mapaPatrullero, posicionAgentePatrullero, posicionIncidente, mapaAmbiente, posicionAgenteAmbiente).start();
+	}
+
+	SearchBasedAgentSimulator simulator;
+
+	public PatrulleroMain(Mapa mapaPatrullero, Interseccion posicionAgentePatrullero, Interseccion posicionIncidente, Mapa mapaAmbiente, Interseccion posicionAgenteAmbiente) {
+		mapaAmbiente.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+		mapaPatrullero.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+
 		Patrullero agent = new Patrullero(mapaPatrullero, posicionAgentePatrullero, posicionIncidente);
 
 		AmbienteCiudad environment = new AmbienteCiudad(mapaAmbiente, posicionAgenteAmbiente);
 
-		SearchBasedAgentSimulator simulator =
-				new SearchBasedAgentSimulator(environment, agent);
-
-		simulator.start();
+		simulator = new SearchBasedAgentSimulator(environment, agent);
 	}
 
+	public void start() {
+		simulator.start();
+	}
 }

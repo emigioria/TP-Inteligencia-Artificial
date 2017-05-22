@@ -20,22 +20,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.VerSimulacionController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.VerSimulacionController">
    <center>
       <SplitPane dividerPositions="0.5" BorderPane.alignment="CENTER">
          <items>
-            <ScrollPane prefHeight="474.0" prefWidth="668.0" />
-            <ScrollPane prefHeight="474.0" prefWidth="668.0" />
+            <ScrollPane fx:id="scrollEstadoAmbiente" prefHeight="474.0" prefWidth="668.0" />
+            <ScrollPane fx:id="scrollEstadoPatrullero" prefHeight="474.0" prefWidth="668.0" />
          </items>
       </SplitPane>
    </center>
    <top>
       <HBox spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Comenzar" />
-            <Button mnemonicParsing="false" text="Pausa" />
-            <Button mnemonicParsing="false" text="Avanzar" />
-            <Button mnemonicParsing="false" text="Ir al final" />
+            <Button mnemonicParsing="false" onAction="#cargarDatos" text="Cargar mapa y caso de prueba" />
+            <Button mnemonicParsing="false" onAction="#comenzar" text="Comenzar" />
+            <Button mnemonicParsing="false" onAction="#pausa" text="Pausa" />
+            <Button mnemonicParsing="false" onAction="#avanzar" text="Avanzar" />
+            <Button mnemonicParsing="false" onAction="#irAlFinal" text="Ir al final" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -51,9 +52,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Última acción: Avanzar" />
-            <Label text="Simulando/Listo" GridPane.halignment="RIGHT" />
-            <Label text="Hora: 24" GridPane.halignment="CENTER" />
+            <Label fx:id="lbUltimaAccion" text="Última acción: Avanzar" />
+            <Label fx:id="lbSimulandoOListo" text="Simulando/Listo" GridPane.halignment="RIGHT" />
+            <Label fx:id="lbHora" text="Hora: 24" GridPane.halignment="CENTER" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
