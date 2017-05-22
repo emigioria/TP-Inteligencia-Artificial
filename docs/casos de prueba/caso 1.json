@@ -1328,6 +1328,222 @@
       "tiempoInicio": 360,
       "tiempoFin": 600,
       "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 127,
+      "lugarID": 11,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "BACHEO",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 7,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 128,
+      "lugarID": 10,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "BACHEO",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 7,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 129,
+      "lugarID": 24,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 130,
+      "lugarID": 92,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CONGESTION",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 9,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 131,
+      "lugarID": 277,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "ACCIDENTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 9,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 132,
+      "lugarID": 125,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "EVENTO_SOCIAL",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 133,
+      "lugarID": 148,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 134,
+      "lugarID": 85,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "BACHEO",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 8,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 135,
+      "lugarID": 164,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 136,
+      "lugarID": 163,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 137,
+      "lugarID": 264,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "ACCIDENTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 10,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 138,
+      "lugarID": 285,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CONGESTION",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 7,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 139,
+      "lugarID": 282,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CONGESTION",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 7,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 140,
+      "lugarID": 123,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 141,
+      "lugarID": 332,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "BACHEO",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 142,
+      "lugarID": 19,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "EVENTO_SOCIAL",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 9,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 143,
+      "lugarID": 98,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "BACHEO",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 144,
+      "lugarID": 199,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "EVENTO_SOCIAL",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 146,
+      "lugarID": 26,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 9,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 147,
+      "lugarID": 121,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "BACHEO",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 360,
+      "tiempoFin": 600,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
     }
   ]
 }
