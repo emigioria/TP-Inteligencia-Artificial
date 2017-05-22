@@ -97,7 +97,7 @@ public abstract class Obstaculo implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "Nombre: " + this.getNombre() + ". Lugar: " + this.getLugar() + ".";
+		return "Nombre: " + this.getNombre() + ". Lugar: " + this.getLugar() + "." + ". Inicio: " + this.getTiempoInicio() + "." + ". Fin: " + this.getTiempoFin() + ".";
 	}
 
 	public abstract Integer getPeso(Integer peso);
