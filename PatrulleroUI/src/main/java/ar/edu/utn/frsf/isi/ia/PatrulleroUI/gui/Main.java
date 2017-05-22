@@ -9,7 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui;
 import java.util.List;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaMapaController;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.MenuAdministracionController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -55,7 +55,7 @@ public class Main extends Application {
 	}
 
 	private void iniciar() {
-		apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(primaryStage, AltaMapaController.URL_VISTA);
+		apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(primaryStage, MenuAdministracionController.URL_VISTA);
 	}
 
 	private void verParametros(List<String> raw) {

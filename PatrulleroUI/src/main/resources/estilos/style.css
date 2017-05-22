@@ -303,12 +303,28 @@
 }
 
 /* Botones topbar */
-.toggle-button-comentario {
-  -fx-graphic: url('../imagenes/boton_comentario.png');
+.toggle-button-simular {
+  -fx-graphic: url('../imagenes/boton_simular.png');
 }
 
-.toggle-button-comentario:selected {
-  -fx-graphic: url('../imagenes/boton_comentario_selected.png');
+.toggle-button-simular:selected {
+  -fx-graphic: url('../imagenes/boton_simular_selected.png');
+}
+
+.toggle-button-cargar-mapa {
+  -fx-graphic: url('../imagenes/boton_cargar_mapa.png');
+}
+
+.toggle-button-cargar-mapa:selected {
+  -fx-graphic: url('../imagenes/boton_cargar_mapa_selected.png');
+}
+
+.toggle-button-cargar-caso-de-prueba {
+  -fx-graphic: url('../imagenes/boton_cargar_caso_de_prueba.png');
+}
+
+.toggle-button-cargar-caso-de-prueba:selected {
+  -fx-graphic: url('../imagenes/boton_cargar_caso_de_prueba_selected.png');
 }
 
 /* Mapa */

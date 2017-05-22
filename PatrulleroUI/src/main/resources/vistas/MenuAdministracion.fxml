@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Copyright (c) 2016, Emiliano Gioria - Andres Leonel Rico
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.MenuAdministracionController">
+   <content>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="800.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="600.0" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <GridPane styleClass="leftbar">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ToggleButton fx:id="toggleButtonSimular" maxHeight="80.0" maxWidth="80.0" minHeight="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#simular" prefHeight="80.0" prefWidth="80.0" styleClass="toggle-button-simular">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ToggleButton>
+                        <Label alignment="CENTER" text="Simular" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" GridPane.rowIndex="1">
+                     <children>
+                        <ToggleButton fx:id="toggleButtonCargarMapa" maxHeight="80.0" maxWidth="80.0" minHeight="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#cargarMapa" prefHeight="80.0" prefWidth="80.0" styleClass="toggle-button-cargar-mapa">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ToggleButton>
+                        <Label alignment="CENTER" text="Cargar mapa" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" GridPane.rowIndex="2">
+                     <children>
+                        <ToggleButton fx:id="toggleButtonCargarCasoDePrueba" maxHeight="80.0" maxWidth="80.0" minHeight="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#cargarCasoDePrueba" prefHeight="80.0" prefWidth="80.0" styleClass="toggle-button-cargar-caso-de-prueba">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ToggleButton>
+                        <Label alignment="CENTER" maxWidth="80.0" text="Cargar caso de prueba" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </GridPane>
+            <AnchorPane GridPane.columnIndex="1">
+               <children>
+                  <StackPane fx:id="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>
