@@ -58,7 +58,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	}
 
 	public Collection<? extends Obstaculo> getObstaculosVisiblesAgente() {
-		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() < hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaPorElAgente))
+		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaPorElAgente))
 				.map(obs -> obs.clone())
 				.collect(Collectors.toSet());
 	}
