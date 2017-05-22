@@ -1,0 +1,49 @@
+{
+  "posicionInicialPatrullero": 68,
+  "posicionIncidente": 4,
+  "obstaculos": [
+    {
+      "id": 1,
+      "lugarID": 20,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 2,
+      "lugarID": 3,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 3,
+      "lugarID": 3,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "ACCIDENTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "retardoMultiplicativo": 7,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 4,
+      "lugarID": 3,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "BACHEO",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "retardoMultiplicativo": 6,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    }
+  ]
+}

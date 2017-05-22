@@ -1,0 +1,26 @@
+{
+  "posicionInicialPatrullero": 2,
+  "posicionIncidente": 15,
+  "obstaculos": [
+    {
+      "id": 1,
+      "lugarID": 3,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 2,
+      "lugarID": 20,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    }
+  ]
+}

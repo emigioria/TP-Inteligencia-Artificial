@@ -1,0 +1,16 @@
+{
+  "posicionInicialPatrullero": 2,
+  "posicionIncidente": 3,
+  "obstaculos": [
+    {
+      "id": 1,
+      "lugarID": 2,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    }
+  ]
+}
