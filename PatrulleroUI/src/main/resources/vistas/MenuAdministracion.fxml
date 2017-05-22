@@ -60,7 +60,7 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></ToggleButton>
-                        <Label alignment="CENTER" text="Cargar mapa" />
+                        <Label alignment="CENTER" text="Crear mapa" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" GridPane.rowIndex="2">
@@ -69,7 +69,7 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></ToggleButton>
-                        <Label alignment="CENTER" maxWidth="80.0" text="Cargar caso de prueba" textAlignment="CENTER" wrapText="true" />
+                        <Label alignment="CENTER" maxWidth="80.0" text="Crear caso de prueba" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </VBox>
                </children>
