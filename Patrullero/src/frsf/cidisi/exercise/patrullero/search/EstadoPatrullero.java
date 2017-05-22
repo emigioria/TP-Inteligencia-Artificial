@@ -72,7 +72,7 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 			case INFORMADO:
 				Set<Obstaculo> obstaculosInformadosViejos = obstaculos.get(visibilidad);
 				Set<Obstaculo> obstaculosInformadosNuevos = obstaculosPercibidosPorVisibilidad.get(visibilidad);
-				obstaculosInformadosViejos.stream().filter(obs -> !obstaculosInformadosNuevos.contains(obs)).forEach(obs -> {
+				new HashSet<>(obstaculosInformadosViejos).stream().filter(obs -> !obstaculosInformadosNuevos.contains(obs)).forEach(obs -> {
 					obstaculosInformadosViejos.remove(obs);
 					obs.getLugar().getObstaculos().remove(obs);
 				});

@@ -27,7 +27,7 @@ public enum Visibilidad {
 		public Boolean soyVisible(Obstaculo obstaculo, Interseccion posicionAgente, Arista ulArista) {
 			if(obstaculo.getLugar().sosArista()){
 				Arista aristaObstaculo = (Arista) obstaculo.getLugar();
-				return ulArista.equals(aristaObstaculo);
+				return aristaObstaculo.equals(ulArista);
 			}
 			else if(obstaculo.getLugar().sosInterseccion()){
 				Interseccion interseccionObstaculo = (Interseccion) obstaculo.getLugar();

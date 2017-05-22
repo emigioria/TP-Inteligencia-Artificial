@@ -1,5 +1,5 @@
 <tree id="2" edgedefault="directed">
-<node Id="1" Action="Avanzar" Cost="0.0" Estado_Agente="
+<node Id="1" Action="Avanzar" Cost="-1.0" Estado_Agente="
 	Viniendo de: San Martin (Que va de 3 a 4)
 	Posici&#243;n: 4 - San Martin # Sarmiento
 	Apuntando a: Sarmiento (Que va de 4 a 1)
