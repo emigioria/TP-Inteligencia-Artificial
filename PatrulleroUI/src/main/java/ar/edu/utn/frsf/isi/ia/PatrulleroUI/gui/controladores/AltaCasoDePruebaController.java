@@ -137,6 +137,10 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			}
 			else{
 				obstaculos = new TreeItem<>("Obstaculos");
+				obstaculos.setExpanded(true);
+				arista.setExpanded(true);
+				aristasSalientes.setExpanded(true);
+				lugarItem.setExpanded(true);
 			}
 			a.getObstaculos().stream().forEach(o -> {
 				obstaculos.getChildren().add(new TreeItem<>(o));
@@ -151,6 +155,8 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		}
 		else{
 			obstaculos = new TreeItem<>("Obstaculos");
+			obstaculos.setExpanded(true);
+			lugarItem.setExpanded(true);
 		}
 		interseccion.getObstaculos().stream().forEach(o -> {
 			obstaculos.getChildren().add(new TreeItem<>(o));
