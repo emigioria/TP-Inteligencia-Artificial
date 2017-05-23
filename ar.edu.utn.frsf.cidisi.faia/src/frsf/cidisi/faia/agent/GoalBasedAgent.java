@@ -31,7 +31,7 @@ public abstract class GoalBasedAgent extends Agent {
 	/**
 	 * This method must be overrode by the agent to receive perceptions
 	 * from the simulator.
-	 * 
+	 *
 	 * @param p
 	 */
 	public abstract void see(Perception p);
@@ -53,4 +53,8 @@ public abstract class GoalBasedAgent extends Agent {
 	}
 
 	public abstract String getGoalString();
+
+	public abstract void fuisteExitoso();
+
+	public abstract void noFuisteExitoso();
 }

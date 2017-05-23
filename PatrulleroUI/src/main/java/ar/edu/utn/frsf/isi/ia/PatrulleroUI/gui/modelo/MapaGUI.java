@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import javafx.scene.layout.Pane;
@@ -139,5 +140,9 @@ public class MapaGUI {
 	public void actualizarObstaculos() {
 		intersecciones.stream().forEach(i -> i.actualizarObstaculos());
 		intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).forEach(a -> a.actualizarObstaculos());
+	}
+
+	public InterseccionGUI getInterseccion(Interseccion interseccionBuscada) {
+		return intersecciones.stream().filter(i -> i.getInterseccion().equals(interseccionBuscada)).findFirst().get();
 	}
 }

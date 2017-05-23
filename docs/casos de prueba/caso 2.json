@@ -1,5 +1,6 @@
 {
   "posicionInicialPatrullero": 1,
+  "tipoIncidente": "ALARMA_VECINAL_SUCESO_CALLEJERO",
   "posicionIncidente": 148,
   "obstaculos": [
     {

@@ -15,6 +15,7 @@ import com.google.gson.JsonSerializer;
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
+import frsf.cidisi.exercise.patrullero.search.modelo.TipoIncidente;
 
 public class CasoDePruebaGsonAdapter implements JsonSerializer<CasoDePrueba>, JsonDeserializer<CasoDePrueba> {
 
@@ -22,6 +23,7 @@ public class CasoDePruebaGsonAdapter implements JsonSerializer<CasoDePrueba>, Js
 	public JsonElement serialize(CasoDePrueba casoDePrueba, Type tipo, JsonSerializationContext contexto) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("posicionInicialPatrullero", casoDePrueba.getPosicionInicialPatrullero().getId());
+		jsonObject.addProperty("tipoIncidente", casoDePrueba.getTipoIncidente().name());
 		jsonObject.addProperty("posicionIncidente", casoDePrueba.getPosicionIncidente().getId());
 
 		JsonArray jsonObstaculosArray = new JsonArray();
@@ -37,6 +39,7 @@ public class CasoDePruebaGsonAdapter implements JsonSerializer<CasoDePrueba>, Js
 
 		Long pipId = jsonObject.get("posicionInicialPatrullero").getAsLong();
 		Interseccion posicionInicialPatrullero = new Interseccion(pipId, null, null, null);
+		TipoIncidente tipoIncidente = TipoIncidente.valueOf(jsonObject.get("tipoIncidente").getAsString());
 		Long piId = jsonObject.get("posicionIncidente").getAsLong();
 		Interseccion posicionIncidente = new Interseccion(piId, null, null, null);
 
@@ -46,6 +49,7 @@ public class CasoDePruebaGsonAdapter implements JsonSerializer<CasoDePrueba>, Js
 
 		CasoDePrueba casoDePrueba = new CasoDePrueba();
 		casoDePrueba.setPosicionInicialPatrullero(posicionInicialPatrullero);
+		casoDePrueba.setTipoIncidentes(tipoIncidente);
 		casoDePrueba.setPosicionIncidente(posicionIncidente);
 		casoDePrueba.setObstaculos(obstaculos);
 		return casoDePrueba;

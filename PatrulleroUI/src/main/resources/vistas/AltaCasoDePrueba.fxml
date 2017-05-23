@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaCasoDePruebaController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.AltaCasoDePruebaController">
    <center>
       <ScrollPane fx:id="scrollMapaPanel" prefHeight="474.0" prefWidth="668.0" BorderPane.alignment="CENTER" />
    </center>
@@ -40,6 +40,7 @@
             <RowConstraints vgrow="NEVER" />
             <RowConstraints vgrow="NEVER" />
             <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="NEVER" />
          </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#nuevoObstaculo" text="Agregar" GridPane.rowIndex="2" />
@@ -47,9 +48,11 @@
             <TreeView fx:id="tvLugaresObstaculos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <Label text="Obstáculos" GridPane.columnSpan="2" />
             <ComboBox fx:id="cbPatrullero" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="cbIncidente" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cbTipoIncidente" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Posicion inicial patrullero" GridPane.rowIndex="3" />
-            <Label text="Posicion incidente" GridPane.rowIndex="4" />
+            <Label text="Tipo incidente" GridPane.rowIndex="4" />
+            <Label text="Posicion incidente" GridPane.rowIndex="5" />
+            <ComboBox fx:id="cbIncidente" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

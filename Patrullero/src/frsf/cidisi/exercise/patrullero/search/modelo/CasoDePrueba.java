@@ -11,6 +11,8 @@ public class CasoDePrueba {
 
 	private Interseccion posicionIncidente;
 
+	private TipoIncidente tipoIncidente;
+
 	public List<Obstaculo> getObstaculos() {
 		return obstaculos;
 	}
@@ -34,4 +36,13 @@ public class CasoDePrueba {
 	public void setPosicionIncidente(Interseccion posicionIncidente) {
 		this.posicionIncidente = posicionIncidente;
 	}
+
+	public TipoIncidente getTipoIncidente() {
+		return tipoIncidente;
+	}
+
+	public void setTipoIncidentes(TipoIncidente tipoIncidentes) {
+		this.tipoIncidente = tipoIncidentes;
+	}
+
 }

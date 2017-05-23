@@ -6,20 +6,27 @@ import java.util.logging.Logger;
 
 import frsf.cidisi.exercise.patrullero.search.actions.Avanzar;
 import frsf.cidisi.exercise.patrullero.search.actions.CambiarOrientacion;
+import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
+import frsf.cidisi.exercise.patrullero.search.modelo.TipoIncidente;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
-import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.cidisi.faia.solver.search.SearchSolveParam;
+import frsf.cidisi.faia.solver.search.Strategy;
 
 public class Patrullero extends SearchBasedAgent {
 
-	public Patrullero(Mapa mapa, Interseccion posicionPatrullero, Interseccion posicionIncidente) {
+	private EstrategiasDeBusqueda estrategia;
+	private ChangeListenerPatrullero avisarCambios;
+	private TipoIncidente tipoIncidente;
+
+	public Patrullero(Mapa mapa, Interseccion posicionPatrullero, Interseccion posicionIncidente, TipoIncidente tipoIncidente) {
+		this.tipoIncidente = tipoIncidente;
 
 		// The Agent Goal
 		ObjetivoPatrullero agGoal = new ObjetivoPatrullero();
@@ -43,9 +50,12 @@ public class Patrullero extends SearchBasedAgent {
 	 */
 	@Override
 	public Action selectAction() {
+		if(avisarCambios != null){
+			avisarCambios.cambio();
+		}
 
 		// Create the search strategy
-		DepthFirstSearch strategy = new DepthFirstSearch();
+		Strategy strategy = estrategia.getInstance();
 
 		// Create a Search object with the strategy
 		Search searchSolver = new Search(strategy);
@@ -85,7 +95,41 @@ public class Patrullero extends SearchBasedAgent {
 	}
 
 	@Override
-	public String getGoalString() {
-		return "Incidente en " + ((EstadoPatrullero) getAgentState()).getIncidente() + ". Enviando patrullero.";
+	public EstadoPatrullero getAgentState() {
+		return (EstadoPatrullero) super.getAgentState();
 	}
+
+	@Override
+	public String getGoalString() {
+		return tipoIncidente + " en " + getAgentState().getIncidente() + ". Enviando patrullero.";
+	}
+
+	public EstrategiasDeBusqueda getEstrategia() {
+		return estrategia;
+	}
+
+	public void setEstrategia(EstrategiasDeBusqueda estrategia) {
+		this.estrategia = estrategia;
+	}
+
+	public void setAvisarCambios(ChangeListenerPatrullero avisar) {
+		this.avisarCambios = avisar;
+	}
+
+	@Override
+	public void fuisteExitoso() {
+		//Patrullero feliz
+		if(avisarCambios != null){
+			avisarCambios.finSimulacionExitosa();
+		}
+	}
+
+	@Override
+	public void noFuisteExitoso() {
+		//Patrullero triste
+		if(avisarCambios != null){
+			avisarCambios.finSimulacionNoExitosa();
+		}
+	}
+
 }

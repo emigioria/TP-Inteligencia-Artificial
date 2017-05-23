@@ -10,16 +10,24 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.concurrent.Semaphore;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.PatrulleroGUI;
+import frsf.cidisi.exercise.patrullero.search.AmbienteCiudad;
+import frsf.cidisi.exercise.patrullero.search.ChangeListenerPatrullero;
+import frsf.cidisi.exercise.patrullero.search.Patrullero;
 import frsf.cidisi.exercise.patrullero.search.PatrulleroMain;
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
+import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
@@ -42,6 +50,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 	@FXML
 	private Label lbSimulandoOListo;
 
+	@FXML
+	private ComboBox<EstrategiasDeBusqueda> cbEstrategia;
+
 	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
 	private MapaGUI mapaAmbiente;
@@ -50,14 +61,32 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private CasoDePrueba casoDePruebaPatrullero;
 
+	private Patrullero agentePatrullero;
+
+	private AmbienteCiudad ambienteCiudad;
+
+	private Semaphore esperar = new Semaphore(0);
+
+	private PatrulleroGUI imagenPatrulleroMapaAmbiente = new PatrulleroGUI();
+
+	private PatrulleroGUI imagenPatrulleroMapaPatrullero = new PatrulleroGUI();
+
 	@Override
 	protected void inicializar() {
-		// TODO Auto-generated method stub
+		cbEstrategia.getItems().addAll(EstrategiasDeBusqueda.values());
+		cbEstrategia.getSelectionModel().select(0);
 
+		scrollEstadoAmbiente.vvalueProperty().bindBidirectional(scrollEstadoPatrullero.vvalueProperty());
+		scrollEstadoAmbiente.hvalueProperty().bindBidirectional(scrollEstadoPatrullero.hvalueProperty());
 	}
 
 	@FXML
 	private void cargarDatos() {
+		mapaAmbiente = null;
+		mapaPatrullero = null;
+		casoDePruebaPatrullero = null;
+		scrollEstadoAmbiente.setContent(null);
+		scrollEstadoPatrullero.setContent(null);
 		cargarMapa();
 		cargarCasoDePrueba();
 	}
@@ -92,6 +121,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 		try{
 			new CasoDePruebaGUI(manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba), mapaAmbiente.getMapa());
 			casoDePruebaPatrullero = manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba);
+
+			cargarDatosSimulacion();
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}
@@ -99,21 +130,100 @@ public class VerSimulacionController extends ControladorPatrullero {
 		mapaAmbiente.actualizarObstaculos();
 	}
 
-	@FXML
-	private void comenzar() throws IOException {
-		File hola = new File("Hola");
-		if(hola.exists()){
-			hola.delete();
-		}
-		hola.createNewFile();
-		System.setOut(new PrintStream(new FileOutputStream(new File("Hola"))));
+	private void cargarDatosSimulacion() {
+		mapaAmbiente.getNode().getChildren().add(imagenPatrulleroMapaAmbiente);
+		mapaPatrullero.getNode().getChildren().add(imagenPatrulleroMapaPatrullero);
 
-		new PatrulleroMain(
+		mapaAmbiente.getMapa().getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+		mapaPatrullero.getMapa().getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+
+		agentePatrullero = new Patrullero(
 				mapaPatrullero.getMapa(),
 				(Interseccion) mapaPatrullero.getMapa().getLugar(casoDePruebaPatrullero.getPosicionInicialPatrullero()),
 				(Interseccion) mapaPatrullero.getMapa().getLugar(casoDePruebaPatrullero.getPosicionIncidente()),
+				casoDePruebaPatrullero.getTipoIncidente());
+		agentePatrullero.setEstrategia(cbEstrategia.getValue());
+		ChangeListenerPatrullero clp = new ChangeListenerPatrullero() {
+
+			@Override
+			public void cambio() {
+				actualizarSimulacion();
+			}
+
+			@Override
+			public void finSimulacionExitosa() {
+				actualizarSimulacion();
+				Platform.runLater(() -> {
+					presentadorVentanas.presentarInformacion(
+							"El agente ha llegado a su destino!",
+							"El agente pudo llegar al incidente y resolverlo! :D",
+							stage);
+				});
+			}
+
+			@Override
+			public void finSimulacionNoExitosa() {
+				actualizarSimulacion();
+				Platform.runLater(() -> {
+					presentadorVentanas.presentarError(
+							"El agente ha muerto",
+							"El agente no pudo llegar a su destino! :(",
+							stage);
+				});
+			}
+		};
+		agentePatrullero.setAvisarCambios(clp);
+
+		ambienteCiudad = new AmbienteCiudad(
 				mapaAmbiente.getMapa(),
-				(Interseccion) mapaAmbiente.getMapa().getLugar(casoDePruebaPatrullero.getPosicionInicialPatrullero())).start();
+				(Interseccion) mapaAmbiente.getMapa().getLugar(casoDePruebaPatrullero.getPosicionInicialPatrullero()));
+
+		moverPatrullero();
+	}
+
+	@FXML
+	private void comenzar() throws IOException {
+		if(ambienteCiudad == null || agentePatrullero == null || casoDePruebaPatrullero == null){
+			return;
+		}
+		File archivoSalida = new File("SalidaSimulacion.txt");
+		if(archivoSalida.exists()){
+			archivoSalida.delete();
+		}
+		archivoSalida.createNewFile();
+		System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
+
+		presentadorVentanas.presentarInformacion("Iniciando patrullero", agentePatrullero.getGoalString(), stage);
+		new Thread(() -> {
+			new PatrulleroMain(ambienteCiudad, agentePatrullero).start();
+
+		}).start();
+	}
+
+	private void actualizarSimulacion() {
+		Platform.runLater(() -> {
+			mapaPatrullero.actualizarObstaculos();
+			moverPatrullero();
+
+			new Thread(() -> {
+				try{
+					Thread.sleep(2000);
+				} catch(InterruptedException e){
+					//Termina la espera
+				}
+				esperar.release();
+			}).start();
+		});
+		try{
+			esperar.acquire();
+		} catch(InterruptedException e){
+			//Termina la espera
+		}
+	}
+
+	private void moverPatrullero() {
+		imagenPatrulleroMapaAmbiente.setPosicion(mapaAmbiente.getInterseccion(ambienteCiudad.getEnvironmentState().getPosicionAgente()));
+		imagenPatrulleroMapaPatrullero.setPosicion(mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getPosicion()));
 	}
 
 	@FXML

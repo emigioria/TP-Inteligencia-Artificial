@@ -18,6 +18,7 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
+import frsf.cidisi.exercise.patrullero.search.modelo.TipoIncidente;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -38,6 +39,9 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 	@FXML
 	private ComboBox<Interseccion> cbPatrullero;
+
+	@FXML
+	private ComboBox<TipoIncidente> cbTipoIncidente;
 
 	@FXML
 	private ComboBox<Interseccion> cbIncidente;
@@ -105,6 +109,9 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		});
 		cbPatrullero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
 			casoDePrueba.getCasoDePrueba().setPosicionInicialPatrullero(newV);
+		});
+		cbTipoIncidente.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+			casoDePrueba.getCasoDePrueba().setTipoIncidentes(newV);
 		});
 		cbIncidente.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
 			casoDePrueba.getCasoDePrueba().setPosicionIncidente(newV);
@@ -196,6 +203,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 		//Crear nuevo caso de prueba
 		this.casoDePrueba = new CasoDePruebaGUI();
 		cbPatrullero.getSelectionModel().select(null);
+		cbTipoIncidente.getSelectionModel().select(null);
 		cbIncidente.getSelectionModel().select(null);
 
 		//Sacar lugar del panel derecho
@@ -231,6 +239,8 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 		cbPatrullero.getItems().clear();
 		cbPatrullero.getItems().addAll(mapa.getMapa().getEsquinas());
+		cbTipoIncidente.getItems().clear();
+		cbTipoIncidente.getItems().addAll(TipoIncidente.values());
 		cbIncidente.getItems().clear();
 		cbIncidente.getItems().addAll(mapa.getMapa().getEsquinas());
 
@@ -262,6 +272,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 		//Cargar interfaz
 		cbPatrullero.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero());
+		cbTipoIncidente.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getTipoIncidente());
 		cbIncidente.getSelectionModel().select(casoDePrueba.getCasoDePrueba().getPosicionIncidente());
 		iniciarPanelDerecho();
 
@@ -270,7 +281,9 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 	@FXML
 	private void guardarCasoDePrueba() {
-		if(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero() == null || casoDePrueba.getCasoDePrueba().getPosicionIncidente() == null){
+		if(casoDePrueba.getCasoDePrueba().getPosicionInicialPatrullero() == null ||
+				casoDePrueba.getCasoDePrueba().getTipoIncidente() == null ||
+				casoDePrueba.getCasoDePrueba().getPosicionIncidente() == null){
 			presentadorVentanas.presentarError("Error al guardar", "Debe seleccionar un origen para el patrullero y para el incidente", stage);
 			return;
 		}

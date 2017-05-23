@@ -2,8 +2,10 @@ package frsf.cidisi.exercise.patrullero.search;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
+import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
+import frsf.cidisi.exercise.patrullero.search.modelo.TipoIncidente;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
@@ -68,20 +70,20 @@ public class PatrulleroMain {
 		Interseccion posicionAgentePatrullero = i1;
 		Interseccion posicionIncidente = i4;
 
-		new PatrulleroMain(mapaPatrullero, posicionAgentePatrullero, posicionIncidente, mapaAmbiente, posicionAgenteAmbiente).start();
+		mapaAmbiente.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+		mapaPatrullero.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
+
+		Patrullero agent = new Patrullero(mapaPatrullero, posicionAgentePatrullero, posicionIncidente, TipoIncidente.ALARMA_DE_CASA_DE_FAMILIA);
+		agent.setEstrategia(EstrategiasDeBusqueda.COSTO_UNIFORME);
+		AmbienteCiudad environment = new AmbienteCiudad(mapaAmbiente, posicionAgenteAmbiente);
+		new PatrulleroMain(environment, agent).start();
 	}
 
 	SearchBasedAgentSimulator simulator;
 
-	public PatrulleroMain(Mapa mapaPatrullero, Interseccion posicionAgentePatrullero, Interseccion posicionIncidente, Mapa mapaAmbiente, Interseccion posicionAgenteAmbiente) {
-		mapaAmbiente.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
-		mapaPatrullero.getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
-
-		Patrullero agent = new Patrullero(mapaPatrullero, posicionAgentePatrullero, posicionIncidente);
-
-		AmbienteCiudad environment = new AmbienteCiudad(mapaAmbiente, posicionAgenteAmbiente);
-
-		simulator = new SearchBasedAgentSimulator(environment, agent);
+	public PatrulleroMain(AmbienteCiudad ambienteCiudad, Patrullero patrullero) {
+		//Simular
+		simulator = new SearchBasedAgentSimulator(ambienteCiudad, patrullero);
 	}
 
 	public void start() {
