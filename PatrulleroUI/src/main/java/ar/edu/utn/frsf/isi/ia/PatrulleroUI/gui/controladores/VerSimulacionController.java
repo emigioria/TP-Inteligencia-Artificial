@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.concurrent.Semaphore;
 
+import org.apache.commons.io.output.TeeOutputStream;
+
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
@@ -191,7 +193,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 			archivoSalida.delete();
 		}
 		archivoSalida.createNewFile();
-		System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
+		TeeOutputStream tee = new TeeOutputStream(new PrintStream(new FileOutputStream(archivoSalida)), System.out);
+		PrintStream ps = new PrintStream(tee, true); //true - auto-flush after println
+		System.setOut(ps);
 
 		presentadorVentanas.presentarInformacion("Iniciando patrullero", agentePatrullero.getGoalString(), stage);
 		new Thread(() -> {
@@ -202,6 +206,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private void actualizarSimulacion() {
 		Platform.runLater(() -> {
+			lbSimulandoOListo.setText("Listo");
+			lbHora.setText("Hora: " + ambienteCiudad.getEnvironmentState().getHora());
 			mapaPatrullero.actualizarObstaculos();
 			moverPatrullero();
 
@@ -214,11 +220,16 @@ public class VerSimulacionController extends ControladorPatrullero {
 				esperar.release();
 			}).start();
 		});
+
 		try{
 			esperar.acquire();
 		} catch(InterruptedException e){
 			//Termina la espera
 		}
+
+		Platform.runLater(() -> {
+			lbSimulandoOListo.setText("Simulando");
+		});
 	}
 
 	private void moverPatrullero() {
