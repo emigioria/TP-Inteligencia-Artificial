@@ -24,11 +24,13 @@ import frsf.cidisi.exercise.patrullero.search.AmbienteCiudad;
 import frsf.cidisi.exercise.patrullero.search.ChangeListenerPatrullero;
 import frsf.cidisi.exercise.patrullero.search.Patrullero;
 import frsf.cidisi.exercise.patrullero.search.PatrulleroMain;
+import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -155,6 +157,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 			@Override
 			public void finSimulacionExitosa() {
 				actualizarSimulacion();
+				esperar.release();
 				Platform.runLater(() -> {
 					presentadorVentanas.presentarInformacion(
 							"El agente ha llegado a su destino!",
@@ -166,6 +169,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 			@Override
 			public void finSimulacionNoExitosa() {
 				actualizarSimulacion();
+				esperar.release();
 				Platform.runLater(() -> {
 					presentadorVentanas.presentarError(
 							"El agente ha muerto",
@@ -208,12 +212,13 @@ public class VerSimulacionController extends ControladorPatrullero {
 		Platform.runLater(() -> {
 			lbSimulandoOListo.setText("Listo");
 			lbHora.setText("Hora: " + ambienteCiudad.getEnvironmentState().getHora());
+			lbUltimaAccion.setText("Última acción: " + agentePatrullero.getSelectedActionStr());
 			mapaPatrullero.actualizarObstaculos();
 			moverPatrullero();
 
 			new Thread(() -> {
 				try{
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 				} catch(InterruptedException e){
 					//Termina la espera
 				}
@@ -234,7 +239,38 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private void moverPatrullero() {
 		imagenPatrulleroMapaAmbiente.setPosicion(mapaAmbiente.getInterseccion(ambienteCiudad.getEnvironmentState().getPosicionAgente()));
+		Arista aristaApuntadaAmbiente = ambienteCiudad.getEnvironmentState().getPosicionAgente().getSalientes().get(ambienteCiudad.getEnvironmentState().getOrientacionAgente().nextIndex());
+		girarImagen(aristaApuntadaAmbiente, imagenPatrulleroMapaAmbiente);
+
 		imagenPatrulleroMapaPatrullero.setPosicion(mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getPosicion()));
+		Arista aristaApuntadaPatrullero = agentePatrullero.getAgentState().getPosicion().getSalientes().get(agentePatrullero.getAgentState().getOrientacion().nextIndex());
+		girarImagen(aristaApuntadaPatrullero, imagenPatrulleroMapaPatrullero);
+	}
+
+	private void girarImagen(Arista aristaApuntada, Node imagenARotar) {
+		Double horizontal = aristaApuntada.getDestino().getCoordenadaX() - aristaApuntada.getOrigen().getCoordenadaX();
+		Double vertical = aristaApuntada.getOrigen().getCoordenadaY() - aristaApuntada.getDestino().getCoordenadaY();
+		if(horizontal < 0){
+			imagenARotar.setScaleX(-1);
+		}
+		else{
+			imagenARotar.setScaleX(1);
+		}
+
+		if(horizontal != 0){
+			imagenARotar.setRotate(-Math.atan(vertical / horizontal) * 360 / (2 * Math.PI));
+		}
+		else{
+			if(vertical < 0){
+				imagenARotar.setRotate(90);
+			}
+			else if(vertical > 0){
+				imagenARotar.setRotate(-90);
+			}
+			else{
+				imagenARotar.setRotate(0);
+			}
+		}
 	}
 
 	@FXML

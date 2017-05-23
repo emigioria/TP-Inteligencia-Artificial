@@ -24,6 +24,7 @@ public class Patrullero extends SearchBasedAgent {
 	private EstrategiasDeBusqueda estrategia;
 	private ChangeListenerPatrullero avisarCambios;
 	private TipoIncidente tipoIncidente;
+	private Action selectedAction;
 
 	public Patrullero(Mapa mapa, Interseccion posicionPatrullero, Interseccion posicionIncidente, TipoIncidente tipoIncidente) {
 		this.tipoIncidente = tipoIncidente;
@@ -70,7 +71,7 @@ public class Patrullero extends SearchBasedAgent {
 		this.setSolver(searchSolver);
 
 		// Ask the solver for the best action
-		Action selectedAction = null;
+		this.selectedAction = null;
 		try{
 			selectedAction =
 					this.getSolver().solve(new SearchSolveParam(this.getProblem()));
@@ -114,6 +115,15 @@ public class Patrullero extends SearchBasedAgent {
 
 	public void setAvisarCambios(ChangeListenerPatrullero avisar) {
 		this.avisarCambios = avisar;
+	}
+
+	public String getSelectedActionStr() {
+		if(selectedAction == null){
+			return "Arrancando patrullero";
+		}
+		else{
+			return selectedAction.toString();
+		}
 	}
 
 	@Override

@@ -61,9 +61,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lbUltimaAccion" text="Última acción: Avanzar" />
-            <Label fx:id="lbSimulandoOListo" text="Simulando/Listo" GridPane.halignment="RIGHT" />
-            <Label fx:id="lbHora" text="Hora: 24" GridPane.halignment="CENTER" />
+            <Label fx:id="lbUltimaAccion" text="Última acción:" />
+            <Label fx:id="lbSimulandoOListo" text="Listo" GridPane.halignment="RIGHT" />
+            <Label fx:id="lbHora" text="Hora:" GridPane.halignment="CENTER" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
