@@ -1,6 +1,6 @@
 {
   "posicionInicialPatrullero": 1,
-  "tipoIncidente": "ALARMA_VECINAL_SUCESO_CALLEJERO",
+  "tipoIncidente": "ALARMA_DE_PANICO_POR_VIOLENCIA_DE_GENERO",
   "posicionIncidente": 148,
   "obstaculos": [
     {

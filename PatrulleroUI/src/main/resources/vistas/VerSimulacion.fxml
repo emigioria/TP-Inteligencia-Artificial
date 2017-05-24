@@ -39,7 +39,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#cargarDatos" text="Cargar mapa y caso de prueba" />
+            <Button fx:id="botonCargarMCP" mnemonicParsing="false" onAction="#cargarDatos" text="Cargar mapa y caso de prueba" />
             <Label text="Estrategia:" />
             <ComboBox fx:id="cbEstrategia" prefWidth="150.0" promptText="Estrategia" />
             <Button mnemonicParsing="false" onAction="#comenzar" text="Comenzar" />

@@ -142,7 +142,13 @@ public class MapaGUI {
 		intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).forEach(a -> a.actualizarObstaculos());
 	}
 
+	public void actualizarObstaculos(Long hora) {
+		intersecciones.stream().forEach(i -> i.actualizarObstaculos(hora));
+		intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).forEach(a -> a.actualizarObstaculos(hora));
+	}
+
 	public InterseccionGUI getInterseccion(Interseccion interseccionBuscada) {
 		return intersecciones.stream().filter(i -> i.getInterseccion().equals(interseccionBuscada)).findFirst().get();
 	}
+
 }

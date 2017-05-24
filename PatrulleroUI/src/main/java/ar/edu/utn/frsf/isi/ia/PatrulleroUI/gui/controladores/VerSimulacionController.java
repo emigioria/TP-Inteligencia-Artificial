@@ -8,8 +8,8 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import org.apache.commons.io.output.TeeOutputStream;
@@ -18,6 +18,7 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.IncidenteGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.PatrulleroGUI;
 import frsf.cidisi.exercise.patrullero.search.AmbienteCiudad;
@@ -28,12 +29,18 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Transition;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.util.Duration;
 
 public class VerSimulacionController extends ControladorPatrullero {
 
@@ -57,6 +64,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 	@FXML
 	private ComboBox<EstrategiasDeBusqueda> cbEstrategia;
 
+	@FXML
+	private Button botonCargarMCP;
+
 	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
 	private MapaGUI mapaAmbiente;
@@ -69,11 +79,19 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private AmbienteCiudad ambienteCiudad;
 
-	private Semaphore esperar = new Semaphore(0);
+	private Semaphore esperarAnimacion = new Semaphore(0, true);
 
-	private PatrulleroGUI imagenPatrulleroMapaAmbiente = new PatrulleroGUI();
+	private PatrulleroGUI imagenPatrulleroMapaAmbiente;
 
-	private PatrulleroGUI imagenPatrulleroMapaPatrullero = new PatrulleroGUI();
+	private PatrulleroGUI imagenPatrulleroMapaPatrullero;
+
+	private IncidenteGUI imagenIncidenteMapaPatrullero;
+
+	private boolean animar = true;
+
+	private Thread ultimaSimulacion;
+
+	private BooleanProperty finalizada = new SimpleBooleanProperty(true);
 
 	@Override
 	protected void inicializar() {
@@ -82,17 +100,27 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 		scrollEstadoAmbiente.vvalueProperty().bindBidirectional(scrollEstadoPatrullero.vvalueProperty());
 		scrollEstadoAmbiente.hvalueProperty().bindBidirectional(scrollEstadoPatrullero.hvalueProperty());
+
+		botonCargarMCP.disableProperty().bind(finalizada.not());
 	}
 
 	@FXML
+	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
 	private void cargarDatos() {
+		if(!finalizada.get()){
+			return;
+		}
 		mapaAmbiente = null;
 		mapaPatrullero = null;
 		casoDePruebaPatrullero = null;
 		scrollEstadoAmbiente.setContent(null);
 		scrollEstadoPatrullero.setContent(null);
+		if(ultimaSimulacion != null){
+			ultimaSimulacion.stop();
+		}
+		ultimaSimulacion = null;
+
 		cargarMapa();
-		cargarCasoDePrueba();
 	}
 
 	private void cargarMapa() {
@@ -110,13 +138,11 @@ public class VerSimulacionController extends ControladorPatrullero {
 		}
 		scrollEstadoAmbiente.setContent(mapaAmbiente.getNode());
 		scrollEstadoPatrullero.setContent(mapaPatrullero.getNode());
+
+		cargarCasoDePrueba();
 	}
 
 	private void cargarCasoDePrueba() {
-		if(mapaAmbiente == null || mapaPatrullero == null){
-			return;
-		}
-
 		//Cargar caso de prueba
 		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_CASO_PRUEBA.getFileChooser(), stage);
 		if(archivoCasoDePrueba == null){
@@ -135,7 +161,12 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	private void cargarDatosSimulacion() {
+		imagenPatrulleroMapaAmbiente = new PatrulleroGUI();
 		mapaAmbiente.getNode().getChildren().add(imagenPatrulleroMapaAmbiente);
+
+		imagenPatrulleroMapaPatrullero = new PatrulleroGUI();
+		imagenIncidenteMapaPatrullero = new IncidenteGUI(casoDePruebaPatrullero.getTipoIncidente());
+		mapaPatrullero.getNode().getChildren().add(imagenIncidenteMapaPatrullero);
 		mapaPatrullero.getNode().getChildren().add(imagenPatrulleroMapaPatrullero);
 
 		mapaAmbiente.getMapa().getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
@@ -152,29 +183,33 @@ public class VerSimulacionController extends ControladorPatrullero {
 			@Override
 			public void cambio() {
 				actualizarSimulacion();
+				seguirSimulacion();
 			}
 
 			@Override
 			public void finSimulacionExitosa() {
 				actualizarSimulacion();
-				esperar.release();
-				Platform.runLater(() -> {
-					presentadorVentanas.presentarInformacion(
-							"El agente ha llegado a su destino!",
-							"El agente pudo llegar al incidente y resolverlo! :D",
-							stage);
+				terminarSimulacion(() -> {
+					Platform.runLater(() -> {
+						mapaPatrullero.getNode().getChildren().remove(imagenIncidenteMapaPatrullero);
+						presentadorVentanas.presentarInformacion(
+								"El agente ha llegado a su destino!",
+								"El agente pudo llegar al incidente y resolverlo! :D",
+								stage);
+					});
 				});
 			}
 
 			@Override
 			public void finSimulacionNoExitosa() {
 				actualizarSimulacion();
-				esperar.release();
-				Platform.runLater(() -> {
-					presentadorVentanas.presentarError(
-							"El agente ha muerto",
-							"El agente no pudo llegar a su destino! :(",
-							stage);
+				terminarSimulacion(() -> {
+					Platform.runLater(() -> {
+						presentadorVentanas.presentarError(
+								"El agente ha muerto",
+								"El agente no pudo llegar a su destino! :(",
+								stage);
+					});
 				});
 			}
 		};
@@ -184,93 +219,137 @@ public class VerSimulacionController extends ControladorPatrullero {
 				mapaAmbiente.getMapa(),
 				(Interseccion) mapaAmbiente.getMapa().getLugar(casoDePruebaPatrullero.getPosicionInicialPatrullero()));
 
-		moverPatrullero();
+		imagenPatrulleroMapaAmbiente.inicializar(
+				mapaAmbiente.getInterseccion(ambienteCiudad.getEnvironmentState().getPosicionAgente()),
+				ambienteCiudad.getEnvironmentState().getPosicionAgente().getSalientes().get(ambienteCiudad.getEnvironmentState().getOrientacionAgente().nextIndex()));
+		imagenPatrulleroMapaPatrullero.inicializar(
+				mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getPosicion()),
+				agentePatrullero.getAgentState().getPosicion().getSalientes().get(agentePatrullero.getAgentState().getOrientacion().nextIndex()));
+
+		imagenIncidenteMapaPatrullero.inicializar(mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getIncidente()));
 	}
 
 	@FXML
-	private void comenzar() throws IOException {
+	private void comenzar() {
+		if(ultimaSimulacion != null){
+			return;
+		}
 		if(ambienteCiudad == null || agentePatrullero == null || casoDePruebaPatrullero == null){
 			return;
 		}
-		File archivoSalida = new File("SalidaSimulacion.txt");
-		if(archivoSalida.exists()){
-			archivoSalida.delete();
+
+		esperarAnimacion.drainPermits();
+		finalizada.set(false);
+
+		//Redirigir salida estandar a un archivo
+		try{
+			File archivoSalida = new File("SalidaSimulacion.txt");
+			if(archivoSalida.exists()){
+				archivoSalida.delete();
+			}
+			archivoSalida.createNewFile();
+			TeeOutputStream tee = new TeeOutputStream(new PrintStream(new FileOutputStream(archivoSalida)), System.out);
+			PrintStream ps = new PrintStream(tee, true); //true - auto-flush after println
+			System.setOut(ps);
+		} catch(Exception e){
+			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}
-		archivoSalida.createNewFile();
-		TeeOutputStream tee = new TeeOutputStream(new PrintStream(new FileOutputStream(archivoSalida)), System.out);
-		PrintStream ps = new PrintStream(tee, true); //true - auto-flush after println
-		System.setOut(ps);
 
+		//Avisar inicio e iniciar
 		presentadorVentanas.presentarInformacion("Iniciando patrullero", agentePatrullero.getGoalString(), stage);
-		new Thread(() -> {
+		ultimaSimulacion = new Thread(() -> {
 			new PatrulleroMain(ambienteCiudad, agentePatrullero).start();
-
-		}).start();
+		});
+		ultimaSimulacion.start();
 	}
 
 	private void actualizarSimulacion() {
 		Platform.runLater(() -> {
 			lbSimulandoOListo.setText("Listo");
-			lbHora.setText("Hora: " + ambienteCiudad.getEnvironmentState().getHora());
 			lbUltimaAccion.setText("Última acción: " + agentePatrullero.getSelectedActionStr());
-			mapaPatrullero.actualizarObstaculos();
 			moverPatrullero();
-
-			new Thread(() -> {
-				try{
-					Thread.sleep(3000);
-				} catch(InterruptedException e){
-					//Termina la espera
-				}
-				esperar.release();
-			}).start();
 		});
+	}
 
+	private void seguirSimulacion() {
 		try{
-			esperar.acquire();
+			esperarAnimacion.acquire();
+		} catch(InterruptedException e){
+			//Termina la espera
+		}
+	}
+
+	private void terminarSimulacion(Runnable accionFinal) {
+		try{
+			esperarAnimacion.acquire();
 		} catch(InterruptedException e){
 			//Termina la espera
 		}
 
-		Platform.runLater(() -> {
-			lbSimulandoOListo.setText("Simulando");
-		});
+		finalizada.set(true);
+
+		accionFinal.run();
 	}
 
 	private void moverPatrullero() {
-		imagenPatrulleroMapaAmbiente.setPosicion(mapaAmbiente.getInterseccion(ambienteCiudad.getEnvironmentState().getPosicionAgente()));
-		Arista aristaApuntadaAmbiente = ambienteCiudad.getEnvironmentState().getPosicionAgente().getSalientes().get(ambienteCiudad.getEnvironmentState().getOrientacionAgente().nextIndex());
-		girarImagen(aristaApuntadaAmbiente, imagenPatrulleroMapaAmbiente);
+		Duration duracionDesplazamiento = new Duration(1800);
+		Duration duracionGiro = new Duration(500);
+		Duration duracionPausaFinal = new Duration(200);
 
-		imagenPatrulleroMapaPatrullero.setPosicion(mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getPosicion()));
+		//Animar Desplazamiento
+		List<Transition> desplazamientoAmbiente = imagenPatrulleroMapaAmbiente.setPosicionTransicionada(
+				mapaAmbiente.getInterseccion(ambienteCiudad.getEnvironmentState().getPosicionAgente()),
+				duracionDesplazamiento);
+		//Animar giro
+		Arista aristaApuntadaAmbiente = ambienteCiudad.getEnvironmentState().getPosicionAgente().getSalientes().get(ambienteCiudad.getEnvironmentState().getOrientacionAgente().nextIndex());
+		List<Transition> giroAmbiente = imagenPatrulleroMapaAmbiente.girarImagen(
+				aristaApuntadaAmbiente,
+				duracionGiro);
+
+		//Animar desplazamiento
+		List<Transition> desplazamientoPatrullero = imagenPatrulleroMapaPatrullero.setPosicionTransicionada(
+				mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getPosicion()),
+				duracionDesplazamiento);
+		//Animar giro
 		Arista aristaApuntadaPatrullero = agentePatrullero.getAgentState().getPosicion().getSalientes().get(agentePatrullero.getAgentState().getOrientacion().nextIndex());
-		girarImagen(aristaApuntadaPatrullero, imagenPatrulleroMapaPatrullero);
+		List<Transition> giroPatrullero = imagenPatrulleroMapaPatrullero.girarImagen(
+				aristaApuntadaPatrullero,
+				duracionGiro);
+
+		//Crear animaciones
+		SequentialTransition animacionAmbiente = new SequentialTransition();
+		animacionAmbiente.getChildren().addAll(desplazamientoAmbiente);
+		animacionAmbiente.getChildren().addAll(giroAmbiente);
+		animacionAmbiente.getChildren().add(new PauseTransition(duracionPausaFinal));
+
+		SequentialTransition animacionPatrullero = new SequentialTransition();
+		animacionPatrullero.getChildren().addAll(desplazamientoPatrullero);
+		animacionPatrullero.getChildren().addAll(giroPatrullero);
+		animacionPatrullero.getChildren().add(new PauseTransition(duracionPausaFinal));
+
+		if(animar){
+			//Iniciar animaciones
+			animacionAmbiente.play();
+			animacionPatrullero.play();
+		}
+		else{
+			//Saltear animaciones
+			animacionAmbiente.playFrom(animacionAmbiente.getTotalDuration());
+			animacionPatrullero.playFrom(animacionPatrullero.getTotalDuration());
+		}
+
+		//Al finalizar, seguir
+		animacionAmbiente.setOnFinished(e -> {
+			mostrarResultadoMover();
+			esperarAnimacion.release();
+		});
 	}
 
-	private void girarImagen(Arista aristaApuntada, Node imagenARotar) {
-		Double horizontal = aristaApuntada.getDestino().getCoordenadaX() - aristaApuntada.getOrigen().getCoordenadaX();
-		Double vertical = aristaApuntada.getOrigen().getCoordenadaY() - aristaApuntada.getDestino().getCoordenadaY();
-		if(horizontal < 0){
-			imagenARotar.setScaleX(-1);
-		}
-		else{
-			imagenARotar.setScaleX(1);
-		}
-
-		if(horizontal != 0){
-			imagenARotar.setRotate(-Math.atan(vertical / horizontal) * 360 / (2 * Math.PI));
-		}
-		else{
-			if(vertical < 0){
-				imagenARotar.setRotate(90);
-			}
-			else if(vertical > 0){
-				imagenARotar.setRotate(-90);
-			}
-			else{
-				imagenARotar.setRotate(0);
-			}
-		}
+	private void mostrarResultadoMover() {
+		mapaAmbiente.actualizarObstaculos(ambienteCiudad.getEnvironmentState().getHora());
+		mapaPatrullero.actualizarObstaculos();
+		lbHora.setText("Hora: " + ambienteCiudad.getEnvironmentState().getHora());
+		lbSimulandoOListo.setText("Simulando");
 	}
 
 	@FXML
@@ -292,7 +371,15 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	@Override
+	public void salir() {
+		super.salir();
+	}
+
+	@Override
 	public Boolean sePuedeSalir() {
-		return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados ¿Seguro que desea salir?", stage).acepta();
+		if(finalizada.get()){
+			return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados ¿Seguro que desea salir?", stage).acepta();
+		}
+		return false;
 	}
 }

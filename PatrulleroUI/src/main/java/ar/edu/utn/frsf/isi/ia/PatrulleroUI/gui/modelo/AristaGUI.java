@@ -7,10 +7,13 @@
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.Calle;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
@@ -176,6 +179,21 @@ public class AristaGUI {
 		}
 		else{
 			if(arista.getObstaculos().stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
+				colorArista.set(Color.RED);
+			}
+			else{
+				colorArista.set(Color.ORANGE);
+			}
+		}
+	}
+
+	public void actualizarObstaculos(Long hora) {
+		Set<Obstaculo> obstaculosActivos = arista.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
+		if(obstaculosActivos.isEmpty()){
+			colorArista.set(Color.BLACK);
+		}
+		else{
+			if(obstaculosActivos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
 				colorArista.set(Color.RED);
 			}
 			else{

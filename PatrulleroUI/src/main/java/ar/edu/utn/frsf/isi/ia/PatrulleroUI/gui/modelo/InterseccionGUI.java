@@ -8,9 +8,12 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -105,6 +108,24 @@ public class InterseccionGUI {
 		}
 		else{
 			if(interseccion.getObstaculos().stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
+				colorTexto.set(Color.WHITE);
+				colorInterseccion.set(Color.RED);
+			}
+			else{
+				colorTexto.set(Color.WHITE);
+				colorInterseccion.set(Color.ORANGE);
+			}
+		}
+	}
+
+	public void actualizarObstaculos(Long hora) {
+		Set<Obstaculo> obstaculosActivos = interseccion.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
+		if(obstaculosActivos.isEmpty()){
+			colorTexto.set(Color.BLACK);
+			colorInterseccion.set(Color.CYAN);
+		}
+		else{
+			if(obstaculosActivos.stream().reduce(1, (x, y) -> y.getPeso(x), (x, y) -> x * y) < 0){
 				colorTexto.set(Color.WHITE);
 				colorInterseccion.set(Color.RED);
 			}
