@@ -48,10 +48,6 @@ public class Avanzar extends SearchAction {
 
 		// PreConditions: que se esté apuntando a una salida
 		if(orientacionAgenteAmbiente.hasNext()){
-			Long tiempo = getCostAvanzar(estadoPatrullero).longValue();
-			Boolean corteTotalEncontrado = Long.signum(tiempo) < 0;
-			tiempo = Math.abs(tiempo);
-
 			// Update the agent state
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
 			Arista aristaElegidaPatrullero = orientacionAgentePatrullero.next();
@@ -62,11 +58,14 @@ public class Avanzar extends SearchAction {
 			// Update the real world
 			// PostConditions: actualizar el mundo real moviendo el agente a la siguiente esquina y apuntando a la primera calle saliente de la misma
 			Arista aristaElegidaAmbiente = orientacionAgenteAmbiente.next();
-			estadoPatrullero.setUltimaCalleRecorrida(aristaElegidaAmbiente);
+			estadoAmbiente.setUltimaCalleRecorridaPorElAgente(aristaElegidaAmbiente);
 			estadoAmbiente.setPosicionAgente(aristaElegidaAmbiente.getDestino());
 			estadoAmbiente.initOrientacion();
 
 			//Actualizo la hora y si chocó con un obstaculo total
+			Long tiempo = getCost(estadoAmbiente).longValue();
+			Boolean corteTotalEncontrado = Long.signum(tiempo) < 0;
+			tiempo = Math.abs(tiempo);
 			estadoAmbiente.addHora(tiempo);
 			if(corteTotalEncontrado){
 				estadoAmbiente.setAgenteEnCorteTotal(true);
@@ -77,6 +76,7 @@ public class Avanzar extends SearchAction {
 		return null;
 	}
 
+	//Costo antes de ejecutar la acción
 	private Integer getCostAvanzar(SearchBasedAgentState sbs) {
 		EstadoPatrullero estadoPatrullero = ((EstadoPatrullero) sbs);
 		Interseccion posicion = estadoPatrullero.getPosicion();
@@ -93,7 +93,7 @@ public class Avanzar extends SearchAction {
 		for(Obstaculo obs: arista.getDestino().getObstaculos()){
 			pesoInterseccion = obs.getPeso(pesoInterseccion);
 		}
-		return (pesoArista < 0 || pesoInterseccion < 0) ? (-1) : (1) * (Math.abs(pesoArista) + Math.abs(pesoInterseccion));
+		return ((pesoArista < 0 || pesoInterseccion < 0) ? (-1) : (1)) * (Math.abs(pesoArista) + Math.abs(pesoInterseccion));
 	}
 
 	/**
@@ -106,6 +106,14 @@ public class Avanzar extends SearchAction {
 		Interseccion posicion = estadoPatrullero.getPosicion();
 		Arista entrada = estadoPatrullero.getUltimaCalleRecorrida();
 		return getCosto(posicion, entrada).doubleValue();
+	}
+
+	//Costo después de ejecutar la acción
+	private Integer getCost(EnvironmentState sbs) {
+		EstadoAmbiente estadoAmbiente = ((EstadoAmbiente) sbs);
+		Interseccion posicion = estadoAmbiente.getPosicionAgente();
+		Arista entrada = estadoAmbiente.getUltimaCalleRecorridaPorElAgente();
+		return getCosto(posicion, entrada);
 	}
 
 	/**
