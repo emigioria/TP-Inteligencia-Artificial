@@ -177,7 +177,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 				(Interseccion) mapaPatrullero.getMapa().getLugar(casoDePruebaPatrullero.getPosicionInicialPatrullero()),
 				(Interseccion) mapaPatrullero.getMapa().getLugar(casoDePruebaPatrullero.getPosicionIncidente()),
 				casoDePruebaPatrullero.getTipoIncidente());
-		agentePatrullero.setEstrategia(cbEstrategia.getValue());
 		ChangeListenerPatrullero clp = new ChangeListenerPatrullero() {
 
 			@Override
@@ -238,8 +237,10 @@ public class VerSimulacionController extends ControladorPatrullero {
 			return;
 		}
 
+		//Inicializar variables
 		esperarAnimacion.drainPermits();
 		finalizada.set(false);
+		agentePatrullero.setEstrategia(cbEstrategia.getValue());
 
 		//Redirigir salida estandar a un archivo
 		try{
