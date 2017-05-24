@@ -240,6 +240,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 		//Inicializar variables
 		esperarAnimacion.drainPermits();
 		finalizada.set(false);
+		animar = true;
 		agentePatrullero.setEstrategia(cbEstrategia.getValue());
 
 		//Redirigir salida estandar a un archivo
@@ -367,8 +368,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	@FXML
 	private void irAlFinal() {
-		// TODO Auto-generated method stub
-
+		animar = false;
 	}
 
 	@Override
@@ -378,9 +378,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	@Override
 	public Boolean sePuedeSalir() {
-		if(finalizada.get()){
-			return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados ¿Seguro que desea salir?", stage).acepta();
-		}
-		return false;
+		return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta();
 	}
 }
