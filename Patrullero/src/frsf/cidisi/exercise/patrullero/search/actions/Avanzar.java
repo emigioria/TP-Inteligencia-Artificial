@@ -63,10 +63,10 @@ public class Avanzar extends SearchAction {
 			estadoAmbiente.initOrientacion();
 
 			//Actualizo la hora y si chocó con un obstaculo total
-			Long tiempo = getCost(estadoAmbiente).longValue();
-			Boolean corteTotalEncontrado = Long.signum(tiempo) < 0;
+			Integer tiempo = getCost(estadoAmbiente);
+			Boolean corteTotalEncontrado = (tiempo < 0);
 			tiempo = Math.abs(tiempo);
-			estadoAmbiente.addHora(tiempo);
+			estadoAmbiente.addHora(tiempo.longValue());
 			if(corteTotalEncontrado){
 				estadoAmbiente.setAgenteEnCorteTotal(true);
 			}
@@ -113,7 +113,23 @@ public class Avanzar extends SearchAction {
 		EstadoAmbiente estadoAmbiente = ((EstadoAmbiente) sbs);
 		Interseccion posicion = estadoAmbiente.getPosicionAgente();
 		Arista entrada = estadoAmbiente.getUltimaCalleRecorridaPorElAgente();
-		return getCosto(posicion, entrada);
+		return getCosto(posicion, entrada, estadoAmbiente.getHora());
+	}
+
+	private Integer getCosto(Interseccion interseccion, Arista arista, Long hora) {
+		Integer pesoArista = arista.getPeso();
+		for(Obstaculo obs: arista.getObstaculos()){
+			if(obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora){
+				pesoArista = obs.getPeso(pesoArista);
+			}
+		}
+		Integer pesoInterseccion = interseccion.getPeso();
+		for(Obstaculo obs: arista.getDestino().getObstaculos()){
+			if(obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora){
+				pesoInterseccion = obs.getPeso(pesoInterseccion);
+			}
+		}
+		return ((pesoArista < 0 || pesoInterseccion < 0) ? (-1) : (1)) * (Math.abs(pesoArista) + Math.abs(pesoInterseccion));
 	}
 
 	/**
