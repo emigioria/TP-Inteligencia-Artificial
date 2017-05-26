@@ -9,6 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 import java.util.Optional;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.InterseccionGUIListCell;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
@@ -114,6 +115,11 @@ public class AltaAristaController extends ControladorDialogo {
 				cbOrigen.getItems().remove(newV);
 			}
 		});
+
+		cbOrigen.setButtonCell(new InterseccionGUIListCell());
+		cbOrigen.setCellFactory(l -> new InterseccionGUIListCell());
+		cbDestino.setButtonCell(new InterseccionGUIListCell());
+		cbDestino.setCellFactory(l -> new InterseccionGUIListCell());
 	}
 
 	public void inicializarCon(MapaGUI mapa) {

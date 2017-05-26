@@ -17,12 +17,11 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
-public class AristaGUI {
+public class AristaGUI extends Group {
 
 	protected static Long ultimoIdAsignado = 0L;
 
@@ -31,8 +30,6 @@ public class AristaGUI {
 	private static final Double ALTO_FLECHA = 5.0;
 
 	private Arista arista;
-
-	private Group node;
 
 	private InterseccionGUI origen;
 
@@ -59,22 +56,20 @@ public class AristaGUI {
 		}
 		this.arista = arista;
 
-		node = new Group();
-
-		this.getOrigen().getNode().translateXProperty().addListener((obs, oldV, newV) -> {
-			node.getChildren().clear();
+		this.getOrigen().translateXProperty().addListener((obs, oldV, newV) -> {
+			this.getChildren().clear();
 			dibujarArista();
 		});
-		this.getOrigen().getNode().translateYProperty().addListener((obs, oldV, newV) -> {
-			node.getChildren().clear();
+		this.getOrigen().translateYProperty().addListener((obs, oldV, newV) -> {
+			this.getChildren().clear();
 			dibujarArista();
 		});
-		this.getDestino().getNode().translateXProperty().addListener((obs, oldV, newV) -> {
-			node.getChildren().clear();
+		this.getDestino().translateXProperty().addListener((obs, oldV, newV) -> {
+			this.getChildren().clear();
 			dibujarArista();
 		});
-		this.getDestino().getNode().translateYProperty().addListener((obs, oldV, newV) -> {
-			node.getChildren().clear();
+		this.getDestino().translateYProperty().addListener((obs, oldV, newV) -> {
+			this.getChildren().clear();
 			dibujarArista();
 		});
 
@@ -82,11 +77,11 @@ public class AristaGUI {
 	}
 
 	private void dibujarArista() {
-		double x1 = this.getOrigen().getNode().getTranslateX() + InterseccionGUI.RADIO;
-		double y1 = this.getOrigen().getNode().getTranslateY() + InterseccionGUI.RADIO;
-		double x2 = this.getDestino().getNode().getTranslateX() + InterseccionGUI.RADIO;
-		double y2 = this.getDestino().getNode().getTranslateY() + InterseccionGUI.RADIO;
-		dibujarLineaConFlecha(node, x1, y1, x2, y2);
+		double x1 = this.getOrigen().getTranslateX() + InterseccionGUI.RADIO;
+		double y1 = this.getOrigen().getTranslateY() + InterseccionGUI.RADIO;
+		double x2 = this.getDestino().getTranslateX() + InterseccionGUI.RADIO;
+		double y2 = this.getDestino().getTranslateY() + InterseccionGUI.RADIO;
+		dibujarLineaConFlecha(this, x1, y1, x2, y2);
 	}
 
 	private void dibujarLineaConFlecha(Group pane, double x1, double y1, double x2, double y2) {
@@ -146,10 +141,6 @@ public class AristaGUI {
 
 	public void setArista(Arista arista) {
 		this.arista = arista;
-	}
-
-	public Node getNode() {
-		return node;
 	}
 
 	public InterseccionGUI getOrigen() {

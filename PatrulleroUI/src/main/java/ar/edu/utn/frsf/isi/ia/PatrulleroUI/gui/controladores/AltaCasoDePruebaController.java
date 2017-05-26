@@ -226,10 +226,10 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
 		}
-		scrollMapaPanel.setContent(mapa.getNode());
+		scrollMapaPanel.setContent(mapa);
 
 		//Hacer algo al seleccionar una interseccion
-		mapa.getIntersecciones().stream().forEach(i -> i.getNode().setOnMousePressed(t -> {
+		mapa.getIntersecciones().stream().forEach(i -> i.setOnMousePressed(t -> {
 			actualizarPanelDerecho(i);
 			t.consume();
 		}));

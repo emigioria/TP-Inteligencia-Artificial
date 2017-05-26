@@ -52,9 +52,9 @@ public class PatrulleroGUI extends ImageView {
 
 		TranslateTransition retorno = new TranslateTransition(duracion);
 		retorno.setFromX(this.getTranslateX());
-		retorno.setToX(posicion.getNode().getTranslateX());
+		retorno.setToX(posicion.getTranslateX());
 		retorno.setFromY(this.getTranslateY());
-		retorno.setToY(posicion.getNode().getTranslateY());
+		retorno.setToY(posicion.getTranslateY());
 		retorno.setNode(this);
 
 		return Arrays.asList(new Transition[] { retorno });

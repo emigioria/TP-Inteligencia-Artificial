@@ -22,8 +22,8 @@ public class IncidenteGUI extends ImageView {
 
 	public void inicializar(InterseccionGUI posicion) {
 		this.posicion = posicion;
-		this.setTranslateX(posicion.getNode().getTranslateX());
-		this.setTranslateY(posicion.getNode().getTranslateY());
+		this.setTranslateX(posicion.getTranslateX());
+		this.setTranslateY(posicion.getTranslateY());
 	}
 
 	public InterseccionGUI getPosicion() {

@@ -16,7 +16,7 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
 import frsf.cidisi.exercise.patrullero.search.modelo.Mapa;
 import javafx.scene.layout.Pane;
 
-public class MapaGUI {
+public class MapaGUI extends Pane {
 
 	protected static Long ultimoIdAsignadoCalle = 0L;
 
@@ -24,15 +24,13 @@ public class MapaGUI {
 
 	private Mapa mapa = new Mapa();
 
-	private Pane mapaPanel = new Pane();
-
 	public MapaGUI() {
 		super();
-		mapaPanel.getStyleClass().add("mapaPanel");
-		mapaPanel.prefHeightProperty().addListener((obs, oldV, newV) -> {
+		this.getStyleClass().add("mapaPanel");
+		this.prefHeightProperty().addListener((obs, oldV, newV) -> {
 			mapa.setAlto(newV.doubleValue());
 		});
-		mapaPanel.prefWidthProperty().addListener((obs, oldV, newV) -> {
+		this.prefWidthProperty().addListener((obs, oldV, newV) -> {
 			mapa.setAncho(newV.doubleValue());
 		});
 
@@ -46,14 +44,14 @@ public class MapaGUI {
 	public MapaGUI(Mapa mapa) {
 		this();
 		this.mapa = mapa;
-		mapaPanel.setPrefHeight(mapa.getAlto());
-		mapaPanel.setPrefWidth(mapa.getAncho());
+		this.setPrefHeight(mapa.getAlto());
+		this.setPrefWidth(mapa.getAncho());
 		mapa.getEsquinas().stream().forEach(i -> {
 			InterseccionGUI nuevaInterseccion = new InterseccionGUI(i);
 			intersecciones.add(nuevaInterseccion);
-			mapaPanel.getChildren().add(nuevaInterseccion.getNode());
+			this.getChildren().add(nuevaInterseccion);
 		});
-		mapa.getCalles().stream().map(c -> c.getTramos()).flatMap(List::stream).forEach(a -> mapaPanel.getChildren().add(new AristaGUI(a, intersecciones).getNode()));
+		mapa.getCalles().stream().map(c -> c.getTramos()).flatMap(List::stream).forEach(a -> this.getChildren().add(new AristaGUI(a, intersecciones)));
 
 		//Setear IDs
 		try{
@@ -80,7 +78,7 @@ public class MapaGUI {
 	public void agregarInterseccionGUI(InterseccionGUI nuevaInterseccion) {
 		intersecciones.add(nuevaInterseccion);
 		mapa.getEsquinas().add(nuevaInterseccion.getInterseccion());
-		mapaPanel.getChildren().add(nuevaInterseccion.getNode());
+		this.getChildren().add(nuevaInterseccion);
 	}
 
 	public void quitarInterseccionGUI(InterseccionGUI interseccionAQuitar) {
@@ -88,7 +86,7 @@ public class MapaGUI {
 		(new ArrayList<>(interseccionAQuitar.getSalientes())).stream().forEach(a -> this.desactivarArista(a));
 		intersecciones.remove(interseccionAQuitar);
 		mapa.getEsquinas().remove(interseccionAQuitar.getInterseccion());
-		mapaPanel.getChildren().remove(interseccionAQuitar.getNode());
+		this.getChildren().remove(interseccionAQuitar);
 	}
 
 	public void desactivarArista(AristaGUI arista) {
@@ -97,11 +95,11 @@ public class MapaGUI {
 		arista.getArista().getDestino().getEntrantes().remove(arista.getArista());
 		arista.getOrigen().getSalientes().remove(arista);
 		arista.getDestino().getEntrantes().remove(arista);
-		mapaPanel.getChildren().remove(arista.getNode());
+		this.getChildren().remove(arista);
 	}
 
 	public void agregarAristaGUI(AristaGUI nuevaArista) {
-		mapaPanel.getChildren().add(nuevaArista.getNode());
+		this.getChildren().add(nuevaArista);
 		Calle nuevaCalle = nuevaArista.getArista().getCalle();
 		if(!mapa.getCalles().contains(nuevaCalle)){
 			mapa.getCalles().add(nuevaCalle);
@@ -119,10 +117,6 @@ public class MapaGUI {
 	public void setMapa(Mapa mapa) {
 		this.mapa = mapa;
 	};
-
-	public Pane getNode() {
-		return mapaPanel;
-	}
 
 	public static Calle crearCalle(String nombrePropio) {
 		return new Calle(++MapaGUI.ultimoIdAsignadoCalle, nombrePropio);

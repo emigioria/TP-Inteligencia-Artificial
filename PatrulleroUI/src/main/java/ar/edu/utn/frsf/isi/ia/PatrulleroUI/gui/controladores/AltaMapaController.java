@@ -12,7 +12,6 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.MouseGesturesAdder;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.AristaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
@@ -64,7 +63,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 	private MouseGesturesAdder mga;
 
-	private MapaGUI mapa;
+	private MapaGUI mapaGUI;
 
 	private InterseccionGUI interseccionActual;
 
@@ -73,8 +72,8 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private void nuevaInterseccion() {
 		ultimaInterseccionAgregada = new InterseccionGUI();
-		mapa.agregarInterseccionGUI(ultimaInterseccionAgregada);
-		mga.makeDraggable(ultimaInterseccionAgregada.getNode());
+		mapaGUI.agregarInterseccionGUI(ultimaInterseccionAgregada);
+		mga.makeDraggable(ultimaInterseccionAgregada);
 	}
 
 	@FXML
@@ -82,7 +81,7 @@ public class AltaMapaController extends ControladorPatrullero {
 		if(interseccionActual == null){
 			return;
 		}
-		mapa.quitarInterseccionGUI(interseccionActual);
+		mapaGUI.quitarInterseccionGUI(interseccionActual);
 		sacarPanelDerecho();
 	}
 
@@ -99,7 +98,7 @@ public class AltaMapaController extends ControladorPatrullero {
 	private void nuevaArista(InterseccionGUI origen) {
 		VentanaPersonalizada ventanaNuevaArista = presentadorVentanas.presentarVentanaPersonalizada(AltaAristaController.URL_VISTA, stage);
 		AltaAristaController controlador = (AltaAristaController) ventanaNuevaArista.getControlador();
-		controlador.inicializarCon(mapa);
+		controlador.inicializarCon(mapaGUI);
 		if(origen != null){
 			controlador.setOrigen(origen);
 		}
@@ -107,7 +106,7 @@ public class AltaMapaController extends ControladorPatrullero {
 
 		AristaGUI resultado = controlador.getResultado();
 		if(resultado != null){
-			mapa.agregarAristaGUI(resultado);
+			mapaGUI.agregarAristaGUI(resultado);
 			if(origen != null){
 				actualizarPanelDerecho(origen);
 			}
@@ -121,7 +120,7 @@ public class AltaMapaController extends ControladorPatrullero {
 			return;
 		}
 		InterseccionGUI interseccion = aristaAQuitar.getOrigen();
-		mapa.quitarAristaGUI(aristaAQuitar);
+		mapaGUI.quitarAristaGUI(aristaAQuitar);
 		actualizarPanelDerecho(interseccion);
 	}
 
@@ -199,8 +198,8 @@ public class AltaMapaController extends ControladorPatrullero {
 	@FXML
 	private void nuevoMapa() {
 		//Crear nuevo mapa
-		this.mapa = new MapaGUI();
-		scrollMapaPanel.setContent(mapa.getNode());
+		this.mapaGUI = new MapaGUI();
+		scrollMapaPanel.setContent(mapaGUI);
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
 		crearMouseGesturesAdder();
@@ -210,19 +209,15 @@ public class AltaMapaController extends ControladorPatrullero {
 	}
 
 	private void crearMouseGesturesAdder() {
-		mga = new MouseGesturesAdder(mapa.getNode());
+		mga = new MouseGesturesAdder(mapaGUI);
 		mga.setOnMousePressed(t -> {
-			if(t.getSource() instanceof StackPaneWithTag){
-				StackPaneWithTag<?> a = (StackPaneWithTag<?>) t.getSource();
-				Object interseccionTalVez = a.getTag();
-				if(interseccionTalVez instanceof InterseccionGUI){
-					InterseccionGUI interseccion = (InterseccionGUI) interseccionTalVez;
-					actualizarPanelDerecho(interseccion);
-				}
+			if(t.getSource() instanceof InterseccionGUI){
+				InterseccionGUI interseccion = (InterseccionGUI) t.getSource();
+				actualizarPanelDerecho(interseccion);
 				t.consume();
 			}
 		});
-		mapa.getNode().setOnMousePressed(t -> {
+		mapaGUI.setOnMousePressed(t -> {
 			if(t.getButton().compareTo(MouseButton.SECONDARY) == 0){
 				nuevaInterseccion();
 				ultimaInterseccionAgregada.getInterseccion().setCoordenadaX(t.getX());
@@ -239,16 +234,16 @@ public class AltaMapaController extends ControladorPatrullero {
 			return;
 		}
 		try{
-			this.mapa = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
+			this.mapaGUI = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
 		}
-		scrollMapaPanel.setContent(mapa.getNode());
+		scrollMapaPanel.setContent(mapaGUI);
 
 		//Hacer un MouseGesturesAdder para que se puedan arrastrar sus elementos
 		crearMouseGesturesAdder();
-		mapa.getIntersecciones().stream().forEach(i -> mga.makeDraggable(i.getNode()));
+		mapaGUI.getIntersecciones().stream().forEach(i -> mga.makeDraggable(i));
 
 		//Sacar panel derecho
 		sacarPanelDerecho();
@@ -261,7 +256,7 @@ public class AltaMapaController extends ControladorPatrullero {
 			return;
 		}
 		try{
-			manejadorArchivos.guardarMapa(mapa.getMapa(), archivoMapa);
+			manejadorArchivos.guardarMapa(mapaGUI.getMapa(), archivoMapa);
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}

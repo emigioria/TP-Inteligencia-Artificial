@@ -11,26 +11,23 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.StackPaneWithTag;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
 import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
-public class InterseccionGUI {
+public class InterseccionGUI extends StackPane {
 
 	protected static Long ultimoIdAsignado = 0L;
 
 	public static final Double RADIO = 20.0;
 
 	private Interseccion interseccion;
-
-	private StackPaneWithTag<InterseccionGUI> node;
 
 	private List<AristaGUI> entrantes = new ArrayList<>();
 
@@ -47,14 +44,11 @@ public class InterseccionGUI {
 	public InterseccionGUI(Interseccion interseccion) {
 		this.interseccion = interseccion;
 
-		node = new StackPaneWithTag<>();
-		node.setTag(this);
-
-		node.translateXProperty().addListener((obs, oldV, newV) -> {
+		this.translateXProperty().addListener((obs, oldV, newV) -> {
 			interseccion.setCoordenadaX(newV.doubleValue() + RADIO);
 		});
 
-		node.translateYProperty().addListener((obs, oldV, newV) -> {
+		this.translateYProperty().addListener((obs, oldV, newV) -> {
 			interseccion.setCoordenadaY(newV.doubleValue() + RADIO);
 		});
 
@@ -62,8 +56,8 @@ public class InterseccionGUI {
 
 		Platform.runLater(() -> {
 			//Solo se puede transformar despues de dibujarse
-			node.setTranslateX(interseccion.getCoordenadaX() - RADIO);
-			node.setTranslateY(interseccion.getCoordenadaY() - RADIO);
+			this.setTranslateX(interseccion.getCoordenadaX() - RADIO);
+			this.setTranslateY(interseccion.getCoordenadaY() - RADIO);
 		});
 	}
 
@@ -77,11 +71,7 @@ public class InterseccionGUI {
 		circulo.fillProperty().bind(colorInterseccion);
 		circulo.setRadius(RADIO);
 
-		node.getChildren().addAll(circulo, textoId);
-	}
-
-	public Node getNode() {
-		return node;
+		this.getChildren().addAll(circulo, textoId);
 	}
 
 	public Interseccion getInterseccion() {

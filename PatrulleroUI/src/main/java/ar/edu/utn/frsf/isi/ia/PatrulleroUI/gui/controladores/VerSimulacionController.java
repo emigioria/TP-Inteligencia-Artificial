@@ -136,8 +136,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
 		}
-		scrollEstadoAmbiente.setContent(mapaAmbiente.getNode());
-		scrollEstadoPatrullero.setContent(mapaPatrullero.getNode());
+		scrollEstadoAmbiente.setContent(mapaAmbiente);
+		scrollEstadoPatrullero.setContent(mapaPatrullero);
 
 		cargarCasoDePrueba();
 	}
@@ -162,12 +162,12 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private void cargarDatosSimulacion() {
 		imagenPatrulleroMapaAmbiente = new PatrulleroGUI();
-		mapaAmbiente.getNode().getChildren().add(imagenPatrulleroMapaAmbiente);
+		mapaAmbiente.getChildren().add(imagenPatrulleroMapaAmbiente);
 
 		imagenPatrulleroMapaPatrullero = new PatrulleroGUI();
 		imagenIncidenteMapaPatrullero = new IncidenteGUI(casoDePruebaPatrullero.getTipoIncidente());
-		mapaPatrullero.getNode().getChildren().add(imagenIncidenteMapaPatrullero);
-		mapaPatrullero.getNode().getChildren().add(imagenPatrulleroMapaPatrullero);
+		mapaPatrullero.getChildren().add(imagenIncidenteMapaPatrullero);
+		mapaPatrullero.getChildren().add(imagenPatrulleroMapaPatrullero);
 
 		mapaAmbiente.getMapa().getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
 		mapaPatrullero.getMapa().getEsquinas().stream().forEach(e -> e.getSalientes().sort((x, y) -> x.getCalle().getNombre().compareTo(y.getCalle().getNombre())));
@@ -190,7 +190,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 				actualizarSimulacion();
 				terminarSimulacion(() -> {
 					Platform.runLater(() -> {
-						mapaPatrullero.getNode().getChildren().remove(imagenIncidenteMapaPatrullero);
+						mapaPatrullero.getChildren().remove(imagenIncidenteMapaPatrullero);
 						presentadorVentanas.presentarInformacion(
 								"El agente ha llegado a su destino!",
 								"El agente pudo llegar al incidente y resolverlo! :D",
