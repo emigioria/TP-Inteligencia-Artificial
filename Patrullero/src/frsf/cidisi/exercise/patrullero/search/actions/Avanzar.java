@@ -23,7 +23,7 @@ public class Avanzar extends SearchAction {
 		EstadoPatrullero estadoPatrullero = (EstadoPatrullero) s;
 		Iterator<Arista> orientacionAgente = estadoPatrullero.getOrientacion();
 
-		// PreConditions: que la calle apuntada no esté cerrada y que se esté apuntando a una salida
+		// PreConditions: que la calle apuntada no esté cerrada
 		if(getCostAvanzar(s) > 0 && orientacionAgente.hasNext()){
 			// PostConditions: moverse a la siguiente esquina y apuntar a la primera calle saliente de la misma
 			Arista aristaElegida = orientacionAgente.next();
