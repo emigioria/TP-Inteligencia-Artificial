@@ -9,6 +9,8 @@ import frsf.cidisi.faia.solver.search.NTree;
  */
 public class Heuristic implements IEstimatedCostFunction {
 
+	private static final double VELOCIDAD_PATRULLERO = 25;
+
 	/**
 	 * It returns the estimated cost to reach the goal from a NTree node.
 	 */
@@ -19,6 +21,8 @@ public class Heuristic implements IEstimatedCostFunction {
 		Double y1 = estadoPatrullero.getIncidente().getCoordenadaY();
 		Double x2 = estadoPatrullero.getPosicion().getCoordenadaX();
 		Double y2 = estadoPatrullero.getPosicion().getCoordenadaY();
-		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+		Double distanciaX = x1 - x2;
+		Double distanciaY = y1 - y2;
+		return Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY) / VELOCIDAD_PATRULLERO;
 	}
 }
