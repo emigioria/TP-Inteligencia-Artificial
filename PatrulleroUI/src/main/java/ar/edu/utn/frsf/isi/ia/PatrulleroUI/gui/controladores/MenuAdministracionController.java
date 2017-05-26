@@ -62,7 +62,7 @@ public class MenuAdministracionController extends ControladorPatrullero {
 
 	@Override
 	public void actualizar() {
-		stage.setTitle("Panel de administración");
+		stage.setTitle("Sistema PatruIA");
 	}
 
 	@Override
