@@ -28,11 +28,22 @@
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="50.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="NEVER" />
             <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <ScrollPane fx:id="scrollEstadoAmbiente" prefHeight="474.0" prefWidth="668.0" />
-            <ScrollPane fx:id="scrollEstadoPatrullero" prefHeight="474.0" prefWidth="668.0" GridPane.columnIndex="1" />
+            <ScrollPane fx:id="scrollEstadoAmbiente" prefHeight="474.0" prefWidth="668.0" GridPane.rowIndex="1" />
+            <ScrollPane fx:id="scrollEstadoPatrullero" prefHeight="474.0" prefWidth="668.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Estado del ambiente">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Estado del patrullero" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </center>
