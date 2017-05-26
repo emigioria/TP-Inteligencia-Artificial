@@ -22,7 +22,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	private ListIterator<Arista> orientacionAgente;
 	private Set<Obstaculo> obstaculos;
 	private Long hora = 0L;
-	private boolean agenteEnCorteTotal = false;
+	private Boolean agenteEnCorteTotal = false;
 
 	public EstadoAmbiente(Mapa mapa, Interseccion posicionAgente) {
 		super();
@@ -57,7 +57,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		return str.substring(0, str.length() - 1);
 	}
 
-	public Collection<? extends Obstaculo> getObstaculosVisiblesAgente() {
+	public Collection<Obstaculo> getObstaculosVisiblesAgente() {
 		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaAgente))
 				.map(obs -> obs.clone())
 				.collect(Collectors.toSet());
@@ -112,11 +112,11 @@ public class EstadoAmbiente extends EnvironmentState {
 		this.orientacionAgente = posicionAgente.getSalientes().listIterator();
 	}
 
-	public void setAgenteEnCorteTotal(boolean agenteEnCorteTotal) {
+	public void setAgenteEnCorteTotal(Boolean agenteEnCorteTotal) {
 		this.agenteEnCorteTotal = agenteEnCorteTotal;
 	}
 
-	public boolean estaAgenteEnCorteTotal() {
+	public Boolean estaAgenteEnCorteTotal() {
 		return agenteEnCorteTotal;
 	}
 

@@ -1,4 +1,3 @@
-
 package frsf.cidisi.exercise.patrullero.search;
 
 import frsf.cidisi.faia.agent.search.GoalTest;
