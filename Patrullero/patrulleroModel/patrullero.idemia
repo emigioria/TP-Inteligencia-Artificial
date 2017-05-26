@@ -5,6 +5,10 @@
       <DataStructure name="mapa" type="Other"/>
       <DataStructure name="posicionAgente" type="Other"/>
       <DataStructure name="orientacionAgente" type="Other"/>
+      <DataStructure name="ultimaCalleRecorridaAgente" type="Other"/>
+      <DataStructure name="obstaculos" type="Other"/>
+      <DataStructure name="hora"/>
+      <DataStructure name="agenteEnCorteTotal" type="boolean"/>
     </EnvironmentState>
   </Environment>
   <Agent name="Patrullero">
@@ -15,6 +19,8 @@
       <DataStructure name="posicion" type="Other"/>
       <DataStructure name="incidente" type="Other"/>
       <DataStructure name="orientacion" type="Other"/>
+      <DataStructure name="obstaculos" type="Other"/>
+      <DataStructure name="ultimaCalleRecorrida" type="Other"/>
     </AgentState>
   </Agent>
   <Actions execute_by="//@Agent" executed_on="//@Environment" name="Avanzar"/>
