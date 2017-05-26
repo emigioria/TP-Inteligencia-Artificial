@@ -58,7 +58,7 @@ public class Avanzar extends SearchAction {
 			// Update the real world
 			// PostConditions: actualizar el mundo real moviendo el agente a la siguiente esquina y apuntando a la primera calle saliente de la misma
 			Arista aristaElegidaAmbiente = orientacionAgenteAmbiente.next();
-			estadoAmbiente.setUltimaCalleRecorridaPorElAgente(aristaElegidaAmbiente);
+			estadoAmbiente.setUltimaCalleRecorridaAgente(aristaElegidaAmbiente);
 			estadoAmbiente.setPosicionAgente(aristaElegidaAmbiente.getDestino());
 			estadoAmbiente.initOrientacion();
 
@@ -112,7 +112,7 @@ public class Avanzar extends SearchAction {
 	private Integer getCost(EnvironmentState sbs) {
 		EstadoAmbiente estadoAmbiente = ((EstadoAmbiente) sbs);
 		Interseccion posicion = estadoAmbiente.getPosicionAgente();
-		Arista entrada = estadoAmbiente.getUltimaCalleRecorridaPorElAgente();
+		Arista entrada = estadoAmbiente.getUltimaCalleRecorridaAgente();
 		return getCosto(posicion, entrada, estadoAmbiente.getHora());
 	}
 

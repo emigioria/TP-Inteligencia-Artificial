@@ -17,7 +17,7 @@ import frsf.cidisi.faia.state.EnvironmentState;
 public class EstadoAmbiente extends EnvironmentState {
 
 	private Mapa mapa;
-	private Arista ultimaCalleRecorridaPorElAgente = null;
+	private Arista ultimaCalleRecorridaAgente = null;
 	private Interseccion posicionAgente;
 	private ListIterator<Arista> orientacionAgente;
 	private Set<Obstaculo> obstaculos;
@@ -58,7 +58,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	}
 
 	public Collection<? extends Obstaculo> getObstaculosVisiblesAgente() {
-		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaPorElAgente))
+		return obstaculos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora && obs.sosVisible(posicionAgente, ultimaCalleRecorridaAgente))
 				.map(obs -> obs.clone())
 				.collect(Collectors.toSet());
 	}
@@ -120,11 +120,11 @@ public class EstadoAmbiente extends EnvironmentState {
 		return agenteEnCorteTotal;
 	}
 
-	public Arista getUltimaCalleRecorridaPorElAgente() {
-		return ultimaCalleRecorridaPorElAgente;
+	public Arista getUltimaCalleRecorridaAgente() {
+		return ultimaCalleRecorridaAgente;
 	}
 
-	public void setUltimaCalleRecorridaPorElAgente(Arista ultimaCalleRecorridaPorElAgente) {
-		this.ultimaCalleRecorridaPorElAgente = ultimaCalleRecorridaPorElAgente;
+	public void setUltimaCalleRecorridaAgente(Arista ultimaCalleRecorridaAgente) {
+		this.ultimaCalleRecorridaAgente = ultimaCalleRecorridaAgente;
 	}
 }
