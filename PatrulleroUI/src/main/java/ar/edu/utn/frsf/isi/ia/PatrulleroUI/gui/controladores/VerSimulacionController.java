@@ -149,8 +149,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 			return;
 		}
 		try{
-			new CasoDePruebaGUI(manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba), mapaAmbiente.getMapa());
 			casoDePruebaPatrullero = manejadorArchivos.cargarCasoDePrueba(archivoCasoDePrueba);
+			new CasoDePruebaGUI(casoDePruebaPatrullero, mapaAmbiente.getMapa());
 
 			cargarDatosSimulacion();
 		} catch(Exception e){
