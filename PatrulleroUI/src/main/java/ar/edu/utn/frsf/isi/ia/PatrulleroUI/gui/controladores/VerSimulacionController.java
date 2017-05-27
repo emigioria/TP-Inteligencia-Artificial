@@ -17,6 +17,9 @@ import org.apache.commons.io.output.TeeOutputStream;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaError;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaInformacion;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.IncidenteGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
@@ -40,6 +43,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class VerSimulacionController extends ControladorPatrullero {
@@ -87,7 +91,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private IncidenteGUI imagenIncidenteMapaPatrullero;
 
-	private boolean animar = true;
+	private Boolean animar = true;
 
 	private Thread ultimaSimulacion;
 
@@ -105,7 +109,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	@FXML
-	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
 	private void cargarDatos() {
 		if(!finalizada.get()){
 			return;
@@ -115,9 +118,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 		casoDePruebaPatrullero = null;
 		scrollEstadoAmbiente.setContent(null);
 		scrollEstadoPatrullero.setContent(null);
-		if(ultimaSimulacion != null){
-			ultimaSimulacion.stop();
-		}
 		ultimaSimulacion = null;
 
 		cargarMapa();
@@ -377,7 +377,25 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
 	public Boolean sePuedeSalir() {
-		return presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta();
+		if(presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta()){
+			if(ultimaSimulacion != null){
+				ultimaSimulacion.stop();
+			}
+			presentadorVentanas = new PresentadorVentanas() {
+				@Override
+				public VentanaError presentarError(String titulo, String mensaje, Window padre) {
+					return null;
+				}
+
+				@Override
+				public VentanaInformacion presentarInformacion(String titulo, String mensaje, Window padre) {
+					return null;
+				}
+			};
+			return true;
+		}
+		return false;
 	}
 }

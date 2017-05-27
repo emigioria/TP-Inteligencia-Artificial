@@ -34,10 +34,10 @@ public enum FiltroArchivos {
 	ARCHIVO_MAPA {
 		@Override
 		public FileChooser getFileChooser() {
-			String tipo = "(*.json)";
+			String tipo = "(*.mapa.json)";
 
 			ArrayList<String> tiposFiltro = new ArrayList<>();
-			tiposFiltro.add("*.json");
+			tiposFiltro.add("*.mapa.json");
 
 			ExtensionFilter filtro = new ExtensionFilter("Archivo de mapa " + tipo, tiposFiltro);
 
@@ -50,10 +50,10 @@ public enum FiltroArchivos {
 	ARCHIVO_CASO_PRUEBA {
 		@Override
 		public FileChooser getFileChooser() {
-			String tipo = "(*.json)";
+			String tipo = "(*.casoprueba.json)";
 
 			ArrayList<String> tiposFiltro = new ArrayList<>();
-			tiposFiltro.add("*.json");
+			tiposFiltro.add("*.casoprueba.json");
 
 			ExtensionFilter filtro = new ExtensionFilter("Archivo de caso de prueba " + tipo, tiposFiltro);
 
