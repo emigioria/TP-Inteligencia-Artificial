@@ -1,7 +1,6 @@
 package frsf.cidisi.exercise.patrullero.search;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
@@ -151,11 +150,6 @@ public class EstadoPatrullero extends SearchBasedAgentState {
 		}
 		str.append("\tPosición: " + posicion + "\n");
 		str.append("\tApuntando a: " + posicion.getSalientes().get(orientacion.nextIndex()) + "\n");
-		str.append("\tObstáculos:\n");
-		obstaculos.values().stream().flatMap(Collection::stream).forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
-		if(obstaculos.isEmpty()){
-			str.append("\t\tNo hay obstaculos.\n");
-		}
 		return str.substring(0, str.length() - 1);
 	}
 
