@@ -30,7 +30,7 @@ public class TreeMLWriter {
 	private static int fileIdx = 0;
 	private static final String searchTreesDir = "TreeML/";
 
-	public static void printFile(NTree graph) {
+	public static void printFile(NTree node) {
 
 		File f = new File(searchTreesDir);
 		if(!f.exists()){
@@ -52,7 +52,7 @@ public class TreeMLWriter {
 			xml.startTree(new Integer(fileIdx).toString());
 			fileIdx = fileIdx + 1;
 
-			NTree node = (NTree) graph.clone();
+			//			NTree node = (NTree) graph.clone();
 
 			while(node.getParent() != null){
 				node = node.getParent();

@@ -176,8 +176,19 @@ public class Search extends Solve {
 	}
 
 	public void showTree() {
+		if(TipoArbol.WHITHOUT_TREE.equals(visibleTree) || TipoArbol.GRAPHICAL_TREE.equals(visibleTree)){
+			return;
+		}
+
+		new Thread(() -> {
+			printTree(visibleTree, tree, this.searchStrategy.getStrategyName());
+		}).start();
+	}
+
+	private void printTree(TipoArbol visibleTree, NTree tree, String searchStrategyName) {
 		switch(visibleTree) {
 		case WHITHOUT_TREE:
+		case GRAPHICAL_TREE:
 			break;
 		case XML_TREE:
 			XmlTree.printFile(tree);
@@ -188,9 +199,7 @@ public class Search extends Solve {
 			 */
 			break;
 		case PDF_TREE:
-			LatexOutput.getInstance().printFile(tree, this.searchStrategy.getStrategyName());
-			break;
-		case GRAPHICAL_TREE:
+			LatexOutput.getInstance().printFile(tree, searchStrategyName);
 			break;
 		case GRAPHVIZ_TREE:
 			GraphvizTree.printFile(tree);
