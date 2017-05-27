@@ -145,4 +145,8 @@ public class MapaGUI extends Pane {
 		return intersecciones.stream().filter(i -> i.getInterseccion().equals(interseccionBuscada)).findFirst().get();
 	}
 
+	public void mostrarTooltips() {
+		intersecciones.stream().forEach(i -> i.mostrarTooltips());
+		intersecciones.stream().map(i -> i.getSalientes()).flatMap(List::stream).forEach(a -> a.mostrarTooltips());
+	}
 }

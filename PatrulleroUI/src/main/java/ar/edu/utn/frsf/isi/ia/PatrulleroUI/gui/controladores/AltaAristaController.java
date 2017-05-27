@@ -123,10 +123,12 @@ public class AltaAristaController extends ControladorDialogo {
 	}
 
 	public void inicializarCon(MapaGUI mapa) {
-		cbOrigen.getItems().addAll(mapa.getIntersecciones());
-		cbDestino.getItems().addAll(mapa.getIntersecciones());
-		cbCalle.getItems().addAll(mapa.getMapa().getCalles());
-		cbCalle.getItems().sort((x, y) -> x.getNombre().compareTo(y.getNombre()));
+		Platform.runLater(() -> {
+			cbOrigen.getItems().addAll(mapa.getIntersecciones());
+			cbDestino.getItems().addAll(mapa.getIntersecciones());
+			cbCalle.getItems().addAll(mapa.getMapa().getCalles());
+			cbCalle.getItems().sort((x, y) -> x.getNombre().compareTo(y.getNombre()));
+		});
 	}
 
 	public void setOrigen(InterseccionGUI origen) {

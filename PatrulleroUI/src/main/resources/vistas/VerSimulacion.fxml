@@ -53,7 +53,8 @@
             <Button fx:id="botonCargarMCP" mnemonicParsing="false" onAction="#cargarDatos" text="Cargar mapa y caso de prueba" />
             <Label text="Estrategia:" />
             <ComboBox fx:id="cbEstrategia" prefWidth="150.0" promptText="Estrategia" />
-            <Button mnemonicParsing="false" onAction="#comenzar" text="Comenzar" />
+            <Button fx:id="botonComenzar" mnemonicParsing="false" onAction="#comenzar" text="Comenzar" />
+            <Button fx:id="botonCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
             <Button mnemonicParsing="false" onAction="#pausa" text="Pausa" />
             <Button mnemonicParsing="false" onAction="#avanzar" text="Avanzar" />
             <Button mnemonicParsing="false" onAction="#irAlFinal" text="Ir al final" />

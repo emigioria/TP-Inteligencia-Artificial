@@ -17,6 +17,9 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -36,6 +39,8 @@ public class AristaGUI extends Group {
 	private InterseccionGUI destino;
 
 	private ObjectProperty<Color> colorArista = new SimpleObjectProperty<>(Color.BLACK);
+
+	private Set<Obstaculo> obstaculosActivos;
 
 	public AristaGUI(Arista arista, List<InterseccionGUI> intersecciones) {
 		this(arista, findInterseccionGUI(arista.getOrigen(), intersecciones), findInterseccionGUI(arista.getDestino(), intersecciones));
@@ -159,6 +164,14 @@ public class AristaGUI extends Group {
 		this.destino = destino;
 	}
 
+	public Set<Obstaculo> getObstaculosActivos() {
+		return obstaculosActivos;
+	}
+
+	public void setObstaculosActivos(Set<Obstaculo> obstaculosActivos) {
+		this.obstaculosActivos = obstaculosActivos;
+	}
+
 	@Override
 	public String toString() {
 		return arista.toString();
@@ -179,7 +192,7 @@ public class AristaGUI extends Group {
 	}
 
 	public void actualizarObstaculos(Long hora) {
-		Set<Obstaculo> obstaculosActivos = arista.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
+		obstaculosActivos = arista.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
 		if(obstaculosActivos.isEmpty()){
 			colorArista.set(Color.BLACK);
 		}
@@ -195,6 +208,14 @@ public class AristaGUI extends Group {
 
 	public static Arista crearArista(Integer peso, Interseccion origen, Interseccion destino, Calle calle) throws Exception {
 		return new Arista(++AristaGUI.ultimoIdAsignado, peso, origen, destino, calle);
+	}
+
+	public void mostrarTooltips() {
+		Tooltip tooltip = new Tooltip();
+		VBox pantalla = new VBox();
+		pantalla.getChildren().add(new Label(arista + " Peso: " + arista.getPeso()));
+		tooltip.setGraphic(pantalla);
+		Tooltip.install(this, tooltip);
 	}
 
 }

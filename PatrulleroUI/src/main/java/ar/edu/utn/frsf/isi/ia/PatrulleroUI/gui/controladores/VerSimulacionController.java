@@ -9,6 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -20,6 +21,7 @@ import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaError;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaInformacion;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.IncidenteGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.MapaGUI;
@@ -32,12 +34,16 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Arista;
 import frsf.cidisi.exercise.patrullero.search.modelo.CasoDePrueba;
 import frsf.cidisi.exercise.patrullero.search.modelo.EstrategiasDeBusqueda;
 import frsf.cidisi.exercise.patrullero.search.modelo.Interseccion;
+import frsf.cidisi.exercise.patrullero.search.modelo.Lugar;
+import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -71,6 +77,12 @@ public class VerSimulacionController extends ControladorPatrullero {
 	@FXML
 	private Button botonCargarMCP;
 
+	@FXML
+	private Button botonComenzar;
+
+	@FXML
+	private Button botonCancelar;
+
 	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
 	private MapaGUI mapaAmbiente;
@@ -93,7 +105,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private Boolean animar = true;
 
-	private Thread ultimaSimulacion;
+	private ObjectProperty<Thread> ultimaSimulacion = new SimpleObjectProperty<>();
+
+	private BooleanProperty cargaFinalizada = new SimpleBooleanProperty(false);
 
 	private BooleanProperty finalizada = new SimpleBooleanProperty(true);
 
@@ -106,6 +120,15 @@ public class VerSimulacionController extends ControladorPatrullero {
 		scrollEstadoAmbiente.hvalueProperty().bindBidirectional(scrollEstadoPatrullero.hvalueProperty());
 
 		botonCargarMCP.disableProperty().bind(finalizada.not());
+
+		botonComenzar.disableProperty().bind(ultimaSimulacion.isNotNull().or(cargaFinalizada.not()));
+		botonCancelar.disableProperty().bind(botonComenzar.disableProperty().not());
+
+		botonCancelar.visibleProperty().bind(ultimaSimulacion.isNotNull());
+		botonComenzar.visibleProperty().bind(botonCancelar.visibleProperty().not());
+
+		botonCancelar.managedProperty().bind(ultimaSimulacion.isNotNull());
+		botonComenzar.managedProperty().bind(botonCancelar.managedProperty().not());
 	}
 
 	@FXML
@@ -118,7 +141,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 		casoDePruebaPatrullero = null;
 		scrollEstadoAmbiente.setContent(null);
 		scrollEstadoPatrullero.setContent(null);
-		ultimaSimulacion = null;
+		ultimaSimulacion.set(null);
+		cargaFinalizada.set(false);
 
 		cargarMapa();
 	}
@@ -131,7 +155,10 @@ public class VerSimulacionController extends ControladorPatrullero {
 		}
 		try{
 			this.mapaAmbiente = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
+			this.mapaAmbiente.mostrarTooltips();
+
 			this.mapaPatrullero = new MapaGUI(manejadorArchivos.cargarMapa(archivoMapa));
+			this.mapaPatrullero.mostrarTooltips();
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
@@ -182,7 +209,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 			@Override
 			public void cambio() {
 				actualizarSimulacion();
-				seguirSimulacion();
 			}
 
 			@Override
@@ -226,19 +252,52 @@ public class VerSimulacionController extends ControladorPatrullero {
 				agentePatrullero.getAgentState().getPosicion().getSalientes().get(agentePatrullero.getAgentState().getOrientacion().nextIndex()));
 
 		imagenIncidenteMapaPatrullero.inicializar(mapaPatrullero.getInterseccion(agentePatrullero.getAgentState().getIncidente()));
+
+		mapaAmbiente.getIntersecciones().stream().forEach(i -> {
+			i.setOnMouseClicked(e -> {
+				if(ambienteCiudad.getEnvironmentState().getHora() > 0){
+					if(i.getObstaculosActivos() != null && !i.getObstaculosActivos().isEmpty()){
+						mostrarObstaculos(i.getInterseccion(), i.getObstaculosActivos());
+					}
+				}
+				else{
+					if(!i.getInterseccion().getObstaculos().isEmpty()){
+						mostrarObstaculos(i.getInterseccion(), i.getInterseccion().getObstaculos());
+					}
+				}
+			});
+			i.getSalientes().stream().forEach(a -> {
+				a.setOnMouseClicked(e -> {
+					if(ambienteCiudad.getEnvironmentState().getHora() > 0){
+						if(a.getObstaculosActivos() != null && !a.getObstaculosActivos().isEmpty()){
+							mostrarObstaculos(a.getArista(), a.getObstaculosActivos());
+						}
+					}
+					else{
+						if(!a.getArista().getObstaculos().isEmpty()){
+							mostrarObstaculos(a.getArista(), a.getArista().getObstaculos());
+						}
+					}
+				});
+			});
+		});
+
+		cargaFinalizada.set(true);
+	}
+
+	private void mostrarObstaculos(Lugar lugar, Collection<Obstaculo> obstaculos) {
+		VentanaPersonalizada ventana = presentadorVentanas.presentarVentanaPersonalizada(VerObstaculosLugarController.URL_VISTA, stage);
+		((VerObstaculosLugarController) ventana.getControlador()).inicializarCon(lugar, obstaculos);
+		ventana.showAndWait();
 	}
 
 	@FXML
 	private void comenzar() {
-		if(ultimaSimulacion != null){
-			return;
-		}
-		if(ambienteCiudad == null || agentePatrullero == null || casoDePruebaPatrullero == null){
+		if(ultimaSimulacion.get() != null || ambienteCiudad == null || agentePatrullero == null || casoDePruebaPatrullero == null){
 			return;
 		}
 
 		//Inicializar variables
-		esperarAnimacion.drainPermits();
 		finalizada.set(false);
 		animar = true;
 		agentePatrullero.setEstrategia(cbEstrategia.getValue());
@@ -259,10 +318,10 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 		//Avisar inicio e iniciar
 		presentadorVentanas.presentarInformacion("Iniciando patrullero", agentePatrullero.getGoalString(), stage);
-		ultimaSimulacion = new Thread(() -> {
+		ultimaSimulacion.set(new Thread(() -> {
 			new PatrulleroMain(ambienteCiudad, agentePatrullero).start();
-		});
-		ultimaSimulacion.start();
+		}));
+		ultimaSimulacion.get().start();
 	}
 
 	private void actualizarSimulacion() {
@@ -271,9 +330,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 			lbUltimaAccion.setText("Última acción: " + agentePatrullero.getSelectedActionStr());
 			moverPatrullero();
 		});
-	}
 
-	private void seguirSimulacion() {
 		try{
 			esperarAnimacion.acquire();
 		} catch(InterruptedException e){
@@ -282,14 +339,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	private void terminarSimulacion(Runnable accionFinal) {
-		try{
-			esperarAnimacion.acquire();
-		} catch(InterruptedException e){
-			//Termina la espera
-		}
-
 		finalizada.set(true);
-
 		accionFinal.run();
 	}
 
@@ -371,18 +421,20 @@ public class VerSimulacionController extends ControladorPatrullero {
 		animar = false;
 	}
 
-	@Override
-	public void salir() {
-		super.salir();
+	@FXML
+	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
+	public void cancelar() {
+		if(ultimaSimulacion.get() != null){
+			ultimaSimulacion.get().stop();
+		}
+		finalizada.set(true);
+		//TODO hacer que no falle el semaforo
 	}
 
 	@Override
-	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
 	public Boolean sePuedeSalir() {
 		if(presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta()){
-			if(ultimaSimulacion != null){
-				ultimaSimulacion.stop();
-			}
+			cancelar();
 			presentadorVentanas = new PresentadorVentanas() {
 				@Override
 				public VentanaError presentarError(String titulo, String mensaje, Window padre) {

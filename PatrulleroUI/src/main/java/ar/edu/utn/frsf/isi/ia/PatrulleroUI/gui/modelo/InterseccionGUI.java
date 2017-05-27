@@ -16,7 +16,10 @@ import frsf.cidisi.exercise.patrullero.search.modelo.Obstaculo;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -36,6 +39,8 @@ public class InterseccionGUI extends StackPane {
 	private ObjectProperty<Color> colorTexto = new SimpleObjectProperty<>(Color.BLACK);
 
 	private ObjectProperty<Color> colorInterseccion = new SimpleObjectProperty<>(Color.CYAN);
+
+	private Set<Obstaculo> obstaculosActivos;
 
 	public InterseccionGUI() {
 		this(new Interseccion(++InterseccionGUI.ultimoIdAsignado, 1, RADIO, RADIO));
@@ -86,6 +91,14 @@ public class InterseccionGUI extends StackPane {
 		return salientes;
 	}
 
+	public Set<Obstaculo> getObstaculosActivos() {
+		return obstaculosActivos;
+	}
+
+	public void setObstaculosActivos(Set<Obstaculo> obstaculosActivos) {
+		this.obstaculosActivos = obstaculosActivos;
+	}
+
 	@Override
 	public String toString() {
 		return interseccion.getId().toString();
@@ -109,7 +122,7 @@ public class InterseccionGUI extends StackPane {
 	}
 
 	public void actualizarObstaculos(Long hora) {
-		Set<Obstaculo> obstaculosActivos = interseccion.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
+		obstaculosActivos = interseccion.getObstaculos().stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).collect(Collectors.toSet());
 		if(obstaculosActivos.isEmpty()){
 			colorTexto.set(Color.BLACK);
 			colorInterseccion.set(Color.CYAN);
@@ -124,6 +137,14 @@ public class InterseccionGUI extends StackPane {
 				colorInterseccion.set(Color.ORANGE);
 			}
 		}
+	}
+
+	public void mostrarTooltips() {
+		Tooltip tooltip = new Tooltip();
+		VBox pantalla = new VBox();
+		pantalla.getChildren().add(new Label(interseccion + " Peso: " + interseccion.getPeso()));
+		tooltip.setGraphic(pantalla);
+		Tooltip.install(this, tooltip);
 	}
 
 }
