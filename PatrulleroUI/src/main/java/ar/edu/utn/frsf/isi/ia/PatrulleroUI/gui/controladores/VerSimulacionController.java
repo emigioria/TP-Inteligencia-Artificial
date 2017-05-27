@@ -124,10 +124,10 @@ public class VerSimulacionController extends ControladorPatrullero {
 		botonComenzar.disableProperty().bind(ultimaSimulacion.isNotNull().or(cargaFinalizada.not()));
 		botonCancelar.disableProperty().bind(botonComenzar.disableProperty().not());
 
-		botonCancelar.visibleProperty().bind(ultimaSimulacion.isNotNull());
+		botonCancelar.visibleProperty().bind(ultimaSimulacion.isNotNull().and(finalizada.not()));
 		botonComenzar.visibleProperty().bind(botonCancelar.visibleProperty().not());
 
-		botonCancelar.managedProperty().bind(ultimaSimulacion.isNotNull());
+		botonCancelar.managedProperty().bind(botonCancelar.visibleProperty());
 		botonComenzar.managedProperty().bind(botonCancelar.managedProperty().not());
 	}
 
@@ -207,8 +207,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 		ChangeListenerPatrullero clp = new ChangeListenerPatrullero() {
 
 			@Override
-			public void cambio() {
-				actualizarSimulacion();
+			public Boolean cambio() {
+				return actualizarSimulacion();
 			}
 
 			@Override
@@ -227,16 +227,30 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 			@Override
 			public void finSimulacionNoExitosa() {
-				actualizarSimulacion();
-				terminarSimulacion(() -> {
-					Platform.runLater(() -> {
-						presentadorVentanas.presentarError(
-								"El agente ha muerto",
-								"El agente no pudo llegar a su destino! :(",
-								stage);
+				if(!Thread.currentThread().isInterrupted()){
+					actualizarSimulacion();
+					terminarSimulacion(() -> {
+						Platform.runLater(() -> {
+							presentadorVentanas.presentarError(
+									"El agente ha muerto",
+									"El agente no pudo llegar a su destino! :(",
+									stage);
+						});
 					});
-				});
+				}
+				else{
+					terminarSimulacion(() -> {
+						Platform.runLater(() -> {
+							presentadorVentanas.presentarError(
+									"El agente ha cancelado",
+									"El agente no pudo llegar a su destino por una orden! :(",
+									stage);
+							lbSimulandoOListo.setText("Cancelada");
+						});
+					});
+				}
 			}
+
 		};
 		agentePatrullero.setAvisarCambios(clp);
 
@@ -324,7 +338,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 		ultimaSimulacion.get().start();
 	}
 
-	private void actualizarSimulacion() {
+	private Boolean actualizarSimulacion() {
 		Platform.runLater(() -> {
 			lbSimulandoOListo.setText("Listo");
 			lbUltimaAccion.setText("Última acción: " + agentePatrullero.getSelectedActionStr());
@@ -334,8 +348,20 @@ public class VerSimulacionController extends ControladorPatrullero {
 		try{
 			esperarAnimacion.acquire();
 		} catch(InterruptedException e){
-			//Termina la espera
+			try{
+				ultimaSimulacion.set(null);
+				esperarAnimacion.acquire();
+				Thread.currentThread().interrupt();
+
+				//No debe seguir
+				return false;
+			} catch(InterruptedException e1){
+
+			}
 		}
+
+		//Debe seguir
+		return true;
 	}
 
 	private void terminarSimulacion(Runnable accionFinal) {
@@ -422,19 +448,16 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	@FXML
-	@SuppressWarnings("deprecation") //El thread se detiene de forma controlada
 	public void cancelar() {
-		if(ultimaSimulacion.get() != null){
-			ultimaSimulacion.get().stop();
+		if(ultimaSimulacion.get() == null){
+			return;
 		}
-		finalizada.set(true);
-		//TODO hacer que no falle el semaforo
+		ultimaSimulacion.get().interrupt();
 	}
 
 	@Override
 	public Boolean sePuedeSalir() {
 		if(presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta()){
-			cancelar();
 			presentadorVentanas = new PresentadorVentanas() {
 				@Override
 				public VentanaError presentarError(String titulo, String mensaje, Window padre) {
@@ -446,6 +469,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 					return null;
 				}
 			};
+			cancelar();
+			esperarAnimacion.release();
 			return true;
 		}
 		return false;

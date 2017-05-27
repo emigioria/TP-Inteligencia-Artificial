@@ -49,9 +49,6 @@ public class Main extends Application {
 			if(!apilador.sePuedeSalir()){
 				e.consume();
 			}
-			else{
-				System.exit(0);
-			}
 		});
 
 		iniciar();

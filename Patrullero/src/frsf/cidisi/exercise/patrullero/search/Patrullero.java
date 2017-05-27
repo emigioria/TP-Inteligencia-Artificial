@@ -52,7 +52,11 @@ public class Patrullero extends SearchBasedAgent {
 	@Override
 	public Action selectAction() {
 		if(avisarCambios != null){
-			avisarCambios.cambio();
+			//Retorna si se debe continuar
+			if(!avisarCambios.cambio()){
+				System.out.println("Simulación cancelada");
+				return null;
+			}
 		}
 
 		// Create the search strategy
