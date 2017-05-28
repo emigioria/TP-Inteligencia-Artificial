@@ -41,7 +41,11 @@ public class BreathFirstSearch extends Strategy {
 	@Override
 	public void addNodeToExpand(NTree node) {
 		//Add the node at the top of the list of nodes to expand
-		node.setCost(node.getParent().getCost() + 1);
+		double costoPadre = 0.0;
+		if(node.getParent() != null){
+			costoPadre = node.getParent().getCost();
+		}
+		node.setCost(costoPadre + 1);
 		nodesToExpand.add(node);
 	}
 
