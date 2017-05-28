@@ -1,0 +1,49 @@
+{
+  "posicionInicialPatrullero": 126,
+  "tipoIncidente": "CAMARA_EN_HOGARES",
+  "posicionIncidente": 161,
+  "obstaculos": [
+    {
+      "id": 8,
+      "lugarID": 125,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 9,
+      "lugarID": 162,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 10,
+      "lugarID": 145,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 10,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 11,
+      "lugarID": 135,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "INVISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 10,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    }
+  ]
+}
