@@ -79,7 +79,7 @@ public class Search extends Solve {
 		Problem problem = ((SearchSolveParam) params).getProblem();
 
 		Vector<SearchAction> actionList = problem.getActions();
-		SearchBasedAgentState agentState = problem.getAgentState();//.clone();
+		SearchBasedAgentState agentState = problem.getAgentState().clone();
 		GoalTest goalTest = problem.getGoalState();
 
 		int nodeIdx = 1;
@@ -179,7 +179,7 @@ public class Search extends Solve {
 		if(TipoArbol.WHITHOUT_TREE.equals(visibleTree) || TipoArbol.GRAPHICAL_TREE.equals(visibleTree)){
 			return;
 		}
-
+		
 		new Thread(() -> {
 			printTree(visibleTree, tree, this.searchStrategy.getStrategyName());
 		}).start();
