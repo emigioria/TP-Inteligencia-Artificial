@@ -18,6 +18,7 @@ import org.apache.commons.io.output.TeeOutputStream;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ScrollPaneZoomer;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaError;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaInformacion;
@@ -83,6 +84,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 	@FXML
 	private Button botonCancelar;
 
+	private ScrollPaneZoomer spz = new ScrollPaneZoomer();
+
 	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
 	private MapaGUI mapaAmbiente;
@@ -116,8 +119,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 		cbEstrategia.getItems().addAll(EstrategiasDeBusqueda.values());
 		cbEstrategia.getSelectionModel().select(0);
 
-		scrollEstadoAmbiente.vvalueProperty().bindBidirectional(scrollEstadoPatrullero.vvalueProperty());
-		scrollEstadoAmbiente.hvalueProperty().bindBidirectional(scrollEstadoPatrullero.hvalueProperty());
+		spz.bindScrollPanes(scrollEstadoAmbiente, scrollEstadoPatrullero);
 
 		botonCargarMCP.disableProperty().bind(finalizada.not());
 
@@ -163,8 +165,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
 		}
-		scrollEstadoAmbiente.setContent(mapaAmbiente);
-		scrollEstadoPatrullero.setContent(mapaPatrullero);
+		spz.createZoomPane(mapaAmbiente, scrollEstadoAmbiente);
+		spz.createZoomPane(mapaPatrullero, scrollEstadoPatrullero);
+		spz.sincronizeZoom(mapaAmbiente, mapaPatrullero);
 
 		cargarCasoDePrueba();
 	}
