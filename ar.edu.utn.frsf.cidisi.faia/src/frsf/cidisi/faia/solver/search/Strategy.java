@@ -68,7 +68,7 @@ public abstract class Strategy {
 	 */
 	public void initNodesToExpandList(NTree node) {
 		if(!isInitialized){
-			nodesToExpand.add(node);
+			addNodeToExpand(node);
 			isInitialized = true;
 		}
 	}

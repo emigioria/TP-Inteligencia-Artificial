@@ -47,14 +47,18 @@ public abstract class InformedSearchStrategy extends Strategy {
 	@Override
 	public void addNodesToExpand(Vector<NTree> nodes) {
 		//Add the nodes at the top of the list of nodes to expand
-		nodes.stream().forEach(nt -> nt.setCost(nt.getParent().getCost() + g.calculateCost(nt) + h.getEstimatedCost(nt)));
+		nodes.stream().forEach(nt -> nt.setCost(nt.getParent().getCost() - h.getEstimatedCost(nt.getParent()) + g.calculateCost(nt) + h.getEstimatedCost(nt)));
 		nodesToExpand.addAll(nodes);
 	}
 
 	@Override
 	public void addNodeToExpand(NTree node) {
 		//Add the node at the top of the list of nodes to expand
-		node.setCost(node.getParent().getCost() + g.calculateCost(node) + h.getEstimatedCost(node));
+		double costoPadre = 0.0;
+		if(node.getParent() != null){
+			costoPadre = node.getParent().getCost() - h.getEstimatedCost(node.getParent());
+		}
+		node.setCost(costoPadre + g.calculateCost(node)  + h.getEstimatedCost(node));
 		nodesToExpand.add(node);
 	}
 
