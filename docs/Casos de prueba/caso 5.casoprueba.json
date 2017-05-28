@@ -1,0 +1,28 @@
+{
+  "posicionInicialPatrullero": 113,
+  "tipoIncidente": "ALARMA_DE_VEHICULO",
+  "posicionIncidente": 108,
+  "obstaculos": [
+    {
+      "id": 1,
+      "lugarID": 121,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 2,
+      "lugarID": 122,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CONGESTION",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 10,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    }
+  ]
+}
