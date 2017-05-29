@@ -1,0 +1,29 @@
+{
+  "posicionInicialPatrullero": 162,
+  "tipoIncidente": "CAMARA_EN_HOGARES",
+  "posicionIncidente": 145,
+  "obstaculos": [
+    {
+      "id": 1,
+      "lugarID": 154,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    },
+    {
+      "id": 2,
+      "lugarID": 154,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "BACHEO",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 5,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    }
+  ]
+}
