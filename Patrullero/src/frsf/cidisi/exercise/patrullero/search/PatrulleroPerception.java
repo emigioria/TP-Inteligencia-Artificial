@@ -35,7 +35,7 @@ public class PatrulleroPerception extends Perception {
 		StringBuffer str = new StringBuffer("\n\tObstáculos:\n");
 		obstaculos_detectables.stream().forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
 		if(obstaculos_detectables.isEmpty()){
-			str.append("\t\tNo hay obstaculos percibidos.\n");
+			str.append("\t\tNo hay obstáculos percibidos.\n");
 		}
 		return str.substring(0, str.length() - 1);
 	}

@@ -49,7 +49,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		str.append("\tObstáculos de ahora:\n");
 		obstaculos.stream().filter(obs -> obs.getTiempoInicio() <= hora && obs.getTiempoFin() > hora).forEach(obs -> str.append("\t\t" + obs.toString() + "\n"));
 		if(obstaculos.isEmpty()){
-			str.append("\t\tNo hay obstaculos a esta hora.\n");
+			str.append("\t\tNo hay obstáculos a esta hora.\n");
 		}
 		if(agenteEnCorteTotal){
 			str.append("\tEl agente se ha encontrado con un corte total!\n");
