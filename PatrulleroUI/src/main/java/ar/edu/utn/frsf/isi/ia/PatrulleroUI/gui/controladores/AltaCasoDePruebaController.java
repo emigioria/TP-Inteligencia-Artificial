@@ -11,6 +11,7 @@ import java.io.File;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ScrollPaneZoomer;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.CasoDePruebaGUI;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.modelo.InterseccionGUI;
@@ -28,6 +29,8 @@ import javafx.scene.control.TreeView;
 public class AltaCasoDePruebaController extends ControladorPatrullero {
 
 	public static final String URL_VISTA = "vistas/AltaCasoDePrueba.fxml";
+
+	private ScrollPaneZoomer spz = new ScrollPaneZoomer();
 
 	private ManejadorArchivos manejadorArchivos = new ManejadorArchivos();
 
@@ -227,6 +230,7 @@ public class AltaCasoDePruebaController extends ControladorPatrullero {
 			return;
 		}
 		scrollMapaPanel.setContent(mapa);
+		spz.createZoomPane(mapa, scrollMapaPanel);
 
 		//Hacer algo al seleccionar una interseccion
 		mapa.getIntersecciones().stream().forEach(i -> i.setOnMousePressed(t -> {
