@@ -7,8 +7,8 @@ Goal: Camara en hogares en 145 - Santiago Derqui # Dorrego. Enviando patrullero.
 Sending perception to agent...
 Perception: 
 	Obstáculos:
-		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
-		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego.
 Agent State: 
 	Arrancando patrullero.
 	Posición: 162 - Salvador del Carril # Dorrego
@@ -25,8 +25,8 @@ Action returned: CambiarOrientacion
 Sending perception to agent...
 Perception: 
 	Obstáculos:
-		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
-		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego.
 Agent State: 
 	Arrancando patrullero.
 	Posición: 162 - Salvador del Carril # Dorrego
@@ -60,8 +60,8 @@ Action returned: Avanzar
 Sending perception to agent...
 Perception: 
 	Obstáculos:
-		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
-		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego.
 Agent State: 
 	Viniendo de: Pje. Pizzorino (Que va de 163 a 155)
 	Posición: 155 - Pje. Pizzorino # José María Zuviría
@@ -78,8 +78,8 @@ Action returned: CambiarOrientacion
 Sending perception to agent...
 Perception: 
 	Obstáculos:
-		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
-		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: null. Fin: null.
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego.
 Agent State: 
 	Viniendo de: Pje. Pizzorino (Que va de 163 a 155)
 	Posición: 155 - Pje. Pizzorino # José María Zuviría
