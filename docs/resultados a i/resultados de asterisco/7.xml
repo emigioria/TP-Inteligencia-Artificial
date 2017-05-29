@@ -1,0 +1,11 @@
+<tree id="7" edgedefault="directed">
+<node Id="1" Action="Avanzar" Cost="6.0" Estado_Agente="
+	Viniendo de: Santiago Derqui (Que va de 146 a 145)
+	Posici&#243;n: 145 - Santiago Derqui # Dorrego
+	Apuntando a: Dorrego (Que va de 145 a 154)"/>
+<node Id="0" Action="null" Cost="4.126402791778815" Estado_Agente="
+	Viniendo de: Pje. Pizzorino (Que va de 155 a 146)
+	Posici&#243;n: 146 - Pje. Pizzorino # Santiago Derqui
+	Apuntando a: Santiago Derqui (Que va de 146 a 145)"/>
+<edge source="0" target="1"/>
+</tree>

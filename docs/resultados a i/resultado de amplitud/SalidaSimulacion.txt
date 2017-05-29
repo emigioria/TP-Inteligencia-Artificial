@@ -1,0 +1,59 @@
+----------------------------------------------------
+--- Search Based Simulator ---
+----------------------------------------------------
+
+Goal: Camara en hogares en 145 - Santiago Derqui # Dorrego. Enviando patrullero.
+------------------------------------
+Sending perception to agent...
+Perception: 
+	Obstáculos:
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego.
+Agent State: 
+	Arrancando patrullero.
+	Posición: 162 - Salvador del Carril # Dorrego
+	Apuntando a: Dorrego (Que va de 162 a 154)
+Environment: 
+	Tiempo: 0
+	Obstáculos de ahora:
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+Asking the agent for an action...
+Action returned: Avanzar
+
+------------------------------------
+Sending perception to agent...
+Perception: 
+	Obstáculos:
+		No hay obstaculos percibidos.
+Agent State: 
+	Viniendo de: Dorrego (Que va de 162 a 154)
+	Posición: 154 - José María Zuviría # Dorrego
+	Apuntando a: Dorrego (Que va de 154 a 162)
+Environment: 
+	Tiempo: 28
+	Obstáculos de ahora:
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+Asking the agent for an action...
+Action returned: CambiarOrientacion
+
+------------------------------------
+Sending perception to agent...
+Perception: 
+	Obstáculos:
+		No hay obstaculos percibidos.
+Agent State: 
+	Viniendo de: Dorrego (Que va de 162 a 154)
+	Posición: 154 - José María Zuviría # Dorrego
+	Apuntando a: Dorrego (Que va de 154 a 145)
+Environment: 
+	Tiempo: 28
+	Obstáculos de ahora:
+		Tipo: Parcial. Nombre: CORTE. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+		Tipo: Parcial. Nombre: BACHEO. Lugar: 154 - José María Zuviría # Dorrego. Inicio: 0. Fin: 1000.
+Asking the agent for an action...
+Action returned: Avanzar
+
+Agent has reached the goal!
+
