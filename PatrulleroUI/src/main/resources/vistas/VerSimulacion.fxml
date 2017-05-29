@@ -14,13 +14,14 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.VerSimulacionController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores.VerSimulacionController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -53,11 +54,12 @@
             <Button fx:id="botonCargarMCP" mnemonicParsing="false" onAction="#cargarDatos" text="Cargar mapa y caso de prueba" />
             <Label text="Estrategia:" />
             <ComboBox fx:id="cbEstrategia" prefWidth="150.0" promptText="Estrategia" />
+            <ToggleButton fx:id="tbAnimar" mnemonicParsing="false" selected="true" text="Animar" />
             <Button fx:id="botonComenzar" mnemonicParsing="false" onAction="#comenzar" text="Comenzar" />
             <Button fx:id="botonCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-            <Button mnemonicParsing="false" onAction="#pausa" text="Pausa" />
-            <Button mnemonicParsing="false" onAction="#avanzar" text="Avanzar" />
-            <Button mnemonicParsing="false" onAction="#irAlFinal" text="Ir al final" />
+            <Button fx:id="botonPausar" mnemonicParsing="false" onAction="#pausar" text="Pausar" />
+            <Button fx:id="botonReanudar" mnemonicParsing="false" onAction="#reanudar" text="Reanudar" />
+            <Button fx:id="botonAvanzar" mnemonicParsing="false" onAction="#avanzar" text="Avanzar" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

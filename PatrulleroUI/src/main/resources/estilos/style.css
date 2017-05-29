@@ -68,6 +68,23 @@
   -fx-text-fill: white;
 }
 
+/* Botones Toggle */
+.toggle-button {
+  -fx-background-color: white ;
+  -fx-border-color: #0066ff;
+  -fx-border-radius: 10.0;
+  -fx-background-radius: 10.0;
+  -fx-text-fill: #005be6;
+}
+.toggle-button:hover {
+  -fx-background-color: #67a3ff;
+  -fx-text-fill: black;
+}
+.toggle-button:selected {
+  -fx-background-color: #005be6;
+  -fx-text-fill: white;
+}
+
 /* Spinners */
 .spinner {
   -fx-background-color: whitesmoke;
@@ -296,6 +313,7 @@
 
 .leftbar .toggle-button {
   -fx-background-color: transparent;
+  -fx-border-color: transparent;
 }
 
 .leftbar .toggle-button:hover {

@@ -50,6 +50,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -76,6 +77,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 	private ComboBox<EstrategiasDeBusqueda> cbEstrategia;
 
 	@FXML
+	private ToggleButton tbAnimar;
+
+	@FXML
 	private Button botonCargarMCP;
 
 	@FXML
@@ -83,6 +87,15 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	@FXML
 	private Button botonCancelar;
+
+	@FXML
+	private Button botonPausar;
+
+	@FXML
+	private Button botonReanudar;
+
+	@FXML
+	private Button botonAvanzar;
 
 	private ScrollPaneZoomer spz = new ScrollPaneZoomer();
 
@@ -106,13 +119,17 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private IncidenteGUI imagenIncidenteMapaPatrullero;
 
-	private Boolean animar = true;
+	private BooleanProperty animar = new SimpleBooleanProperty(true);
 
 	private ObjectProperty<Thread> ultimaSimulacion = new SimpleObjectProperty<>();
 
 	private BooleanProperty cargaFinalizada = new SimpleBooleanProperty(false);
 
 	private BooleanProperty finalizada = new SimpleBooleanProperty(true);
+
+	private BooleanProperty pausada = new SimpleBooleanProperty(false);
+
+	private Semaphore esperarPausa = new Semaphore(0, true);
 
 	@Override
 	protected void inicializar() {
@@ -126,11 +143,24 @@ public class VerSimulacionController extends ControladorPatrullero {
 		botonComenzar.disableProperty().bind(ultimaSimulacion.isNotNull().or(cargaFinalizada.not()));
 		botonCancelar.disableProperty().bind(botonComenzar.disableProperty().not());
 
-		botonCancelar.visibleProperty().bind(ultimaSimulacion.isNotNull().and(finalizada.not()));
-		botonComenzar.visibleProperty().bind(botonCancelar.visibleProperty().not());
+		botonComenzar.visibleProperty().bind(ultimaSimulacion.isNull().or(finalizada));
+		botonCancelar.visibleProperty().bind(botonComenzar.visibleProperty().not());
+
+		botonPausar.disableProperty().bind(pausada);
+		botonReanudar.disableProperty().bind(botonPausar.disableProperty().not());
+		botonAvanzar.disableProperty().bind(botonPausar.disableProperty().not());
+
+		botonPausar.visibleProperty().bind(botonCancelar.visibleProperty().and(pausada.not()));
+		botonReanudar.visibleProperty().bind(botonCancelar.visibleProperty().and(pausada));
+		botonAvanzar.visibleProperty().bind(botonReanudar.visibleProperty());
 
 		botonCancelar.managedProperty().bind(botonCancelar.visibleProperty());
-		botonComenzar.managedProperty().bind(botonCancelar.managedProperty().not());
+		botonComenzar.managedProperty().bind(botonComenzar.visibleProperty());
+		botonPausar.managedProperty().bind(botonPausar.visibleProperty());
+		botonReanudar.managedProperty().bind(botonReanudar.visibleProperty());
+		botonAvanzar.managedProperty().bind(botonAvanzar.visibleProperty());
+
+		animar.bind(tbAnimar.selectedProperty());
 	}
 
 	@FXML
@@ -150,9 +180,12 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	private void cargarMapa() {
+		lbSimulandoOListo.setText("Cargando mapa");
+
 		//Cargar mapa
 		File archivoMapa = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_MAPA.getFileChooser(), stage);
 		if(archivoMapa == null){
+			lbSimulandoOListo.setText("Carga cancelada");
 			return;
 		}
 		try{
@@ -163,6 +196,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 			this.mapaPatrullero.mostrarTooltips();
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+
+			lbSimulandoOListo.setText("Error de carga");
 			return;
 		}
 		spz.createZoomPane(mapaAmbiente, scrollEstadoAmbiente);
@@ -173,9 +208,12 @@ public class VerSimulacionController extends ControladorPatrullero {
 	}
 
 	private void cargarCasoDePrueba() {
+		lbSimulandoOListo.setText("Cargando caso de prueba");
+
 		//Cargar caso de prueba
 		File archivoCasoDePrueba = presentadorVentanas.solicitarArchivoCarga(FiltroArchivos.ARCHIVO_CASO_PRUEBA.getFileChooser(), stage);
 		if(archivoCasoDePrueba == null){
+			lbSimulandoOListo.setText("Carga cancelada");
 			return;
 		}
 		try{
@@ -185,9 +223,15 @@ public class VerSimulacionController extends ControladorPatrullero {
 			cargarDatosSimulacion();
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+
+			lbSimulandoOListo.setText("Error de carga");
+			return;
 		}
 
 		mapaAmbiente.actualizarObstaculos();
+
+		cargaFinalizada.set(true);
+		lbSimulandoOListo.setText("Carga exitosa");
 	}
 
 	private void cargarDatosSimulacion() {
@@ -220,6 +264,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 				terminarSimulacion(() -> {
 					Platform.runLater(() -> {
 						mapaPatrullero.getChildren().remove(imagenIncidenteMapaPatrullero);
+
+						lbSimulandoOListo.setText("Finalizado con éxito");
 						presentadorVentanas.presentarInformacion(
 								"El agente ha llegado a su destino!",
 								"El agente pudo llegar al incidente y resolverlo! :D",
@@ -234,6 +280,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 					actualizarSimulacion();
 					terminarSimulacion(() -> {
 						Platform.runLater(() -> {
+							lbSimulandoOListo.setText("Finalizado sin éxito");
 							presentadorVentanas.presentarError(
 									"El agente ha muerto",
 									"El agente no pudo llegar a su destino! :(",
@@ -244,11 +291,11 @@ public class VerSimulacionController extends ControladorPatrullero {
 				else{
 					terminarSimulacion(() -> {
 						Platform.runLater(() -> {
+							lbSimulandoOListo.setText("Cancelado");
 							presentadorVentanas.presentarError(
 									"El agente ha cancelado",
 									"El agente no pudo llegar a su destino por una orden! :(",
 									stage);
-							lbSimulandoOListo.setText("Cancelada");
 						});
 					});
 				}
@@ -298,8 +345,6 @@ public class VerSimulacionController extends ControladorPatrullero {
 				});
 			});
 		});
-
-		cargaFinalizada.set(true);
 	}
 
 	private void mostrarObstaculos(Lugar lugar, Collection<Obstaculo> obstaculos) {
@@ -315,8 +360,8 @@ public class VerSimulacionController extends ControladorPatrullero {
 		}
 
 		//Inicializar variables
+		pausada.set(false);
 		finalizada.set(false);
-		animar = true;
 		agentePatrullero.setEstrategia(cbEstrategia.getValue());
 
 		//Redirigir salida estandar a un archivo
@@ -343,17 +388,30 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 	private Boolean actualizarSimulacion() {
 		Platform.runLater(() -> {
-			lbSimulandoOListo.setText("Listo");
+			if(!pausada.get()){
+				lbSimulandoOListo.setText("Listo");
+			}
+			else{
+				lbSimulandoOListo.setText("Pausado");
+			}
 			lbUltimaAccion.setText("Última acción: " + agentePatrullero.getSelectedActionStr());
 			moverPatrullero();
 		});
 
+		Boolean seguir = esperarSemaforo(esperarAnimacion);
+		seguir = esperarSemaforo(esperarPausa) && seguir;
+
+		//Debe seguir
+		return seguir;
+	}
+
+	private Boolean esperarSemaforo(Semaphore semaforo) {
 		try{
-			esperarAnimacion.acquire();
+			semaforo.acquire();
 		} catch(InterruptedException e){
 			try{
 				ultimaSimulacion.set(null);
-				esperarAnimacion.acquire();
+				semaforo.acquire();
 				Thread.currentThread().interrupt();
 
 				//No debe seguir
@@ -362,12 +420,11 @@ public class VerSimulacionController extends ControladorPatrullero {
 
 			}
 		}
-
-		//Debe seguir
 		return true;
 	}
 
 	private void terminarSimulacion(Runnable accionFinal) {
+		pausada.set(false);
 		finalizada.set(true);
 		accionFinal.run();
 	}
@@ -408,7 +465,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 		animacionPatrullero.getChildren().addAll(giroPatrullero);
 		animacionPatrullero.getChildren().add(new PauseTransition(duracionPausaFinal));
 
-		if(animar){
+		if(animar.get()){
 			//Iniciar animaciones
 			animacionAmbiente.play();
 			animacionPatrullero.play();
@@ -423,6 +480,10 @@ public class VerSimulacionController extends ControladorPatrullero {
 		animacionAmbiente.setOnFinished(e -> {
 			mostrarResultadoMover();
 			esperarAnimacion.release();
+			if(!pausada.get()){
+				esperarPausa.release();
+				lbSimulandoOListo.setText("Simulando");
+			}
 		});
 	}
 
@@ -430,24 +491,28 @@ public class VerSimulacionController extends ControladorPatrullero {
 		mapaAmbiente.actualizarObstaculos(ambienteCiudad.getEnvironmentState().getHora());
 		mapaPatrullero.actualizarObstaculos();
 		lbHora.setText("Hora: " + ambienteCiudad.getEnvironmentState().getHora());
+	}
+
+	@FXML
+	private void pausar() {
+		pausada.set(true);
+
+		lbSimulandoOListo.setText("Pausada");
+	}
+
+	@FXML
+	private void reanudar() {
+		esperarPausa.drainPermits();
+		esperarPausa.release();
+
+		pausada.set(false);
 		lbSimulandoOListo.setText("Simulando");
 	}
 
 	@FXML
-	private void pausa() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@FXML
 	private void avanzar() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@FXML
-	private void irAlFinal() {
-		animar = false;
+		esperarPausa.release();
+		lbSimulandoOListo.setText("Simulando");
 	}
 
 	@FXML
@@ -456,6 +521,9 @@ public class VerSimulacionController extends ControladorPatrullero {
 			return;
 		}
 		ultimaSimulacion.get().interrupt();
+		if(pausada.get()){
+			reanudar();
+		}
 	}
 
 	@Override
@@ -474,6 +542,7 @@ public class VerSimulacionController extends ControladorPatrullero {
 			};
 			cancelar();
 			esperarAnimacion.release();
+			esperarPausa.release();
 			return true;
 		}
 		return false;
