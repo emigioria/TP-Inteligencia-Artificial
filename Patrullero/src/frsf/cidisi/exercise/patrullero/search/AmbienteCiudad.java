@@ -44,6 +44,11 @@ public class AmbienteCiudad extends Environment {
 		return this.getEnvironmentState().estaAgenteEnCorteTotal();
 	}
 
+	@Override
+	public void close() {
+		super.close();
+		System.out.println("Tiempo total: " + getEnvironmentState().getHora());
+	}
 	// The following methods are agent-specific:
 
 }
