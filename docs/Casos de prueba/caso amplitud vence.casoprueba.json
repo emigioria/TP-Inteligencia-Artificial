@@ -1,0 +1,28 @@
+{
+  "posicionInicialPatrullero": 4,
+  "tipoIncidente": "ALARMA_DE_CASA_DE_FAMILIA",
+  "posicionIncidente": 7,
+  "obstaculos": [
+    {
+      "id": 5,
+      "lugarID": 18,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Interseccion",
+      "nombre": "CORTE",
+      "visibilidad": "VISIBLE",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoTotal"
+    },
+    {
+      "id": 6,
+      "lugarID": 5,
+      "TipoLugar": "frsf.cidisi.exercise.patrullero.search.modelo.Arista",
+      "nombre": "CORTE",
+      "visibilidad": "INFORMADO",
+      "tiempoInicio": 0,
+      "tiempoFin": 1000,
+      "retardoMultiplicativo": 8,
+      "TipoObstaculo": "frsf.cidisi.exercise.patrullero.search.modelo.ObstaculoParcial"
+    }
+  ]
+}
