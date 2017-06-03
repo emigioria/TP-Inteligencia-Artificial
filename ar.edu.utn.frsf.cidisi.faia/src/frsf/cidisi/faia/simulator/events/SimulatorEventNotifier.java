@@ -17,17 +17,18 @@
  */
 package frsf.cidisi.faia.simulator.events;
 
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SimulatorEventNotifier {
 
-	private static Hashtable<EventType, Vector<EventHandler>> eventHandlers =
-			new Hashtable<>();
+	private static Map<EventType, Set<EventHandler>> eventHandlers = new HashMap<>();
 
 	public static void runEventHandlers(EventType eventType, Object[] params) {
 
-		if(!eventHandlers.contains(eventType)){
+		if(!eventHandlers.keySet().contains(eventType)){
 			return;
 		}
 
@@ -35,25 +36,19 @@ public class SimulatorEventNotifier {
 	}
 
 	public static void SubscribeEventHandler(EventType eventType, EventHandler eventHandler) {
-		if(!eventHandlers.contains(eventType)){
-			eventHandlers.put(eventType, new Vector<EventHandler>());
+		if(!eventHandlers.keySet().contains(eventType)){
+			eventHandlers.put(eventType, new HashSet<EventHandler>());
 		}
 
-		Vector<EventHandler> eventHandlerList =
-				eventHandlers.get(eventType);
-
-		eventHandlerList.add(eventHandler);
+		eventHandlers.get(eventType).add(eventHandler);
 	}
 
 	public static void UnsubscribeEventHandler(EventType eventType, EventHandler eventHandler) {
-		if(!eventHandlers.contains(eventType)){
+		if(!eventHandlers.keySet().contains(eventType)){
 			return;
 		}
 
-		Vector<EventHandler> eventHandlerList =
-				eventHandlers.get(eventType);
-
-		eventHandlerList.remove(eventHandler);
+		eventHandlers.get(eventType).remove(eventHandler);
 	}
 
 	public static void ClearEventHandlers() {

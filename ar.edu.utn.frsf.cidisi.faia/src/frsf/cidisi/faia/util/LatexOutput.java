@@ -2,77 +2,78 @@
  * Copyright 2007-2009 Georgina Stegmayer, Milagros Gutiérrez, Jorge Roa,
  * Luis Ignacio Larrateguy y Milton Pividori.
  *
- * This program is free software: you can redistribute it and/or modify
+ * LatexOutput program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * LatexOutput program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with LatexOutput program. If not, see <http://www.gnu.org/licenses/>.
  */
 package frsf.cidisi.faia.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 
 import frsf.cidisi.faia.exceptions.LatexOutputException;
 import frsf.cidisi.faia.simulator.events.EventHandler;
 import frsf.cidisi.faia.solver.search.NTree;
 
-public class LatexOutput implements EventHandler {
+public enum LatexOutput implements EventHandler {
+	INSTANCE {
+		@Override
+		public void runEventHandler(Object[] params) {
+			new Thread(() -> {
+				try{
+					semaphore.acquire();
 
-	private static LatexOutput instance;
-	private static final String lineSeparator = System.getProperty("line.separator");
-	private final String faiaPdflatexDir = "../faia/pdflatex/";
-	private final String pdflatexDir = "pdflatex/";
-	private int fileIdx = 0;
+					LatexOutput.compileLatexFiles(true);
 
-	LatexOutput() {
-	}
-
-	public static LatexOutput getInstance() {
-		if(instance == null){
-			instance = new LatexOutput();
+					semaphore.release();
+				} catch(InterruptedException | LatexOutputException e){
+					e.printStackTrace();
+				}
+			}).start();
 		}
-		return instance;
+	};
+
+	private static final String lineSeparator = System.getProperty("line.separator");
+	private static final String pdflatexResourceDir = "/pdflatex/";
+	private static final String pdflatexDir = "pdflatex/";
+	private static String[] archivosLatex = new String[] { "a0poster.cls", "a0size.sty", "nodo.sty", "qtree.sty" };
+	private static int fileIdx = 0;
+	private static Semaphore semaphore = new Semaphore(1);
+
+	private static void copyFiles(String faiaPdflatex) throws IOException, URISyntaxException {
+		for(String archivo: archivosLatex){
+			FileOperations.CopyFile(
+					new URI(LatexOutput.class.getResource(faiaPdflatex + archivo).toString()).getPath(),
+					pdflatexDir + archivo);
+		}
 	}
 
-	private void copyFiles(String faiaPdflatex) throws IOException {
-		FileOperations.CopyFile(faiaPdflatex + "a0poster.cls", pdflatexDir + "a0poster.cls");
-		FileOperations.CopyFile(faiaPdflatex + "a0size.sty", pdflatexDir + "a0size.sty");
-		FileOperations.CopyFile(faiaPdflatex + "nodo.sty", pdflatexDir + "nodo.sty");
-		FileOperations.CopyFile(faiaPdflatex + "qtree.sty", pdflatexDir + "qtree.sty");
-	}
-
-	public void compileLatexFiles(boolean removeTexFiles) throws LatexOutputException {
+	private static void compileLatexFiles(boolean removeTexFiles) throws LatexOutputException {
 		// Copio los archivos necesarios para poder compilar con pdflatex
-		// FIXME: Estoy suponiendo acá que FAIA se encuentra en la carpeta "..faia"
 		try{
-			this.copyFiles(this.faiaPdflatexDir);
-		} catch(FileNotFoundException e1){
-			try{
-				// Probamos a buscar un niver mas arriba
-				this.copyFiles("../" + this.faiaPdflatexDir);
-			} catch(IOException ex){
-				throw new LatexOutputException("LaTeX files not found: " + e1.getMessage());
-			}
-		} catch(Exception e2){
-			throw new LatexOutputException("LaTeX files not found: " + e2.getMessage());
+			LatexOutput.copyFiles(LatexOutput.pdflatexResourceDir);
+		} catch(IOException | URISyntaxException e){
+			throw new LatexOutputException("LaTeX files not found: " + e.getMessage());
 		}
 
 		// Creo el objeto que representa la carpeta pdfLatex
@@ -103,7 +104,7 @@ public class LatexOutput implements EventHandler {
 					System.out.print(" -> Ok");
 				}
 				else{
-					System.out.println(" -> There was an error. This is tandard output of the 'pdflatex' command:");
+					System.out.println(" -> There was an error. This is standard output of the 'pdflatex' command:");
 					System.out.println();
 					BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
@@ -138,11 +139,25 @@ public class LatexOutput implements EventHandler {
 		System.out.println("Temp files deleted.");
 	}
 
-	public void printFile(NTree tree) {
+	public static void printFile(NTree tree) {
+		try{
+			semaphore.acquire();
+		} catch(InterruptedException e1){
+			return;
+		}
+
 		printFile(tree, "ESTRATEGIA NO SETEADA");
+
+		semaphore.release();
 	}
 
-	public void printFile(NTree tree, String strategyName) {
+	public static void printFile(NTree tree, String strategyName) {
+		try{
+			semaphore.acquire();
+		} catch(InterruptedException e1){
+			return;
+		}
+
 		StringBuffer str = new StringBuffer();
 
 		// Clase del documento y opciones generales
@@ -193,59 +208,24 @@ public class LatexOutput implements EventHandler {
 		str.append("\\end{document}" + lineSeparator);
 
 		// Ahora creo el archivo
-		try{
-			// Si la carpeta que necesito no existe, la creo.
-			File f = new File(pdflatexDir);
-			if(!f.exists()){
-				f.mkdir();
-			}
 
-			Writer out = new BufferedWriter(
-					new OutputStreamWriter(
-							new FileOutputStream(pdflatexDir + fileIdx + ".tex"),
-							"UTF-8"));
+		// Si la carpeta que necesito no existe, la creo.
+		File f = new File(pdflatexDir);
+		if(!f.exists()){
+			f.mkdir();
+		}
 
+		try(Writer out = new BufferedWriter(
+				new OutputStreamWriter(
+						new FileOutputStream(pdflatexDir + fileIdx + ".tex"),
+						"UTF-8"))){
 			out.write(str.toString());
-			out.close();
-
 			fileIdx++;
 		} catch(Exception e){
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		semaphore.release();
 	}
 
-	@Override
-	public void runEventHandler(Object[] params) {
-		try{
-			this.compileLatexFiles(true);
-		} catch(LatexOutputException e){
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-}
-
-class PdfFilesFilter implements FilenameFilter {
-
-	@Override
-	public boolean accept(File arg0, String arg1) {
-		return (arg1.toLowerCase().endsWith(".pdf"));
-	}
-}
-
-class TexFilter implements FilenameFilter {
-
-	@Override
-	public boolean accept(File arg0, String arg1) {
-		return (arg1.toLowerCase().endsWith(".tex"));
-	}
-}
-
-class TempFilesFilter implements FilenameFilter {
-
-	@Override
-	public boolean accept(File arg0, String arg1) {
-		return (arg1.toLowerCase().endsWith(".aux") || arg1.toLowerCase().endsWith(".log"));
-	}
 }

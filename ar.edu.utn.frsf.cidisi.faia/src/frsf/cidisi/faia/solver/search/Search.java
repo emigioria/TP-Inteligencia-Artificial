@@ -179,7 +179,7 @@ public class Search extends Solve {
 		if(TipoArbol.WHITHOUT_TREE.equals(visibleTree) || TipoArbol.GRAPHICAL_TREE.equals(visibleTree)){
 			return;
 		}
-		
+
 		new Thread(() -> {
 			printTree(visibleTree, tree, this.searchStrategy.getStrategyName());
 		}).start();
@@ -192,14 +192,9 @@ public class Search extends Solve {
 			break;
 		case XML_TREE:
 			XmlTree.printFile(tree);
-			/*
-			 * String arbol = this.toXml();
-			 * System.out.println("Arbol:");
-			 * System.out.println(arbol);
-			 */
 			break;
 		case PDF_TREE:
-			LatexOutput.getInstance().printFile(tree, searchStrategyName);
+			LatexOutput.printFile(tree, searchStrategyName);
 			break;
 		case GRAPHVIZ_TREE:
 			GraphvizTree.printFile(tree);
@@ -228,7 +223,7 @@ public class Search extends Solve {
 
 		if(visibleTree == TipoArbol.PDF_TREE){
 			SimulatorEventNotifier.SubscribeEventHandler(EventType.SimulationFinished,
-					LatexOutput.getInstance());
+					LatexOutput.INSTANCE);
 		}
 		this.visibleTree = visibleTree;
 	}

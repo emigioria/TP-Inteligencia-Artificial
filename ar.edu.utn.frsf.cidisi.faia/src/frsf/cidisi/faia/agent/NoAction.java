@@ -26,13 +26,7 @@ import frsf.cidisi.faia.state.EnvironmentState;
  */
 public class NoAction extends Action {
 
-	private static NoAction instance;
-
-	static{
-		if(instance == null){
-			instance = new NoAction();
-		}
-	}
+	private static NoAction instance = new NoAction();
 
 	public static NoAction getInstance() {
 		return instance;

@@ -106,7 +106,7 @@ public abstract class GoalBasedAgentSimulator extends Simulator {
 		System.out.println();
 
 		// FIXME: This call can be moved to the Simulator class
-		this.environment.close();
+		this.close();
 
 		// Launch simulationFinished event
 		SimulatorEventNotifier.runEventHandlers(EventType.SimulationFinished, null);
@@ -120,6 +120,11 @@ public abstract class GoalBasedAgentSimulator extends Simulator {
 	 */
 	protected void updateState(Action action) {
 		this.getEnvironment().updateState(((GoalBasedAgent) agents.elementAt(0)).getAgentState(), action);
+	}
+
+	@Override
+	public void close() {
+		this.getEnvironment().close();
 	}
 
 	public abstract boolean agentSucceeded(Action action);
@@ -139,4 +144,5 @@ public abstract class GoalBasedAgentSimulator extends Simulator {
 	 * @return The name of the simulator, e.g. 'SearchBasedAgentSimulator'
 	 */
 	public abstract String getSimulatorName();
+
 }

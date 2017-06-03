@@ -1,31 +1,16 @@
 package frsf.cidisi.faia.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
 import frsf.cidisi.faia.solver.search.NTree;
 
 public class TreeMLWriter {
-
-	private static final HashMap<Class<?>, Constante> TYPES = new HashMap<>();
-	static{
-		TYPES.put(int.class, Constante.INT);
-		TYPES.put(Integer.class, Constante.INTEGER);
-		TYPES.put(Long.class, Constante.LONG);
-		TYPES.put(Float.class, Constante.FLOAT);
-		TYPES.put(Double.class, Constante.DOUBLE);
-		TYPES.put(boolean.class, Constante.BOOLEAN);
-		TYPES.put(String.class, Constante.STRING);
-		TYPES.put(Date.class, Constante.DATE);
-	}
 
 	private static int fileIdx = 0;
 	private static final String searchTreesDir = "TreeML/";
@@ -37,14 +22,8 @@ public class TreeMLWriter {
 			f.mkdir();
 		}
 
-		FileOutputStream os = null;
-		try{
-			os = new FileOutputStream(new File(searchTreesDir + fileIdx
-					+ ".xml"));
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-		}
-		if(os != null){
+		try(FileOutputStream os = new FileOutputStream(new File(searchTreesDir + fileIdx
+				+ ".xml"))){
 
 			PrintWriter out = new PrintWriter(os);
 			XMLWriter xml = new XMLWriter(out);
@@ -67,11 +46,8 @@ public class TreeMLWriter {
 			xml.end();
 			xml.finish();
 			out.close();
-			try{
-				os.close();
-			} catch(IOException e){
-
-			}
+		} catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 
