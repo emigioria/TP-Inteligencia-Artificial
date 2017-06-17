@@ -31,7 +31,7 @@ public class Sinonimos {
 				je -> sinonimos.append(je.getAsJsonObject().get("list").getAsJsonObject().get("synonyms") + "|"));
 
 		ArrayList<String> retorno = new ArrayList<>();
-		StringTokenizer st = new StringTokenizer(sinonimos.toString(), "|");
+		StringTokenizer st = new StringTokenizer(sinonimos.toString(), "|\"");
 		while(st.hasMoreTokens()){
 			retorno.add(st.nextToken());
 		}
