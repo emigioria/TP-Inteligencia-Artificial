@@ -14,7 +14,7 @@ public class Sinonimos {
 
 	private String urlBase = "http://thesaurus.altervista.org/thesaurus/v1?key=P9VVIjkF5XeTFRVRTMcl&language=es_ES&output=json&word=";
 
-	private ArrayList<String> sinonimosDe(String palabra) {
+	public ArrayList<String> sinonimosDe(String palabra) {
 		try{
 			return procesarRespuesta(getHTML(urlBase + palabra));
 		} catch(Exception e){
