@@ -4,21 +4,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package frsf.cidisi.faia.agent.productionsystem;
+package frsf.cidisi.faia.solver.productionsystem;
 
-import java.util.ArrayList;
-import java.util.List;
+import frsf.cidisi.faia.agent.PrologConnector;
 
-public class ProductionMemory {
+public interface WorkingMemory {
 
-	private List<Rule> rules = new ArrayList<>();
-
-	public ProductionMemory() {
-
-	}
-
-	public List<Rule> getRules() {
-		return rules;
-	}
-
+	//TODO hacer clase con prolog
+	public PrologConnector getConnection();
 }

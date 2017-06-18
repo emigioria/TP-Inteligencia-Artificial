@@ -7,6 +7,7 @@
 package frsf.cidisi.faia.agent.productionsystem;
 
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.Rule;
 import frsf.cidisi.faia.state.AgentState;
 import frsf.cidisi.faia.state.EnvironmentState;
 import javafx.util.Pair;

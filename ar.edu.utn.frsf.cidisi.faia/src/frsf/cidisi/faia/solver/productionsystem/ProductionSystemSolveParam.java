@@ -6,8 +6,6 @@
  */
 package frsf.cidisi.faia.solver.productionsystem;
 
-import frsf.cidisi.faia.agent.productionsystem.ProductionMemory;
-import frsf.cidisi.faia.agent.productionsystem.WorkingMemory;
 import frsf.cidisi.faia.solver.SolveParam;
 
 public class ProductionSystemSolveParam extends SolveParam {

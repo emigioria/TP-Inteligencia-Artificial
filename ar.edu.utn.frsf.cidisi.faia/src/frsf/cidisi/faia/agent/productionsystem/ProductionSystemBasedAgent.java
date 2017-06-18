@@ -13,6 +13,9 @@ import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.solver.productionsystem.InferenceEngine;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.ProductionMemory;
+import frsf.cidisi.faia.solver.productionsystem.Rule;
+import frsf.cidisi.faia.solver.productionsystem.WorkingMemory;
 import frsf.cidisi.faia.solver.productionsystem.criterias.UsedRulesExpert;
 import javafx.util.Pair;
 

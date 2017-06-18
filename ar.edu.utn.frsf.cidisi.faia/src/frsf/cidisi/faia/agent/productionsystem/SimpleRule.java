@@ -6,15 +6,17 @@
  */
 package frsf.cidisi.faia.agent.productionsystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.Rule;
 
 /**
  * Clase que modela elas reglas del sistema de produccion.
  */
-public abstract class Rule {
+public class SimpleRule implements Rule {
 
 	private Function<List<Matches>, Boolean> condition;
 	private Function<Matches, Void> then;
@@ -23,13 +25,14 @@ public abstract class Rule {
 	private Integer priority;
 	private Integer novelty;
 
-	public Rule(Integer id) {
+	public SimpleRule(Integer id) {
 		this.id = id;
 		specificity = 0;
 		priority = 0;
 		novelty = 0;
 	}
 
+	@Override
 	public Integer getId() {
 		return new Integer(id);
 	}
@@ -38,6 +41,7 @@ public abstract class Rule {
 		id = identificador;
 	}
 
+	@Override
 	public Integer getSpecificity() {
 		return specificity;
 	}
@@ -46,6 +50,7 @@ public abstract class Rule {
 		specificity = s;
 	}
 
+	@Override
 	public Integer getPriority() {
 		return priority;
 	}
@@ -54,6 +59,7 @@ public abstract class Rule {
 		priority = p;
 	}
 
+	@Override
 	public Integer getNovelty() {
 		return novelty;
 	}
@@ -89,17 +95,26 @@ public abstract class Rule {
 		if(getClass() != obj.getClass()){
 			return false;
 		}
-		Rule other = (Rule) obj;
+		SimpleRule other = (SimpleRule) obj;
 		if(id.equals(other.id)){
 			return true;
 		}
 		return false;
 	}
 
+	@Override
+	public List<Matches> match() {
+		List<Matches> matchesList = new ArrayList<>();
+		condition.apply(matchesList);
+		return matchesList;
+	}
+
+	@Override
 	public Boolean isActive(List<Matches> matchesList) {
 		return condition.apply(matchesList);
 	}
 
+	@Override
 	public void execute(Matches unificaciones) {
 		then.apply(unificaciones);
 	}

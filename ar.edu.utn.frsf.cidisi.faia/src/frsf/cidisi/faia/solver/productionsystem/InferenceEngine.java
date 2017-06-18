@@ -6,16 +6,11 @@
  */
 package frsf.cidisi.faia.solver.productionsystem;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.agent.Action;
-import frsf.cidisi.faia.agent.productionsystem.ProductionMemory;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
-import frsf.cidisi.faia.agent.productionsystem.Rule;
-import frsf.cidisi.faia.agent.productionsystem.WorkingMemory;
 import frsf.cidisi.faia.solver.Solve;
 import frsf.cidisi.faia.solver.SolveParam;
 import javafx.util.Pair;
@@ -29,12 +24,15 @@ public abstract class InferenceEngine extends Solve {
 
 	private List<Criteria> criterias;
 
+	private Matcher matcher;
+
 	/**
 	 * Constructor.
 	 * Recibe las estrategias en el orden a ser aplicadas.
 	 */
-	public InferenceEngine(List<Criteria> criterias) {
+	public InferenceEngine(List<Criteria> criterias, Matcher matcher) {
 		this.criterias = criterias;
+		this.matcher = matcher;
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public abstract class InferenceEngine extends Solve {
 		WorkingMemory workingMemory = param.getWorkingMemory();
 
 		//Se obtienen las reglas activas
-		List<Pair<Rule, Matches>> activeRules = this.match(productionMemory, workingMemory);
+		List<Pair<Rule, Matches>> activeRules = matcher.match(productionMemory, workingMemory);
 
 		//Si no hay reglas activas se termina.
 		if(activeRules.isEmpty()){
@@ -78,24 +76,4 @@ public abstract class InferenceEngine extends Solve {
 		return new ProductionSystemAction(r);
 	}
 
-	/**
-	 * Naive algorithm for matching. It can be overrited to a better solution, like a rete algorithm.
-	 *
-	 * @param productionMemory
-	 *            Production memory with the rules
-	 * @param workingMemory
-	 *            Working memory with the data
-	 * @return List of pair of rules with their matches
-	 */
-	public List<Pair<Rule, Matches>> match(ProductionMemory productionMemory, WorkingMemory workingMemory) {
-		return productionMemory.getRules().parallelStream().map(r -> {
-			List<Matches> unificaciones = new ArrayList<>();
-			if(r.isActive(unificaciones)){
-				return unificaciones.parallelStream().map(m -> new Pair<>(r, m)).collect(Collectors.toList());
-			}
-
-			ArrayList<Pair<Rule, Matches>> retorno = new ArrayList<>();
-			return retorno;
-		}).flatMap(List::stream).collect(Collectors.toList());
-	};
 }

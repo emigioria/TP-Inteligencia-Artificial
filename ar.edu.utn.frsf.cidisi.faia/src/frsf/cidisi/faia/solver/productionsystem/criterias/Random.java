@@ -9,9 +9,9 @@ package frsf.cidisi.faia.solver.productionsystem.criterias;
 import java.util.ArrayList;
 import java.util.List;
 
-import frsf.cidisi.faia.agent.productionsystem.Rule;
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.Rule;
 import javafx.util.Pair;
 
 /**

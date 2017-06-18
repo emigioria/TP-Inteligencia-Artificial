@@ -6,8 +6,8 @@
  */
 package frsf.cidisi.faia.solver.productionsystem.criterias;
 
-import frsf.cidisi.faia.agent.productionsystem.Rule;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.Rule;
 import javafx.util.Pair;
 
 public interface UsedRulesExpert {
