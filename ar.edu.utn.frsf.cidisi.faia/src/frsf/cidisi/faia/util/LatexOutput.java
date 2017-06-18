@@ -120,7 +120,6 @@ public enum LatexOutput implements EventHandler {
 			} catch(IOException e){
 				throw new LatexOutputException("LaTeX/MiKTeX is not installed: " + e.getMessage());
 			} catch(InterruptedException e){
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

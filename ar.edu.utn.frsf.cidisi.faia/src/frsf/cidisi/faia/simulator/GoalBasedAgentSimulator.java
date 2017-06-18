@@ -105,7 +105,6 @@ public abstract class GoalBasedAgentSimulator extends Simulator {
 		// Leave a blank line
 		System.out.println();
 
-		// FIXME: This call can be moved to the Simulator class
 		this.close();
 
 		// Launch simulationFinished event

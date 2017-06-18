@@ -58,6 +58,7 @@ public abstract class Simulator {
 	}
 
 	public void setEnvironment(Environment evm) {
+		this.environment = evm;
 	}
 
 	public abstract void start();

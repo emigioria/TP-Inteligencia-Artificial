@@ -82,14 +82,14 @@ public class TreeMLWriter {
 		ArrayList<String> names = new ArrayList<>();
 		ArrayList<String> values = new ArrayList<>();
 
-		NTree s = (NTree) tree.clone();
-		Vector<NTree> ts = s.getSons();
+		//tree = tree.clone();
+		Vector<NTree> ts = tree.getSons();
 
 		ts.forEach(son -> {
 			names.add(Constante.SOURCE.toString());
 			names.add(Constante.TARGET.toString());
 
-			values.add(new Integer(s.getExecutionOrder()).toString());
+			values.add(new Integer(tree.getExecutionOrder()).toString());
 			values.add(new Integer(son.getExecutionOrder()).toString());
 
 			xml.tag(tag, names, values, names.size());

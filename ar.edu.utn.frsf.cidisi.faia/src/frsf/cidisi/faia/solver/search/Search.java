@@ -112,8 +112,7 @@ public class Search extends Solve {
 					SearchBasedAgentState ast = firstNode.getAgentState().clone();
 					// This is the action that can generate a new node.-
 					ast = action.execute(ast);
-					// TODO: HAY QUE VER SI CONVIENE QUE CUANDO EL OPERADOR NO PUEDA SER
-					// EJECUTADO DEVUELVA UN OBJETO EN LUGAR DE NULL.
+					// TODO: HAY QUE VER SI CONVIENE QUE CUANDO EL OPERADOR NO PUEDA SER EJECUTADO DEVUELVA UN OBJETO EN LUGAR DE NULL.
 					if(ast != null){ // If the action was correctly executed.-
 						NTree n = new NTree(firstNode, action, ast, nodeIdx);
 						// If the node is not repeated in his search's tree branch

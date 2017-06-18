@@ -9,11 +9,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package frsf.cidisi.faia.simulator;
 
@@ -27,36 +27,35 @@ import frsf.cidisi.faia.environment.Environment;
 
 public class ReactiveBasedAgentSimulator extends GoalBasedAgentSimulator {
 
-    public ReactiveBasedAgentSimulator(Environment environment, Vector<Agent> agent) {
-        super(environment, agent);
-        // TODO Auto-generated constructor stub
-    }
+	public ReactiveBasedAgentSimulator(Environment environment, Vector<Agent> agent) {
+		super(environment, agent);
+	}
 
-    public ReactiveBasedAgentSimulator(Environment environment, Agent agent) {
-        this(environment, new Vector<Agent>(Arrays.asList(agent)));
-    }
+	public ReactiveBasedAgentSimulator(Environment environment, Agent agent) {
+		this(environment, new Vector<>(Arrays.asList(agent)));
+	}
 
-    @Override
-    public String getSimulatorName() {
-        return "Reactive Based Simulator";
-    }
+	@Override
+	public String getSimulatorName() {
+		return "Reactive Based Simulator";
+	}
 
-    @Override
-    public boolean agentSucceeded(Action actionReturned) {
-        if (actionReturned instanceof NoAction) {
-            return true;
-        }
+	@Override
+	public boolean agentSucceeded(Action actionReturned) {
+		if(actionReturned instanceof NoAction){
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public boolean agentFailed(Action actionReturned) {
-        return this.environment.agentFailed(actionReturned);
-    }
+	@Override
+	public boolean agentFailed(Action actionReturned) {
+		return this.environment.agentFailed(actionReturned);
+	}
 
-    @Override
-    public void actionReturned(Agent agent, Action action) {
-        this.updateState(action);
-    }
+	@Override
+	public void actionReturned(Agent agent, Action action) {
+		this.updateState(action);
+	}
 }

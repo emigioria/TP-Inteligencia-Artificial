@@ -81,8 +81,6 @@ public class NTree implements Cloneable, Comparable<NTree> {
 		node.setAgentState(agSt);
 		node.setExecutionOrder(executionOrder);
 
-		// TODO: Ac� hay que clonar a los hijos tambi�n!!???.-
-
 		/* node.setSons((Vector<NTree>)sons.clone()); */
 		node.setSons(sons);
 

@@ -53,22 +53,18 @@ public class PrologConnector {
 			JPL.init();
 		} catch(UnsatisfiedLinkError ex){
 			throw new PrologConnectorException("SWI-Prolog is not installed: " +
-					ex.getMessage());
+					ex.getMessage(), ex);
 		}
 
 		// Load the knowledge base
 		Query prologQuery;
 		prologQuery = new Query("consult('" + this.prologFile + "')");
 
-		/*
-		 * TODO: Aca hay que manejar los errores de otra forma. La excepción tiene
-		 * que arrojarse, pero la PrologException tira un error feo.
-		 */
 		try{
 			prologQuery.hasSolution();
 		} catch(PrologException e){
 			throw new PrologConnectorException("Load of prolog file failed ('" +
-					this.prologFile + "').");
+					this.prologFile + "').", e);
 		}
 	}
 
