@@ -10,6 +10,7 @@ public abstract class ReteRule extends Nodo implements Rule {
 	private Integer id;
 	private Integer specificity;
 	private Integer priority;
+	private List<Matches> matches;
 
 	public ReteRule(Integer id, Integer specificity, Integer priority) {
 		super();
@@ -69,11 +70,17 @@ public abstract class ReteRule extends Nodo implements Rule {
 
 	@Override
 	public void agregarSalida(Nodo salida) {
-		throw new RuntimeException();
+		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public void propagarHechos(List<List<Hecho>> hechos) {
-		//TODO hacer
+		matches = this.generarMatches(hechos);
 	}
+
+	public List<Matches> getMatches() {
+		return matches;
+	}
+
+	public abstract List<Matches> generarMatches(List<List<Hecho>> hechos);
 }

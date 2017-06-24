@@ -10,7 +10,7 @@ public class ReteProductionMemory extends Nodo implements ProductionMemory {
 
 	private List<Rule> reglas;
 
-	public ReteProductionMemory(ReteWorkingMemory rwm, List<Rule> reglas) {
+	public ReteProductionMemory(ReteMatcher rm, List<Rule> reglas) {
 		this.reglas = reglas;
 	}
 
@@ -19,8 +19,13 @@ public class ReteProductionMemory extends Nodo implements ProductionMemory {
 		return reglas;
 	}
 
+	public void matchear() {
+		super.propagarHechos(new ArrayList<>());
+
+	}
+
 	@Override
 	public void propagarHechos(List<List<Hecho>> hechos) {
-		super.propagarHechos(new ArrayList<>());
+		throw new UnsupportedOperationException();
 	}
 }

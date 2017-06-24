@@ -15,7 +15,7 @@ public class Unir extends Nodo {
 
 	@Override
 	public void propagarHechos(List<List<Hecho>> hechos) {
-		throw new RuntimeException();
+		throw new UnsupportedOperationException();
 	}
 
 	public synchronized void unirEn(List<List<Hecho>> hechos, Integer lugar) {
