@@ -38,4 +38,8 @@ public class ProductionSystemAction extends frsf.cidisi.faia.agent.Action {
 		ruleData.getKey().execute(ruleData.getValue());
 		return est;
 	}
+
+	public boolean finish() {
+		return ruleData.getKey().finish(ruleData.getValue());
+	}
 }
