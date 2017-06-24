@@ -17,7 +17,7 @@
  */
 package frsf.cidisi.faia.agent.situationcalculus;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.ActionFactory;
@@ -44,13 +44,13 @@ public abstract class KnowledgeBase extends AgentState {
 
 	/**
 	 * Returns the actual situation of the Knowledge Base
-	 * 
+	 *
 	 * @return
 	 */
 	public int getSituation() {
 		String query = this.getSituationPredicate() + "(S)";
 
-		Hashtable<?, ?>[] pos = this.query(query);
+		Map<?, ?>[] pos = this.query(query);
 
 		int s = Integer.parseInt(pos[0].get("S").toString());
 
@@ -110,7 +110,7 @@ public abstract class KnowledgeBase extends AgentState {
 		this.prologConnector.removePredicate(predicate);
 	}
 
-	public Hashtable<?, ?>[] query(String query) {
+	public Map<?, ?>[] query(String query) {
 		return this.prologConnector.query(query);
 	}
 

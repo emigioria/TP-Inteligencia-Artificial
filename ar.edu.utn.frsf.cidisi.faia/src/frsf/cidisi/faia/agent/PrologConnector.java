@@ -17,12 +17,14 @@
  */
 package frsf.cidisi.faia.agent;
 
-import java.util.Hashtable;
+import java.util.Map;
+
+import org.jpl7.JPL;
+import org.jpl7.PrologException;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
-import jpl.JPL;
-import jpl.PrologException;
-import jpl.Query;
 
 /**
  * This is the knowledge base used by the agent. It offers some methods
@@ -69,8 +71,7 @@ public class PrologConnector {
 	}
 
 	public void executeNonQuery(String query) {
-		Query prologQuery = new Query(query);
-		prologQuery.hasSolution();
+		queryHasSolution(query);
 	}
 
 	private String preparePredicate(String predicate) {
@@ -96,7 +97,7 @@ public class PrologConnector {
 		query.hasSolution();
 	}
 
-	public Hashtable<?, ?>[] query(String query) {
+	public Map<String, Term>[] query(String query) {
 		Query prologQuery = new Query(query);
 		return prologQuery.allSolutions();
 	}

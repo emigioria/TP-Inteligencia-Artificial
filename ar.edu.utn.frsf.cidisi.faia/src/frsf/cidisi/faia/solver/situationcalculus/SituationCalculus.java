@@ -17,7 +17,7 @@
  */
 package frsf.cidisi.faia.solver.situationcalculus;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.situationcalculus.KnowledgeBase;
@@ -37,7 +37,7 @@ public class SituationCalculus extends Solve {
 		KnowledgeBase kb = ((SituationCalculusSolveParam) params).getKnowledgeBase();
 
 		// Query the knowledge base for the best action in the current situation.
-		Hashtable<?, ?>[] results =
+		Map<?, ?>[] results =
 				kb.query(kb.getBestActionPredicate() + "(X," +
 						kb.getSituation() + ")");
 

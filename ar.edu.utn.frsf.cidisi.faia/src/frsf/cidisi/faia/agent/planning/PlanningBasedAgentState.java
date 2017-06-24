@@ -17,7 +17,7 @@
  */
 package frsf.cidisi.faia.agent.planning;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import frsf.cidisi.faia.agent.ActionFactory;
 import frsf.cidisi.faia.agent.PrologConnector;
@@ -43,11 +43,11 @@ public abstract class PlanningBasedAgentState extends AgentState {
 		this.prologConnector.addPredicate(query);
 	}
 
-	public Hashtable<?, ?>[] query(String query) {
+	public Map<?, ?>[] query(String query) {
 		return this.prologConnector.query(this.prepareQuery(query));
 	}
 
-	public Hashtable<?, ?>[] plainQuery(String query) {
+	public Map<?, ?>[] plainQuery(String query) {
 		return this.prologConnector.query(query);
 	}
 
@@ -66,7 +66,7 @@ public abstract class PlanningBasedAgentState extends AgentState {
 		String bestActionQuery = this.getBestActionPredicate() + "(X)";
 
 		// Query for the best action.
-		Hashtable<?, ?>[] result = this.prologConnector.query(bestActionQuery);
+		Map<?, ?>[] result = this.prologConnector.query(bestActionQuery);
 		String bestAction = result[0].get("X").toString();
 
 		// Apply the best action's effects on the agent state.
