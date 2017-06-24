@@ -12,12 +12,10 @@ import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.solver.productionsystem.InferenceEngine;
-import frsf.cidisi.faia.solver.productionsystem.Matches;
 import frsf.cidisi.faia.solver.productionsystem.ProductionMemory;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 import frsf.cidisi.faia.solver.productionsystem.WorkingMemory;
 import frsf.cidisi.faia.solver.productionsystem.criterias.UsedRulesExpert;
-import javafx.util.Pair;
 
 public abstract class ProductionSystemBasedAgent extends Agent implements UsedRulesExpert {
 
@@ -25,7 +23,7 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	private WorkingMemory state;
 	private ProductionMemory productionMemory;
 
-	private Set<Pair<Rule, Matches>> usedRules;
+	private Set<RuleMatchesPair> usedRules;
 
 	public ProductionSystemBasedAgent() {
 	}
@@ -70,7 +68,7 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	}
 
 	@Override
-	public boolean used(Pair<Rule, Matches> prd) {
+	public boolean used(RuleMatchesPair prd) {
 		return usedRules.contains(prd);
 	}
 

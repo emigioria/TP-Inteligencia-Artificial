@@ -13,14 +13,13 @@ import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
 import frsf.cidisi.faia.solver.Solve;
 import frsf.cidisi.faia.solver.SolveParam;
-import javafx.util.Pair;
 
 /**
  * Clase que implementa el solver del sistema de producciï¿½n.
  */
 public class InferenceEngine extends Solve {
 
-	private Pair<Rule, Matches> r;
+	private RuleMatchesPair r;
 
 	private List<Criteria> criterias;
 
@@ -53,7 +52,7 @@ public class InferenceEngine extends Solve {
 		WorkingMemory workingMemory = param.getWorkingMemory();
 
 		//Se obtienen las reglas activas
-		List<Pair<Rule, Matches>> activeRules = matcher.match(productionMemory, workingMemory);
+		List<RuleMatchesPair> activeRules = matcher.match(productionMemory, workingMemory);
 
 		//Si no hay reglas activas se termina.
 		if(activeRules.isEmpty()){
@@ -63,7 +62,7 @@ public class InferenceEngine extends Solve {
 			//Se resuelven los conflictos.
 			Iterator<Criteria> it = criterias.iterator();
 			while(it.hasNext() && activeRules.size() > 1){
-				List<Pair<Rule, Matches>> finalRules = it.next().apply(activeRules);
+				List<RuleMatchesPair> finalRules = it.next().apply(activeRules);
 				if(finalRules.size() != 0){
 					activeRules = finalRules;
 				}

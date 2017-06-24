@@ -6,11 +6,9 @@
  */
 package frsf.cidisi.faia.agent.productionsystem;
 
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 import frsf.cidisi.faia.state.AgentState;
 import frsf.cidisi.faia.state.EnvironmentState;
-import javafx.util.Pair;
 
 /**
  * Clase que implementa las acciones que el sistema de produccion puede
@@ -18,9 +16,9 @@ import javafx.util.Pair;
  */
 public class ProductionSystemAction extends frsf.cidisi.faia.agent.Action {
 
-	private Pair<Rule, Matches> ruleData;
+	private RuleMatchesPair ruleData;
 
-	public ProductionSystemAction(Pair<Rule, Matches> rd) {
+	public ProductionSystemAction(RuleMatchesPair rd) {
 		ruleData = rd;
 	}
 
@@ -29,7 +27,7 @@ public class ProductionSystemAction extends frsf.cidisi.faia.agent.Action {
 		return "Ejecutar";
 	}
 
-	public Pair<Rule, Matches> getPeerRuleData() {
+	public RuleMatchesPair getPeerRuleData() {
 		return ruleData;
 	}
 

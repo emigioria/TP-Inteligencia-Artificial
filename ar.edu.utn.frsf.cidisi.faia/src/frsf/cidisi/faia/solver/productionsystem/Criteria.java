@@ -8,14 +8,12 @@ package frsf.cidisi.faia.solver.productionsystem;
 
 import java.util.List;
 
-import javafx.util.Pair;
-
 /**
  * Clase que engloba el comportamiento de los criterios del sistema de produccion.
  */
 public abstract class Criteria {
 
-	public abstract List<Pair<Rule, Matches>> apply(List<Pair<Rule, Matches>> list);
+	public abstract List<RuleMatchesPair> apply(List<RuleMatchesPair> list);
 
 	@Override
 	public abstract String toString();

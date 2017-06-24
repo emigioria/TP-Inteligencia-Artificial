@@ -23,13 +23,11 @@ public class SimpleRule implements Rule {
 	private Integer id;
 	private Integer specificity;
 	private Integer priority;
-	private Integer novelty;
 
 	public SimpleRule(Integer id) {
 		this.id = id;
 		specificity = 0;
 		priority = 0;
-		novelty = 0;
 	}
 
 	@Override
@@ -57,15 +55,6 @@ public class SimpleRule implements Rule {
 
 	public void setPriority(Integer p) {
 		priority = p;
-	}
-
-	@Override
-	public Integer getNovelty() {
-		return novelty;
-	}
-
-	public void setNovelty(Integer n) {
-		novelty = n;
 	}
 
 	public void setCondition(Function<List<Matches>, Boolean> o) {
@@ -102,16 +91,10 @@ public class SimpleRule implements Rule {
 		return false;
 	}
 
-	@Override
 	public List<Matches> match() {
 		List<Matches> matchesList = new ArrayList<>();
 		condition.apply(matchesList);
 		return matchesList;
-	}
-
-	@Override
-	public Boolean isActive(List<Matches> matchesList) {
-		return condition.apply(matchesList);
 	}
 
 	@Override
