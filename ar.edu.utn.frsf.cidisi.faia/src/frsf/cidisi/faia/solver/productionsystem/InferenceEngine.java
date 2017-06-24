@@ -18,7 +18,7 @@ import javafx.util.Pair;
 /**
  * Clase que implementa el solver del sistema de producciï¿½n.
  */
-public abstract class InferenceEngine extends Solve {
+public class InferenceEngine extends Solve {
 
 	private Pair<Rule, Matches> r;
 

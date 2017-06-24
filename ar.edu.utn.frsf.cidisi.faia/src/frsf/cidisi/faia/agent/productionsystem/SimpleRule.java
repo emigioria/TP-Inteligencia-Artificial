@@ -119,4 +119,9 @@ public class SimpleRule implements Rule {
 		then.apply(unificaciones);
 	}
 
+	@Override
+	public boolean finish(Matches value) {
+		return false;
+	}
+
 }

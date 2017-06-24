@@ -6,10 +6,9 @@
  */
 package frsf.cidisi.faia.solver.productionsystem;
 
-import frsf.cidisi.faia.agent.PrologConnector;
+import frsf.cidisi.faia.agent.Perception;
 
 public interface WorkingMemory {
 
-	//TODO hacer clase con prolog
-	public PrologConnector getConnection();
+	public void updateState(Perception p);
 }

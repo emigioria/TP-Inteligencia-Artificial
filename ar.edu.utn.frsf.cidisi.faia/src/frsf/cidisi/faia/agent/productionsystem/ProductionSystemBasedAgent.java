@@ -75,4 +75,6 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	}
 
 	public abstract ProductionSystemAction learn();
+
+	public abstract boolean finish();
 }

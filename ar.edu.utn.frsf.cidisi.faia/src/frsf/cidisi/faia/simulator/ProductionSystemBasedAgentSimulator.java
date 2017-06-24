@@ -12,6 +12,7 @@ import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.GoalBasedAgent;
 import frsf.cidisi.faia.agent.Perception;
+import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
 import frsf.cidisi.faia.environment.Environment;
 import frsf.cidisi.faia.simulator.events.EventType;
@@ -20,7 +21,7 @@ import frsf.cidisi.faia.simulator.events.SimulatorEventNotifier;
 /**
  * Clase que implementa el simulador de un agente basado en conocimiento.
  */
-public abstract class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simulator.Simulator {
+public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simulator.Simulator {
 
 	/**
 	 * Constructor.
@@ -76,12 +77,17 @@ public abstract class ProductionSystemBasedAgentSimulator extends frsf.cidisi.fa
 
 			System.out.println();
 
-			this.ruleReturned(agent, action);
+			if(action != null){
+				this.ruleReturned(agent, action);
+			}
 
-		} while(!this.finishForRule(action) && !this.finishForAgentState(agent));
+		} while(action != null && !this.finishForRule(action) && !this.finishForAgentState(agent));
 
 		// Check what happened.
-		if(this.finishForRule(action)){
+		if(action != null){
+			System.out.println("The agent don't have any more to learn.");
+		}
+		else if(this.finishForRule(action)){
 			System.out.println("The agent has executed the finish rule.");
 		}
 		else{
@@ -99,9 +105,14 @@ public abstract class ProductionSystemBasedAgentSimulator extends frsf.cidisi.fa
 
 	}
 
-	public abstract boolean finishForAgentState(Agent agent);
+	public boolean finishForAgentState(ProductionSystemBasedAgent agent) {
+		return agent.finish();
+	};
 
-	public abstract boolean finishForRule(Action action);
+	public boolean finishForRule(Action action) {
+		ProductionSystemAction a = (ProductionSystemAction) action;
+		return a.finish();
+	};
 
 	public String getSimulatorName() {
 		return "Knowledge Based Simulator";

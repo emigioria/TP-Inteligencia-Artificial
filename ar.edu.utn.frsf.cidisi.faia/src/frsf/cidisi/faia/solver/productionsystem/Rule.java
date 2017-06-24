@@ -27,4 +27,11 @@ public interface Rule {
 
 	public void execute(Matches unificaciones);
 
+	public boolean finish(Matches value);
+
+	@Override
+	public boolean equals(Object obj);
+
+	@Override
+	public int hashCode();
 }
