@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Filtro<T> extends Nodo {
+public class Filtro extends Nodo {
 
 	private Integer indicePredicado;
 	private Integer indiceHecho;
-	private T filtro;
+	private Object filtro;
 	private Function<List<List<Hecho>>, List<List<Hecho>>> filtrar;
 
-	public Filtro(Integer indicePredicado, Integer indiceHecho, T filtro) {
+	public Filtro(Integer indicePredicado, Integer indiceHecho, Object filtro) {
 		assert filtro != null;
 
 		this.indicePredicado = indicePredicado;
@@ -19,7 +19,7 @@ public class Filtro<T> extends Nodo {
 		this.filtro = filtro;
 	}
 
-	public Filtro(Integer indiceHecho, T filtro) {
+	public Filtro(Integer indiceHecho, Object filtro) {
 		this(0, indiceHecho, filtro);
 	}
 
