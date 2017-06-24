@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
-import javafx.util.Pair;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 /**
  * Clase que implementa el criterio de novedad.
@@ -21,9 +19,9 @@ import javafx.util.Pair;
 public class Novelty extends Criteria {
 
 	@Override
-	public List<Pair<Rule, Matches>> apply(List<Pair<Rule, Matches>> list) {
-		Integer mayor = list.stream().map(prd -> prd.getKey().getNovelty()).max(Comparator.naturalOrder()).orElse(0);
-		return list.stream().filter(prd -> prd.getKey().getNovelty().equals(mayor)).collect(Collectors.toList());
+	public List<RuleMatchesPair> apply(List<RuleMatchesPair> list) {
+		Integer mayor = list.stream().map(prd -> prd.getNovelty()).max(Comparator.naturalOrder()).orElse(0);
+		return list.stream().filter(prd -> prd.getNovelty().equals(mayor)).collect(Collectors.toList());
 	}
 
 	@Override

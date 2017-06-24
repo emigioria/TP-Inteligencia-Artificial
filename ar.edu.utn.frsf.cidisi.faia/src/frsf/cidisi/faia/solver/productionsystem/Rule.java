@@ -6,8 +6,6 @@
  */
 package frsf.cidisi.faia.solver.productionsystem;
 
-import java.util.List;
-
 /**
  * Clase que modela elas reglas del sistema de produccion.
  */
@@ -15,15 +13,9 @@ public interface Rule {
 
 	public Integer getId();
 
-	public Integer getSpecificity();
-
 	public Integer getPriority();
 
-	public Integer getNovelty();
-
-	public List<Matches> match();
-
-	public Boolean isActive(List<Matches> matchesList);
+	public Integer getSpecificity();
 
 	public void execute(Matches unificaciones);
 

@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
-import javafx.util.Pair;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 /**
  * Clase que implementa el criterio aleatorio.
@@ -20,10 +18,10 @@ import javafx.util.Pair;
 public class Random extends Criteria {
 
 	@Override
-	public List<Pair<Rule, Matches>> apply(List<Pair<Rule, Matches>> list) {
+	public List<RuleMatchesPair> apply(List<RuleMatchesPair> list) {
 		int valor = new java.util.Random(System.currentTimeMillis()).nextInt(list.size());
 
-		List<Pair<Rule, Matches>> ret = new ArrayList<>();
+		List<RuleMatchesPair> ret = new ArrayList<>();
 		ret.add(list.get(valor));
 		return ret;
 	}

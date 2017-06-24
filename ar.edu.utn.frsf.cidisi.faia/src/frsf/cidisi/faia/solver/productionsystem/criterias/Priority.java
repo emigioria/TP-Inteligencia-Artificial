@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
-import javafx.util.Pair;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 /**
  * Clase que implementa el criterio de prioridad.
@@ -21,7 +19,7 @@ import javafx.util.Pair;
 public class Priority extends Criteria {
 
 	@Override
-	public List<Pair<Rule, Matches>> apply(List<Pair<Rule, Matches>> list) {
+	public List<RuleMatchesPair> apply(List<RuleMatchesPair> list) {
 		Integer mayor = list.stream().map(prd -> prd.getKey().getPriority()).max(Comparator.naturalOrder()).orElse(0);
 		return list.stream().filter(prd -> prd.getKey().getPriority().equals(mayor)).collect(Collectors.toList());
 	}

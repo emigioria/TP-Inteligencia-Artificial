@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
-import javafx.util.Pair;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 /**
  * Clase que implementa el criterio de no duplicacion.
@@ -26,7 +24,7 @@ public class NoDuplication extends Criteria {
 	}
 
 	@Override
-	public List<Pair<Rule, Matches>> apply(List<Pair<Rule, Matches>> list) {
+	public List<RuleMatchesPair> apply(List<RuleMatchesPair> list) {
 		return list.stream().filter(prd -> !usedRulesExpert.used(prd)).collect(Collectors.toList());
 	}
 

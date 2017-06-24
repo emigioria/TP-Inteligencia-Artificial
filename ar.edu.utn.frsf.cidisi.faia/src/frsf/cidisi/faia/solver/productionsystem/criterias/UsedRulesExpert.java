@@ -6,12 +6,10 @@
  */
 package frsf.cidisi.faia.solver.productionsystem.criterias;
 
-import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.Rule;
-import javafx.util.Pair;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 public interface UsedRulesExpert {
 
-	public boolean used(Pair<Rule, Matches> prd);
+	public boolean used(RuleMatchesPair prd);
 
 }
