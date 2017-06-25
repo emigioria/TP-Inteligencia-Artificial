@@ -6,6 +6,8 @@ import frsf.cidisi.faia.environment.Environment;
 
 public class GuardianPerception extends Perception {
 
+	private String percepcion;
+
 	public GuardianPerception() {
 
 	}
@@ -24,6 +26,14 @@ public class GuardianPerception extends Perception {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return percepcion;
+	}
+
+	public void setPercepcion(String percepcion) {
+		this.percepcion = percepcion;
+	}
+
+	public String getPercepcion() {
+		return percepcion;
 	}
 }

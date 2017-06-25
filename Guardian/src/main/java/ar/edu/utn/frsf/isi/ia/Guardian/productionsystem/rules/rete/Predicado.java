@@ -1,6 +1,8 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 public abstract class Predicado extends Nodo {
 
@@ -15,9 +17,15 @@ public abstract class Predicado extends Nodo {
 
 	@Override
 	public void propagarHechos(List<List<Hecho>> hechos) {
+		List<Hecho> hs = new ArrayList<>();
 		rwm.query(nombre).stream().forEach(map -> {
-
+			List<Object> valores = new ArrayList<>();
+			for(Entry<String, String> hecho: map.entrySet()){
+				valores.set(this.number(hecho.getKey()), hecho.getValue());
+			}
+			hs.add(new Hecho(valores));
 		});
+		hechos.add(hs);
 
 		super.propagarHechos(hechos);
 	}
@@ -27,8 +35,10 @@ public abstract class Predicado extends Nodo {
 		for(int i = 1; i < cantidadParamentros; i++){
 			retorno.append(alpha(i)).append(",");
 		}
-		retorno.append(alpha(cantidadParamentros)).append(")");
-		return retorno.toString();
+		if(cantidadParamentros > 0){
+			retorno.append(alpha(cantidadParamentros));
+		}
+		return retorno.append(")").toString();
 	}
 
 	private static char[] letras;
@@ -43,5 +53,18 @@ public abstract class Predicado extends Nodo {
 		char r = letras[--i % letras.length];
 		int n = i / letras.length;
 		return n == 0 ? new StringBuilder().append(r) : alpha(n).append(r);
+	}
+
+	private Integer number(String s) {
+		return numberRec(s.toCharArray(), s.length() - 1);
+	}
+
+	private Integer numberRec(char[] s, int i) {
+		if(i < 0){
+			return 0;
+		}
+		char letra = s[i];
+		int n = letra - 'A' + 1;
+		return numberRec(s, i - 1) * letras.length + n;
 	}
 }
