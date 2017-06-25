@@ -14,6 +14,10 @@ public class ReteMatches implements Matches,Cloneable {
 		this.listaHechos = new ArrayList<>();
 	}
 
+	public Hecho getHecho(Integer indice) {
+		return listaHechos.get(indice);
+	}
+
 	public void addHecho(Hecho hecho) {
 		this.listaHechos.add(hecho);
 	}

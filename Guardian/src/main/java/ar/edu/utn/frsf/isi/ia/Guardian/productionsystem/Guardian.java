@@ -70,7 +70,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		criterios.add(new Priority());
 		criterios.add(new Specificity());
 		criterios.add(new Random());
-		
+
 		//Cargar todas las palabras relevantes
 		setPalabrasRelevantes = cargarTodasLasPalabrasRelevantes();
 	}
@@ -85,18 +85,18 @@ public class Guardian extends ProductionSystemBasedAgent {
 	public void see(Perception p) {
 		GuardianPerception gPerception = (GuardianPerception) p;
 		ArrayList<String> palabras = new ArrayList<>();
-		
+
 		StringTokenizer palabrasTokenizer = new StringTokenizer(gPerception.getPercepcion().toLowerCase(), " ,()\"\'");
-		
+
 		//Obtenemos las palabras individuales percibidas
 		while(palabrasTokenizer.hasMoreTokens()){
 			palabras.add(palabrasTokenizer.nextToken());
 		}
-		
+
 		if(palabras.isEmpty()){
 			return;
 		}
-		
+
 		BaseVerbos baseVerbos;
 		try {
 			baseVerbos = new BaseVerbos();
@@ -107,11 +107,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Singularizador singularizador = new Singularizador();
 		ArrayList<String> palabrasProcesadas = new ArrayList<>();
 		String palabraEnInfinitivo;
-		
+
 		//Se las pone en infinitivo y se las singulariza
 		for(String palabra: palabras){
 			palabraEnInfinitivo = baseVerbos.infinitivo(palabra);
-			
+
 			if(palabraEnInfinitivo != null){
 				palabrasProcesadas.add(palabraEnInfinitivo);
 			}
@@ -120,37 +120,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 				palabrasProcesadas.add(singularizador.singularizar(palabra));
 			}
 		}
-		
+
 		ArrayList<ArrayList<String>> listaDelistasDeSinonimos = new ArrayList<>();
 		ArrayList<String> sinonimos;
 		Sinonimos baseSinonimos = new Sinonimos();
-		
+
 		//Se busca los sinonimos de cada palabra
 		for(String palabra: palabrasProcesadas){
 			sinonimos = baseSinonimos.sinonimosDe(palabra);
 			sinonimos.add(palabra);
 			listaDelistasDeSinonimos.add(sinonimos);
 		}
-		
+
 		//De cada lista de sinonimos nos quedamos con las palabras clave
 		for(ArrayList<String> listaDeSinonimos: listaDelistasDeSinonimos){
 			listaDeSinonimos.retainAll(setPalabrasRelevantes);
 		}
-		
+
 		//Agregamos las palabras escuchadas a la memoria de trabajo
 		for(ArrayList<String> listaDeSinonimos: listaDelistasDeSinonimos){
-			
+
 			for(String palabra: listaDeSinonimos){
 				this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")");
 			}
-			
+
 			proximoIndice++;
 		}
-		
+
 		//Borramos las reglas usadas previamente.
 		this.getUsedRules().clear();
 	}
-	
+
 	@Override
 	public EstadoGuardian getAgentState() {
 		return (EstadoGuardian) super.getAgentState();
@@ -194,7 +194,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando al 911");
 
 			}
 		};
@@ -217,7 +217,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Grabando audio");
 
 			}
 		};
@@ -239,7 +239,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando a un familiar");
 
 			}
 		};
@@ -279,8 +279,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(delitoCallejero,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(delitoCallejero,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(delitoCallejero)");
 			}
 		};
 
@@ -305,7 +309,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando al 911");
 
 			}
 		};
@@ -327,7 +331,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Grabando audio y enviándolo al 911");
 
 			}
 		};
@@ -350,7 +354,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Activando cámara de seguridad");
 
 			}
 		};
@@ -373,7 +377,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Activando alarma vecinal");
 
 			}
 		};
@@ -412,8 +416,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(delitoHogar,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(delitoHogar,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(delitoHogar)");
 			}
 		};
 
@@ -438,7 +446,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Grabando audio");
 
 			}
 		};
@@ -460,7 +468,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando al 911");
 
 			}
 		};
@@ -482,8 +490,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				System.out.println("Enviando audio al 911");
 			}
 		};
 
@@ -505,7 +512,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando a un familiar");
 
 			}
 		};
@@ -544,8 +551,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(violenciaDomestica,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(violenciaDomestica,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(violenciaDomestica)");
 			}
 		};
 
@@ -570,7 +581,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando bomberos");
 
 			}
 		};
@@ -592,7 +603,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Enviando audio a bomberos");
 
 			}
 		};
@@ -631,8 +642,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(incendio,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(incendio,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(incendio)");
 			}
 		};
 
@@ -657,7 +672,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando a hospital");
 
 			}
 		};
@@ -679,7 +694,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Enviando audio a hospital");
 
 			}
 		};
@@ -718,8 +733,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(emergenciaMedica,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(emergenciaMedica,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(emergenciaMedica)");
 			}
 		};
 
@@ -744,7 +763,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Llamando a policía");
 
 			}
 		};
@@ -766,7 +785,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				System.out.println("Enviando audio a policía");
 
 			}
 		};
@@ -775,7 +794,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionExplosionEnviarAudio);
 
 		//accion explosion - riesgo
-		Filtro filtroExplosionRiesgo = new Filtro(0, "emergenciaMedica");
+		Filtro filtroExplosionRiesgo = new Filtro(0, "explosion");
 		riesgo.agregarSalida(filtroExplosionRiesgo);
 
 		Unir unionAccionRiesgo6 = new Unir(2);
@@ -805,8 +824,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
-
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
+				estadoGuardian.addPredicate("riesgo(explosion,0)");
+				String nivelViejo = rm.getHecho(1).get(1).toString();
+				estadoGuardian.removePredicate("riesgo(explosion,"+nivelViejo+")");
+				estadoGuardian.removePredicate("accion(explosion)");
 			}
 		};
 
@@ -862,8 +885,17 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				Integer nivelViejo = new Integer(rm.getHecho(2).get(1).toString());
+				Integer valor = new Integer(rm.getHecho(1).get(2).toString());
+				String incidente = rm.getHecho(0).get(0).toString();
+				String numero = ((Integer)(nivelViejo+valor)).toString();
+				estadoGuardian.addPredicate("riesgo("+incidente+","+numero+")");
+				estadoGuardian.removePredicate("riesgo("+incidente+","+nivelViejo+")");
+				String palabra = rm.getHecho(0).get(1).toString();
+				estadoGuardian.removePredicate("clasificada("+incidente+","+palabra+")");
 			}
 		};
 
@@ -923,8 +955,13 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String incidente = rm.getHecho(0).get(0).toString();
+				estadoGuardian.addPredicate("accion("+incidente+")");
+				estadoGuardian.addPredicate("noSospecho("+incidente+")");
+				estadoGuardian.removePredicate("sospecho("+incidente+")");
 			}
 		};
 
@@ -2110,9 +2147,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		return listaReglas;
 	}
-	
+
 	private HashSet<String> cargarTodasLasPalabrasRelevantes(){
-		
+
 		Collection<Map<String,String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
 		HashSet<String> setPalabrasRelevantes = new HashSet<>();
 		StringTokenizer fraseTokenizer;
@@ -2126,7 +2163,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				setPalabrasRelevantes.add(fraseTokenizer.nextToken());
 			}
 		}
-		
+
 		return setPalabrasRelevantes;
 	}
 }
