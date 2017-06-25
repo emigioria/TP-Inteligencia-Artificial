@@ -162,9 +162,9 @@ riesgo(emergenciaMedica, 0).
 riesgo(explosion, 0).
 
 %Inicialización del estado de los incidentes
-noSucede(delitoHogar).
-noSucede(delitoCallejero).
-noSucede(violenciaDomestica).
-noSucede(incendio).
-noSucede(emergenciaMedica).
-noSucede(explosion).
+noSospecho(delitoHogar).
+noSospecho(delitoCallejero).
+noSospecho(violenciaDomestica).
+noSospecho(incendio).
+noSospecho(emergenciaMedica).
+noSospecho(explosion).

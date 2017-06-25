@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
@@ -16,6 +17,7 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroMayorOI
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestas;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestasTriple;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Hecho;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteProductionMemory;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteRule;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Unificar;
@@ -29,7 +31,6 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Li
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.NoSospecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Riesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Sospecho;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Sucede;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.TieneRiesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.util.Singularizador;
 import frsf.cidisi.faia.agent.Perception;
@@ -184,8 +185,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -204,8 +208,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return  hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -223,8 +230,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return  hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -248,12 +258,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccion1);
 		filtroDelitoCallejeroRiesgo.agregarSalida(unirAdapterRiesgo1);
 
-		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4,2,5) {
+		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -275,8 +296,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -290,22 +314,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoHogarLlamar911);
 
 		//accion delito hogar enviar audio al 911
-		Sucede sucede = new Sucede();
-		Filtro filtroSucedeAtiende911 = new Filtro(0, "atiende911");
-		sucede.agregarSalida(filtroSucedeAtiende911);
-
-		Unir unionAccionSucede1 = new Unir(2);
-		UnirAdapter unirAdapterAccionSuc1 = new UnirAdapter(0, unionAccionSucede1);
-		UnirAdapter unirAdapterSucede1 = new UnirAdapter(1, unionAccionSucede1);
-		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccionSuc1);
-		filtroSucedeAtiende911.agregarSalida(unirAdapterSucede1);
-
-		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6,2,5) {
+		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return  hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -315,7 +332,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		unionAccionSucede1.agregarSalida(reglaAccionDelitoHogarEnviarAudio);
+		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoHogarEnviarAudio);
 		listaReglas.add(reglaAccionDelitoHogarEnviarAudio);
 
 		//accion delito hogar activar camara de seguridad
@@ -324,8 +341,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -344,8 +364,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -368,12 +391,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoHogarAccion.agregarSalida(unirAdapterAccion2);
 		filtroDelitoHogarRiesgo.agregarSalida(unirAdapterRiesgo2);
 
-		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9,2,5) {
+		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -395,8 +429,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -410,13 +447,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaGrabarAudio);
 
 		//accion violencia domestica llamar 911
-
 		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -430,18 +469,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaLlamar911);
 
 		//accion violencia domestica enviar audio al 911
-		Unir unionAccionSucede2 = new Unir(2);
-		UnirAdapter unirAdapterAccionSuc2 = new UnirAdapter(0, unionAccionSucede2);
-		UnirAdapter unirAdapterSucede2 = new UnirAdapter(1, unionAccionSucede2);
-		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccionSuc2);
-		filtroSucedeAtiende911.agregarSalida(unirAdapterSucede2);
-
-		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12,2,5) {
+		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -451,7 +487,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		unionAccionSucede2.agregarSalida(reglaViolenciaDomesticaEnviarAudio);
+		filtroViolenciaDomesticaAccion.agregarSalida(reglaViolenciaDomesticaEnviarAudio);
 		listaReglas.add(reglaViolenciaDomesticaEnviarAudio);
 
 		//accion violencia domestica llamar familiar
@@ -460,8 +496,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -484,12 +523,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccion3);
 		filtroViolenciaDomesticaRiesgo.agregarSalida(unirAdapterRiesgo3);
 
-		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14,2,5) {
+		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -511,8 +561,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -526,21 +579,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionIncendioLlamar);
 
 		//accion incendio enviar audio a bomberos
-		Filtro filtroSucedeAtiendeBomberos = new Filtro(0, "atiendeBomberos");
-		sucede.agregarSalida(filtroSucedeAtiendeBomberos);
-
-		Unir unionAccionSucede3 = new Unir(2);
-		UnirAdapter unirAdapterAccionSuc3 = new UnirAdapter(0, unionAccionSucede3);
-		UnirAdapter unirAdapterSucede3 = new UnirAdapter(1, unionAccionSucede3);
-		filtroIncendioAccion.agregarSalida(unirAdapterAccionSuc3);
-		filtroSucedeAtiendeBomberos.agregarSalida(unirAdapterSucede3);
-
-		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16,2,5) {
+		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -550,7 +597,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		unionAccionSucede3.agregarSalida(reglaAccionIncendioEnviarAudio);
+		filtroIncendioAccion.agregarSalida(reglaAccionIncendioEnviarAudio);
 		listaReglas.add(reglaAccionIncendioEnviarAudio);
 
 		//accion incendio - riesgo
@@ -563,12 +610,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(unirAdapterAccion4);
 		filtroIncendioRiesgo.agregarSalida(unirAdapterRiesgo4);
 
-		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17,2,5) {
+		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -590,8 +648,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -605,21 +666,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionEmergenciaMedicaLlamar);
 
 		//accion emergencia medica enviar audio a hospital
-		Filtro filtroSucedeAtiendeHospital = new Filtro(0, "atiendeHospital");
-		sucede.agregarSalida(filtroSucedeAtiendeHospital);
-
-		Unir unionAccionSucede4 = new Unir(2);
-		UnirAdapter unirAdapterAccionSuc4 = new UnirAdapter(0, unionAccionSucede4);
-		UnirAdapter unirAdapterSucede4 = new UnirAdapter(1, unionAccionSucede4);
-		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccionSuc4);
-		filtroSucedeAtiendeHospital.agregarSalida(unirAdapterSucede4);
-
-		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19,2,5) {
+		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -629,7 +684,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		unionAccionSucede4.agregarSalida(reglaAccionEmergenciaMedicaEnviar);
+		filtroEmergenciaMedicaAccion.agregarSalida(reglaAccionEmergenciaMedicaEnviar);
 		listaReglas.add(reglaAccionEmergenciaMedicaEnviar);
 
 		//accion emergencia medica - riesgo
@@ -642,12 +697,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccion5);
 		filtroEmergenciaMedicaRiesgo.agregarSalida(unirAdapterRiesgo5);
 
-		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20,2,5) {
+		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -669,8 +735,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -684,21 +753,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionExplosionLlamar);
 
 		//accion explosion enviar audio a policia
-		Filtro filtroSucedeAtiendepolicia = new Filtro(0, "atiendePolicia");
-		sucede.agregarSalida(filtroSucedeAtiendepolicia);
-
-		Unir unionAccionSucede5 = new Unir(2);
-		UnirAdapter unirAdapterAccionSuc5 = new UnirAdapter(0, unionAccionSucede5);
-		UnirAdapter unirAdapterSucede5 = new UnirAdapter(1, unionAccionSucede5);
-		filtroexplosionAccion.agregarSalida(unirAdapterAccionSuc5);
-		filtroSucedeAtiendepolicia.agregarSalida(unirAdapterSucede5);
-
-		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22,2,5) {
+		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22,1,5) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -708,7 +771,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		unionAccionSucede5.agregarSalida(reglaAccionExplosionEnviarAudio);
+		filtroexplosionAccion.agregarSalida(reglaAccionExplosionEnviarAudio);
 		listaReglas.add(reglaAccionExplosionEnviarAudio);
 
 		//accion explosion - riesgo
@@ -721,12 +784,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(unirAdapterAccion6);
 		filtroExplosionRiesgo.agregarSalida(unirAdapterRiesgo6);
 
-		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23,2,5) {
+		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23,2,3) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return rm2;
+						})
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -764,8 +838,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.filter(h2 -> h2.get(1).equals(h.get(1)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> h3.get(0).equals(h2.get(0)))
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -803,8 +895,30 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(0).equals(h.get(0)))
+						.filter(h2 -> {
+							Integer nivel = new Integer(h2.get(1).toString());
+							Integer limite = new Integer(h.get(1).toString());
+							return nivel>=limite;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> h3.get(0).equals(h2.get(0)))
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -840,8 +954,25 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> h2.get(1).equals(h.get(0)))
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> h3.get(0).equals(h2.get(0)))
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -868,8 +999,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> h2.get(1).equals(h.get(0)))
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -887,8 +1029,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return rm;
+				}).collect(Collectors.toList());
 			}
 
 			@Override
@@ -917,12 +1062,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada = new FiltroPalabrasCompuestas();
 		unionEscuchada1.agregarSalida(filtroEscuchada);
 
-		ReteRule reglaDarPlata = new ReteRule(29, 2, 10) {
+		ReteRule reglaDarPlata = new ReteRule(29, 3, 10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -948,12 +1108,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada2 = new FiltroPalabrasCompuestas();
 		unionEscuchada2.agregarSalida(filtroEscuchada2);
 
-		ReteRule reglaDarBici = new ReteRule(30,2,10) {
+		ReteRule reglaDarBici = new ReteRule(30,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -979,12 +1154,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada3 = new FiltroPalabrasCompuestas();
 		unionEscuchada3.agregarSalida(filtroEscuchada3);
 
-		ReteRule reglaDarMoto = new ReteRule(31,2,10) {
+		ReteRule reglaDarMoto = new ReteRule(31,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1010,12 +1200,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada4 = new FiltroPalabrasCompuestas();
 		unionEscuchada4.agregarSalida(filtroEscuchada4);
 
-		ReteRule reglaDarCelu = new ReteRule(32,2,10) {
+		ReteRule reglaDarCelu = new ReteRule(32,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1041,12 +1246,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada5 = new FiltroPalabrasCompuestas();
 		unionEscuchada5.agregarSalida(filtroEscuchada5);
 
-		ReteRule reglaDarBilletera = new ReteRule(33,2,10) {
+		ReteRule reglaDarBilletera = new ReteRule(33,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1072,12 +1292,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada6 = new FiltroPalabrasCompuestas();
 		unionEscuchada6.agregarSalida(filtroEscuchada6);
 
-		ReteRule reglaDarCartera = new ReteRule(34,2,10) {
+		ReteRule reglaDarCartera = new ReteRule(34,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1103,12 +1338,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada7 = new FiltroPalabrasCompuestas();
 		unionEscuchada7.agregarSalida(filtroEscuchada7);
 
-		ReteRule relgaDarTodo = new ReteRule(35,2,10) {
+		ReteRule relgaDarTodo = new ReteRule(35,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1134,12 +1384,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada8 = new FiltroPalabrasCompuestas();
 		unionEscuchada8.agregarSalida(filtroEscuchada8);
 
-		ReteRule reglaDarMochila = new ReteRule(36,2,10) {
+		ReteRule reglaDarMochila = new ReteRule(36,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1165,12 +1430,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada9 = new FiltroPalabrasCompuestas();
 		unionEscuchada9.agregarSalida(filtroEscuchada9);
 
-		ReteRule reglaDarJoyas = new ReteRule(37,2,10) {
+		ReteRule reglaDarJoyas = new ReteRule(37,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1199,12 +1479,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada10 = new FiltroPalabrasCompuestas();
 		unionEscuchada10.agregarSalida(filtroEscuchada10);
 
-		ReteRule reglaVaciarCaja = new ReteRule(38,2,10) {
+		ReteRule reglaVaciarCaja = new ReteRule(38,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1235,12 +1530,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada11.agregarSalida(filtroEscuchadaTriple);
 
-		ReteRule reglaPonerTodoBolsa = new ReteRule(39,3,10) {
+		ReteRule reglaPonerTodoBolsa = new ReteRule(39,4,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> {
+							Integer n = new Integer(h.get(1).toString());
+							Integer m = new Integer(h2.get(1).toString());
+							return m==n+1;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> {
+										Integer m = new Integer(h2.get(1).toString());
+										Integer l = new Integer(h3.get(1).toString());
+										return l==m+1;
+									})
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1274,12 +1594,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple2 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada12.agregarSalida(filtroEscuchadaTriple2);
 
-		ReteRule reglaEstoSerAsalto = new ReteRule(40,3,10) {
+		ReteRule reglaEstoSerAsalto = new ReteRule(40,4,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> {
+							Integer n = new Integer(h.get(1).toString());
+							Integer m = new Integer(h2.get(1).toString());
+							return m==n+1;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> {
+										Integer m = new Integer(h2.get(1).toString());
+										Integer l = new Integer(h3.get(1).toString());
+										return l==m+1;
+									})
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1307,12 +1652,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple3 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada13.agregarSalida(filtroEscuchadaTriple3);
 
-		ReteRule reglaEstoSerRobo = new ReteRule(41,3,10) {
+		ReteRule reglaEstoSerRobo = new ReteRule(41,4,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> {
+							Integer n = new Integer(h.get(1).toString());
+							Integer m = new Integer(h2.get(1).toString());
+							return m==n+1;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> {
+										Integer m = new Integer(h2.get(1).toString());
+										Integer l = new Integer(h3.get(1).toString());
+										return l==m+1;
+									})
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1341,12 +1711,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada11 = new FiltroPalabrasCompuestas();
 		unionEscuchada14.agregarSalida(filtroEscuchada11);
 
-		ReteRule reglaNoGolpear = new ReteRule(42,2,10) {
+		ReteRule reglaNoGolpear = new ReteRule(42,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1377,12 +1762,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple4 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada15.agregarSalida(filtroEscuchadaTriple4);
 
-		ReteRule reglaNoDecirNadie = new ReteRule(43,3,10) {
+		ReteRule reglaNoDecirNadie = new ReteRule(43,4,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> {
+							Integer n = new Integer(h.get(1).toString());
+							Integer m = new Integer(h2.get(1).toString());
+							return m==n+1;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> {
+										Integer m = new Integer(h2.get(1).toString());
+										Integer l = new Integer(h3.get(1).toString());
+										return l==m+1;
+									})
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1411,12 +1821,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada12 = new FiltroPalabrasCompuestas();
 		unionEscuchada16.agregarSalida(filtroEscuchada12);
 
-		ReteRule reglaCerrarBoca = new ReteRule(44,2,10) {
+		ReteRule reglaCerrarBoca = new ReteRule(44,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1450,12 +1875,37 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada17.agregarSalida(filtroEscuchadaTriple5);
 
-		ReteRule reglaSacarManosEncima = new ReteRule(45,3,10) {
+		ReteRule reglaSacarManosEncima = new ReteRule(45,4,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+						.filter(h2 -> {
+							Integer n = new Integer(h.get(1).toString());
+							Integer m = new Integer(h2.get(1).toString());
+							return m==n+1;
+						})
+						.map(h2 -> {
+							ReteMatches rm2 = rm.clone();
+							rm2.addHecho(h2);
+							return hechos.get(2).stream()
+									.filter(h3 -> {
+										Integer m = new Integer(h2.get(1).toString());
+										Integer l = new Integer(h3.get(1).toString());
+										return l==m+1;
+									})
+									.map(h3 -> {
+										ReteMatches rm3 = rm2.clone();
+										rm3.addHecho(h3);
+										return rm3;
+									}).collect(Collectors.toList());
+						}).flatMap(List::stream)
+						.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1484,12 +1934,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada13 = new FiltroPalabrasCompuestas();
 		unionEscuchada18.agregarSalida(filtroEscuchada13);
 
-		ReteRule reglaVenirAca = new ReteRule(46,2,10) {
+		ReteRule reglaVenirAca = new ReteRule(46,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1518,12 +1983,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada14 = new FiltroPalabrasCompuestas();
 		unionEscuchada19.agregarSalida(filtroEscuchada14);
 
-		ReteRule reglaLlamarPolicia = new ReteRule(47,2,10) {
+		ReteRule reglaLlamarPolicia = new ReteRule(47,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1549,12 +2029,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada15 = new FiltroPalabrasCompuestas();
 		unionEscuchada20.agregarSalida(filtroEscuchada15);
 
-		ReteRule reglaLlamarAmbulancia = new ReteRule(48,2,10) {
+		ReteRule reglaLlamarAmbulancia = new ReteRule(48,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
@@ -1580,12 +2075,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada16 = new FiltroPalabrasCompuestas();
 		unionEscuchada21.agregarSalida(filtroEscuchada16);
 
-		ReteRule reglaLlamarBomberos = new ReteRule(49,2,10) {
+		ReteRule reglaLlamarBomberos = new ReteRule(49,3,10) {
 
 			@Override
 			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				// TODO Auto-generated method stub
-				return null;
+				return hechos.get(0).stream().map(h -> {
+					ReteMatches rm = new ReteMatches();
+					rm.addHecho(h);
+					return hechos.get(1).stream()
+							.filter(h2 -> {
+								Integer n = new Integer(h.get(1).toString());
+								Integer m = new Integer(h2.get(1).toString());
+								return m==n+1;
+							})
+							.map(h2 -> {
+								ReteMatches rm2 = rm.clone();
+								rm2.addHecho(h2);
+								return rm2;
+							})
+							.collect(Collectors.toList());
+				}).flatMap(List::stream)
+				.collect(Collectors.toList());
 			}
 
 			@Override
