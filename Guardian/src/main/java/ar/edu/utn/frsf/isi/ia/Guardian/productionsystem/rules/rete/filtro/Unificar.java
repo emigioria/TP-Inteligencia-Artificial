@@ -1,11 +1,13 @@
-package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
+package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Filtro;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
 
-public class Unificar extends NodoRete {
+public class Unificar extends Filtro {
 
 	private Integer indiceHecho1;
 	private Integer indiceValor1;
@@ -20,12 +22,10 @@ public class Unificar extends NodoRete {
 	}
 
 	@Override
-	public void propagarHechos(List<Matches> hechos) {
-		hechos = hechos.stream()
+	public List<Matches> filtrar(List<Matches> hechos) {
+		return hechos.stream()
 				.map(m -> ((ReteMatches) m))
 				.filter(rm -> rm.getHecho(indiceHecho1).get(indiceValor1).equals(rm.getHecho(indiceHecho2).get(indiceValor2)))
 				.collect(Collectors.toList());
-
-		super.propagarHechos(hechos);
 	}
 }

@@ -14,11 +14,9 @@ public class ReteMatcher implements Matcher {
 	public List<RuleMatchesPair> match(ProductionMemory productionMemory, WorkingMemory workingMemory) {
 		return productionMemory.getRules()
 				.parallelStream()
-				.map(r -> ((ReteRule) r).getMatches()
-						.parallelStream()
-						.map(m -> new RuleMatchesPair(r, m))
-						.collect(Collectors.toList()))
+				.map(r -> ((ReteRule) r).getMatches())
 				.flatMap(List::stream)
+				.distinct()
 				.collect(Collectors.toList());
 	}
 

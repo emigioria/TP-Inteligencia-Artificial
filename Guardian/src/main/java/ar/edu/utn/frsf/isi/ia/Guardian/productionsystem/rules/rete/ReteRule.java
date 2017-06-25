@@ -1,16 +1,18 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.solver.productionsystem.Matches;
 import frsf.cidisi.faia.solver.productionsystem.Rule;
+import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
 
 public abstract class ReteRule extends NodoRete implements Rule {
 
 	private Integer id;
 	private Integer specificity;
 	private Integer priority;
-	private List<Matches> matches;
+	private List<RuleMatchesPair> matches;
 
 	public ReteRule(Integer id, Integer specificity, Integer priority) {
 		super();
@@ -80,10 +82,12 @@ public abstract class ReteRule extends NodoRete implements Rule {
 
 	@Override
 	public void propagarHechos(List<Matches> hechos) {
-		matches = hechos;
+		matches = hechos.parallelStream()
+				.map(m -> new RuleMatchesPair(this, m))
+				.collect(Collectors.toList());
 	}
 
-	public List<Matches> getMatches() {
+	public List<RuleMatchesPair> getMatches() {
 		return matches;
 	}
 
