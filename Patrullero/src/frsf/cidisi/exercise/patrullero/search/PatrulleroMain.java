@@ -79,7 +79,7 @@ public class PatrulleroMain {
 		new PatrulleroMain(environment, agent).start();
 	}
 
-	SearchBasedAgentSimulator simulator;
+	private SearchBasedAgentSimulator simulator;
 
 	public PatrulleroMain(AmbienteCiudad ambienteCiudad, Patrullero patrullero) {
 		//Simular

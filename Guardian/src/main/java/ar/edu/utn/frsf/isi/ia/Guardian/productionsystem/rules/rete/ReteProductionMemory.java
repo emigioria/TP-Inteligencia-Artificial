@@ -10,7 +10,7 @@ public class ReteProductionMemory extends Nodo implements ProductionMemory {
 
 	private List<Rule> reglas;
 
-	public ReteProductionMemory(ReteMatcher rm, List<Rule> reglas) {
+	public ReteProductionMemory(List<Rule> reglas) {
 		this.reglas = reglas;
 	}
 
