@@ -108,6 +108,8 @@ critica(emergenciaMedica, desangrar).
 %Inicialización predicados incendio
 tieneRiesgo(incendio, fuego, 4).
 critica(incendio, fuego).
+tieneRiesgo(incendio, humo, 4).
+critica(incendio, humo).
 tieneRiesgo(incendio, ayuda, 3).
 tieneRiesgo(incendio, herido, 3).
 tieneRiesgo(incendio, incendio, 4).
