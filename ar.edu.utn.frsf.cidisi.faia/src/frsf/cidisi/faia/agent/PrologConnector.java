@@ -63,6 +63,8 @@ public class PrologConnector {
 		prologQuery = new Query("consult('" + this.prologFile + "')");
 
 		try{
+			new Query("style_check(-discontiguous)").hasSolution();
+
 			prologQuery.hasSolution();
 		} catch(PrologException e){
 			throw new PrologConnectorException("Load of prolog file failed ('" +
