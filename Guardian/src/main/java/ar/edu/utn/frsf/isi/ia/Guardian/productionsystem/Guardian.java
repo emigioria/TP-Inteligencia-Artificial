@@ -1,7 +1,6 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,10 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Predicado;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatcher;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteProductionMemory;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteRule;
@@ -33,11 +36,14 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Ri
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Sospecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.TieneRiesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.util.Singularizador;
+import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
-import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
+import frsf.cidisi.faia.solver.productionsystem.InferenceEngine;
+import frsf.cidisi.faia.solver.productionsystem.Matcher;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
+import frsf.cidisi.faia.solver.productionsystem.ProductionSystemSolveParam;
 import frsf.cidisi.faia.solver.productionsystem.Rule;
 import frsf.cidisi.faia.solver.productionsystem.criterias.NoDuplication;
 import frsf.cidisi.faia.solver.productionsystem.criterias.Priority;
@@ -48,10 +54,14 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	private List<Criteria> criterios;
 	private Integer proximoIndice = 0;
-	private Set<String> setPalabrasRelevantes;
 
 	private List<Rule> listaReglas;
 	private List<Predicado> listaPredicados;
+
+	private Set<String> setPalabrasRelevantes;
+	private BaseVerbos baseVerbos;
+	private Singularizador singularizador;
+	private Sinonimos baseSinonimos;
 
 	public Guardian() throws Exception {
 		// The Agent State
@@ -78,6 +88,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//Cargar todas las palabras relevantes
 		setPalabrasRelevantes = cargarTodasLasPalabrasRelevantes();
+		baseVerbos = new BaseVerbos();
+		singularizador = new Singularizador();
+		baseSinonimos = new Sinonimos();
 	}
 
 	/**
@@ -89,7 +102,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 	@Override
 	public void see(Perception p) {
 		GuardianPerception gPerception = (GuardianPerception) p;
-		ArrayList<String> palabras = new ArrayList<>();
+		List<String> palabras = new ArrayList<>();
 
 		StringTokenizer palabrasTokenizer = new StringTokenizer(gPerception.getPercepcion().toLowerCase(), " ,()\"\'");
 
@@ -102,58 +115,53 @@ public class Guardian extends ProductionSystemBasedAgent {
 			return;
 		}
 
-		BaseVerbos baseVerbos;
-		try{
-			baseVerbos = new BaseVerbos();
-		} catch(URISyntaxException e){
-			//TODO manejar excepcion
-			return;
-		}
-		Singularizador singularizador = new Singularizador();
-		ArrayList<String> palabrasProcesadas = new ArrayList<>();
-		String palabraEnInfinitivo;
+		List<String> palabrasProcesadas = palabras.parallelStream()
+				.map(palabra -> {
+					String palabraEnInfinitivo = baseVerbos.infinitivo(palabra);
+					if(palabraEnInfinitivo != null){
+						return palabraEnInfinitivo;
+					}
+					else{
+						//se hace en el else porque si se encontró su infinitivo no necesita singularizarse
+						return singularizador.singularizar(palabra);
+					}
+				}).collect(Collectors.toList());
 
-		//Se las pone en infinitivo y se las singulariza
-		for(String palabra: palabras){
-			palabraEnInfinitivo = baseVerbos.infinitivo(palabra);
+		List<List<String>> listaDeListasDeSinonimos = palabrasProcesadas
+				.parallelStream()
+				.map(palabra -> {
+					//Saco los sinónimos
+					List<String> sinonimos = baseSinonimos.sinonimosDe(palabra);
+					sinonimos.add(palabra);
 
-			if(palabraEnInfinitivo != null){
-				palabrasProcesadas.add(palabraEnInfinitivo);
-			}
-			else{
-				//se hace en el else porque si se encontró su infinitivo no necesita singularizarse
-				palabrasProcesadas.add(singularizador.singularizar(palabra));
-			}
-		}
+					//De cada lista de sinonimos nos quedamos con las palabras clave
+					sinonimos.retainAll(setPalabrasRelevantes);
 
-		ArrayList<ArrayList<String>> listaDelistasDeSinonimos = new ArrayList<>();
-		ArrayList<String> sinonimos;
-		Sinonimos baseSinonimos = new Sinonimos();
-
-		//Se busca los sinonimos de cada palabra
-		for(String palabra: palabrasProcesadas){
-			sinonimos = baseSinonimos.sinonimosDe(palabra);
-			sinonimos.add(palabra);
-			listaDelistasDeSinonimos.add(sinonimos);
-		}
-
-		//De cada lista de sinonimos nos quedamos con las palabras clave
-		for(ArrayList<String> listaDeSinonimos: listaDelistasDeSinonimos){
-			listaDeSinonimos.retainAll(setPalabrasRelevantes);
-		}
+					return sinonimos;
+				})
+				.collect(Collectors.toList());
 
 		//Agregamos las palabras escuchadas a la memoria de trabajo
-		for(ArrayList<String> listaDeSinonimos: listaDelistasDeSinonimos){
-
-			for(String palabra: listaDeSinonimos){
-				this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")");
-			}
-
+		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
+			listaDeSinonimos.parallelStream()
+					.forEach(palabra -> this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
 			proximoIndice++;
-		}
+		});
+	}
 
-		//Borramos las reglas usadas previamente.
-		this.getUsedRules().clear();
+	private Set<String> cargarTodasLasPalabrasRelevantes() {
+		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
+		Set<String> setPalabrasRelevantes = new HashSet<>();
+
+		resultado.parallelStream().forEach(mapa -> {
+			//El valor asociado a la clave "Palabra" es una palabra o un simbolo con formato palabra_palabra_palabra
+			StringTokenizer fraseTokenizer = new StringTokenizer(mapa.get("Palabra"), "_");
+			while(fraseTokenizer.hasMoreTokens()){
+				setPalabrasRelevantes.add(fraseTokenizer.nextToken());
+			}
+		});
+
+		return setPalabrasRelevantes;
 	}
 
 	@Override
@@ -165,14 +173,29 @@ public class Guardian extends ProductionSystemBasedAgent {
 	 * This method is executed by the simulator to ask the agent for an action.
 	 */
 	@Override
-	public ProductionSystemAction learn() {
+	public Action learn() {
+		//Borramos las reglas usadas previamente.
+		this.getUsedRules().clear();
 
-		return null;
+		Matcher matcher = new ReteMatcher();
+
+		// Set the InferenceEngine.
+		this.setSolver(new InferenceEngine(criterios, matcher));
+
+		// Ask the solver for the best action
+		Action selectedAction = null;
+		try{
+			selectedAction = this.getSolver().solve(new ProductionSystemSolveParam(this.getProductionMemory(), this.getAgentState()));
+		} catch(Exception ex){
+			Logger.getLogger(Guardian.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		// Return the selected action
+		return selectedAction;
 	}
 
 	@Override
 	public boolean finish() {
-
 		return false;
 	}
 
@@ -1514,22 +1537,4 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaLlamarBomberos);
 	}
 
-	private HashSet<String> cargarTodasLasPalabrasRelevantes() {
-
-		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
-		HashSet<String> setPalabrasRelevantes = new HashSet<>();
-		StringTokenizer fraseTokenizer;
-
-		for(Map<String, String> mapa: resultado){
-
-			//El valor asociado a la clave "Palabra" es una palabra o un simbolo con formato palabra_palabra_palabra
-			fraseTokenizer = new StringTokenizer(mapa.get("Palabra"), "_");
-
-			while(fraseTokenizer.hasMoreTokens()){
-				setPalabrasRelevantes.add(fraseTokenizer.nextToken());
-			}
-		}
-
-		return setPalabrasRelevantes;
-	}
 }

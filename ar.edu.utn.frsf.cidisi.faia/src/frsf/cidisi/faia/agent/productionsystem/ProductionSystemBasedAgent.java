@@ -62,7 +62,7 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 
 	@Override
 	public Action selectAction() {
-		ProductionSystemAction psa = this.learn();
+		ProductionSystemAction psa = (ProductionSystemAction) this.learn();
 		usedRules.add(psa.getPeerRuleData());
 		return psa;
 	}
@@ -71,16 +71,16 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	public boolean used(RuleMatchesPair prd) {
 		return usedRules.contains(prd);
 	}
-	
+
 	public Set<RuleMatchesPair> getUsedRules() {
 		return usedRules;
 	}
-	
+
 	public void setUsedRules(Set<RuleMatchesPair> usedRules) {
 		this.usedRules = usedRules;
 	}
 
-	public abstract ProductionSystemAction learn();
+	public abstract Action learn();
 
 	public abstract boolean finish();
 }
