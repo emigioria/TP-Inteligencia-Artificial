@@ -27,17 +27,14 @@ public class Unir extends NodoRete {
 		if(unionesPasadas > 0){
 			union = union.stream()
 					.map(m -> ((ReteMatches) m))
-					.map(rm -> {
-						return hechos.stream()
-								.map(m -> ((ReteMatches) m).getListaHechos())
-								.map(lh -> {
-									ReteMatches rmu = rm.clone();
-									for(Hecho h: lh){
-										rmu.getListaHechos().set(this.lugar++, h);
-									}
-									return rmu;
-								}).collect(Collectors.toList());
-					}).flatMap(List::stream)
+					.map(rm -> hechos.stream()
+							.map(m -> ((ReteMatches) m).getListaHechos())
+							.map(lh -> {
+								ReteMatches rmu = rm.clone();
+								lh.forEach(h -> rmu.getListaHechos().set(this.lugar++, h));
+								return rmu;
+							}).collect(Collectors.toList()))
+					.flatMap(List::stream)
 					.collect(Collectors.toList());
 		}
 		else{
@@ -45,9 +42,7 @@ public class Unir extends NodoRete {
 					.map(m -> ((ReteMatches) m).getListaHechos())
 					.map(lh -> {
 						ReteMatches rmu = new ReteMatches();
-						for(Hecho h: lh){
-							rmu.getListaHechos().set(this.lugar++, h);
-						}
+						lh.forEach(h -> rmu.getListaHechos().set(this.lugar++, h));
 						return rmu;
 					}).collect(Collectors.toList());
 		}

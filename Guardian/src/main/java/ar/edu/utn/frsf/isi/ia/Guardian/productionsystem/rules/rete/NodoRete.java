@@ -11,7 +11,7 @@ public abstract class NodoRete {
 
 	public void propagarHechos(List<Matches> hechos) {
 		salidas.parallelStream().forEach(s -> s.propagarHechos(
-				hechos.stream()
+				hechos.parallelStream()
 						.map(m -> ((ReteMatches) m).clone())
 						.collect(Collectors.toList())));
 	}
