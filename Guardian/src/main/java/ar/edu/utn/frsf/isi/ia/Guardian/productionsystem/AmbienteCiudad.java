@@ -7,7 +7,7 @@ import frsf.cidisi.faia.environment.Environment;
 public class AmbienteCiudad extends Environment {
 
 	private StringTokenizer frasesEscuchadasTokenizer;
-	
+
 	public AmbienteCiudad() {
 		// Create the environment state
 		this.environmentState = new EstadoAmbiente();
@@ -29,18 +29,18 @@ public class AmbienteCiudad extends Environment {
 	public GuardianPerception getPercept() {
 		// Create a new perception to return
 		GuardianPerception perception = null;
-		
+
 		if(frasesEscuchadasTokenizer.hasMoreTokens()){
 			perception = new GuardianPerception();
 			perception.setPercepcion(frasesEscuchadasTokenizer.nextToken());
 		}
-		
+
 		// Return the perception
 		return perception;
 	}
-	
-	public void setFrasesDichas(String frases){
-		frasesEscuchadasTokenizer = new StringTokenizer(frases, "\n\f\r.;");
+
+	public void setFrasesDichas(String frases) {
+		frasesEscuchadasTokenizer = new StringTokenizer(frases, "\n\f\r.;¿?¡!");
 	}
 
 	@Override

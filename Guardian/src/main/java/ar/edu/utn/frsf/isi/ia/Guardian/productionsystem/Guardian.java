@@ -7,10 +7,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Predicado;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteProductionMemory;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteRule;
@@ -36,7 +38,6 @@ import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
 import frsf.cidisi.faia.solver.productionsystem.Criteria;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
-import frsf.cidisi.faia.solver.productionsystem.ProductionMemory;
 import frsf.cidisi.faia.solver.productionsystem.Rule;
 import frsf.cidisi.faia.solver.productionsystem.criterias.NoDuplication;
 import frsf.cidisi.faia.solver.productionsystem.criterias.Priority;
@@ -47,7 +48,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	private List<Criteria> criterios;
 	private Integer proximoIndice = 0;
-	HashSet<String> setPalabrasRelevantes;
+	private Set<String> setPalabrasRelevantes;
+
+	private List<Rule> listaReglas;
+	private List<Predicado> listaPredicados;
 
 	public Guardian() throws Exception {
 		// The Agent State
@@ -56,11 +60,14 @@ public class Guardian extends ProductionSystemBasedAgent {
 		this.setAgentState(agState);
 
 		//Crear reglas
-		List<Rule> reglas = crearReglas();
+		crearPredicadosYReglas();
+		listaPredicados.parallelStream().forEach(p -> p.setRWM(agState));
 
 		//Crear memoria de trabajo
-		ProductionMemory productionMemory = new ReteProductionMemory(reglas);
+		ReteProductionMemory productionMemory = new ReteProductionMemory(listaReglas);
 		this.setProductionMemory(productionMemory);
+		listaPredicados.parallelStream().forEach(p -> productionMemory.agregarSalida(p));
+		productionMemory.inicializar();
 
 		//Crear criterios para resolver conflictos
 		criterios = new ArrayList<>();
@@ -169,14 +176,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		return false;
 	}
 
-	private List<Rule> crearReglas() {
+	private void crearPredicadosYReglas() {
 
-		List<Rule> listaReglas = new ArrayList<>();
+		this.listaReglas = new ArrayList<>();
+		this.listaPredicados = new ArrayList<>();
 
 		//DELITO CALLEJERO
 		//accion delito callejero llamar 911
 		Accion accion = new Accion();
-		accion.setRWM(this.getAgentState());
+		listaPredicados.add(accion);
+
 		FiltroIgualdad filtroDelitoCallejeroAccion = new FiltroIgualdad(0, "delitoCallejero");
 		accion.agregarSalida(filtroDelitoCallejeroAccion);
 
@@ -218,7 +227,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito callejero - riesgo
 		Riesgo riesgo = new Riesgo();
-		riesgo.setRWM(this.getAgentState());
+		listaPredicados.add(riesgo);
 
 		FiltroIgualdad filtroDelitoCallejeroRiesgo = new FiltroIgualdad(0, "delitoCallejero");
 		riesgo.agregarSalida(filtroDelitoCallejeroRiesgo);
@@ -581,9 +590,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//clasificada - tiene riesgo - riesgo
 		Clasificada clasificada = new Clasificada();
-		clasificada.setRWM(this.getAgentState());
+		listaPredicados.add(clasificada);
+
 		TieneRiesgo tieneRiesgo = new TieneRiesgo();
-		tieneRiesgo.setRWM(this.getAgentState());
+		listaPredicados.add(tieneRiesgo);
 
 		Unir unionClasificadaTieneriesgoRiesgo = new Unir(3);
 		UnirAdapter unirAdapterClasificada = new UnirAdapter(0, unionClasificadaTieneriesgoRiesgo);
@@ -625,9 +635,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//limite riesgo - riesgo - sospecho
 		LimiteRiesgo limiteRiesgo = new LimiteRiesgo();
-		limiteRiesgo.setRWM(this.getAgentState());
+		listaPredicados.add(limiteRiesgo);
+
 		Sospecho sospecho = new Sospecho();
-		sospecho.setRWM(this.getAgentState());
+		listaPredicados.add(sospecho);
 
 		Unir unionLimiteriesgoRiesgoSospecho = new Unir(3);
 		UnirAdapter unirAdapterLimiteRiesgo = new UnirAdapter(0, unionLimiteriesgoRiesgoSospecho);
@@ -665,11 +676,13 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//escuchada - critica - no sospecho
 		Escuchada escuchada = new Escuchada();
-		escuchada.setRWM(this.getAgentState());
+		listaPredicados.add(escuchada);
+
 		Critica critica = new Critica();
-		critica.setRWM(this.getAgentState());
+		listaPredicados.add(critica);
+
 		NoSospecho noSospecho = new NoSospecho();
-		noSospecho.setRWM(this.getAgentState());
+		listaPredicados.add(noSospecho);
 
 		Unir unionEscuchadaCriticaNosospecho = new Unir(3);
 		UnirAdapter unirAdapterEscuchada01 = new UnirAdapter(0, unionEscuchadaCriticaNosospecho);
@@ -1499,8 +1512,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		filtroEscuchada16.agregarSalida(reglaLlamarBomberos);
 		listaReglas.add(reglaLlamarBomberos);
-
-		return listaReglas;
 	}
 
 	private HashSet<String> cargarTodasLasPalabrasRelevantes() {
