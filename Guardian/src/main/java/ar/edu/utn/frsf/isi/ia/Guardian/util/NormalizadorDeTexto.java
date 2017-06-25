@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.Spliterator;
 import java.util.TreeMap;
 
-public class Singularizador {
+public class NormalizadorDeTexto {
 
 	private String cortar(String s, String suffix) {
 		return (s.substring(0, s.length() - suffix.length()));

@@ -35,7 +35,7 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.No
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Riesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Sospecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.TieneRiesgo;
-import ar.edu.utn.frsf.isi.ia.Guardian.util.Singularizador;
+import ar.edu.utn.frsf.isi.ia.Guardian.util.NormalizadorDeTexto;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
@@ -60,7 +60,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	private Set<String> setPalabrasRelevantes;
 	private BaseVerbos baseVerbos;
-	private Singularizador singularizador;
+	private NormalizadorDeTexto normalizadorDeTexto;
 	private Sinonimos baseSinonimos;
 
 	public Guardian() throws Exception {
@@ -89,7 +89,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		//Cargar todas las palabras relevantes
 		setPalabrasRelevantes = cargarTodasLasPalabrasRelevantes();
 		baseVerbos = new BaseVerbos();
-		singularizador = new Singularizador();
+		normalizadorDeTexto = new NormalizadorDeTexto();
 		baseSinonimos = new Sinonimos();
 	}
 
@@ -123,7 +123,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 					}
 					else{
 						//se hace en el else porque si se encontró su infinitivo no necesita singularizarse
-						return singularizador.singularizar(palabra);
+						return normalizadorDeTexto.singularizar(palabra);
 					}
 				}).collect(Collectors.toList());
 
