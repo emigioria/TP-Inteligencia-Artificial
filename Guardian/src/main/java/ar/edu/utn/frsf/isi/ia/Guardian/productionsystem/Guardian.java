@@ -180,15 +180,62 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroDelitoCallejeroAccion = new Filtro(0, "delitoCallejero");
 		accion.agregarSalida(filtroDelitoCallejeroAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoCallejeroLlamar911 = new ReteRule(1,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroLlamar911);
+		listaReglas.add(reglaAccionDelitoCallejeroLlamar911);
+
 
 		//accion delito callejero grabar lo que sucede
+		ReteRule reglaAccionDelitoCallejeroGrabar = new ReteRule(2,1,5) {
 
-		//TODO crear ReteRule
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroGrabar);
+		listaReglas.add(reglaAccionDelitoCallejeroGrabar);
 
 		//accion delito callejero llamar familiar
+		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3,1,5) {
 
-		//TODO crear ReteRule
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroLlamar);
+		listaReglas.add(reglaAccionDelitoCallejeroLlamar);
 
 		//accion delito callejero - riesgo
 		Riesgo riesgo = new Riesgo();
@@ -201,14 +248,46 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccion1);
 		filtroDelitoCallejeroRiesgo.agregarSalida(unirAdapterRiesgo1);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo1.agregarSalida(reglaAccionDelitoCallejeroRiesgo);
+		listaReglas.add(reglaAccionDelitoCallejeroRiesgo);
 
 		//DELITO HOGAR
 		//accion delito hogar llamar 911
 		Filtro filtroDelitoHogarAccion = new Filtro(0, "delitoHogar");
 		accion.agregarSalida(filtroDelitoHogarAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoHogarAccion.agregarSalida(reglaAccionDelitoHogarLlamar911);
+		listaReglas.add(reglaAccionDelitoHogarLlamar911);
 
 		//accion delito hogar enviar audio al 911
 		Sucede sucede = new Sucede();
@@ -221,15 +300,63 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccionSuc1);
 		filtroSucedeAtiende911.agregarSalida(unirAdapterSucede1);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionSucede1.agregarSalida(reglaAccionDelitoHogarEnviarAudio);
+		listaReglas.add(reglaAccionDelitoHogarEnviarAudio);
 
 		//accion delito hogar activar camara de seguridad
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoHogarAccion.agregarSalida(reglaAccionDelitoHogarActivarCamara);
+		listaReglas.add(reglaAccionDelitoHogarActivarCamara);
 
 		//accion delito hogar activar alarma vecinal
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroDelitoHogarAccion.agregarSalida(reglaAccionDelitoHogarActivarAlarma);
+		listaReglas.add(reglaAccionDelitoHogarActivarAlarma);
 
 		//accion delito hogar - riesgo
 		Filtro filtroDelitoHogarRiesgo = new Filtro(0, "delitoHogar");
@@ -241,33 +368,113 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoHogarAccion.agregarSalida(unirAdapterAccion2);
 		filtroDelitoHogarRiesgo.agregarSalida(unirAdapterRiesgo2);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo2.agregarSalida(reglaAccionDelitoHogarRiesgo);
+		listaReglas.add(reglaAccionDelitoHogarRiesgo);
 
 		//VIOLENCIA DOMESTICA
 		//accion violencia domestica grabar audio
 		Filtro filtroViolenciaDomesticaAccion = new Filtro(0, "violenciaDomestica");
 		accion.agregarSalida(filtroViolenciaDomesticaAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroViolenciaDomesticaAccion.agregarSalida(reglaAccionViolenciaDomesticaGrabarAudio);
+		listaReglas.add(reglaAccionViolenciaDomesticaGrabarAudio);
 
 		//accion violencia domestica llamar 911
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11,1,5) {
 
-		//accion delito hogar enviar audio al 911
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroViolenciaDomesticaAccion.agregarSalida(reglaAccionViolenciaDomesticaLlamar911);
+		listaReglas.add(reglaAccionViolenciaDomesticaLlamar911);
+
+		//accion violencia domestica enviar audio al 911
 		Unir unionAccionSucede2 = new Unir(2);
 		UnirAdapter unirAdapterAccionSuc2 = new UnirAdapter(0, unionAccionSucede2);
 		UnirAdapter unirAdapterSucede2 = new UnirAdapter(1, unionAccionSucede2);
 		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccionSuc2);
 		filtroSucedeAtiende911.agregarSalida(unirAdapterSucede2);
 
-		//TODO crear ReteRule
+		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionSucede2.agregarSalida(reglaViolenciaDomesticaEnviarAudio);
+		listaReglas.add(reglaViolenciaDomesticaEnviarAudio);
 
 		//accion violencia domestica llamar familiar
 
-		//TODO crear ReteRule
+		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13,1,5) {
 
-		//accion delito hogar - riesgo
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroViolenciaDomesticaAccion.agregarSalida(reglaViolenciaDomesticaLlamarFamiliar);
+		listaReglas.add(reglaViolenciaDomesticaLlamarFamiliar);
+
+		//accion violencia domestica - riesgo
 		Filtro filtroViolenciaDomesticaRiesgo = new Filtro(0, "violenciaDomestica");
 		riesgo.agregarSalida(filtroViolenciaDomesticaRiesgo);
 
@@ -277,14 +484,46 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccion3);
 		filtroViolenciaDomesticaRiesgo.agregarSalida(unirAdapterRiesgo3);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo3.agregarSalida(reglaAccionViolenciaDomesticaRiesgo);
+		listaReglas.add(reglaAccionViolenciaDomesticaRiesgo);
 
 		//INCENDIO
 		//accion incendio llamar bomberos
 		Filtro filtroIncendioAccion = new Filtro(0, "incendio");
 		accion.agregarSalida(filtroIncendioAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionIncendioLlamar = new ReteRule(15,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroIncendioAccion.agregarSalida(reglaAccionIncendioLlamar);
+		listaReglas.add(reglaAccionIncendioLlamar);
 
 		//accion incendio enviar audio a bomberos
 		Filtro filtroSucedeAtiendeBomberos = new Filtro(0, "atiendeBomberos");
@@ -296,7 +535,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(unirAdapterAccionSuc3);
 		filtroSucedeAtiendeBomberos.agregarSalida(unirAdapterSucede3);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionSucede3.agregarSalida(reglaAccionIncendioEnviarAudio);
+		listaReglas.add(reglaAccionIncendioEnviarAudio);
 
 		//accion incendio - riesgo
 		Filtro filtroIncendioRiesgo = new Filtro(0, "incendio");
@@ -308,14 +563,46 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(unirAdapterAccion4);
 		filtroIncendioRiesgo.agregarSalida(unirAdapterRiesgo4);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo4.agregarSalida(reglaAccionIncendioRiesgo);
+		listaReglas.add(reglaAccionIncendioRiesgo);
 
 		//EMERGENCIA MEDICA
 		//accion emergencia medica llamar hospital
 		Filtro filtroEmergenciaMedicaAccion = new Filtro(0, "emergenciaMedica");
 		accion.agregarSalida(filtroEmergenciaMedicaAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEmergenciaMedicaAccion.agregarSalida(reglaAccionEmergenciaMedicaLlamar);
+		listaReglas.add(reglaAccionEmergenciaMedicaLlamar);
 
 		//accion emergencia medica enviar audio a hospital
 		Filtro filtroSucedeAtiendeHospital = new Filtro(0, "atiendeHospital");
@@ -327,7 +614,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccionSuc4);
 		filtroSucedeAtiendeHospital.agregarSalida(unirAdapterSucede4);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionSucede4.agregarSalida(reglaAccionEmergenciaMedicaEnviar);
+		listaReglas.add(reglaAccionEmergenciaMedicaEnviar);
 
 		//accion emergencia medica - riesgo
 		Filtro filtroEmergenciaMedicaRiesgo = new Filtro(0, "emergenciaMedica");
@@ -339,14 +642,46 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccion5);
 		filtroEmergenciaMedicaRiesgo.agregarSalida(unirAdapterRiesgo5);
 
-		//TODO crear ReteRule
+		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo5.agregarSalida(reglaEmergenciaMedicaRiesgo);
+		listaReglas.add(reglaEmergenciaMedicaRiesgo);
 
 		//EXPLOSION
 		//accion explosion llamar policia
 		Filtro filtroexplosionAccion = new Filtro(0, "explosion");
 		accion.agregarSalida(filtroexplosionAccion);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionExplosionLlamar = new ReteRule(21,1,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroexplosionAccion.agregarSalida(reglaAccionExplosionLlamar);
+		listaReglas.add(reglaAccionExplosionLlamar);
 
 		//accion explosion enviar audio a policia
 		Filtro filtroSucedeAtiendepolicia = new Filtro(0, "atiendePolicia");
@@ -358,7 +693,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(unirAdapterAccionSuc5);
 		filtroSucedeAtiendepolicia.agregarSalida(unirAdapterSucede5);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionSucede5.agregarSalida(reglaAccionExplosionEnviarAudio);
+		listaReglas.add(reglaAccionExplosionEnviarAudio);
 
 		//accion explosion - riesgo
 		Filtro filtroExplosionRiesgo = new Filtro(0, "emergenciaMedica");
@@ -370,7 +721,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(unirAdapterAccion6);
 		filtroExplosionRiesgo.agregarSalida(unirAdapterRiesgo6);
 
-		//TODO crear ReteRule
+		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23,2,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unionAccionRiesgo6.agregarSalida(reglaAccionExplosionRiesgo);
+		listaReglas.add(reglaAccionExplosionRiesgo);
 
 		//clasificada - tiene riesgo - riesgo
 		Clasificada clasificada = new Clasificada();
@@ -393,7 +760,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar3 = new Unificar(0, 1, 1, 1); //palabra entre clasificada y tiene riesgo
 		unificar2.agregarSalida(unificar3);
 
-		//TODO crear ReteRule
+		ReteRule reglaClasificadaTieneriesgoRiesgo = new ReteRule(24,3,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unificar3.agregarSalida(reglaClasificadaTieneriesgoRiesgo);
+		listaReglas.add(reglaClasificadaTieneriesgoRiesgo);
 
 		//limite riesgo - riesgo - sospecho
 		LimiteRiesgo limiteRiesgo = new LimiteRiesgo();
@@ -416,7 +799,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroMayorOIgual = new FiltroMayorOIgual();
 		unificar5.agregarSalida(filtroMayorOIgual);
 
-		//TODO crear ReteRule
+		ReteRule reglaLimiteriesgoRiesgoSospecho = new ReteRule(25,4,5) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroMayorOIgual.agregarSalida(reglaLimiteriesgoRiesgoSospecho);
+		listaReglas.add(reglaLimiteriesgoRiesgoSospecho);
 
 		//escuchada - critica - no sospecho
 		Escuchada escuchada = new Escuchada();
@@ -437,7 +836,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar7 = new Unificar(1, 0, 2, 0); //incidente entre critica y no sospecho
 		unificar6.agregarSalida(unificar7);
 
-		//TODO crear ReteRule
+		ReteRule reglaEscuchadaCriticaNosospecho = new ReteRule(26,3,3) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unificar7.agregarSalida(reglaEscuchadaCriticaNosospecho);
+		listaReglas.add(reglaEscuchadaCriticaNosospecho);
 
 		//Escuchada - tiene riesgo
 		Unir unionEscuchadaTieneriesgo = new Unir(2);
@@ -449,14 +864,44 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar8 = new Unificar(0, 0, 1, 1); //palabra entre escuchada y tiene riesgo
 		unionEscuchadaTieneriesgo.agregarSalida(unificar8);
 
-		//TODO crear ReteRule
+		ReteRule reglaEscuchadaTieneriesgo = new ReteRule(27,2,2) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		unificar8.agregarSalida(reglaEscuchadaTieneriesgo);
+		listaReglas.add(reglaEscuchadaTieneriesgo);
 
 		//escuchada
+		ReteRule reglaEscuchada = new ReteRule(28,1,1) {
 
-		//TODO crear ReteRule
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		escuchada.agregarSalida(reglaEscuchada);
+		listaReglas.add(reglaEscuchada);
 
 		//palabra compuesta dar plata
-
 		Filtro filtroDar = new Filtro(0, "dar");
 		escuchada.agregarSalida(filtroDar);
 
@@ -487,6 +932,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
+		filtroEscuchada.agregarSalida(reglaDarPlata);
 		listaReglas.add(reglaDarPlata);
 
 		//palabra compuesta dar bici
@@ -502,7 +948,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada2 = new FiltroPalabrasCompuestas();
 		unionEscuchada2.agregarSalida(filtroEscuchada2);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarBici = new ReteRule(30,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada2.agregarSalida(reglaDarBici);
+		listaReglas.add(reglaDarBici);
 
 		//palabra compuesta dar moto
 		Filtro filtroMoto = new Filtro(0, "moto");
@@ -517,7 +979,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada3 = new FiltroPalabrasCompuestas();
 		unionEscuchada3.agregarSalida(filtroEscuchada3);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarMoto = new ReteRule(31,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada3.agregarSalida(reglaDarMoto);
+		listaReglas.add(reglaDarMoto);
 
 		//palabra compuesta dar celu
 		Filtro filtroCelu = new Filtro(0, "celu");
@@ -532,7 +1010,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada4 = new FiltroPalabrasCompuestas();
 		unionEscuchada4.agregarSalida(filtroEscuchada4);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarCelu = new ReteRule(32,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada4.agregarSalida(reglaDarCelu);
+		listaReglas.add(reglaDarCelu);
 
 		//palabra compuesta dar billetera
 		Filtro filtroBilletera = new Filtro(0, "billetera");
@@ -547,7 +1041,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada5 = new FiltroPalabrasCompuestas();
 		unionEscuchada5.agregarSalida(filtroEscuchada5);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarBilletera = new ReteRule(33,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada5.agregarSalida(reglaDarBilletera);
+		listaReglas.add(reglaDarBilletera);
 
 		//palabra compuesta dar cartera
 		Filtro filtroCartera = new Filtro(0, "cartera");
@@ -562,7 +1072,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada6 = new FiltroPalabrasCompuestas();
 		unionEscuchada6.agregarSalida(filtroEscuchada6);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarCartera = new ReteRule(34,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada6.agregarSalida(reglaDarCartera);
+		listaReglas.add(reglaDarCartera);
 
 		//palabra compuesta dar todo
 		Filtro filtroTodo = new Filtro(0, "todo");
@@ -577,7 +1103,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada7 = new FiltroPalabrasCompuestas();
 		unionEscuchada7.agregarSalida(filtroEscuchada7);
 
-		//TODO crear ReteRule
+		ReteRule relgaDarTodo = new ReteRule(35,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada7.agregarSalida(relgaDarTodo);
+		listaReglas.add(relgaDarTodo);
 
 		//palabra compuesta dar mochila
 		Filtro filtroMochila = new Filtro(0, "mochila");
@@ -592,7 +1134,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada8 = new FiltroPalabrasCompuestas();
 		unionEscuchada8.agregarSalida(filtroEscuchada8);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarMochila = new ReteRule(36,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada8.agregarSalida(reglaDarMochila);
+		listaReglas.add(reglaDarMochila);
 
 		//palabra compuesta dar joyas
 		Filtro filtroJoyas = new Filtro(0, "joyas");
@@ -607,7 +1165,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada9 = new FiltroPalabrasCompuestas();
 		unionEscuchada9.agregarSalida(filtroEscuchada9);
 
-		//TODO crear ReteRule
+		ReteRule reglaDarJoyas = new ReteRule(37,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada9.agregarSalida(reglaDarJoyas);
+		listaReglas.add(reglaDarJoyas);
 
 		//palabra compuesta vaciar caja
 		Filtro filtroVaciar = new Filtro(0, "vaciar");
@@ -625,7 +1199,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada10 = new FiltroPalabrasCompuestas();
 		unionEscuchada10.agregarSalida(filtroEscuchada10);
 
-		//TODO crear ReteRule
+		ReteRule reglaVaciarCaja = new ReteRule(38,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada10.agregarSalida(reglaVaciarCaja);
+		listaReglas.add(reglaVaciarCaja);
 
 		//palabra compuesta poner todo bolsa
 		Filtro filtroPoner = new Filtro(0, "poner");
@@ -645,7 +1235,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada11.agregarSalida(filtroEscuchadaTriple);
 
-		//TODO crear ReteRule
+		ReteRule reglaPonerTodoBolsa = new ReteRule(39,3,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchadaTriple.agregarSalida(reglaPonerTodoBolsa);
+		listaReglas.add(reglaPonerTodoBolsa);
 
 		//palabra compuesta esto ser asalto
 		Filtro filtroEsto = new Filtro(0, "esto");
@@ -668,7 +1274,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple2 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada12.agregarSalida(filtroEscuchadaTriple2);
 
-		//TODO crear ReteRule
+		ReteRule reglaEstoSerAsalto = new ReteRule(40,3,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchadaTriple2.agregarSalida(reglaEstoSerAsalto);
+		listaReglas.add(reglaEstoSerAsalto);
 
 		//palabra compuesta esto ser robo
 		Filtro filtroRobo = new Filtro(0, "robo");
@@ -685,7 +1307,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple3 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada13.agregarSalida(filtroEscuchadaTriple3);
 
-		//TODO crear ReteRule
+		ReteRule reglaEstoSerRobo = new ReteRule(41,3,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchadaTriple3.agregarSalida(reglaEstoSerRobo);
+		listaReglas.add(reglaEstoSerRobo);
 
 		//palabra compuesta no golpear
 		Filtro filtroNo = new Filtro(0, "no");
@@ -703,7 +1341,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada11 = new FiltroPalabrasCompuestas();
 		unionEscuchada14.agregarSalida(filtroEscuchada11);
 
-		//TODO crear ReteRule
+		ReteRule reglaNoGolpear = new ReteRule(42,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada11.agregarSalida(reglaNoGolpear);
+		listaReglas.add(reglaNoGolpear);
 
 		//palabra compuesta no decir nadie
 		Filtro filtroDecir = new Filtro(0, "decir");
@@ -723,7 +1377,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple4 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada15.agregarSalida(filtroEscuchadaTriple4);
 
-		//TODO crear ReteRule
+		ReteRule reglaNoDecirNadie = new ReteRule(43,3,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchadaTriple4.agregarSalida(reglaNoDecirNadie);
+		listaReglas.add(reglaNoDecirNadie);
 
 		//palabra compuesta cerrar boca
 		Filtro filtroCerrar = new Filtro(0, "cerrar");
@@ -741,7 +1411,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada12 = new FiltroPalabrasCompuestas();
 		unionEscuchada16.agregarSalida(filtroEscuchada12);
 
-		//TODO crear ReteRule
+		ReteRule reglaCerrarBoca = new ReteRule(44,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada12.agregarSalida(reglaCerrarBoca);
+		listaReglas.add(reglaCerrarBoca);
 
 		//palabra compuesta sacar manos encima
 		Filtro filtroSacar = new Filtro(0, "sacar");
@@ -764,7 +1450,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada17.agregarSalida(filtroEscuchadaTriple5);
 
-		//TODO crear ReteRule
+		ReteRule reglaSacarManosEncima = new ReteRule(45,3,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchadaTriple5.agregarSalida(reglaSacarManosEncima);
+		listaReglas.add(reglaSacarManosEncima);
 
 		//palabra compuesta venir aca
 		Filtro filtroVenir = new Filtro(0, "venir");
@@ -782,7 +1484,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada13 = new FiltroPalabrasCompuestas();
 		unionEscuchada18.agregarSalida(filtroEscuchada13);
 
-		//TODO crear ReteRule
+		ReteRule reglaVenirAca = new ReteRule(46,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada13.agregarSalida(reglaVenirAca);
+		listaReglas.add(reglaVenirAca);
 
 		//palabra compuesta llamar policia
 		Filtro filtroLlamar = new Filtro(0, "llamar");
@@ -800,7 +1518,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada14 = new FiltroPalabrasCompuestas();
 		unionEscuchada19.agregarSalida(filtroEscuchada14);
 
-		//TODO crear ReteRule
+		ReteRule reglaLlamarPolicia = new ReteRule(47,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada14.agregarSalida(reglaLlamarPolicia);
+		listaReglas.add(reglaLlamarPolicia);
 
 		//palabra compuesta llamar ambulancia
 		Filtro filtroAmbulancia = new Filtro(0, "ambulancia");
@@ -815,7 +1549,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada15 = new FiltroPalabrasCompuestas();
 		unionEscuchada20.agregarSalida(filtroEscuchada15);
 
-		//TODO crear ReteRule
+		ReteRule reglaLlamarAmbulancia = new ReteRule(48,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada15.agregarSalida(reglaLlamarAmbulancia);
+		listaReglas.add(reglaLlamarAmbulancia);
 
 		//palabra compuesta llamar bomberos
 		Filtro filtroBomberos = new Filtro(0, "bomberos");
@@ -830,7 +1580,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEscuchada16 = new FiltroPalabrasCompuestas();
 		unionEscuchada21.agregarSalida(filtroEscuchada16);
 
-		//TODO crear ReteRule
+		ReteRule reglaLlamarBomberos = new ReteRule(49,2,10) {
+
+			@Override
+			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void execute(Matches unificaciones) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		filtroEscuchada16.agregarSalida(reglaLlamarBomberos);
+		listaReglas.add(reglaLlamarBomberos);
 
 		return listaReglas;
 	}
