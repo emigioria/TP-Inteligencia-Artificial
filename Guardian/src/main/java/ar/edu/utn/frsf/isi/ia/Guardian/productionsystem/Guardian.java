@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Filtro;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroMayorOIgual;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestas;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestasTriple;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Hecho;
@@ -171,7 +172,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//TODO crear ReteRule
 
-		//acion violencia domestica llamar 911
+		//accion violencia domestica llamar 911
 
 		//TODO crear ReteRule
 
@@ -305,7 +306,14 @@ public class Guardian extends ProductionSystemBasedAgent {
 		tieneRiesgo.agregarSalida(unirAdapterTieneRiesgo);
 		riesgo.agregarSalida(unirAdapterRiesgo7);
 
-		//FIXME unificar
+		Unificar unificar1 = new Unificar(0, 0, 1, 0); //incidente entre clasificada y tiene riesgo
+		unionClasificadaTieneriesgoRiesgo.agregarSalida(unificar1);
+
+		Unificar unificar2 = new Unificar(1, 0, 2, 0); //incidente entre tiene riesgo y riesgo
+		unificar1.agregarSalida(unificar2);
+
+		Unificar unificar3 = new Unificar(0, 1, 1, 1); //palabra entre clasificada y tiene riesgo
+		unificar2.agregarSalida(unificar3);
 
 		//TODO crear ReteRule
 
@@ -321,7 +329,14 @@ public class Guardian extends ProductionSystemBasedAgent {
 		riesgo.agregarSalida(unirAdapterRiesgo8);
 		sospecho.agregarSalida(unirAdapterSospecho);
 
-		//FIXME unificar
+		Unificar unificar4 = new Unificar(0, 0, 1, 0); //incidente entre limite riesgo y riesgo
+		unionLimiteriesgoRiesgoSospecho.agregarSalida(unificar4);
+
+		Unificar unificar5 = new Unificar(1, 0, 2, 0); //incidente entre riesgo y sospecho
+		unificar4.agregarSalida(unificar5);
+
+		Filtro filtroMayorOIgual = new FiltroMayorOIgual();
+		unificar5.agregarSalida(filtroMayorOIgual);
 
 		//TODO crear ReteRule
 
@@ -338,7 +353,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		critica.agregarSalida(unirAdapterCritica);
 		noSospecho.agregarSalida(unirAdapterNoSospecho);
 
-		//FIXME unificar
+		Unificar unificar6 = new Unificar(0, 0, 1, 1); //palabra entre escuchada y critica
+		unionEscuchadaCriticaNosospecho.agregarSalida(unificar6);
+
+		Unificar unificar7 = new Unificar(1, 0, 2, 0); //incidente entre critica y no sospecho
+		unificar6.agregarSalida(unificar7);
 
 		//TODO crear ReteRule
 
@@ -349,7 +368,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 		escuchada.agregarSalida(unirAdapterEscuchada02);
 		tieneRiesgo.agregarSalida(unirAdapterTieneRiesgo2);
 
-		//FIXME unificar
+		Unificar unificar8 = new Unificar(0, 0, 1, 1); //palabra entre escuchada y tiene riesgo
+		unionEscuchadaTieneriesgo.agregarSalida(unificar8);
 
 		//TODO crear ReteRule
 
