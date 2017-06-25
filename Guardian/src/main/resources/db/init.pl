@@ -54,12 +54,12 @@ tieneRiesgo(delitoCallejero, droga, 1).
 tieneRiesgo(delitoCallejero, faso, 1).
 tieneRiesgo(delitoCallejero, merca, 1).
 tieneRiesgo(delitoCallejero, cortar, 2).
-tieneRiesgoDelitoCallejero(rayar, 2).
-tieneRiesgoDelitoCallejero(bala, 3).
-tieneRiesgoDelitoCallejero(yuta, 1).
-tieneRiesgoDelitoCallejero(fierro, 2).
-tieneRiesgoDelitoCallejero(ladron, 3).
-tieneRiesgoDelitoCallejero(chorro, 3).
+tieneRiesgo(delitoCallejero, rayar, 2).
+tieneRiesgo(delitoCallejero, bala, 3).
+tieneRiesgo(delitoCallejero, yuta, 1).
+tieneRiesgo(delitoCallejero, fierro, 2).
+tieneRiesgo(delitoCallejero, ladron, 3).
+tieneRiesgo(delitoCallejero, chorro, 3).
 
 %Inicialización predicados violenciaDomestica
 tieneRiesgo(violenciaDomestica, inutil, 3).
