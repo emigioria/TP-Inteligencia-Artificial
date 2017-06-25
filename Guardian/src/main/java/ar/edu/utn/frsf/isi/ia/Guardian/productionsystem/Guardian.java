@@ -690,8 +690,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String incidente = rm.getHecho(1).get(0).toString();
+				estadoGuardian.addPredicate("sospecho(" + incidente + ")");
+				estadoGuardian.removePredicate("noSospecho(" + incidente + ")");
 			}
 		};
 
@@ -712,8 +716,14 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String incidente = rm.getHecho(1).get(0).toString();
+				String palabra = rm.getHecho(0).get(0).toString();
+				estadoGuardian.addPredicate("clasificada(" + incidente + "," + palabra + ")");
+				String n = rm.getHecho(0).get(1).toString();
+				estadoGuardian.removePredicate("escuchada(" + palabra + "," + n + ")");
 			}
 		};
 
@@ -725,8 +735,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				estadoGuardian.removePredicate("escuchada(" + palabra + "," + n + ")");
 			}
 		};
 
@@ -753,8 +767,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -778,8 +800,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -803,8 +833,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -828,8 +866,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -853,8 +899,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -878,8 +932,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -903,8 +965,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -928,8 +998,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -953,8 +1031,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -981,8 +1067,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1011,8 +1105,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1044,8 +1149,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1071,8 +1187,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1099,8 +1226,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1129,8 +1264,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1157,8 +1303,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1190,8 +1344,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1218,8 +1383,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1246,8 +1419,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1271,8 +1452,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1296,8 +1485,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
