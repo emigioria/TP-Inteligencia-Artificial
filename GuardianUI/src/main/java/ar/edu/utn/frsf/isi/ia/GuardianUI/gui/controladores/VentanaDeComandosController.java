@@ -17,7 +17,13 @@ public class VentanaDeComandosController extends ControladorJavaFX {
 	@FXML
 	private void tomarEntrada(){
 		AmbienteCiudad ambiente = new AmbienteCiudad();
-		Guardian agente = new Guardian();
+		Guardian agente;
+		try {
+			agente = new Guardian();
+		} catch (Exception e) {
+			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+			return;
+		}
 		GuardianMain main = new GuardianMain(ambiente, agente);
 		
 		ambiente.setFrasesDichas(taEntrada.getText());
