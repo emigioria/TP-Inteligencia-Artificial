@@ -71,6 +71,14 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	public boolean used(RuleMatchesPair prd) {
 		return usedRules.contains(prd);
 	}
+	
+	public Set<RuleMatchesPair> getUsedRules() {
+		return usedRules;
+	}
+	
+	public void setUsedRules(Set<RuleMatchesPair> usedRules) {
+		this.usedRules = usedRules;
+	}
 
 	public abstract ProductionSystemAction learn();
 
