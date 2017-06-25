@@ -12,6 +12,7 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabra
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Hecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteProductionMemory;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteRule;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Unificar;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Unir;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.UnirAdapter;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Accion;
