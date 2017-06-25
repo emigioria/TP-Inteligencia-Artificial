@@ -4,6 +4,8 @@ import frsf.cidisi.faia.environment.Environment;
 
 public class AmbienteCiudad extends Environment {
 
+	private String frasesDichas;
+	
 	public AmbienteCiudad() {
 		// Create the environment state
 		this.environmentState = new EstadoAmbiente();
@@ -25,10 +27,13 @@ public class AmbienteCiudad extends Environment {
 	public GuardianPerception getPercept() {
 		// Create a new perception to return
 		GuardianPerception perception = new GuardianPerception();
-		//TODO hacer
-
+		
 		// Return the perception
 		return perception;
+	}
+	
+	public void setFrasesDichas(String frases){
+		frasesDichas = frases;
 	}
 
 	@Override

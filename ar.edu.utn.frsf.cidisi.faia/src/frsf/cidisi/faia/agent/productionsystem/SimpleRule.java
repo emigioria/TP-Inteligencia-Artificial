@@ -107,4 +107,9 @@ public class SimpleRule implements Rule {
 		return false;
 	}
 
+	@Override
+	public boolean finishLearning(Matches value) {
+		return false;
+	}
+
 }

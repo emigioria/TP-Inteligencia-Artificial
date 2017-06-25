@@ -55,39 +55,46 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 		System.out.println();
 
 		Perception perception;
-		Action action;
+		Action action = null;
 		ProductionSystemBasedAgent agent;
 
 		agent = (ProductionSystemBasedAgent) this.getAgents().firstElement();
-
+		
 		do{
 
 			System.out.println("------------------------------------");
 
 			System.out.println("Sending perception to agent...");
 			perception = this.getPercept();
-			agent.see(perception);
-			System.out.println("Perception: " + perception);
+			if(perception != null){
+				agent.see(perception);
+				System.out.println("Perception: " + perception);
 
-			System.out.println("Agent State: " + agent.getAgentState());
-			System.out.println("Environment: " + environment);
+				System.out.println("Agent State: " + agent.getAgentState());
+				System.out.println("Environment: " + environment);
 
-			System.out.println("Asking the agent that start the learning process...");
-			action = agent.selectAction();
+				System.out.println("Asking the agent that start the learning process...");
+				do{
+					action = agent.selectAction();
 
-			System.out.println();
+					System.out.println();
 
-			if(action != null){
-				this.ruleReturned(agent, action);
+					if(action != null){
+						this.ruleReturned(agent, action);
+					}
+
+				} while(action != null && !this.finishLearningForRule(action) && !this.finishForAgentState(agent));
+
+				System.out.println("\nThe agent doesn't have any more to learn.");
 			}
-
-		} while(action != null && !this.finishForRule(action) && !this.finishForAgentState(agent));
+			else{
+				System.out.println("\nThe agent doesn't have any more to percieve.");
+			}
+			
+		} while(perception != null && !this.finishForRule(action) && !this.finishForAgentState(agent));
 
 		// Check what happened.
-		if(action != null){
-			System.out.println("The agent don't have any more to learn.");
-		}
-		else if(this.finishForRule(action)){
+		if(this.finishForRule(action)){
 			System.out.println("The agent has executed the finish rule.");
 		}
 		else{
@@ -110,8 +117,19 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	};
 
 	public boolean finishForRule(Action action) {
+		if(action == null){
+			return false;
+		}
 		ProductionSystemAction a = (ProductionSystemAction) action;
 		return a.finish();
+	};
+	
+	public boolean finishLearningForRule(Action action) {
+		if(action == null){
+			return false;
+		}
+		ProductionSystemAction a = (ProductionSystemAction) action;
+		return a.finishLearning();
 	};
 
 	public String getSimulatorName() {

@@ -40,6 +40,11 @@ public abstract class ReteRule extends Nodo implements Rule {
 	public boolean finish(Matches value) {
 		return false;
 	}
+	
+	@Override
+	public boolean finishLearning(Matches value) {
+		return false;
+	}
 
 	@Override
 	public int hashCode() {
