@@ -170,3 +170,13 @@ noSospecho(violenciaDomestica).
 noSospecho(incendio).
 noSospecho(emergenciaMedica).
 noSospecho(explosion).
+
+:- dynamic(tieneRiesgo/3).
+:- dynamic(escuchada/2).
+:- dynamic(riesgo/2).
+:- dynamic(limiteRiesgo/2).
+:- dynamic(accion/1).
+:- dynamic(sospecho/1).
+:- dynamic(noSospecho/1).
+:- dynamic(critica/2).
+:- dynamic(clasificada/2).
