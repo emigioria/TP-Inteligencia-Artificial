@@ -10,12 +10,13 @@ import frsf.cidisi.faia.solver.productionsystem.WorkingMemory;
  */
 public interface ReteWorkingMemory extends WorkingMemory {
 
+	public boolean queryHasSolution(String query);
+
 	public Collection<Map<String, String>> query(String query);
 
 	public void addPredicate(String predicate);
 
 	public void removePredicate(String predicate);
 
-	public boolean queryHasSolution(String query);
-
+	public void suscribe(ReteWorkingMemoryChangeListener rwmcl);
 }

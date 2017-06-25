@@ -5,7 +5,7 @@ import java.util.List;
 
 import frsf.cidisi.faia.solver.productionsystem.Matches;
 
-public class ReteMatches implements Matches,Cloneable {
+public class ReteMatches implements Matches, Cloneable {
 
 	private List<Hecho> listaHechos;
 
@@ -20,6 +20,10 @@ public class ReteMatches implements Matches,Cloneable {
 
 	public void addHecho(Hecho hecho) {
 		this.listaHechos.add(hecho);
+	}
+
+	public List<Hecho> getListaHechos() {
+		return listaHechos;
 	}
 
 	@Override
@@ -39,20 +43,25 @@ public class ReteMatches implements Matches,Cloneable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		ReteMatches other = (ReteMatches) obj;
-		if (listaHechos == null) {
-			if (other.listaHechos != null)
+		if(listaHechos == null){
+			if(other.listaHechos != null){
 				return false;
-		} else if (!listaHechos.equals(other.listaHechos))
+			}
+		}
+		else if(!listaHechos.equals(other.listaHechos)){
 			return false;
+		}
 		return true;
 	}
-
 
 }

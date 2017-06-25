@@ -8,21 +8,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Filtro;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroMayorOIgual;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestas;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroPalabrasCompuestasTriple;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Hecho;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.FiltroFuncion;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteProductionMemory;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteRule;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Unificar;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Unir;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.UnirAdapter;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroMayorOIgual;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroPalabrasCompuestas;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroPalabrasCompuestasTriple;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Accion;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Clasificada;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Critica;
@@ -98,9 +97,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 		}
 
 		BaseVerbos baseVerbos;
-		try {
+		try{
 			baseVerbos = new BaseVerbos();
-		} catch (URISyntaxException e) {
+		} catch(URISyntaxException e){
 			//TODO manejar excepcion
 			return;
 		}
@@ -178,19 +177,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		//DELITO CALLEJERO
 		//accion delito callejero llamar 911
 		Accion accion = new Accion();
+		accion.setRWM(this.getAgentState());
 		Filtro filtroDelitoCallejeroAccion = new Filtro(0, "delitoCallejero");
 		accion.agregarSalida(filtroDelitoCallejeroAccion);
 
-		ReteRule reglaAccionDelitoCallejeroLlamar911 = new ReteRule(1,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoCallejeroLlamar911 = new ReteRule(1, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -202,23 +193,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroLlamar911);
 		listaReglas.add(reglaAccionDelitoCallejeroLlamar911);
 
-
 		//accion delito callejero grabar lo que sucede
-		ReteRule reglaAccionDelitoCallejeroGrabar = new ReteRule(2,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return  hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoCallejeroGrabar = new ReteRule(2, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Grabando audio");
-
 			}
 		};
 
@@ -226,21 +206,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoCallejeroGrabar);
 
 		//accion delito callejero llamar familiar
-		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return  hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando a un familiar");
-
 			}
 		};
 
@@ -249,6 +219,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito callejero - riesgo
 		Riesgo riesgo = new Riesgo();
+		riesgo.setRWM(this.getAgentState());
+
 		Filtro filtroDelitoCallejeroRiesgo = new Filtro(0, "delitoCallejero");
 		riesgo.agregarSalida(filtroDelitoCallejeroRiesgo);
 
@@ -258,24 +230,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccion1);
 		filtroDelitoCallejeroRiesgo.agregarSalida(unirAdapterRiesgo1);
 
-		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -283,7 +238,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(delitoCallejero,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(delitoCallejero,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(delitoCallejero," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(delitoCallejero)");
 			}
 		};
@@ -296,16 +251,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroDelitoHogarAccion = new Filtro(0, "delitoHogar");
 		accion.agregarSalida(filtroDelitoHogarAccion);
 
-		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -318,16 +264,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoHogarLlamar911);
 
 		//accion delito hogar enviar audio al 911
-		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return  hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -341,16 +278,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar camara de seguridad
 
-		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -364,16 +292,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar alarma vecinal
 
-		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -395,24 +314,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoHogarAccion.agregarSalida(unirAdapterAccion2);
 		filtroDelitoHogarRiesgo.agregarSalida(unirAdapterRiesgo2);
 
-		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -420,7 +322,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(delitoHogar,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(delitoHogar,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(delitoHogar," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(delitoHogar)");
 			}
 		};
@@ -433,16 +335,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroViolenciaDomesticaAccion = new Filtro(0, "violenciaDomestica");
 		accion.agregarSalida(filtroViolenciaDomesticaAccion);
 
-		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -455,16 +348,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaGrabarAudio);
 
 		//accion violencia domestica llamar 911
-		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -477,16 +361,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaLlamar911);
 
 		//accion violencia domestica enviar audio al 911
-		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -499,16 +374,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion violencia domestica llamar familiar
 
-		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -530,24 +396,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccion3);
 		filtroViolenciaDomesticaRiesgo.agregarSalida(unirAdapterRiesgo3);
 
-		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -555,7 +404,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(violenciaDomestica,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(violenciaDomestica,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(violenciaDomestica," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(violenciaDomestica)");
 			}
 		};
@@ -568,16 +417,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroIncendioAccion = new Filtro(0, "incendio");
 		accion.agregarSalida(filtroIncendioAccion);
 
-		ReteRule reglaAccionIncendioLlamar = new ReteRule(15,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionIncendioLlamar = new ReteRule(15, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -590,16 +430,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionIncendioLlamar);
 
 		//accion incendio enviar audio a bomberos
-		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -621,24 +452,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(unirAdapterAccion4);
 		filtroIncendioRiesgo.agregarSalida(unirAdapterRiesgo4);
 
-		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -646,7 +460,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(incendio,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(incendio,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(incendio," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(incendio)");
 			}
 		};
@@ -659,16 +473,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroEmergenciaMedicaAccion = new Filtro(0, "emergenciaMedica");
 		accion.agregarSalida(filtroEmergenciaMedicaAccion);
 
-		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -681,16 +486,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionEmergenciaMedicaLlamar);
 
 		//accion emergencia medica enviar audio a hospital
-		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -712,24 +508,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccion5);
 		filtroEmergenciaMedicaRiesgo.agregarSalida(unirAdapterRiesgo5);
 
-		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -737,7 +516,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(emergenciaMedica,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(emergenciaMedica,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(emergenciaMedica," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(emergenciaMedica)");
 			}
 		};
@@ -750,16 +529,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Filtro filtroexplosionAccion = new Filtro(0, "explosion");
 		accion.agregarSalida(filtroexplosionAccion);
 
-		ReteRule reglaAccionExplosionLlamar = new ReteRule(21,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionExplosionLlamar = new ReteRule(21, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -772,16 +542,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionExplosionLlamar);
 
 		//accion explosion enviar audio a policia
-		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22,1,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22, 1, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -803,24 +564,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(unirAdapterAccion6);
 		filtroExplosionRiesgo.agregarSalida(unirAdapterRiesgo6);
 
-		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23,2,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return rm2;
-						})
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23, 2, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -828,7 +572,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 				estadoGuardian.addPredicate("riesgo(explosion,0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(explosion,"+nivelViejo+")");
+				estadoGuardian.removePredicate("riesgo(explosion," + nivelViejo + ")");
 				estadoGuardian.removePredicate("accion(explosion)");
 			}
 		};
@@ -838,7 +582,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//clasificada - tiene riesgo - riesgo
 		Clasificada clasificada = new Clasificada();
+		clasificada.setRWM(this.getAgentState());
 		TieneRiesgo tieneRiesgo = new TieneRiesgo();
+		tieneRiesgo.setRWM(this.getAgentState());
 
 		Unir unionClasificadaTieneriesgoRiesgo = new Unir(3);
 		UnirAdapter unirAdapterClasificada = new UnirAdapter(0, unionClasificadaTieneriesgoRiesgo);
@@ -857,31 +603,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar3 = new Unificar(0, 1, 1, 1); //palabra entre clasificada y tiene riesgo
 		unificar2.agregarSalida(unificar3);
 
-		ReteRule reglaClasificadaTieneriesgoRiesgo = new ReteRule(24,3,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.filter(h2 -> h2.get(1).equals(h.get(1)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> h3.get(0).equals(h2.get(0)))
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaClasificadaTieneriesgoRiesgo = new ReteRule(24, 3, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -891,11 +613,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 				Integer nivelViejo = new Integer(rm.getHecho(2).get(1).toString());
 				Integer valor = new Integer(rm.getHecho(1).get(2).toString());
 				String incidente = rm.getHecho(0).get(0).toString();
-				String numero = ((Integer)(nivelViejo+valor)).toString();
-				estadoGuardian.addPredicate("riesgo("+incidente+","+numero+")");
-				estadoGuardian.removePredicate("riesgo("+incidente+","+nivelViejo+")");
+				String numero = ((Integer) (nivelViejo + valor)).toString();
+				estadoGuardian.addPredicate("riesgo(" + incidente + "," + numero + ")");
+				estadoGuardian.removePredicate("riesgo(" + incidente + "," + nivelViejo + ")");
 				String palabra = rm.getHecho(0).get(1).toString();
-				estadoGuardian.removePredicate("clasificada("+incidente+","+palabra+")");
+				estadoGuardian.removePredicate("clasificada(" + incidente + "," + palabra + ")");
 			}
 		};
 
@@ -904,7 +626,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//limite riesgo - riesgo - sospecho
 		LimiteRiesgo limiteRiesgo = new LimiteRiesgo();
+		limiteRiesgo.setRWM(this.getAgentState());
 		Sospecho sospecho = new Sospecho();
+		sospecho.setRWM(this.getAgentState());
 
 		Unir unionLimiteriesgoRiesgoSospecho = new Unir(3);
 		UnirAdapter unirAdapterLimiteRiesgo = new UnirAdapter(0, unionLimiteriesgoRiesgoSospecho);
@@ -920,38 +644,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar5 = new Unificar(1, 0, 2, 0); //incidente entre riesgo y sospecho
 		unificar4.agregarSalida(unificar5);
 
-		Filtro filtroMayorOIgual = new FiltroMayorOIgual();
+		FiltroFuncion filtroMayorOIgual = new FiltroMayorOIgual();
 		unificar5.agregarSalida(filtroMayorOIgual);
 
-		ReteRule reglaLimiteriesgoRiesgoSospecho = new ReteRule(25,4,5) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(0).equals(h.get(0)))
-						.filter(h2 -> {
-							Integer nivel = new Integer(h2.get(1).toString());
-							Integer limite = new Integer(h.get(1).toString());
-							return nivel>=limite;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> h3.get(0).equals(h2.get(0)))
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaLimiteriesgoRiesgoSospecho = new ReteRule(25, 4, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -959,9 +655,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
 				String incidente = rm.getHecho(0).get(0).toString();
-				estadoGuardian.addPredicate("accion("+incidente+")");
-				estadoGuardian.addPredicate("noSospecho("+incidente+")");
-				estadoGuardian.removePredicate("sospecho("+incidente+")");
+				estadoGuardian.addPredicate("accion(" + incidente + ")");
+				estadoGuardian.addPredicate("noSospecho(" + incidente + ")");
+				estadoGuardian.removePredicate("sospecho(" + incidente + ")");
 			}
 		};
 
@@ -970,8 +666,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//escuchada - critica - no sospecho
 		Escuchada escuchada = new Escuchada();
+		escuchada.setRWM(this.getAgentState());
 		Critica critica = new Critica();
+		critica.setRWM(this.getAgentState());
 		NoSospecho noSospecho = new NoSospecho();
+		noSospecho.setRWM(this.getAgentState());
 
 		Unir unionEscuchadaCriticaNosospecho = new Unir(3);
 		UnirAdapter unirAdapterEscuchada01 = new UnirAdapter(0, unionEscuchadaCriticaNosospecho);
@@ -987,35 +686,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar7 = new Unificar(1, 0, 2, 0); //incidente entre critica y no sospecho
 		unificar6.agregarSalida(unificar7);
 
-		ReteRule reglaEscuchadaCriticaNosospecho = new ReteRule(26,3,3) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> h2.get(1).equals(h.get(0)))
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> h3.get(0).equals(h2.get(0)))
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaEscuchadaCriticaNosospecho = new ReteRule(26, 3, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String incidente = rm.getHecho(1).get(0).toString();
+				estadoGuardian.addPredicate("sospecho(" + incidente + ")");
+				estadoGuardian.removePredicate("noSospecho(" + incidente + ")");
 			}
 		};
 
@@ -1032,29 +712,18 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar8 = new Unificar(0, 0, 1, 1); //palabra entre escuchada y tiene riesgo
 		unionEscuchadaTieneriesgo.agregarSalida(unificar8);
 
-		ReteRule reglaEscuchadaTieneriesgo = new ReteRule(27,2,2) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> h2.get(1).equals(h.get(0)))
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaEscuchadaTieneriesgo = new ReteRule(27, 2, 2) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String incidente = rm.getHecho(1).get(0).toString();
+				String palabra = rm.getHecho(0).get(0).toString();
+				estadoGuardian.addPredicate("clasificada(" + incidente + "," + palabra + ")");
+				String n = rm.getHecho(0).get(1).toString();
+				estadoGuardian.removePredicate("escuchada(" + palabra + "," + n + ")");
 			}
 		};
 
@@ -1062,21 +731,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaEscuchadaTieneriesgo);
 
 		//escuchada
-		ReteRule reglaEscuchada = new ReteRule(28,1,1) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return rm;
-				}).collect(Collectors.toList());
-			}
+		ReteRule reglaEscuchada = new ReteRule(28, 1, 1) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				estadoGuardian.removePredicate("escuchada(" + palabra + "," + n + ")");
 			}
 		};
 
@@ -1096,36 +760,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar1);
 		filtroPlata.agregarSalida(unirAdapterPlata);
 
-		Filtro filtroEscuchada = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada = new FiltroPalabrasCompuestas();
 		unionEscuchada1.agregarSalida(filtroEscuchada);
 
 		ReteRule reglaDarPlata = new ReteRule(29, 3, 10) {
 
 			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
-
-			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1142,36 +793,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar2);
 		filtroBici.agregarSalida(unirAdapterBici);
 
-		Filtro filtroEscuchada2 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada2 = new FiltroPalabrasCompuestas();
 		unionEscuchada2.agregarSalida(filtroEscuchada2);
 
-		ReteRule reglaDarBici = new ReteRule(30,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarBici = new ReteRule(30, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1188,36 +826,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar3);
 		filtroMoto.agregarSalida(unirAdapterMoto);
 
-		Filtro filtroEscuchada3 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada3 = new FiltroPalabrasCompuestas();
 		unionEscuchada3.agregarSalida(filtroEscuchada3);
 
-		ReteRule reglaDarMoto = new ReteRule(31,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarMoto = new ReteRule(31, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1234,36 +859,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar4);
 		filtroCelu.agregarSalida(unirAdapterCelu);
 
-		Filtro filtroEscuchada4 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada4 = new FiltroPalabrasCompuestas();
 		unionEscuchada4.agregarSalida(filtroEscuchada4);
 
-		ReteRule reglaDarCelu = new ReteRule(32,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarCelu = new ReteRule(32, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1280,36 +892,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar5);
 		filtroBilletera.agregarSalida(unirAdapterBilletera);
 
-		Filtro filtroEscuchada5 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada5 = new FiltroPalabrasCompuestas();
 		unionEscuchada5.agregarSalida(filtroEscuchada5);
 
-		ReteRule reglaDarBilletera = new ReteRule(33,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarBilletera = new ReteRule(33, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1326,36 +925,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar6);
 		filtroCartera.agregarSalida(unirAdapterCartera);
 
-		Filtro filtroEscuchada6 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada6 = new FiltroPalabrasCompuestas();
 		unionEscuchada6.agregarSalida(filtroEscuchada6);
 
-		ReteRule reglaDarCartera = new ReteRule(34,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarCartera = new ReteRule(34, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1372,36 +958,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar7);
 		filtroTodo.agregarSalida(unirAdapterTodo);
 
-		Filtro filtroEscuchada7 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada7 = new FiltroPalabrasCompuestas();
 		unionEscuchada7.agregarSalida(filtroEscuchada7);
 
-		ReteRule relgaDarTodo = new ReteRule(35,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule relgaDarTodo = new ReteRule(35, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1418,36 +991,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar8);
 		filtroMochila.agregarSalida(unirAdapterMochila);
 
-		Filtro filtroEscuchada8 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada8 = new FiltroPalabrasCompuestas();
 		unionEscuchada8.agregarSalida(filtroEscuchada8);
 
-		ReteRule reglaDarMochila = new ReteRule(36,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarMochila = new ReteRule(36, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1464,36 +1024,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDar.agregarSalida(unirAdapterDar9);
 		filtroJoyas.agregarSalida(unirAdapterJoyas);
 
-		Filtro filtroEscuchada9 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada9 = new FiltroPalabrasCompuestas();
 		unionEscuchada9.agregarSalida(filtroEscuchada9);
 
-		ReteRule reglaDarJoyas = new ReteRule(37,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaDarJoyas = new ReteRule(37, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1513,36 +1060,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroVaciar.agregarSalida(unirAdapterVaciar);
 		filtroCaja.agregarSalida(unirAdapterCaja);
 
-		Filtro filtroEscuchada10 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada10 = new FiltroPalabrasCompuestas();
 		unionEscuchada10.agregarSalida(filtroEscuchada10);
 
-		ReteRule reglaVaciarCaja = new ReteRule(38,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaVaciarCaja = new ReteRule(38, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1564,46 +1098,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroTodo.agregarSalida(unirAdapterTodo2);
 		filtroBolsa.agregarSalida(unirAdapterBolsa);
 
-		Filtro filtroEscuchadaTriple = new FiltroPalabrasCompuestasTriple();
+		FiltroFuncion filtroEscuchadaTriple = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada11.agregarSalida(filtroEscuchadaTriple);
 
-		ReteRule reglaPonerTodoBolsa = new ReteRule(39,4,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> {
-							Integer n = new Integer(h.get(1).toString());
-							Integer m = new Integer(h2.get(1).toString());
-							return m==n+1;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> {
-										Integer m = new Integer(h2.get(1).toString());
-										Integer l = new Integer(h3.get(1).toString());
-										return l==m+1;
-									})
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaPonerTodoBolsa = new ReteRule(39, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1628,46 +1142,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroSer.agregarSalida(unirAdapterSer);
 		filtroAsalto.agregarSalida(unirAdapterAsalto);
 
-		Filtro filtroEscuchadaTriple2 = new FiltroPalabrasCompuestasTriple();
+		FiltroFuncion filtroEscuchadaTriple2 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada12.agregarSalida(filtroEscuchadaTriple2);
 
-		ReteRule reglaEstoSerAsalto = new ReteRule(40,4,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> {
-							Integer n = new Integer(h.get(1).toString());
-							Integer m = new Integer(h2.get(1).toString());
-							return m==n+1;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> {
-										Integer m = new Integer(h2.get(1).toString());
-										Integer l = new Integer(h3.get(1).toString());
-										return l==m+1;
-									})
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaEstoSerAsalto = new ReteRule(40, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1686,46 +1180,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroSer.agregarSalida(unirAdapterSer2);
 		filtroRobo.agregarSalida(unirAdapterRobo);
 
-		Filtro filtroEscuchadaTriple3 = new FiltroPalabrasCompuestasTriple();
+		FiltroFuncion filtroEscuchadaTriple3 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada13.agregarSalida(filtroEscuchadaTriple3);
 
-		ReteRule reglaEstoSerRobo = new ReteRule(41,4,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> {
-							Integer n = new Integer(h.get(1).toString());
-							Integer m = new Integer(h2.get(1).toString());
-							return m==n+1;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> {
-										Integer m = new Integer(h2.get(1).toString());
-										Integer l = new Integer(h3.get(1).toString());
-										return l==m+1;
-									})
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaEstoSerRobo = new ReteRule(41, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1745,36 +1219,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroNo.agregarSalida(unirAdapterNo);
 		filtroGolpear.agregarSalida(unirAdapterGolpear);
 
-		Filtro filtroEscuchada11 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada11 = new FiltroPalabrasCompuestas();
 		unionEscuchada14.agregarSalida(filtroEscuchada11);
 
-		ReteRule reglaNoGolpear = new ReteRule(42,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaNoGolpear = new ReteRule(42, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1796,46 +1257,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDecir.agregarSalida(unirAdapterDecir);
 		filtroNadie.agregarSalida(unirAdapterNadie);
 
-		Filtro filtroEscuchadaTriple4 = new FiltroPalabrasCompuestasTriple();
+		FiltroFuncion filtroEscuchadaTriple4 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada15.agregarSalida(filtroEscuchadaTriple4);
 
-		ReteRule reglaNoDecirNadie = new ReteRule(43,4,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> {
-							Integer n = new Integer(h.get(1).toString());
-							Integer m = new Integer(h2.get(1).toString());
-							return m==n+1;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> {
-										Integer m = new Integer(h2.get(1).toString());
-										Integer l = new Integer(h3.get(1).toString());
-										return l==m+1;
-									})
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaNoDecirNadie = new ReteRule(43, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1855,36 +1296,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroCerrar.agregarSalida(unirAdapterCerrar);
 		filtroBoca.agregarSalida(unirAdapterBoca);
 
-		Filtro filtroEscuchada12 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada12 = new FiltroPalabrasCompuestas();
 		unionEscuchada16.agregarSalida(filtroEscuchada12);
 
-		ReteRule reglaCerrarBoca = new ReteRule(44,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaCerrarBoca = new ReteRule(44, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -1909,46 +1337,26 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroManos.agregarSalida(unirAdapterManos);
 		filtroEncima.agregarSalida(unirAdapterEncima);
 
-		Filtro filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
+		FiltroFuncion filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada17.agregarSalida(filtroEscuchadaTriple5);
 
-		ReteRule reglaSacarManosEncima = new ReteRule(45,4,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-						.filter(h2 -> {
-							Integer n = new Integer(h.get(1).toString());
-							Integer m = new Integer(h2.get(1).toString());
-							return m==n+1;
-						})
-						.map(h2 -> {
-							ReteMatches rm2 = rm.clone();
-							rm2.addHecho(h2);
-							return hechos.get(2).stream()
-									.filter(h3 -> {
-										Integer m = new Integer(h2.get(1).toString());
-										Integer l = new Integer(h3.get(1).toString());
-										return l==m+1;
-									})
-									.map(h3 -> {
-										ReteMatches rm3 = rm2.clone();
-										rm3.addHecho(h3);
-										return rm3;
-									}).collect(Collectors.toList());
-						}).flatMap(List::stream)
-						.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaSacarManosEncima = new ReteRule(45, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				String palabra3 = rm.getHecho(2).get(0).toString();
+				String l = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
 			}
 		};
 
@@ -1968,36 +1376,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroVenir.agregarSalida(unirAdapterVenir);
 		filtroAca.agregarSalida(unirAdapterAca);
 
-		Filtro filtroEscuchada13 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada13 = new FiltroPalabrasCompuestas();
 		unionEscuchada18.agregarSalida(filtroEscuchada13);
 
-		ReteRule reglaVenirAca = new ReteRule(46,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaVenirAca = new ReteRule(46, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -2017,36 +1412,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroLlamar.agregarSalida(unirAdapterLlamar);
 		filtroPolicia.agregarSalida(unirAdapterPolicia);
 
-		Filtro filtroEscuchada14 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada14 = new FiltroPalabrasCompuestas();
 		unionEscuchada19.agregarSalida(filtroEscuchada14);
 
-		ReteRule reglaLlamarPolicia = new ReteRule(47,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaLlamarPolicia = new ReteRule(47, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -2063,36 +1445,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroLlamar.agregarSalida(unirAdapterLlamar2);
 		filtroAmbulancia.agregarSalida(unirAdapterAmbulancia);
 
-		Filtro filtroEscuchada15 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada15 = new FiltroPalabrasCompuestas();
 		unionEscuchada20.agregarSalida(filtroEscuchada15);
 
-		ReteRule reglaLlamarAmbulancia = new ReteRule(48,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaLlamarAmbulancia = new ReteRule(48, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -2109,36 +1478,23 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroLlamar.agregarSalida(unirAdapterLlamar3);
 		filtroBomberos.agregarSalida(unirAdapterBomberos);
 
-		Filtro filtroEscuchada16 = new FiltroPalabrasCompuestas();
+		FiltroFuncion filtroEscuchada16 = new FiltroPalabrasCompuestas();
 		unionEscuchada21.agregarSalida(filtroEscuchada16);
 
-		ReteRule reglaLlamarBomberos = new ReteRule(49,3,10) {
-
-			@Override
-			public List<Matches> generarMatches(List<List<Hecho>> hechos) {
-				return hechos.get(0).stream().map(h -> {
-					ReteMatches rm = new ReteMatches();
-					rm.addHecho(h);
-					return hechos.get(1).stream()
-							.filter(h2 -> {
-								Integer n = new Integer(h.get(1).toString());
-								Integer m = new Integer(h2.get(1).toString());
-								return m==n+1;
-							})
-							.map(h2 -> {
-								ReteMatches rm2 = rm.clone();
-								rm2.addHecho(h2);
-								return rm2;
-							})
-							.collect(Collectors.toList());
-				}).flatMap(List::stream)
-				.collect(Collectors.toList());
-			}
+		ReteRule reglaLlamarBomberos = new ReteRule(49, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				// TODO Auto-generated method stub
+				ReteMatches rm = (ReteMatches) unificaciones;
+				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
+				String palabra1 = rm.getHecho(0).get(0).toString();
+				String n = rm.getHecho(0).get(1).toString();
+				String palabra2 = rm.getHecho(1).get(0).toString();
+				String m = rm.getHecho(1).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
+				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
@@ -2148,13 +1504,13 @@ public class Guardian extends ProductionSystemBasedAgent {
 		return listaReglas;
 	}
 
-	private HashSet<String> cargarTodasLasPalabrasRelevantes(){
+	private HashSet<String> cargarTodasLasPalabrasRelevantes() {
 
-		Collection<Map<String,String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
+		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
 		HashSet<String> setPalabrasRelevantes = new HashSet<>();
 		StringTokenizer fraseTokenizer;
 
-		for(Map<String,String> mapa: resultado){
+		for(Map<String, String> mapa: resultado){
 
 			//El valor asociado a la clave "Palabra" es una palabra o un simbolo con formato palabra_palabra_palabra
 			fraseTokenizer = new StringTokenizer(mapa.get("Palabra"), "_");

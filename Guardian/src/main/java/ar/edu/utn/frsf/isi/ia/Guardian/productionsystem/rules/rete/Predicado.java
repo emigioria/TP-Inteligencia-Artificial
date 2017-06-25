@@ -3,29 +3,41 @@ package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
-public abstract class Predicado extends Nodo {
+import frsf.cidisi.faia.solver.productionsystem.Matches;
+
+public abstract class Predicado extends NodoRete implements ReteWorkingMemoryChangeListener {
 
 	private ReteWorkingMemory rwm;
-
 	private String nombre;
+	private String nombreConsulta;
 
 	public Predicado(String nombre, Integer cantidadParamentros) {
 		nombre = Character.toLowerCase(nombre.charAt(0)) + nombre.substring(1, nombre.length());
-		this.nombre = nombre + getStringParametros(cantidadParamentros);
+		this.nombre = nombre;
+		this.nombreConsulta = nombre + getStringParametros(cantidadParamentros);
+	}
+
+	public void setRWM(ReteWorkingMemory rwm) {
+		this.rwm = rwm;
+		rwm.suscribe(this);
 	}
 
 	@Override
-	public void propagarHechos(List<List<Hecho>> hechos) {
-		List<Hecho> hs = new ArrayList<>();
-		rwm.query(nombre).stream().forEach(map -> {
+	public void propagarHechos(List<Matches> hechos) {
+		List<Matches> nuevosHechos = rwm.query(nombreConsulta).stream().map(map -> {
 			List<Object> valores = new ArrayList<>();
 			for(Entry<String, String> hecho: map.entrySet()){
 				valores.set(this.number(hecho.getKey()), hecho.getValue());
 			}
-			hs.add(new Hecho(valores));
-		});
-		hechos.add(hs);
+			return new Hecho(valores);
+		}).map(h -> {
+			ReteMatches rm = new ReteMatches();
+			rm.addHecho(h);
+			return rm;
+		}).collect(Collectors.toList());
+		hechos.addAll(nuevosHechos);
 
 		super.propagarHechos(hechos);
 	}
@@ -66,5 +78,12 @@ public abstract class Predicado extends Nodo {
 		char letra = s[i];
 		int n = letra - 'A' + 1;
 		return numberRec(s, i - 1) * letras.length + n;
+	}
+
+	@Override
+	public void cambio(String query) {
+		if(query.startsWith(nombre + "(")){
+			this.propagarHechos(new ArrayList<>());
+		}
 	}
 }

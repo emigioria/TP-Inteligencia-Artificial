@@ -12,8 +12,6 @@ public class ReteMatcher implements Matcher {
 
 	@Override
 	public List<RuleMatchesPair> match(ProductionMemory productionMemory, WorkingMemory workingMemory) {
-		ReteProductionMemory reteProductionMemory = (ReteProductionMemory) productionMemory;
-		reteProductionMemory.matchear();
 		return productionMemory.getRules()
 				.parallelStream()
 				.map(r -> ((ReteRule) r).getMatches()
