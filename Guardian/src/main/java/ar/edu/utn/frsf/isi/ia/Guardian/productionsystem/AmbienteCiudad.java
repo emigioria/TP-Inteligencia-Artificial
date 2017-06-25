@@ -1,12 +1,8 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
-import java.util.StringTokenizer;
-
 import frsf.cidisi.faia.environment.Environment;
 
 public class AmbienteCiudad extends Environment {
-
-	private StringTokenizer frasesEscuchadasTokenizer;
 
 	public AmbienteCiudad() {
 		// Create the environment state
@@ -28,19 +24,15 @@ public class AmbienteCiudad extends Environment {
 	@Override
 	public GuardianPerception getPercept() {
 		// Create a new perception to return
-		GuardianPerception perception = null;
-
-		if(frasesEscuchadasTokenizer.hasMoreTokens()){
-			perception = new GuardianPerception();
-			perception.setPercepcion(frasesEscuchadasTokenizer.nextToken());
+		GuardianPerception perception = new GuardianPerception();
+		String frase = this.getEnvironmentState().getNextFrase();
+		if(frase != null){
+			perception.setPercepcion(frase);
+			return perception;
 		}
-
-		// Return the perception
-		return perception;
-	}
-
-	public void setFrasesDichas(String frases) {
-		frasesEscuchadasTokenizer = new StringTokenizer(frases, "\n\f\r.;¿?¡!");
+		else{
+			return null;
+		}
 	}
 
 	@Override

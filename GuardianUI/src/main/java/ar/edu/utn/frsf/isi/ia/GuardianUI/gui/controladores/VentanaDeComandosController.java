@@ -8,29 +8,28 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 public class VentanaDeComandosController extends ControladorJavaFX {
-	
+
 	public static final String URL_VISTA = "vistas/ventanaDeComandos.fxml";
-	
+
 	@FXML
 	private TextArea taEntrada;
-	
+
 	@FXML
-	private void tomarEntrada(){
+	private void tomarEntrada() {
 		AmbienteCiudad ambiente = new AmbienteCiudad();
 		Guardian agente;
-		try {
+		try{
 			agente = new Guardian();
-		} catch (Exception e) {
+		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
 		}
 		GuardianMain main = new GuardianMain(ambiente, agente);
-		
-		ambiente.setFrasesDichas(taEntrada.getText());
-		
+
+		ambiente.getEnvironmentState().setFrasesDichas(taEntrada.getText());
+
 		main.start();
 	}
-	
 
 	@Override
 	protected void inicializar() {
