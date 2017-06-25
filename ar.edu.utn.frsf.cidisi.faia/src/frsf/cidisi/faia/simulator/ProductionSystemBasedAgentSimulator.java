@@ -50,7 +50,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	public void start() {
 
 		System.out.println("----------------------------------------------------");
-		System.out.println("------------- " + this.getSimulatorName() + " ------------");
+		System.out.println("--------- " + this.getSimulatorName() + " --------");
 		System.out.println("----------------------------------------------------");
 		System.out.println();
 
@@ -59,7 +59,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 		ProductionSystemBasedAgent agent;
 
 		agent = (ProductionSystemBasedAgent) this.getAgents().firstElement();
-		
+
 		do{
 
 			System.out.println("------------------------------------");
@@ -90,7 +90,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 			else{
 				System.out.println("\nThe agent doesn't have any more to percieve.");
 			}
-			
+
 		} while(perception != null && !this.finishForRule(action) && !this.finishForAgentState(agent));
 
 		// Check what happened.
@@ -123,7 +123,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 		ProductionSystemAction a = (ProductionSystemAction) action;
 		return a.finish();
 	};
-	
+
 	public boolean finishLearningForRule(Action action) {
 		if(action == null){
 			return false;
@@ -133,7 +133,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	};
 
 	public String getSimulatorName() {
-		return "Knowledge Based Simulator";
+		return "Production System Based Simulator";
 	}
 
 	public void showSolution() {
