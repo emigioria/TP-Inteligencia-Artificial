@@ -3,18 +3,20 @@ package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Nodo {
+import frsf.cidisi.faia.solver.productionsystem.Matches;
 
-	protected List<Nodo> salidas;
+public abstract class NodoRete {
 
-	public void propagarHechos(List<List<Hecho>> hechos) {
+	protected List<NodoRete> salidas;
+
+	public void propagarHechos(List<Matches> hechos) {
 		salidas.parallelStream().forEach(s -> s.propagarHechos(
 				hechos.stream()
-						.map(lh -> lh.stream().collect(Collectors.toList()))
+						.map(m -> ((ReteMatches) m).clone())
 						.collect(Collectors.toList())));
 	}
 
-	public void agregarSalida(Nodo salida) {
+	public void agregarSalida(NodoRete salida) {
 		salidas.add(salida);
 	}
 

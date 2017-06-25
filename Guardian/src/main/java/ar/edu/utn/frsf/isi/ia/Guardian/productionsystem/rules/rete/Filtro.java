@@ -1,15 +1,15 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Filtro extends Nodo {
+import frsf.cidisi.faia.solver.productionsystem.Matches;
+
+public class Filtro extends NodoRete {
 
 	private Integer indicePredicado;
 	private Integer indiceHecho;
 	private Object filtro;
-	private Function<List<List<Hecho>>, List<List<Hecho>>> filtrar;
 
 	public Filtro(Integer indicePredicado, Integer indiceHecho, Object filtro) {
 		assert filtro != null;
@@ -23,19 +23,13 @@ public class Filtro extends Nodo {
 		this(0, indiceHecho, filtro);
 	}
 
-	public Filtro(Function<List<List<Hecho>>, List<List<Hecho>>> filtrar) {
-		this.filtrar = filtrar;
-	}
-
 	@Override
-	public void propagarHechos(List<List<Hecho>> hechos) {
-		if(filtro != null){
-			List<Hecho> listaFiltrada = hechos.get(indicePredicado).parallelStream().filter(h -> h.get(indiceHecho).equals(filtro)).collect(Collectors.toList());
-			hechos.set(indicePredicado, listaFiltrada);
-		}
-		else{
-			hechos = filtrar.apply(hechos);
-		}
+	public void propagarHechos(List<Matches> hechos) {
+		hechos = hechos.stream()
+				.map(h -> ((ReteMatches) h))
+				.filter(rm -> rm.getListaHechos().get(indicePredicado).get(indiceHecho).equals(filtro))
+				.collect(Collectors.toList());
+
 		super.propagarHechos(hechos);
 	}
 }

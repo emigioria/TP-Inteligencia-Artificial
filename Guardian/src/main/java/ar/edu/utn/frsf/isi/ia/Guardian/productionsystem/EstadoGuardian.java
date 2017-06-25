@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.jpl7.Term;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteWorkingMemory;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteWorkingMemoryChangeListener;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.PrologConnector;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
@@ -20,6 +21,8 @@ import frsf.cidisi.faia.exceptions.PrologConnectorException;
 public class EstadoGuardian implements ReteWorkingMemory {
 
 	public PrologConnector plc;
+
+	public List<ReteWorkingMemoryChangeListener> suscriptores = new ArrayList<>();
 
 	public EstadoGuardian(String prologFile) throws PrologConnectorException {
 		plc = new PrologConnector(prologFile);
@@ -42,7 +45,11 @@ public class EstadoGuardian implements ReteWorkingMemory {
 
 	}
 
-	// The following methods are ReteWorkingMemory-specific:
+	@Override
+	public boolean queryHasSolution(String query) {
+		return plc.queryHasSolution(query);
+	}
+
 	@Override
 	public Collection<Map<String, String>> query(String query) {
 		List<Map<String, String>> mapas = new ArrayList<>();
@@ -58,16 +65,18 @@ public class EstadoGuardian implements ReteWorkingMemory {
 	@Override
 	public void addPredicate(String predicate) {
 		plc.addPredicate(predicate);
+		suscriptores.parallelStream().forEach(s -> s.cambio(predicate));
 	}
 
 	@Override
 	public void removePredicate(String predicate) {
 		plc.removePredicate(predicate);
+		suscriptores.parallelStream().forEach(s -> s.cambio(predicate));
 	}
 
 	@Override
-	public boolean queryHasSolution(String query) {
-		return plc.queryHasSolution(query);
+	public void suscribe(ReteWorkingMemoryChangeListener rwmcl) {
+		suscriptores.add(rwmcl);
 	}
 
 	// The following methods are agent-specific:

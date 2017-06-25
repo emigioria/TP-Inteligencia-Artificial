@@ -5,7 +5,7 @@ import java.util.List;
 import frsf.cidisi.faia.solver.productionsystem.Matches;
 import frsf.cidisi.faia.solver.productionsystem.Rule;
 
-public abstract class ReteRule extends Nodo implements Rule {
+public abstract class ReteRule extends NodoRete implements Rule {
 
 	private Integer id;
 	private Integer specificity;
@@ -41,7 +41,7 @@ public abstract class ReteRule extends Nodo implements Rule {
 	public boolean finish(Matches value) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean finishLearning(Matches value) {
 		return false;
@@ -74,18 +74,17 @@ public abstract class ReteRule extends Nodo implements Rule {
 	}
 
 	@Override
-	public void agregarSalida(Nodo salida) {
+	public void agregarSalida(NodoRete salida) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void propagarHechos(List<List<Hecho>> hechos) {
-		matches = this.generarMatches(hechos);
+	public void propagarHechos(List<Matches> hechos) {
+		matches = hechos;
 	}
 
 	public List<Matches> getMatches() {
 		return matches;
 	}
 
-	public abstract List<Matches> generarMatches(List<List<Hecho>> hechos);
 }
