@@ -5,7 +5,24 @@ import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
 public class GuardianMain {
 
 	public static void main(String[] args) {
-		//TODO hacer
+		AmbienteCiudad ambiente = new AmbienteCiudad();
+		Guardian agente;
+		try{
+			agente = new Guardian();
+		} catch(Exception e){
+			e.printStackTrace();
+			return;
+		}
+		GuardianMain main = new GuardianMain(ambiente, agente);
+
+		ambiente.getEnvironmentState().setFrasesDichas("Voy caminando por la calle, mientras pienso en voz alta..." +
+				"\n¿Eameo, tenés hora?" +
+				"\nEh, no." +
+				"\nChe ameo pará un toque." +
+				"\n¡Ayuda!" +
+				"\nCallate y dame el celu o te corto.");
+
+		main.start();
 	}
 
 	private ProductionSystemBasedAgentSimulator simulator;
