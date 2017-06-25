@@ -6,6 +6,7 @@
  */
 package ar.edu.utn.frsf.isi.ia.Guardian.util;
 
+import java.text.Normalizer;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Map;
@@ -279,6 +280,13 @@ public class NormalizadorDeTexto {
 		//Si ninguna regla se activa, devuelvo la entrada en minúscula
 		return lowerText;
 	}
+	
+	public String reemplazarCaracteresRaros(String s) 
+	{
+	    s = Normalizer.normalize(s, Normalizer.Form.NFD);
+	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+	    return s;
+	}
 }
 
 /**
@@ -408,5 +416,4 @@ class FinalMap<T1 extends Comparable<T1>, T2> extends TreeMap<T1, T2> {
 			put((T1) a[i], (T2) a[i + 1]);
 		}
 	}
-
 }

@@ -104,7 +104,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 		GuardianPerception gPerception = (GuardianPerception) p;
 		List<String> palabras = new ArrayList<>();
 
-		StringTokenizer palabrasTokenizer = new StringTokenizer(gPerception.getPercepcion().toLowerCase(), " ,()\"\'");
+		StringTokenizer palabrasTokenizer = new StringTokenizer(
+				normalizadorDeTexto.reemplazarCaracteresRaros(gPerception.getPercepcion().toLowerCase()),
+				" ,()\"\'");
 
 		//Obtenemos las palabras individuales percibidas
 		while(palabrasTokenizer.hasMoreTokens()){
