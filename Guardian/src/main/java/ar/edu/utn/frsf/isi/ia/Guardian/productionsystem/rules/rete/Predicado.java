@@ -35,7 +35,11 @@ public abstract class Predicado extends NodoRete implements ReteWorkingMemoryCha
 		List<Matches> nuevosHechos = rwm.query(nombreConsulta).stream().map(map -> {
 			List<Object> valores = new ArrayList<>();
 			for(Entry<String, String> hecho: map.entrySet()){
-				valores.set(this.number(hecho.getKey()), hecho.getValue());
+				Integer indice = this.number(hecho.getKey()) - 1;
+				while(indice >= valores.size()){
+					valores.add(null);
+				}
+				valores.set(indice, hecho.getValue());
 			}
 			return new Hecho(valores);
 		}).map(h -> {

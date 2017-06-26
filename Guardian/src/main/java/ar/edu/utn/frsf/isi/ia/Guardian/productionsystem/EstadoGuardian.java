@@ -64,6 +64,7 @@ public class EstadoGuardian implements ReteWorkingMemory {
 			for(Entry<String, Term> entrada: pares.entrySet()){
 				mapa.put(entrada.getKey(), entrada.getValue().toString());
 			}
+			mapas.add(mapa);
 		}
 		return mapas;
 	}
