@@ -6,6 +6,7 @@
  */
 package frsf.cidisi.faia.agent.productionsystem;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import frsf.cidisi.faia.agent.Action;
@@ -23,7 +24,7 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	private WorkingMemory state;
 	private ProductionMemory productionMemory;
 
-	private Set<RuleMatchesPair> usedRules;
+	private Set<RuleMatchesPair> usedRules = new HashSet<>();
 
 	public ProductionSystemBasedAgent() {
 	}
@@ -63,7 +64,9 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 	@Override
 	public Action selectAction() {
 		ProductionSystemAction psa = (ProductionSystemAction) this.learn();
-		usedRules.add(psa.getPeerRuleData());
+		if(psa != null){
+			usedRules.add(psa.getPeerRuleData());
+		}
 		return psa;
 	}
 
