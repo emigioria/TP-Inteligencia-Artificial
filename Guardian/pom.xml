@@ -46,6 +46,7 @@
 					<header>header.txt</header>
 					<mapping>
 						<fxml>XML_STYLE</fxml>
+						<pl>PERCENT_STYLE</pl>
 					</mapping>
 					<properties>
 						<owner>Emiliano Gioria - Andres Leonel Rico - Esteban Javier Rebechi</owner>
