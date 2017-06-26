@@ -34,8 +34,8 @@ tieneRiesgo(delitoHogar, dar_todo, 6).
 critica(delitoHogar, dar_todo).
 tieneRiesgo(delitoHogar, vaciar_caja, 6).
 critica(delitoHogar, vaciar_caja).
-tieneRiesgo(delitoHogar, dar_joyas, 6).
-critica(delitoHogar, dar_joyas).
+tieneRiesgo(delitoHogar, dar_joya, 6).
+critica(delitoHogar, dar_joya).
 tieneRiesgo(delitoHogar, poner_todo_bolsa, 4).
 tieneRiesgo(delitoHogar, esto_ser_asalto, 7).
 critica(delitoHogar, esto_ser_asalto).
@@ -95,8 +95,8 @@ tieneRiesgo(violenciaDomestica, acogotar, 7).
 critica(violenciaDomestica, acogotar).
 tieneRiesgo(violenciaDomestica, no_decir_nadie, 2).
 tieneRiesgo(violenciaDomestica, cerrar_boca, 3).
-tieneRiesgo(violenciaDomestica, sacar_manos_encima, 7).
-critica(violenciaDomestica, sacar_manos_encima).
+tieneRiesgo(violenciaDomestica, sacar_mano_encima, 7).
+critica(violenciaDomestica, sacar_mano_encima).
 tieneRiesgo(violenciaDomestica, venir_aca, 3).
 
 % Inicialización predicados emergeenciaMedica
@@ -133,8 +133,8 @@ critica(incendio, incendio).
 tieneRiesgo(incendio, llamar_policia, 3).
 tieneRiesgo(incendio, llamar_ambulancia, 4).
 critica(incendio, llamar_ambulancia).
-tieneRiesgo(incendio, llamar_bomberos, 6).
-critica(incendio, llamar_bomberos).
+tieneRiesgo(incendio, llamar_bombero, 6).
+critica(incendio, llamar_bombero).
 tieneRiesgo(incendio, emergencia, 4).
 critica(incendio, emergencia).
 tieneRiesgo(incendio, hospital, 3).
@@ -150,8 +150,8 @@ tieneRiesgo(explosion, llamar_policia, 5).
 critica(explosion, llamar_policia).
 tieneRiesgo(explosion, llamar_ambulancia, 5).
 critica(explosion, llamar_ambulancia).
-tieneRiesgo(explosion, llamar_bomberos, 5).
-critica(explosion, llamar_bomberos).
+tieneRiesgo(explosion, llamar_bombero, 5).
+critica(explosion, llamar_bombero).
 tieneRiesgo(explosion, explosion, 4).
 critica(explosion, explosion).
 tieneRiesgo(explosion, explotar, 4).
