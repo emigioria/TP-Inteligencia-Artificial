@@ -1,13 +1,13 @@
-package ar.edu.utn.frsf.isi.ia.GuardianUI.gui.controladores;
+package ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.GuardianMain;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFX;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
-public class VentanaDeComandosController extends ControladorJavaFX {
+public class VentanaDeComandosController extends ControladorPatrullero {
 
 	public static final String URL_VISTA = "vistas/ventanaDeComandos.fxml";
 
@@ -36,8 +36,4 @@ public class VentanaDeComandosController extends ControladorJavaFX {
 
 	}
 
-	@Override
-	protected void salir() {
-		// TODO Auto-generated method stub
-	}
 }
