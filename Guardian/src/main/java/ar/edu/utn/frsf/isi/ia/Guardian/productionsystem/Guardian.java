@@ -332,7 +332,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoHogarEnviarAudio);
+		filtroDelitoHogarAccion.agregarSalida(reglaAccionDelitoHogarEnviarAudio);
 		listaReglas.add(reglaAccionDelitoHogarEnviarAudio);
 
 		//accion delito hogar activar camara de seguridad
