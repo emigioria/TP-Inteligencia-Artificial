@@ -14,12 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Normalizer;
 
-/**
- * Write a description of class BaseVerbos here.
- *
- * @author Rey Salcedo
- * @version (a version number or a date)
- */
 public class BaseVerbos {
 	private Connection conexion;
 	private String ruta;
