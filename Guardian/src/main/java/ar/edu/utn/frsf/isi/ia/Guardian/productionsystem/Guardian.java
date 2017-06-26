@@ -161,6 +161,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 				proximoIndice++;
 			}
 		});
+
+		//Borramos las reglas usadas previamente.
+		this.getUsedRules().clear();
 	}
 
 	private Set<String> cargarTodasLasPalabrasRelevantes() {
@@ -188,9 +191,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 	 */
 	@Override
 	public Action learn() {
-		//Borramos las reglas usadas previamente.
-		this.getUsedRules().clear();
-
 		Matcher matcher = new ReteMatcher();
 
 		// Set the InferenceEngine.

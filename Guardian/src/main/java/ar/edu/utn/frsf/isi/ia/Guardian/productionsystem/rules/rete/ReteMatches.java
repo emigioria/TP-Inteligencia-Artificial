@@ -13,11 +13,10 @@ import frsf.cidisi.faia.solver.productionsystem.Matches;
 
 public class ReteMatches implements Matches, Cloneable {
 
-	private List<Hecho> listaHechos;
+	private List<Hecho> listaHechos = new ArrayList<>();
 
 	public ReteMatches() {
 		super();
-		this.listaHechos = new ArrayList<>();
 	}
 
 	public Hecho getHecho(Integer indice) {
