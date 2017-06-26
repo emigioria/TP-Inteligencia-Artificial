@@ -43,16 +43,16 @@ public class Unir extends NodoRete {
 				union = union.stream()
 						.map(mu -> ((ReteMatches) mu))
 						.map(rmu -> es.getValue().stream()
-								.map(mh -> ((ReteMatches) mh).getListaHechos())
+								.map(mh -> ((ReteMatches) mh).getHechos())
 								.map(lhh -> {
 									ReteMatches rmuClon = rmu.clone();
 									this.lugar = es.getKey();
 									lhh.forEach(h -> {
 										Integer indice = this.lugar;
-										while(indice >= rmuClon.getListaHechos().size()){
-											rmuClon.getListaHechos().add(null);
+										while(indice >= rmuClon.getHechos().size()){
+											rmuClon.getHechos().add(null);
 										}
-										rmuClon.getListaHechos().set(this.lugar++, h);
+										rmuClon.getHechos().set(this.lugar++, h);
 									});
 									return rmuClon;
 								}).collect(Collectors.toList()))
@@ -61,16 +61,16 @@ public class Unir extends NodoRete {
 			}
 			else{
 				union = es.getValue().stream()
-						.map(m -> ((ReteMatches) m).getListaHechos())
+						.map(m -> ((ReteMatches) m).getHechos())
 						.map(lh -> {
 							ReteMatches rmu = new ReteMatches();
 							this.lugar = es.getKey();
 							lh.forEach(h -> {
 								Integer indice = this.lugar;
-								while(indice >= rmu.getListaHechos().size()){
-									rmu.getListaHechos().add(null);
+								while(indice >= rmu.getHechos().size()){
+									rmu.getHechos().add(null);
 								}
-								rmu.getListaHechos().set(this.lugar++, h);
+								rmu.getHechos().set(this.lugar++, h);
 							});
 							return rmu;
 						}).collect(Collectors.toList());

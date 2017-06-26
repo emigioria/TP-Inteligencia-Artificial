@@ -67,7 +67,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 			perception = this.getPercept();
 			if(perception != null){
 				agent.see(perception);
-				System.out.println("Perception: " + perception);
+				System.out.println("\nPerception: " + perception);
 
 				System.out.println("Agent State: " + agent.getAgentState());
 				System.out.println("Environment: " + environment);
@@ -75,8 +75,6 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 				System.out.println("Asking the agent that start the learning process...");
 				do{
 					action = agent.selectAction();
-
-					System.out.println();
 
 					if(action != null){
 						this.ruleReturned(agent, action);
@@ -141,8 +139,9 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	}
 
 	public void ruleReturned(Agent agent, Action action) {
-		this.updateState(action);
 		this.showSolution();
+		this.updateState(action);
+		System.out.println("-----------------------");
 	}
 
 	/**

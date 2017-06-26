@@ -13,28 +13,28 @@ import frsf.cidisi.faia.solver.productionsystem.Matches;
 
 public class ReteMatches implements Matches, Cloneable {
 
-	private List<Hecho> listaHechos = new ArrayList<>();
+	private List<Hecho> hechos = new ArrayList<>();
 
 	public ReteMatches() {
 		super();
 	}
 
 	public Hecho getHecho(Integer indice) {
-		return listaHechos.get(indice);
+		return hechos.get(indice);
 	}
 
 	public void addHecho(Hecho hecho) {
-		this.listaHechos.add(hecho);
+		this.hechos.add(hecho);
 	}
 
-	public List<Hecho> getListaHechos() {
-		return listaHechos;
+	public List<Hecho> getHechos() {
+		return hechos;
 	}
 
 	@Override
 	public ReteMatches clone() {
 		ReteMatches rm = new ReteMatches();
-		rm.listaHechos = new ArrayList<>(this.listaHechos);
+		rm.hechos = new ArrayList<>(this.hechos);
 		return rm;
 	}
 
@@ -42,7 +42,7 @@ public class ReteMatches implements Matches, Cloneable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((listaHechos == null) ? 0 : listaHechos.hashCode());
+		result = prime * result + ((hechos == null) ? 0 : hechos.hashCode());
 		return result;
 	}
 
@@ -58,15 +58,29 @@ public class ReteMatches implements Matches, Cloneable {
 			return false;
 		}
 		ReteMatches other = (ReteMatches) obj;
-		if(listaHechos == null){
-			if(other.listaHechos != null){
+		if(hechos == null){
+			if(other.hechos != null){
 				return false;
 			}
 		}
-		else if(!listaHechos.equals(other.listaHechos)){
+		else if(!hechos.equals(other.hechos)){
 			return false;
 		}
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		String salida = "{";
+		for(int i = 0; i < hechos.size(); i++){
+			salida += hechos.get(i);
+			if(i != hechos.size() - 1){
+				salida += ", ";
+			}
+			else{
+				salida += "}";
+			}
+		}
+		return salida;
+	}
 }

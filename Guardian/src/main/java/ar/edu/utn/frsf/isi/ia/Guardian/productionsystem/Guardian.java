@@ -52,6 +52,7 @@ import frsf.cidisi.faia.solver.productionsystem.Matches;
 import frsf.cidisi.faia.solver.productionsystem.ProductionSystemSolveParam;
 import frsf.cidisi.faia.solver.productionsystem.Rule;
 import frsf.cidisi.faia.solver.productionsystem.criterias.NoDuplication;
+import frsf.cidisi.faia.solver.productionsystem.criterias.Novelty;
 import frsf.cidisi.faia.solver.productionsystem.criterias.Priority;
 import frsf.cidisi.faia.solver.productionsystem.criterias.Random;
 import frsf.cidisi.faia.solver.productionsystem.criterias.Specificity;
@@ -88,6 +89,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		//Crear criterios para resolver conflictos
 		criterios = new ArrayList<>();
 		criterios.add(new NoDuplication(this));
+		criterios.add(new Novelty());
 		criterios.add(new Priority());
 		criterios.add(new Specificity());
 		criterios.add(new Random());
@@ -126,37 +128,33 @@ public class Guardian extends ProductionSystemBasedAgent {
 		baseVerbos.conectar();
 
 		List<String> palabrasProcesadas = palabras.stream()
-				.map(palabra -> {
-					String palabraEnInfinitivo = baseVerbos.infinitivo(palabra);
-					if(palabraEnInfinitivo != null){
-						return palabraEnInfinitivo;
-					}
-					else{
-						//se hace en el else porque si se encontró su infinitivo no necesita singularizarse
-						return normalizadorDeTexto.singularizar(palabra);
-					}
-				}).collect(Collectors.toList());
+				.map(palabra -> baseVerbos.infinitivo(palabra))
+				.filter(palabra -> palabra != null)
+				.collect(Collectors.toList());
+
+		List<String> palabrasProcesadas2 = palabras.stream()
+				.map(palabra -> normalizadorDeTexto.singularizar(palabra))
+				.collect(Collectors.toList());
 
 		baseVerbos.desconectar();
 
 		List<List<String>> listaDeListasDeSinonimos = palabrasProcesadas
 				.parallelStream()
-				.map(palabra -> {
-					//Saco los sinónimos
-					List<String> sinonimos = baseSinonimos.sinonimosDe(palabra);
-					sinonimos.add(palabra);
-
-					//De cada lista de sinonimos nos quedamos con las palabras clave
-					sinonimos.retainAll(setPalabrasRelevantes);
-
-					return sinonimos.parallelStream().distinct().collect(Collectors.toList());
-				})
+				.map(palabra -> sinonimosClavesDe(palabra))
 				.collect(Collectors.toList());
+
+		List<List<String>> listaDeListasDeSinonimos2 = palabrasProcesadas2
+				.parallelStream()
+				.map(palabra -> sinonimosClavesDe(palabra))
+				.collect(Collectors.toList());
+
+		for(int i = 0; i < listaDeListasDeSinonimos.size(); i++){
+			listaDeListasDeSinonimos.get(i).addAll(listaDeListasDeSinonimos2.get(i));
+		}
 
 		//Agregamos las palabras escuchadas a la memoria de trabajo
 		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
-			listaDeSinonimos.parallelStream()
-					.forEach(palabra -> this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
+			listaDeSinonimos.forEach(palabra -> this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
 			if(!listaDeSinonimos.isEmpty()){
 				proximoIndice++;
 			}
@@ -164,6 +162,17 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//Borramos las reglas usadas previamente.
 		this.getUsedRules().clear();
+	}
+
+	private List<String> sinonimosClavesDe(String palabra) {
+		//Saco los sinónimos
+		List<String> sinonimos = baseSinonimos.sinonimosDe(palabra);
+		sinonimos.add(palabra);
+
+		//De cada lista de sinonimos nos quedamos con las palabras clave
+		sinonimos.retainAll(setPalabrasRelevantes);
+
+		return sinonimos.parallelStream().distinct().collect(Collectors.toList());
 	}
 
 	private Set<String> cargarTodasLasPalabrasRelevantes() {
@@ -226,12 +235,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroDelitoCallejeroAccion = new FiltroIgualdad(0, "delitoCallejero");
 		accion.agregarSalida(filtroDelitoCallejeroAccion);
 
-		ReteRule reglaAccionDelitoCallejeroLlamar911 = new ReteRule(1, 1, 5) {
+		ReteRule reglaAccionDelitoCallejeroLlamar911 = new ReteRule(1, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando al 911");
-
 			}
 		};
 
@@ -239,7 +247,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoCallejeroLlamar911);
 
 		//accion delito callejero grabar lo que sucede
-		ReteRule reglaAccionDelitoCallejeroGrabar = new ReteRule(2, 1, 5) {
+		ReteRule reglaAccionDelitoCallejeroGrabar = new ReteRule(2, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -251,7 +259,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoCallejeroGrabar);
 
 		//accion delito callejero llamar familiar
-		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3, 1, 5) {
+		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -275,7 +283,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccion1);
 		filtroDelitoCallejeroRiesgo.agregarSalida(unirAdapterRiesgo1);
 
-		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4, 2, 3) {
+		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -296,12 +304,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroDelitoHogarAccion = new FiltroIgualdad(0, "delitoHogar");
 		accion.agregarSalida(filtroDelitoHogarAccion);
 
-		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5, 1, 5) {
+		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando al 911");
-
 			}
 		};
 
@@ -309,12 +316,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoHogarLlamar911);
 
 		//accion delito hogar enviar audio al 911
-		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6, 1, 5) {
+		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Grabando audio y enviándolo al 911");
-
 			}
 		};
 
@@ -323,12 +329,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar camara de seguridad
 
-		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7, 1, 5) {
+		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Activando cámara de seguridad");
-
 			}
 		};
 
@@ -337,12 +342,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar alarma vecinal
 
-		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8, 1, 5) {
+		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8, 1, 17) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Activando alarma vecinal");
-
 			}
 		};
 
@@ -359,7 +363,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoHogarAccion.agregarSalida(unirAdapterAccion2);
 		filtroDelitoHogarRiesgo.agregarSalida(unirAdapterRiesgo2);
 
-		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9, 2, 3) {
+		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -380,12 +384,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroViolenciaDomesticaAccion = new FiltroIgualdad(0, "violenciaDomestica");
 		accion.agregarSalida(filtroViolenciaDomesticaAccion);
 
-		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10, 1, 5) {
+		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Grabando audio");
-
 			}
 		};
 
@@ -393,12 +396,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaGrabarAudio);
 
 		//accion violencia domestica llamar 911
-		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11, 1, 5) {
+		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando al 911");
-
 			}
 		};
 
@@ -406,7 +408,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaLlamar911);
 
 		//accion violencia domestica enviar audio al 911
-		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12, 1, 5) {
+		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -419,12 +421,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion violencia domestica llamar familiar
 
-		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13, 1, 5) {
+		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13, 1, 17) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando a un familiar");
-
 			}
 		};
 
@@ -441,7 +442,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccion3);
 		filtroViolenciaDomesticaRiesgo.agregarSalida(unirAdapterRiesgo3);
 
-		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14, 2, 3) {
+		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -462,12 +463,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroIncendioAccion = new FiltroIgualdad(0, "incendio");
 		accion.agregarSalida(filtroIncendioAccion);
 
-		ReteRule reglaAccionIncendioLlamar = new ReteRule(15, 1, 5) {
+		ReteRule reglaAccionIncendioLlamar = new ReteRule(15, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando bomberos");
-
 			}
 		};
 
@@ -475,12 +475,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionIncendioLlamar);
 
 		//accion incendio enviar audio a bomberos
-		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16, 1, 5) {
+		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Enviando audio a bomberos");
-
 			}
 		};
 
@@ -497,7 +496,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(unirAdapterAccion4);
 		filtroIncendioRiesgo.agregarSalida(unirAdapterRiesgo4);
 
-		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17, 2, 3) {
+		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -518,12 +517,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroEmergenciaMedicaAccion = new FiltroIgualdad(0, "emergenciaMedica");
 		accion.agregarSalida(filtroEmergenciaMedicaAccion);
 
-		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18, 1, 5) {
+		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando a hospital");
-
 			}
 		};
 
@@ -531,12 +529,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionEmergenciaMedicaLlamar);
 
 		//accion emergencia medica enviar audio a hospital
-		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19, 1, 5) {
+		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Enviando audio a hospital");
-
 			}
 		};
 
@@ -553,7 +550,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccion5);
 		filtroEmergenciaMedicaRiesgo.agregarSalida(unirAdapterRiesgo5);
 
-		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20, 2, 3) {
+		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -574,12 +571,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroIgualdad filtroexplosionAccion = new FiltroIgualdad(0, "explosion");
 		accion.agregarSalida(filtroexplosionAccion);
 
-		ReteRule reglaAccionExplosionLlamar = new ReteRule(21, 1, 5) {
+		ReteRule reglaAccionExplosionLlamar = new ReteRule(21, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Llamando a policía");
-
 			}
 		};
 
@@ -587,12 +583,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionExplosionLlamar);
 
 		//accion explosion enviar audio a policia
-		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22, 1, 5) {
+		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				System.out.println("Enviando audio a policía");
-
 			}
 		};
 
@@ -609,7 +604,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(unirAdapterAccion6);
 		filtroExplosionRiesgo.agregarSalida(unirAdapterRiesgo6);
 
-		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23, 2, 3) {
+		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {

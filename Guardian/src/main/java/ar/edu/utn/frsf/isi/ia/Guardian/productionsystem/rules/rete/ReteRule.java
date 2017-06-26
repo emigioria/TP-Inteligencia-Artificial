@@ -88,9 +88,18 @@ public abstract class ReteRule extends NodoRete implements Rule {
 
 	@Override
 	public void propagarHechos(List<Matches> hechos) {
+		imprimirHechos(hechos);
 		matches = hechos.parallelStream()
 				.map(m -> new RuleMatchesPair(this, m))
 				.collect(Collectors.toList());
+	}
+
+	private synchronized void imprimirHechos(List<Matches> hechos) {
+		if(!hechos.isEmpty()){
+			System.out.println("\nRegla: " + id);
+			System.out.println("Activa con: ");
+			hechos.forEach(h -> System.out.println(h));
+		}
 	}
 
 	public List<RuleMatchesPair> getMatches() {

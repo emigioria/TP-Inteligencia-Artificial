@@ -6,11 +6,16 @@
  */
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
 
 public class GuardianMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		AmbienteCiudad ambiente = new AmbienteCiudad();
 		Guardian agente;
 		try{
@@ -28,6 +33,13 @@ public class GuardianMain {
 				"\n¡Ayuda!" +
 				"\nCallate y dame el celu o te corto." +
 				"\nDar plata!");
+
+		File archivoSalida = new File("SalidaSimulacion.txt");
+		if(archivoSalida.exists()){
+			archivoSalida.delete();
+		}
+		archivoSalida.createNewFile();
+		System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
 
 		main.start();
 	}

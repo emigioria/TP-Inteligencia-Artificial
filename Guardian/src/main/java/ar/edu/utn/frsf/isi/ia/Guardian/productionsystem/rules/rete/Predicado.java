@@ -41,7 +41,7 @@ public abstract class Predicado extends NodoRete implements ReteWorkingMemoryCha
 				}
 				valores.set(indice, hecho.getValue());
 			}
-			return new Hecho(valores);
+			return new Hecho(this, valores);
 		}).map(h -> {
 			ReteMatches rm = new ReteMatches();
 			rm.addHecho(h);
@@ -96,4 +96,10 @@ public abstract class Predicado extends NodoRete implements ReteWorkingMemoryCha
 			this.propagarHechos(new ArrayList<>());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
 }

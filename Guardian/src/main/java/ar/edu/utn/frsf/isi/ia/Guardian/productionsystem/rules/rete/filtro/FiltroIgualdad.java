@@ -33,7 +33,7 @@ public class FiltroIgualdad extends Filtro {
 	public List<Matches> filtrar(List<Matches> hechos) {
 		return hechos.stream()
 				.map(h -> ((ReteMatches) h))
-				.filter(rm -> rm.getListaHechos().get(indicePredicado).get(indiceHecho).equals(filtro))
+				.filter(rm -> rm.getHechos().get(indicePredicado).get(indiceHecho).equals(filtro))
 				.collect(Collectors.toList());
 	}
 }
