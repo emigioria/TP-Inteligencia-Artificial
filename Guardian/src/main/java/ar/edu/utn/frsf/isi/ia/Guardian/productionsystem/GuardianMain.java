@@ -29,10 +29,13 @@ public class GuardianMain {
 		ambiente.getEnvironmentState().setFrasesDichas("Voy caminando por la calle, mientras pienso en voz alta..." +
 				"\n¿Eameo, tenés hora?" +
 				"\nEh, no." +
-				"\nChe ameo pará un toque." +
-				"\n¡Ayuda!" +
-				"\nCallate y dame el celu o te corto." +
-				"\nDar plata!");
+				"\nChe eameo pará un toque." +
+				"\n¡Ayuda! ¡Socorro!" +
+				"\nCallate, dame todo o te corto." +
+				"\nBueno pero no me hagas nada!" +
+				"\nAhí viene la policia. Chau gato!" +
+				"\nMe robaron, ayuda" +
+				"\nEstas arrestado ladrón!");
 
 		File archivoSalida = new File("SalidaSimulacion.txt");
 		if(archivoSalida.exists()){

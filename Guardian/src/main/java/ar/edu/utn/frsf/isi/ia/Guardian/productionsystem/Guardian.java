@@ -128,15 +128,19 @@ public class Guardian extends ProductionSystemBasedAgent {
 		baseVerbos.conectar();
 
 		List<String> palabrasProcesadas = palabras.stream()
-				.map(palabra -> baseVerbos.infinitivo(palabra))
-				.filter(palabra -> palabra != null)
+				.map(palabra -> {
+					if(palabra.equals("dame")){
+						return "dar";
+					}
+					return baseVerbos.infinitivo(palabra);
+				})
 				.collect(Collectors.toList());
+
+		baseVerbos.desconectar();
 
 		List<String> palabrasProcesadas2 = palabras.stream()
 				.map(palabra -> normalizadorDeTexto.singularizar(palabra))
 				.collect(Collectors.toList());
-
-		baseVerbos.desconectar();
 
 		List<List<String>> listaDeListasDeSinonimos = palabrasProcesadas
 				.parallelStream()
@@ -165,6 +169,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 	}
 
 	private List<String> sinonimosClavesDe(String palabra) {
+		if(palabra == null){
+			return new ArrayList<>();
+		}
+
 		//Saco los sinónimos
 		List<String> sinonimos = baseSinonimos.sinonimosDe(palabra);
 		sinonimos.add(palabra);

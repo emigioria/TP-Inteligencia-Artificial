@@ -80,8 +80,7 @@ tieneRiesgo(delitoCallejero, chorro, 3).
 % Inicialización predicados violenciaDomestica
 tieneRiesgo(violenciaDomestica, inutil, 3).
 tieneRiesgo(violenciaDomestica, idiota, 3).
-tieneRiesgo(violenciaDomestica, pegar, 3).
-critica(violenciaDomestica, pegar).
+tieneRiesgo(violenciaDomestica, pegar, 1).
 tieneRiesgo(violenciaDomestica, callar, 2).
 tieneRiesgo(violenciaDomestica, no_golpear, 6).
 critica(violenciaDomestica, no_golpear).
