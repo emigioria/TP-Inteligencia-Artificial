@@ -8,6 +8,8 @@ package frsf.cidisi.faia.solver.productionsystem;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
@@ -53,6 +55,7 @@ public class InferenceEngine extends Solve {
 
 		//Se obtienen las reglas activas
 		List<RuleMatchesPair> activeRules = matcher.match(productionMemory, workingMemory);
+		imprimirReglas(activeRules);
 
 		//Si no hay reglas activas se termina.
 		if(activeRules.isEmpty()){
@@ -62,9 +65,18 @@ public class InferenceEngine extends Solve {
 			//Se resuelven los conflictos.
 			Iterator<Criteria> it = criterias.iterator();
 			while(it.hasNext() && activeRules.size() > 1){
-				List<RuleMatchesPair> finalRules = it.next().apply(activeRules);
+				Criteria currentCriteria = it.next();
+				System.out.println("\nCriterio:" + currentCriteria.toString());
+
+				List<RuleMatchesPair> finalRules = currentCriteria.apply(activeRules);
 				if(finalRules.size() != 0){
+					System.out.print("Conflict set: ");
+					imprimirReglas(finalRules);
+
 					activeRules = finalRules;
+				}
+				else{
+					System.out.print("Conflict set: - ");
 				}
 			}
 		}
@@ -75,4 +87,14 @@ public class InferenceEngine extends Solve {
 		return new ProductionSystemAction(r);
 	}
 
+	private void imprimirReglas(List<RuleMatchesPair> activeRules) {
+		if(!activeRules.isEmpty()){
+			Map<Rule, List<RuleMatchesPair>> map = activeRules.stream().collect(Collectors.groupingBy(RuleMatchesPair::getKey));
+			map.keySet().forEach(r -> {
+				System.out.println("\nRegla: " + r.getId());
+				System.out.println("Activa con: ");
+				map.get(r).forEach(h -> System.out.println(h.getValue()));
+			});
+		}
+	}
 }
