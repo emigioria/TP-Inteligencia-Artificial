@@ -72,13 +72,13 @@ public class EstadoGuardian extends ProductionSystemBasedAgentState implements R
 	}
 
 	@Override
-	public void addPredicate(String predicate) {
+	public synchronized void addPredicate(String predicate) {
 		plc.addPredicate(predicate);
 		suscriptores.parallelStream().forEach(s -> s.cambio(predicate));
 	}
 
 	@Override
-	public void removePredicate(String predicate) {
+	public synchronized void removePredicate(String predicate) {
 		plc.removePredicate(predicate);
 		suscriptores.parallelStream().forEach(s -> s.cambio(predicate));
 	}

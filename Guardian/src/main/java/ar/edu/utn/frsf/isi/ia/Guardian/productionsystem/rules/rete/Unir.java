@@ -7,17 +7,19 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import frsf.cidisi.faia.solver.productionsystem.Matches;
 
 public class Unir extends NodoRete {
 
-	private List<Matches> union = new ArrayList<>();
 	private Integer unionesEsperadas;
-	private Integer unionesPasadas = 0;
 	private Integer lugar;
+	private Map<Integer, List<Matches>> cacheHechos = new HashMap<>();
 
 	public Unir(Integer uniones) {
 		this.unionesEsperadas = uniones;
@@ -29,44 +31,54 @@ public class Unir extends NodoRete {
 	}
 
 	public synchronized void unirEn(List<Matches> hechos, Integer lugar) {
-		this.lugar = lugar;
-		if(unionesPasadas > 0){
-			union = union.stream()
-					.map(m -> ((ReteMatches) m))
-					.map(rm -> hechos.stream()
-							.map(m -> ((ReteMatches) m).getListaHechos())
-							.map(lh -> {
-								ReteMatches rmu = rm.clone();
-								lh.forEach(h -> {
-									Integer indice = this.lugar;
-									while(indice >= rmu.getListaHechos().size()){
-										rmu.getListaHechos().add(null);
-									}
-									rmu.getListaHechos().set(this.lugar++, h);
-								});
-								return rmu;
-							}).collect(Collectors.toList()))
-					.flatMap(List::stream)
-					.collect(Collectors.toList());
-		}
-		else{
-			union = hechos.stream()
-					.map(m -> ((ReteMatches) m).getListaHechos())
-					.map(lh -> {
-						ReteMatches rmu = new ReteMatches();
-						lh.forEach(h -> {
-							Integer indice = this.lugar;
-							while(indice >= rmu.getListaHechos().size()){
-								rmu.getListaHechos().add(null);
-							}
-							rmu.getListaHechos().set(this.lugar++, h);
-						});
-						return rmu;
-					}).collect(Collectors.toList());
+		cacheHechos.put(lugar, hechos);
+		if(cacheHechos.keySet().size() != unionesEsperadas){
+			return;
 		}
 
-		if(++unionesPasadas == unionesEsperadas){
-			super.propagarHechos(union);
+		List<Matches> union = new ArrayList<>();
+		Integer unionesPasadas = 0;
+		for(Entry<Integer, List<Matches>> es: cacheHechos.entrySet()){
+			if(unionesPasadas > 0){
+				union = union.stream()
+						.map(mu -> ((ReteMatches) mu))
+						.map(rmu -> es.getValue().stream()
+								.map(mh -> ((ReteMatches) mh).getListaHechos())
+								.map(lhh -> {
+									ReteMatches rmuClon = rmu.clone();
+									this.lugar = es.getKey();
+									lhh.forEach(h -> {
+										Integer indice = this.lugar;
+										while(indice >= rmuClon.getListaHechos().size()){
+											rmuClon.getListaHechos().add(null);
+										}
+										rmuClon.getListaHechos().set(this.lugar++, h);
+									});
+									return rmuClon;
+								}).collect(Collectors.toList()))
+						.flatMap(List::stream)
+						.collect(Collectors.toList());
+			}
+			else{
+				union = es.getValue().stream()
+						.map(m -> ((ReteMatches) m).getListaHechos())
+						.map(lh -> {
+							ReteMatches rmu = new ReteMatches();
+							this.lugar = es.getKey();
+							lh.forEach(h -> {
+								Integer indice = this.lugar;
+								while(indice >= rmu.getListaHechos().size()){
+									rmu.getListaHechos().add(null);
+								}
+								rmu.getListaHechos().set(this.lugar++, h);
+							});
+							return rmu;
+						}).collect(Collectors.toList());
+			}
+			unionesPasadas++;
 		}
+
+		super.propagarHechos(union);
 	}
+
 }

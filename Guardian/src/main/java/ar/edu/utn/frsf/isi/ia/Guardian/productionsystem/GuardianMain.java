@@ -26,7 +26,8 @@ public class GuardianMain {
 				"\nEh, no." +
 				"\nChe ameo pará un toque." +
 				"\n¡Ayuda!" +
-				"\nCallate y dame el celu o te corto.");
+				"\nCallate y dame el celu o te corto." +
+				"\nDar plata!");
 
 		main.start();
 	}
