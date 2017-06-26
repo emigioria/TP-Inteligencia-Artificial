@@ -157,7 +157,9 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
 			listaDeSinonimos.parallelStream()
 					.forEach(palabra -> this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
-			proximoIndice++;
+			if(!listaDeSinonimos.isEmpty()){
+				proximoIndice++;
+			}
 		});
 	}
 
