@@ -15,13 +15,12 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.solver.productionsystem.InferenceEngine;
 import frsf.cidisi.faia.solver.productionsystem.ProductionMemory;
 import frsf.cidisi.faia.solver.productionsystem.RuleMatchesPair;
-import frsf.cidisi.faia.solver.productionsystem.WorkingMemory;
 import frsf.cidisi.faia.solver.productionsystem.criterias.UsedRulesExpert;
 
 public abstract class ProductionSystemBasedAgent extends Agent implements UsedRulesExpert {
 
 	private InferenceEngine solver;
-	private WorkingMemory state;
+	private ProductionSystemBasedAgentState state;
 	private ProductionMemory productionMemory;
 
 	private Set<RuleMatchesPair> usedRules = new HashSet<>();
@@ -45,11 +44,11 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 		this.solver = solver;
 	}
 
-	public WorkingMemory getAgentState() {
+	public ProductionSystemBasedAgentState getAgentState() {
 		return state;
 	}
 
-	protected void setAgentState(WorkingMemory agentState) {
+	protected void setAgentState(ProductionSystemBasedAgentState agentState) {
 		this.state = agentState;
 	}
 

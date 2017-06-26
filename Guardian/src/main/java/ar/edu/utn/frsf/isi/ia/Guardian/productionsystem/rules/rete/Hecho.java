@@ -19,6 +19,6 @@ public class Hecho {
 	}
 
 	public Object get(Integer indice) {
-		return valores.get(0);
+		return valores.get(indice);
 	}
 }
