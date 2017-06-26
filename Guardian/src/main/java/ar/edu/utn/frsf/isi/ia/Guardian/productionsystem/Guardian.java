@@ -1063,20 +1063,20 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEscuchada8.agregarSalida(reglaDarMochila);
 		listaReglas.add(reglaDarMochila);
 
-		//palabra compuesta dar joyas
-		FiltroIgualdad filtroJoyas = new FiltroIgualdad(0, "joyas");
-		escuchada.agregarSalida(filtroJoyas);
+		//palabra compuesta dar joya
+		FiltroIgualdad filtroJoya = new FiltroIgualdad(0, "joya");
+		escuchada.agregarSalida(filtroJoya);
 
 		Unir unionEscuchada9 = new Unir(2);
 		UnirAdapter unirAdapterDar9 = new UnirAdapter(0, unionEscuchada9);
-		UnirAdapter unirAdapterJoyas = new UnirAdapter(1, unionEscuchada9);
+		UnirAdapter unirAdapterJoya = new UnirAdapter(1, unionEscuchada9);
 		filtroDar.agregarSalida(unirAdapterDar9);
-		filtroJoyas.agregarSalida(unirAdapterJoyas);
+		filtroJoya.agregarSalida(unirAdapterJoya);
 
 		FiltroPalabrasCompuestas filtroEscuchada9 = new FiltroPalabrasCompuestas();
 		unionEscuchada9.agregarSalida(filtroEscuchada9);
 
-		ReteRule reglaDarJoyas = new ReteRule(37, 3, 10) {
+		ReteRule reglaDarJoya = new ReteRule(37, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -1093,8 +1093,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		filtroEscuchada9.agregarSalida(reglaDarJoyas);
-		listaReglas.add(reglaDarJoyas);
+		filtroEscuchada9.agregarSalida(reglaDarJoya);
+		listaReglas.add(reglaDarJoya);
 
 		//palabra compuesta vaciar caja
 		FiltroIgualdad filtroVaciar = new FiltroIgualdad(0, "vaciar");
@@ -1368,28 +1368,28 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEscuchada12.agregarSalida(reglaCerrarBoca);
 		listaReglas.add(reglaCerrarBoca);
 
-		//palabra compuesta sacar manos encima
+		//palabra compuesta sacar mano encima
 		FiltroIgualdad filtroSacar = new FiltroIgualdad(0, "sacar");
 		escuchada.agregarSalida(filtroSacar);
 
-		FiltroIgualdad filtroManos = new FiltroIgualdad(0, "manos");
-		escuchada.agregarSalida(filtroManos);
+		FiltroIgualdad filtroMano = new FiltroIgualdad(0, "mano");
+		escuchada.agregarSalida(filtroMano);
 
 		FiltroIgualdad filtroEncima = new FiltroIgualdad(0, "encima");
 		escuchada.agregarSalida(filtroEncima);
 
 		Unir unionEscuchada17 = new Unir(3);
 		UnirAdapter unirAdapterSacar = new UnirAdapter(0, unionEscuchada17);
-		UnirAdapter unirAdapterManos = new UnirAdapter(1, unionEscuchada17);
+		UnirAdapter unirAdapterMano = new UnirAdapter(1, unionEscuchada17);
 		UnirAdapter unirAdapterEncima = new UnirAdapter(2, unionEscuchada17);
 		filtroSacar.agregarSalida(unirAdapterSacar);
-		filtroManos.agregarSalida(unirAdapterManos);
+		filtroMano.agregarSalida(unirAdapterMano);
 		filtroEncima.agregarSalida(unirAdapterEncima);
 
 		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
 		unionEscuchada17.agregarSalida(filtroEscuchadaTriple5);
 
-		ReteRule reglaSacarManosEncima = new ReteRule(45, 4, 10) {
+		ReteRule reglaSacarManoEncima = new ReteRule(45, 4, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -1409,8 +1409,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		filtroEscuchadaTriple5.agregarSalida(reglaSacarManosEncima);
-		listaReglas.add(reglaSacarManosEncima);
+		filtroEscuchadaTriple5.agregarSalida(reglaSacarManoEncima);
+		listaReglas.add(reglaSacarManoEncima);
 
 		//palabra compuesta venir aca
 		FiltroIgualdad filtroVenir = new FiltroIgualdad(0, "venir");
@@ -1517,20 +1517,20 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEscuchada15.agregarSalida(reglaLlamarAmbulancia);
 		listaReglas.add(reglaLlamarAmbulancia);
 
-		//palabra compuesta llamar bomberos
-		FiltroIgualdad filtroBomberos = new FiltroIgualdad(0, "bomberos");
-		escuchada.agregarSalida(filtroBomberos);
+		//palabra compuesta llamar bombero
+		FiltroIgualdad filtroBombero = new FiltroIgualdad(0, "bombero");
+		escuchada.agregarSalida(filtroBombero);
 
 		Unir unionEscuchada21 = new Unir(2);
 		UnirAdapter unirAdapterLlamar3 = new UnirAdapter(0, unionEscuchada21);
-		UnirAdapter unirAdapterBomberos = new UnirAdapter(1, unionEscuchada21);
+		UnirAdapter unirAdapterBombero = new UnirAdapter(1, unionEscuchada21);
 		filtroLlamar.agregarSalida(unirAdapterLlamar3);
-		filtroBomberos.agregarSalida(unirAdapterBomberos);
+		filtroBombero.agregarSalida(unirAdapterBombero);
 
 		FiltroPalabrasCompuestas filtroEscuchada16 = new FiltroPalabrasCompuestas();
 		unionEscuchada21.agregarSalida(filtroEscuchada16);
 
-		ReteRule reglaLlamarBomberos = new ReteRule(49, 3, 10) {
+		ReteRule reglaLlamarBombero = new ReteRule(49, 3, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -1547,8 +1547,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 			}
 		};
 
-		filtroEscuchada16.agregarSalida(reglaLlamarBomberos);
-		listaReglas.add(reglaLlamarBomberos);
+		filtroEscuchada16.agregarSalida(reglaLlamarBombero);
+		listaReglas.add(reglaLlamarBombero);
 	}
 
 }
