@@ -1560,9 +1560,13 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaLlamarBombero);
 	}
 
-	protected void mandarPatruIA() {
-		// TODO Auto-generated method stub
+	@Override
+	public String toString() {
+		return "GuardIAn";
+	}
 
+	protected void mandarPatruIA() {
+		System.out.println("Mandando móvil con el sistema PatruIA");
 	}
 
 }
