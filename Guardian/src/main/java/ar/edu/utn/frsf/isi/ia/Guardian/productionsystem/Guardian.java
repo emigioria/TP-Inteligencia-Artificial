@@ -247,7 +247,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando al 911");
+				System.out.println("Grabando audio");
 			}
 		};
 
@@ -259,19 +259,20 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Grabando audio");
+				System.out.println("Llamando a la policia");
 			}
 		};
 
 		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroGrabar);
 		listaReglas.add(reglaAccionDelitoCallejeroGrabar);
 
-		//accion delito callejero llamar familiar
+		//accion delito callejero llamar policia
 		ReteRule reglaAccionDelitoCallejeroLlamar = new ReteRule(3, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando a un familiar");
+				System.out.println("Enviando audio y lugar a la policia");
+				mandarPatruIA();
 			}
 		};
 
@@ -328,7 +329,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Grabando audio y enviándolo al 911");
+				System.out.println("Enviando audio y lugar al 911");
+				mandarPatruIA();
 			}
 		};
 
@@ -420,7 +422,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio al 911");
+				System.out.println("Enviando audio y lugar al 911");
+				mandarPatruIA();
 			}
 		};
 
@@ -487,7 +490,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio a bomberos");
+				System.out.println("Enviando audio y lugar a bomberos");
+				mandarPatruIA();
 			}
 		};
 
@@ -541,7 +545,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio a hospital");
+				System.out.println("Enviando audio y lugar a hospital");
+				mandarPatruIA();
 			}
 		};
 
@@ -595,7 +600,8 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio a policía");
+				System.out.println("Enviando audio y lugar a policía");
+				mandarPatruIA();
 			}
 		};
 
@@ -1552,6 +1558,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		filtroEscuchada16.agregarSalida(reglaLlamarBombero);
 		listaReglas.add(reglaLlamarBombero);
+	}
+
+	protected void mandarPatruIA() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
