@@ -37,7 +37,13 @@ public class Unir extends NodoRete {
 							.map(m -> ((ReteMatches) m).getListaHechos())
 							.map(lh -> {
 								ReteMatches rmu = rm.clone();
-								lh.forEach(h -> rmu.getListaHechos().set(this.lugar++, h));
+								lh.forEach(h -> {
+									Integer indice = this.lugar;
+									while(indice >= rmu.getListaHechos().size()){
+										rmu.getListaHechos().add(null);
+									}
+									rmu.getListaHechos().set(this.lugar++, h);
+								});
 								return rmu;
 							}).collect(Collectors.toList()))
 					.flatMap(List::stream)
@@ -48,7 +54,13 @@ public class Unir extends NodoRete {
 					.map(m -> ((ReteMatches) m).getListaHechos())
 					.map(lh -> {
 						ReteMatches rmu = new ReteMatches();
-						lh.forEach(h -> rmu.getListaHechos().set(this.lugar++, h));
+						lh.forEach(h -> {
+							Integer indice = this.lugar;
+							while(indice >= rmu.getListaHechos().size()){
+								rmu.getListaHechos().add(null);
+							}
+							rmu.getListaHechos().set(this.lugar++, h);
+						});
 						return rmu;
 					}).collect(Collectors.toList());
 		}

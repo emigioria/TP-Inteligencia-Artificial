@@ -19,12 +19,13 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteWorkingMe
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteWorkingMemoryChangeListener;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.PrologConnector;
+import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgentState;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 
 /**
  * Represent the internal state of the Agent.
  */
-public class EstadoGuardian implements ReteWorkingMemory {
+public class EstadoGuardian extends ProductionSystemBasedAgentState implements ReteWorkingMemory {
 
 	public PrologConnector plc;
 
@@ -38,6 +39,7 @@ public class EstadoGuardian implements ReteWorkingMemory {
 	/**
 	 * This method is optional, and sets the initial state of the agent.
 	 */
+	@Override
 	public void initState() {
 
 	}
@@ -64,6 +66,7 @@ public class EstadoGuardian implements ReteWorkingMemory {
 			for(Entry<String, Term> entrada: pares.entrySet()){
 				mapa.put(entrada.getKey(), entrada.getValue().toString());
 			}
+			mapas.add(mapa);
 		}
 		return mapas;
 	}
@@ -83,6 +86,11 @@ public class EstadoGuardian implements ReteWorkingMemory {
 	@Override
 	public void suscribe(ReteWorkingMemoryChangeListener rwmcl) {
 		suscriptores.add(rwmcl);
+	}
+
+	@Override
+	public String toString() {
+		return "Working Memory";
 	}
 
 	// The following methods are agent-specific:

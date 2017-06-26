@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Agent;
-import frsf.cidisi.faia.agent.GoalBasedAgent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemAction;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
@@ -137,7 +136,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	}
 
 	public void showSolution() {
-		GoalBasedAgent agent = (GoalBasedAgent) this.getAgents().firstElement();
+		ProductionSystemBasedAgent agent = (ProductionSystemBasedAgent) this.getAgents().firstElement();
 		agent.getSolver().showSolution();
 	}
 
@@ -153,7 +152,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 	 * @param action
 	 */
 	protected void updateState(Action action) {
-		this.getEnvironment().updateState(((GoalBasedAgent) agents.elementAt(0)).getAgentState(), action);
+		this.getEnvironment().updateState(((ProductionSystemBasedAgent) agents.elementAt(0)).getAgentState(), action);
 	}
 
 	@Override
