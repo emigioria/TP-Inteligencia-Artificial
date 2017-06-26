@@ -122,8 +122,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 		if(palabras.isEmpty()){
 			return;
 		}
-
-		List<String> palabrasProcesadas = palabras.parallelStream()
+		
+		long startTime = System.currentTimeMillis();
+		
+		baseVerbos.conectar();
+		
+		List<String> palabrasProcesadas = palabras.stream()
 				.map(palabra -> {
 					String palabraEnInfinitivo = baseVerbos.infinitivo(palabra);
 					if(palabraEnInfinitivo != null){
@@ -134,7 +138,13 @@ public class Guardian extends ProductionSystemBasedAgent {
 						return normalizadorDeTexto.singularizar(palabra);
 					}
 				}).collect(Collectors.toList());
+		
+		baseVerbos.desconectar();
+		
+		long endTime = System.currentTimeMillis();
 
+		System.out.println("That took " + (endTime - startTime) + " milliseconds");
+		
 		List<List<String>> listaDeListasDeSinonimos = palabrasProcesadas
 				.parallelStream()
 				.map(palabra -> {
@@ -148,7 +158,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 					return sinonimos;
 				})
 				.collect(Collectors.toList());
-
+		
 		//Agregamos las palabras escuchadas a la memoria de trabajo
 		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
 			listaDeSinonimos.parallelStream()

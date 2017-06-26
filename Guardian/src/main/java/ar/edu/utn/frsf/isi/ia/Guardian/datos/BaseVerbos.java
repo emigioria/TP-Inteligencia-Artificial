@@ -28,7 +28,7 @@ public class BaseVerbos {
 		ruta = new URI(BaseVerbos.class.getResource("/db/verbos.db").toString()).getPath();
 	}
 
-	private void conectar() {
+	public void conectar() {
 		try{
 			Class.forName("org.sqlite.JDBC");
 		} catch(ClassNotFoundException e){
@@ -41,7 +41,7 @@ public class BaseVerbos {
 		}
 	}
 
-	private void desconectar() {
+	public void desconectar() {
 		try{
 			conexion.close();
 		} catch(SQLException e){
@@ -50,13 +50,6 @@ public class BaseVerbos {
 	}
 
 	public String infinitivo(String verbo) {
-		this.conectar();
-		String infinitivo = this.buscarInfinitivo(verbo);
-		this.desconectar();
-		return infinitivo;
-	}
-
-	private String buscarInfinitivo(String verbo) {
 		ResultSet resultado;
 
 		//Normalizar verbo
