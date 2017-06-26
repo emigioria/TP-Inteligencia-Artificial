@@ -82,6 +82,11 @@ public abstract class ProductionSystemBasedAgent extends Agent implements UsedRu
 		this.usedRules = usedRules;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductionSystemBasedAgent";
+	}
+
 	public abstract Action learn();
 
 	public abstract boolean finish();

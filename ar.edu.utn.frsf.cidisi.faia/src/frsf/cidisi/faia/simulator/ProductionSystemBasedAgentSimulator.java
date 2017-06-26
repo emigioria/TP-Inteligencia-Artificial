@@ -59,6 +59,7 @@ public class ProductionSystemBasedAgentSimulator extends frsf.cidisi.faia.simula
 
 		agent = (ProductionSystemBasedAgent) this.getAgents().firstElement();
 
+		System.out.println("Agent: " + agent);
 		do{
 
 			System.out.println("------------------------------------");
