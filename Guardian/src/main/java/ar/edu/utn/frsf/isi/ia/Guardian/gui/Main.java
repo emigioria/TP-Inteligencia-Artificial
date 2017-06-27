@@ -4,10 +4,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores;
+package ar.edu.utn.frsf.isi.ia.Guardian.gui;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores.VentanaDeComandosController;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
