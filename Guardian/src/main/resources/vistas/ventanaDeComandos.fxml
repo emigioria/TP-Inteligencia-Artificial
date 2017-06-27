@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores.VentanaDeComandosController">
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores.VentanaDeComandosController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -20,7 +20,7 @@
       <TextArea fx:id="taEntrada" prefHeight="100.0" prefWidth="200.0" />
       <HBox alignment="TOP_RIGHT" spacing="5.0" GridPane.rowIndex="1">
          <children>
-            <Button mnemonicParsing="false" onAction="#tomarEntrada" prefWidth="100.0" text="Decir" />
+            <Button fx:id="botonDecir" mnemonicParsing="false" onAction="#tomarEntrada" prefWidth="100.0" text="Decir" />
          </children>
       </HBox>
    </children>

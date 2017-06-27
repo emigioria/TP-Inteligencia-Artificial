@@ -1,0 +1,3446 @@
+{
+  "alto": 1733.0,
+  "ancho": 2353.0,
+  "intersecciones": [
+    {
+      "id": 1,
+      "peso": 1,
+      "coordenadaX": 1128.0,
+      "coordenadaY": 36.0
+    },
+    {
+      "id": 2,
+      "peso": 1,
+      "coordenadaX": 1288.0,
+      "coordenadaY": 71.0
+    },
+    {
+      "id": 3,
+      "peso": 1,
+      "coordenadaX": 1418.0,
+      "coordenadaY": 100.0
+    },
+    {
+      "id": 4,
+      "peso": 1,
+      "coordenadaX": 1541.0,
+      "coordenadaY": 127.0
+    },
+    {
+      "id": 5,
+      "peso": 1,
+      "coordenadaX": 1669.0,
+      "coordenadaY": 154.0
+    },
+    {
+      "id": 6,
+      "peso": 1,
+      "coordenadaX": 1792.0,
+      "coordenadaY": 181.0
+    },
+    {
+      "id": 7,
+      "peso": 1,
+      "coordenadaX": 1922.0,
+      "coordenadaY": 210.0
+    },
+    {
+      "id": 8,
+      "peso": 1,
+      "coordenadaX": 2047.0,
+      "coordenadaY": 236.0
+    },
+    {
+      "id": 9,
+      "peso": 1,
+      "coordenadaX": 2171.0,
+      "coordenadaY": 267.0
+    },
+    {
+      "id": 10,
+      "peso": 1,
+      "coordenadaX": 2309.0,
+      "coordenadaY": 299.0
+    },
+    {
+      "id": 11,
+      "peso": 1,
+      "coordenadaX": 1059.0,
+      "coordenadaY": 141.0
+    },
+    {
+      "id": 12,
+      "peso": 1,
+      "coordenadaX": 1137.0,
+      "coordenadaY": 161.0
+    },
+    {
+      "id": 13,
+      "peso": 1,
+      "coordenadaX": 1261.0,
+      "coordenadaY": 184.0
+    },
+    {
+      "id": 14,
+      "peso": 1,
+      "coordenadaX": 1385.0,
+      "coordenadaY": 211.0
+    },
+    {
+      "id": 15,
+      "peso": 1,
+      "coordenadaX": 1515.0,
+      "coordenadaY": 238.0
+    },
+    {
+      "id": 16,
+      "peso": 1,
+      "coordenadaX": 1641.0,
+      "coordenadaY": 271.0
+    },
+    {
+      "id": 17,
+      "peso": 1,
+      "coordenadaX": 1767.0,
+      "coordenadaY": 295.0
+    },
+    {
+      "id": 18,
+      "peso": 1,
+      "coordenadaX": 1896.0,
+      "coordenadaY": 320.0
+    },
+    {
+      "id": 19,
+      "peso": 1,
+      "coordenadaX": 2027.0,
+      "coordenadaY": 352.0
+    },
+    {
+      "id": 20,
+      "peso": 1,
+      "coordenadaX": 2154.0,
+      "coordenadaY": 377.0
+    },
+    {
+      "id": 21,
+      "peso": 1,
+      "coordenadaX": 2267.0,
+      "coordenadaY": 404.0
+    },
+    {
+      "id": 22,
+      "peso": 1,
+      "coordenadaX": 1009.0,
+      "coordenadaY": 244.0
+    },
+    {
+      "id": 23,
+      "peso": 1,
+      "coordenadaX": 1108.0,
+      "coordenadaY": 271.0
+    },
+    {
+      "id": 24,
+      "peso": 1,
+      "coordenadaX": 1229.0,
+      "coordenadaY": 294.0
+    },
+    {
+      "id": 25,
+      "peso": 1,
+      "coordenadaX": 1357.0,
+      "coordenadaY": 321.0
+    },
+    {
+      "id": 26,
+      "peso": 1,
+      "coordenadaX": 1486.0,
+      "coordenadaY": 345.0
+    },
+    {
+      "id": 27,
+      "peso": 1,
+      "coordenadaX": 1611.0,
+      "coordenadaY": 377.0
+    },
+    {
+      "id": 28,
+      "peso": 1,
+      "coordenadaX": 1736.0,
+      "coordenadaY": 401.0
+    },
+    {
+      "id": 29,
+      "peso": 1,
+      "coordenadaX": 1866.0,
+      "coordenadaY": 427.0
+    },
+    {
+      "id": 30,
+      "peso": 1,
+      "coordenadaX": 1991.0,
+      "coordenadaY": 459.0
+    },
+    {
+      "id": 31,
+      "peso": 1,
+      "coordenadaX": 2116.0,
+      "coordenadaY": 490.0
+    },
+    {
+      "id": 32,
+      "peso": 1,
+      "coordenadaX": 2181.0,
+      "coordenadaY": 506.0
+    },
+    {
+      "id": 33,
+      "peso": 1,
+      "coordenadaX": 954.0,
+      "coordenadaY": 354.0
+    },
+    {
+      "id": 34,
+      "peso": 1,
+      "coordenadaX": 1072.0,
+      "coordenadaY": 382.0
+    },
+    {
+      "id": 35,
+      "peso": 1,
+      "coordenadaX": 1202.0,
+      "coordenadaY": 408.0
+    },
+    {
+      "id": 36,
+      "peso": 1,
+      "coordenadaX": 1332.0,
+      "coordenadaY": 433.0
+    },
+    {
+      "id": 37,
+      "peso": 1,
+      "coordenadaX": 1451.0,
+      "coordenadaY": 458.0
+    },
+    {
+      "id": 38,
+      "peso": 1,
+      "coordenadaX": 1581.0,
+      "coordenadaY": 487.0
+    },
+    {
+      "id": 39,
+      "peso": 1,
+      "coordenadaX": 1709.0,
+      "coordenadaY": 517.0
+    },
+    {
+      "id": 40,
+      "peso": 1,
+      "coordenadaX": 1837.0,
+      "coordenadaY": 543.0
+    },
+    {
+      "id": 41,
+      "peso": 1,
+      "coordenadaX": 1965.0,
+      "coordenadaY": 576.0
+    },
+    {
+      "id": 42,
+      "peso": 1,
+      "coordenadaX": 2092.0,
+      "coordenadaY": 601.0
+    },
+    {
+      "id": 43,
+      "peso": 1,
+      "coordenadaX": 1185.0,
+      "coordenadaY": 458.0
+    },
+    {
+      "id": 44,
+      "peso": 1,
+      "coordenadaX": 1313.0,
+      "coordenadaY": 487.0
+    },
+    {
+      "id": 45,
+      "peso": 1,
+      "coordenadaX": 1440.0,
+      "coordenadaY": 517.0
+    },
+    {
+      "id": 46,
+      "peso": 1,
+      "coordenadaX": 1566.0,
+      "coordenadaY": 546.0
+    },
+    {
+      "id": 47,
+      "peso": 1,
+      "coordenadaX": 1688.0,
+      "coordenadaY": 571.0
+    },
+    {
+      "id": 48,
+      "peso": 1,
+      "coordenadaX": 872.0,
+      "coordenadaY": 453.0
+    },
+    {
+      "id": 49,
+      "peso": 1,
+      "coordenadaX": 1041.0,
+      "coordenadaY": 492.0
+    },
+    {
+      "id": 50,
+      "peso": 1,
+      "coordenadaX": 1168.0,
+      "coordenadaY": 518.0
+    },
+    {
+      "id": 51,
+      "peso": 1,
+      "coordenadaX": 1299.0,
+      "coordenadaY": 549.0
+    },
+    {
+      "id": 52,
+      "peso": 1,
+      "coordenadaX": 1424.0,
+      "coordenadaY": 580.0
+    },
+    {
+      "id": 53,
+      "peso": 1,
+      "coordenadaX": 1550.0,
+      "coordenadaY": 605.0
+    },
+    {
+      "id": 54,
+      "peso": 1,
+      "coordenadaX": 1675.0,
+      "coordenadaY": 633.0
+    },
+    {
+      "id": 55,
+      "peso": 1,
+      "coordenadaX": 1802.0,
+      "coordenadaY": 660.0
+    },
+    {
+      "id": 56,
+      "peso": 1,
+      "coordenadaX": 1930.0,
+      "coordenadaY": 685.0
+    },
+    {
+      "id": 57,
+      "peso": 1,
+      "coordenadaX": 1990.0,
+      "coordenadaY": 697.0
+    },
+    {
+      "id": 58,
+      "peso": 1,
+      "coordenadaX": 793.0,
+      "coordenadaY": 551.0
+    },
+    {
+      "id": 59,
+      "peso": 1,
+      "coordenadaX": 1012.0,
+      "coordenadaY": 599.0
+    },
+    {
+      "id": 60,
+      "peso": 1,
+      "coordenadaX": 1144.0,
+      "coordenadaY": 629.0
+    },
+    {
+      "id": 61,
+      "peso": 1,
+      "coordenadaX": 1264.0,
+      "coordenadaY": 658.0
+    },
+    {
+      "id": 62,
+      "peso": 1,
+      "coordenadaX": 1394.0,
+      "coordenadaY": 688.0
+    },
+    {
+      "id": 63,
+      "peso": 1,
+      "coordenadaX": 1520.0,
+      "coordenadaY": 714.0
+    },
+    {
+      "id": 64,
+      "peso": 1,
+      "coordenadaX": 1648.0,
+      "coordenadaY": 739.0
+    },
+    {
+      "id": 65,
+      "peso": 1,
+      "coordenadaX": 1779.0,
+      "coordenadaY": 767.0
+    },
+    {
+      "id": 66,
+      "peso": 1,
+      "coordenadaX": 1867.0,
+      "coordenadaY": 791.0
+    },
+    {
+      "id": 67,
+      "peso": 1,
+      "coordenadaX": 709.0,
+      "coordenadaY": 652.0
+    },
+    {
+      "id": 68,
+      "peso": 1,
+      "coordenadaX": 844.0,
+      "coordenadaY": 684.0
+    },
+    {
+      "id": 69,
+      "peso": 1,
+      "coordenadaX": 981.0,
+      "coordenadaY": 707.0
+    },
+    {
+      "id": 70,
+      "peso": 1,
+      "coordenadaX": 1110.0,
+      "coordenadaY": 741.0
+    },
+    {
+      "id": 71,
+      "peso": 1,
+      "coordenadaX": 1236.0,
+      "coordenadaY": 767.0
+    },
+    {
+      "id": 72,
+      "peso": 1,
+      "coordenadaX": 1365.0,
+      "coordenadaY": 798.0
+    },
+    {
+      "id": 73,
+      "peso": 1,
+      "coordenadaX": 1488.0,
+      "coordenadaY": 822.0
+    },
+    {
+      "id": 74,
+      "peso": 1,
+      "coordenadaX": 1618.0,
+      "coordenadaY": 851.0
+    },
+    {
+      "id": 75,
+      "peso": 1,
+      "coordenadaX": 1752.0,
+      "coordenadaY": 881.0
+    },
+    {
+      "id": 76,
+      "peso": 1,
+      "coordenadaX": 641.0,
+      "coordenadaY": 750.0
+    },
+    {
+      "id": 77,
+      "peso": 1,
+      "coordenadaX": 810.0,
+      "coordenadaY": 794.0
+    },
+    {
+      "id": 78,
+      "peso": 1,
+      "coordenadaX": 911.0,
+      "coordenadaY": 815.0
+    },
+    {
+      "id": 79,
+      "peso": 1,
+      "coordenadaX": 960.0,
+      "coordenadaY": 828.0
+    },
+    {
+      "id": 80,
+      "peso": 1,
+      "coordenadaX": 1076.0,
+      "coordenadaY": 848.0
+    },
+    {
+      "id": 81,
+      "peso": 1,
+      "coordenadaX": 1210.0,
+      "coordenadaY": 880.0
+    },
+    {
+      "id": 82,
+      "peso": 1,
+      "coordenadaX": 1334.0,
+      "coordenadaY": 911.0
+    },
+    {
+      "id": 83,
+      "peso": 1,
+      "coordenadaX": 1458.0,
+      "coordenadaY": 938.0
+    },
+    {
+      "id": 84,
+      "peso": 1,
+      "coordenadaX": 1589.0,
+      "coordenadaY": 961.0
+    },
+    {
+      "id": 85,
+      "peso": 1,
+      "coordenadaX": 1644.0,
+      "coordenadaY": 973.0
+    },
+    {
+      "id": 86,
+      "peso": 1,
+      "coordenadaX": 599.0,
+      "coordenadaY": 803.0
+    },
+    {
+      "id": 87,
+      "peso": 1,
+      "coordenadaX": 688.0,
+      "coordenadaY": 883.0
+    },
+    {
+      "id": 88,
+      "peso": 1,
+      "coordenadaX": 781.0,
+      "coordenadaY": 902.0
+    },
+    {
+      "id": 89,
+      "peso": 1,
+      "coordenadaX": 1057.0,
+      "coordenadaY": 923.0
+    },
+    {
+      "id": 90,
+      "peso": 1,
+      "coordenadaX": 1189.0,
+      "coordenadaY": 949.0
+    },
+    {
+      "id": 91,
+      "peso": 1,
+      "coordenadaX": 1309.0,
+      "coordenadaY": 979.0
+    },
+    {
+      "id": 92,
+      "peso": 1,
+      "coordenadaX": 560.0,
+      "coordenadaY": 857.0
+    },
+    {
+      "id": 93,
+      "peso": 1,
+      "coordenadaX": 648.0,
+      "coordenadaY": 906.0
+    },
+    {
+      "id": 94,
+      "peso": 1,
+      "coordenadaX": 751.0,
+      "coordenadaY": 957.0
+    },
+    {
+      "id": 95,
+      "peso": 1,
+      "coordenadaX": 930.0,
+      "coordenadaY": 956.0
+    },
+    {
+      "id": 96,
+      "peso": 1,
+      "coordenadaX": 1042.0,
+      "coordenadaY": 984.0
+    },
+    {
+      "id": 97,
+      "peso": 1,
+      "coordenadaX": 1170.0,
+      "coordenadaY": 1013.0
+    },
+    {
+      "id": 98,
+      "peso": 1,
+      "coordenadaX": 1292.0,
+      "coordenadaY": 1040.0
+    },
+    {
+      "id": 99,
+      "peso": 1,
+      "coordenadaX": 478.0,
+      "coordenadaY": 952.0
+    },
+    {
+      "id": 100,
+      "peso": 1,
+      "coordenadaX": 548.0,
+      "coordenadaY": 973.0
+    },
+    {
+      "id": 101,
+      "peso": 1,
+      "coordenadaX": 621.0,
+      "coordenadaY": 987.0
+    },
+    {
+      "id": 102,
+      "peso": 1,
+      "coordenadaX": 699.0,
+      "coordenadaY": 997.0
+    },
+    {
+      "id": 103,
+      "peso": 1,
+      "coordenadaX": 740.0,
+      "coordenadaY": 1076.0
+    },
+    {
+      "id": 104,
+      "peso": 1,
+      "coordenadaX": 758.0,
+      "coordenadaY": 1018.0
+    },
+    {
+      "id": 105,
+      "peso": 1,
+      "coordenadaX": 900.0,
+      "coordenadaY": 1027.0
+    },
+    {
+      "id": 106,
+      "peso": 1,
+      "coordenadaX": 1016.0,
+      "coordenadaY": 1049.0
+    },
+    {
+      "id": 107,
+      "peso": 1,
+      "coordenadaX": 1152.0,
+      "coordenadaY": 1080.0
+    },
+    {
+      "id": 108,
+      "peso": 1,
+      "coordenadaX": 1271.0,
+      "coordenadaY": 1106.0
+    },
+    {
+      "id": 109,
+      "peso": 1,
+      "coordenadaX": 886.0,
+      "coordenadaY": 1092.0
+    },
+    {
+      "id": 110,
+      "peso": 1,
+      "coordenadaX": 1001.0,
+      "coordenadaY": 1117.0
+    },
+    {
+      "id": 111,
+      "peso": 1,
+      "coordenadaX": 1132.0,
+      "coordenadaY": 1147.0
+    },
+    {
+      "id": 112,
+      "peso": 1,
+      "coordenadaX": 1254.0,
+      "coordenadaY": 1174.0
+    },
+    {
+      "id": 113,
+      "peso": 1,
+      "coordenadaX": 1408.0,
+      "coordenadaY": 1159.0
+    },
+    {
+      "id": 114,
+      "peso": 1,
+      "coordenadaX": 399.0,
+      "coordenadaY": 1059.0
+    },
+    {
+      "id": 115,
+      "peso": 1,
+      "coordenadaX": 513.0,
+      "coordenadaY": 1079.0
+    },
+    {
+      "id": 116,
+      "peso": 1,
+      "coordenadaX": 595.0,
+      "coordenadaY": 1097.0
+    },
+    {
+      "id": 117,
+      "peso": 1,
+      "coordenadaX": 714.0,
+      "coordenadaY": 1134.0
+    },
+    {
+      "id": 118,
+      "peso": 1,
+      "coordenadaX": 866.0,
+      "coordenadaY": 1159.0
+    },
+    {
+      "id": 119,
+      "peso": 1,
+      "coordenadaX": 987.0,
+      "coordenadaY": 1190.0
+    },
+    {
+      "id": 120,
+      "peso": 1,
+      "coordenadaX": 1113.0,
+      "coordenadaY": 1213.0
+    },
+    {
+      "id": 121,
+      "peso": 1,
+      "coordenadaX": 1233.0,
+      "coordenadaY": 1238.0
+    },
+    {
+      "id": 122,
+      "peso": 1,
+      "coordenadaX": 1292.0,
+      "coordenadaY": 1258.0
+    },
+    {
+      "id": 123,
+      "peso": 1,
+      "coordenadaX": 323.0,
+      "coordenadaY": 1157.0
+    },
+    {
+      "id": 124,
+      "peso": 1,
+      "coordenadaX": 486.0,
+      "coordenadaY": 1195.0
+    },
+    {
+      "id": 125,
+      "peso": 1,
+      "coordenadaX": 558.0,
+      "coordenadaY": 1213.0
+    },
+    {
+      "id": 126,
+      "peso": 1,
+      "coordenadaX": 686.0,
+      "coordenadaY": 1238.0
+    },
+    {
+      "id": 127,
+      "peso": 1,
+      "coordenadaX": 779.0,
+      "coordenadaY": 1260.0
+    },
+    {
+      "id": 128,
+      "peso": 1,
+      "coordenadaX": 845.0,
+      "coordenadaY": 1269.0
+    },
+    {
+      "id": 129,
+      "peso": 1,
+      "coordenadaX": 956.0,
+      "coordenadaY": 1297.0
+    },
+    {
+      "id": 130,
+      "peso": 1,
+      "coordenadaX": 1082.0,
+      "coordenadaY": 1322.0
+    },
+    {
+      "id": 131,
+      "peso": 1,
+      "coordenadaX": 1186.0,
+      "coordenadaY": 1348.0
+    },
+    {
+      "id": 132,
+      "peso": 1,
+      "coordenadaX": 246.0,
+      "coordenadaY": 1259.0
+    },
+    {
+      "id": 133,
+      "peso": 1,
+      "coordenadaX": 400.0,
+      "coordenadaY": 1296.0
+    },
+    {
+      "id": 134,
+      "peso": 1,
+      "coordenadaX": 532.0,
+      "coordenadaY": 1323.0
+    },
+    {
+      "id": 135,
+      "peso": 1,
+      "coordenadaX": 655.0,
+      "coordenadaY": 1347.0
+    },
+    {
+      "id": 136,
+      "peso": 1,
+      "coordenadaX": 753.0,
+      "coordenadaY": 1371.0
+    },
+    {
+      "id": 137,
+      "peso": 1,
+      "coordenadaX": 807.0,
+      "coordenadaY": 1386.0
+    },
+    {
+      "id": 138,
+      "peso": 1,
+      "coordenadaX": 929.0,
+      "coordenadaY": 1415.0
+    },
+    {
+      "id": 139,
+      "peso": 1,
+      "coordenadaX": 1052.0,
+      "coordenadaY": 1436.0
+    },
+    {
+      "id": 140,
+      "peso": 1,
+      "coordenadaX": 1104.0,
+      "coordenadaY": 1448.0
+    },
+    {
+      "id": 141,
+      "peso": 1,
+      "coordenadaX": 174.0,
+      "coordenadaY": 1363.0
+    },
+    {
+      "id": 142,
+      "peso": 1,
+      "coordenadaX": 237.0,
+      "coordenadaY": 1377.0
+    },
+    {
+      "id": 143,
+      "peso": 1,
+      "coordenadaX": 367.0,
+      "coordenadaY": 1403.0
+    },
+    {
+      "id": 144,
+      "peso": 1,
+      "coordenadaX": 496.0,
+      "coordenadaY": 1434.0
+    },
+    {
+      "id": 145,
+      "peso": 1,
+      "coordenadaX": 620.0,
+      "coordenadaY": 1460.0
+    },
+    {
+      "id": 146,
+      "peso": 1,
+      "coordenadaX": 721.0,
+      "coordenadaY": 1481.0
+    },
+    {
+      "id": 147,
+      "peso": 1,
+      "coordenadaX": 780.0,
+      "coordenadaY": 1495.0
+    },
+    {
+      "id": 148,
+      "peso": 1,
+      "coordenadaX": 897.0,
+      "coordenadaY": 1518.0
+    },
+    {
+      "id": 149,
+      "peso": 1,
+      "coordenadaX": 1041.0,
+      "coordenadaY": 1549.0
+    },
+    {
+      "id": 150,
+      "peso": 1,
+      "coordenadaX": 108.0,
+      "coordenadaY": 1463.0
+    },
+    {
+      "id": 151,
+      "peso": 1,
+      "coordenadaX": 209.0,
+      "coordenadaY": 1485.0
+    },
+    {
+      "id": 152,
+      "peso": 1,
+      "coordenadaX": 334.0,
+      "coordenadaY": 1515.0
+    },
+    {
+      "id": 153,
+      "peso": 1,
+      "coordenadaX": 461.0,
+      "coordenadaY": 1542.0
+    },
+    {
+      "id": 154,
+      "peso": 1,
+      "coordenadaX": 589.0,
+      "coordenadaY": 1570.0
+    },
+    {
+      "id": 155,
+      "peso": 1,
+      "coordenadaX": 690.0,
+      "coordenadaY": 1594.0
+    },
+    {
+      "id": 156,
+      "peso": 1,
+      "coordenadaX": 753.0,
+      "coordenadaY": 1573.0
+    },
+    {
+      "id": 157,
+      "peso": 1,
+      "coordenadaX": 870.0,
+      "coordenadaY": 1596.0
+    },
+    {
+      "id": 158,
+      "peso": 1,
+      "coordenadaX": 62.0,
+      "coordenadaY": 1535.0
+    },
+    {
+      "id": 159,
+      "peso": 1,
+      "coordenadaX": 188.0,
+      "coordenadaY": 1559.0
+    },
+    {
+      "id": 160,
+      "peso": 1,
+      "coordenadaX": 318.0,
+      "coordenadaY": 1586.0
+    },
+    {
+      "id": 161,
+      "peso": 1,
+      "coordenadaX": 443.0,
+      "coordenadaY": 1608.0
+    },
+    {
+      "id": 162,
+      "peso": 1,
+      "coordenadaX": 569.0,
+      "coordenadaY": 1636.0
+    },
+    {
+      "id": 163,
+      "peso": 1,
+      "coordenadaX": 670.0,
+      "coordenadaY": 1653.0
+    },
+    {
+      "id": 164,
+      "peso": 1,
+      "coordenadaX": 734.0,
+      "coordenadaY": 1662.0
+    },
+    {
+      "id": 165,
+      "peso": 1,
+      "coordenadaX": 846.0,
+      "coordenadaY": 1677.0
+    },
+    {
+      "id": 166,
+      "peso": 1,
+      "coordenadaX": 991.0,
+      "coordenadaY": 1699.0
+    },
+    {
+      "id": 167,
+      "peso": 1,
+      "coordenadaX": 870.0,
+      "coordenadaY": 921.0
+    },
+    {
+      "id": 168,
+      "peso": 1,
+      "coordenadaX": 883.0,
+      "coordenadaY": 571.0
+    },
+    {
+      "id": 169,
+      "peso": 1,
+      "coordenadaX": 429.0,
+      "coordenadaY": 1183.0
+    }
+  ],
+  "calles": [
+    {
+      "id": 1,
+      "nombre": "Obispo Boneo",
+      "tramos": [
+        {
+          "id": 1,
+          "peso": 5,
+          "origen": 1,
+          "destino": 2
+        },
+        {
+          "id": 2,
+          "peso": 5,
+          "origen": 2,
+          "destino": 3
+        },
+        {
+          "id": 3,
+          "peso": 5,
+          "origen": 3,
+          "destino": 4
+        },
+        {
+          "id": 4,
+          "peso": 5,
+          "origen": 4,
+          "destino": 5
+        },
+        {
+          "id": 5,
+          "peso": 5,
+          "origen": 5,
+          "destino": 6
+        },
+        {
+          "id": 6,
+          "peso": 5,
+          "origen": 6,
+          "destino": 7
+        },
+        {
+          "id": 7,
+          "peso": 5,
+          "origen": 7,
+          "destino": 8
+        },
+        {
+          "id": 8,
+          "peso": 5,
+          "origen": 8,
+          "destino": 9
+        },
+        {
+          "id": 9,
+          "peso": 5,
+          "origen": 9,
+          "destino": 10
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Av. General Paz",
+      "tramos": [
+        {
+          "id": 10,
+          "peso": 5,
+          "origen": 1,
+          "destino": 11
+        },
+        {
+          "id": 11,
+          "peso": 5,
+          "origen": 11,
+          "destino": 1
+        },
+        {
+          "id": 151,
+          "peso": 5,
+          "origen": 158,
+          "destino": 150
+        },
+        {
+          "id": 152,
+          "peso": 5,
+          "origen": 150,
+          "destino": 158
+        },
+        {
+          "id": 153,
+          "peso": 5,
+          "origen": 150,
+          "destino": 141
+        },
+        {
+          "id": 154,
+          "peso": 5,
+          "origen": 141,
+          "destino": 150
+        },
+        {
+          "id": 155,
+          "peso": 5,
+          "origen": 141,
+          "destino": 132
+        },
+        {
+          "id": 156,
+          "peso": 5,
+          "origen": 132,
+          "destino": 141
+        },
+        {
+          "id": 157,
+          "peso": 5,
+          "origen": 132,
+          "destino": 123
+        },
+        {
+          "id": 158,
+          "peso": 5,
+          "origen": 123,
+          "destino": 132
+        },
+        {
+          "id": 159,
+          "peso": 5,
+          "origen": 123,
+          "destino": 114
+        },
+        {
+          "id": 160,
+          "peso": 5,
+          "origen": 114,
+          "destino": 123
+        },
+        {
+          "id": 161,
+          "peso": 5,
+          "origen": 114,
+          "destino": 99
+        },
+        {
+          "id": 162,
+          "peso": 5,
+          "origen": 99,
+          "destino": 114
+        },
+        {
+          "id": 163,
+          "peso": 5,
+          "origen": 99,
+          "destino": 92
+        },
+        {
+          "id": 164,
+          "peso": 5,
+          "origen": 92,
+          "destino": 99
+        },
+        {
+          "id": 168,
+          "peso": 5,
+          "origen": 76,
+          "destino": 86
+        },
+        {
+          "id": 169,
+          "peso": 5,
+          "origen": 76,
+          "destino": 67
+        },
+        {
+          "id": 170,
+          "peso": 5,
+          "origen": 67,
+          "destino": 76
+        },
+        {
+          "id": 171,
+          "peso": 5,
+          "origen": 67,
+          "destino": 58
+        },
+        {
+          "id": 172,
+          "peso": 5,
+          "origen": 58,
+          "destino": 67
+        },
+        {
+          "id": 173,
+          "peso": 5,
+          "origen": 58,
+          "destino": 48
+        },
+        {
+          "id": 174,
+          "peso": 5,
+          "origen": 48,
+          "destino": 58
+        },
+        {
+          "id": 175,
+          "peso": 5,
+          "origen": 48,
+          "destino": 33
+        },
+        {
+          "id": 176,
+          "peso": 5,
+          "origen": 33,
+          "destino": 48
+        },
+        {
+          "id": 177,
+          "peso": 5,
+          "origen": 33,
+          "destino": 22
+        },
+        {
+          "id": 178,
+          "peso": 5,
+          "origen": 22,
+          "destino": 33
+        },
+        {
+          "id": 179,
+          "peso": 5,
+          "origen": 22,
+          "destino": 11
+        },
+        {
+          "id": 180,
+          "peso": 5,
+          "origen": 11,
+          "destino": 22
+        },
+        {
+          "id": 223,
+          "peso": 2,
+          "origen": 92,
+          "destino": 86
+        },
+        {
+          "id": 224,
+          "peso": 2,
+          "origen": 86,
+          "destino": 92
+        },
+        {
+          "id": 225,
+          "peso": 3,
+          "origen": 86,
+          "destino": 76
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Estanislao Zeballos",
+      "tramos": [
+        {
+          "id": 13,
+          "peso": 5,
+          "origen": 13,
+          "destino": 12
+        },
+        {
+          "id": 14,
+          "peso": 5,
+          "origen": 14,
+          "destino": 13
+        },
+        {
+          "id": 15,
+          "peso": 5,
+          "origen": 15,
+          "destino": 14
+        },
+        {
+          "id": 16,
+          "peso": 5,
+          "origen": 16,
+          "destino": 15
+        },
+        {
+          "id": 17,
+          "peso": 5,
+          "origen": 17,
+          "destino": 16
+        },
+        {
+          "id": 18,
+          "peso": 5,
+          "origen": 18,
+          "destino": 17
+        },
+        {
+          "id": 19,
+          "peso": 5,
+          "origen": 19,
+          "destino": 18
+        },
+        {
+          "id": 22,
+          "peso": 5,
+          "origen": 21,
+          "destino": 20
+        },
+        {
+          "id": 23,
+          "peso": 5,
+          "origen": 20,
+          "destino": 19
+        },
+        {
+          "id": 220,
+          "peso": 2,
+          "origen": 12,
+          "destino": 11
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Tacuarí",
+      "tramos": [
+        {
+          "id": 20,
+          "peso": 5,
+          "origen": 2,
+          "destino": 13
+        },
+        {
+          "id": 196,
+          "peso": 5,
+          "origen": 13,
+          "destino": 24
+        },
+        {
+          "id": 197,
+          "peso": 5,
+          "origen": 24,
+          "destino": 35
+        },
+        {
+          "id": 198,
+          "peso": 2,
+          "origen": 35,
+          "destino": 43
+        },
+        {
+          "id": 199,
+          "peso": 3,
+          "origen": 43,
+          "destino": 50
+        },
+        {
+          "id": 200,
+          "peso": 5,
+          "origen": 50,
+          "destino": 60
+        },
+        {
+          "id": 201,
+          "peso": 5,
+          "origen": 60,
+          "destino": 70
+        },
+        {
+          "id": 202,
+          "peso": 5,
+          "origen": 70,
+          "destino": 80
+        },
+        {
+          "id": 203,
+          "peso": 3,
+          "origen": 80,
+          "destino": 89
+        },
+        {
+          "id": 204,
+          "peso": 3,
+          "origen": 89,
+          "destino": 96
+        },
+        {
+          "id": 205,
+          "peso": 3,
+          "origen": 96,
+          "destino": 106
+        },
+        {
+          "id": 206,
+          "peso": 3,
+          "origen": 106,
+          "destino": 110
+        },
+        {
+          "id": 207,
+          "peso": 3,
+          "origen": 110,
+          "destino": 119
+        },
+        {
+          "id": 208,
+          "peso": 5,
+          "origen": 119,
+          "destino": 129
+        },
+        {
+          "id": 209,
+          "peso": 5,
+          "origen": 129,
+          "destino": 138
+        },
+        {
+          "id": 210,
+          "peso": 5,
+          "origen": 138,
+          "destino": 148
+        },
+        {
+          "id": 211,
+          "peso": 5,
+          "origen": 148,
+          "destino": 157
+        },
+        {
+          "id": 212,
+          "peso": 5,
+          "origen": 157,
+          "destino": 165
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Piedras",
+      "tramos": [
+        {
+          "id": 21,
+          "peso": 5,
+          "origen": 14,
+          "destino": 3
+        },
+        {
+          "id": 247,
+          "peso": 5,
+          "origen": 25,
+          "destino": 14
+        },
+        {
+          "id": 248,
+          "peso": 5,
+          "origen": 36,
+          "destino": 25
+        },
+        {
+          "id": 249,
+          "peso": 2,
+          "origen": 44,
+          "destino": 36
+        },
+        {
+          "id": 250,
+          "peso": 3,
+          "origen": 51,
+          "destino": 44
+        },
+        {
+          "id": 251,
+          "peso": 5,
+          "origen": 61,
+          "destino": 51
+        },
+        {
+          "id": 252,
+          "peso": 5,
+          "origen": 71,
+          "destino": 61
+        },
+        {
+          "id": 253,
+          "peso": 5,
+          "origen": 81,
+          "destino": 71
+        },
+        {
+          "id": 254,
+          "peso": 3,
+          "origen": 90,
+          "destino": 81
+        },
+        {
+          "id": 255,
+          "peso": 3,
+          "origen": 97,
+          "destino": 90
+        },
+        {
+          "id": 256,
+          "peso": 3,
+          "origen": 107,
+          "destino": 97
+        },
+        {
+          "id": 257,
+          "peso": 3,
+          "origen": 111,
+          "destino": 107
+        },
+        {
+          "id": 258,
+          "peso": 3,
+          "origen": 120,
+          "destino": 111
+        },
+        {
+          "id": 259,
+          "peso": 5,
+          "origen": 130,
+          "destino": 120
+        },
+        {
+          "id": 260,
+          "peso": 5,
+          "origen": 139,
+          "destino": 130
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nombre": "Juan Castelli",
+      "tramos": [
+        {
+          "id": 24,
+          "peso": 5,
+          "origen": 22,
+          "destino": 23
+        },
+        {
+          "id": 25,
+          "peso": 5,
+          "origen": 23,
+          "destino": 24
+        },
+        {
+          "id": 26,
+          "peso": 5,
+          "origen": 24,
+          "destino": 25
+        },
+        {
+          "id": 27,
+          "peso": 5,
+          "origen": 25,
+          "destino": 26
+        },
+        {
+          "id": 28,
+          "peso": 5,
+          "origen": 26,
+          "destino": 27
+        },
+        {
+          "id": 29,
+          "peso": 5,
+          "origen": 27,
+          "destino": 28
+        },
+        {
+          "id": 30,
+          "peso": 5,
+          "origen": 28,
+          "destino": 29
+        },
+        {
+          "id": 31,
+          "peso": 5,
+          "origen": 29,
+          "destino": 30
+        },
+        {
+          "id": 32,
+          "peso": 5,
+          "origen": 30,
+          "destino": 31
+        },
+        {
+          "id": 213,
+          "peso": 1,
+          "origen": 31,
+          "destino": 32
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "nombre": "Calle Hernandarias",
+      "tramos": [
+        {
+          "id": 34,
+          "peso": 5,
+          "origen": 34,
+          "destino": 33
+        },
+        {
+          "id": 35,
+          "peso": 5,
+          "origen": 35,
+          "destino": 34
+        },
+        {
+          "id": 36,
+          "peso": 5,
+          "origen": 36,
+          "destino": 35
+        },
+        {
+          "id": 37,
+          "peso": 5,
+          "origen": 37,
+          "destino": 36
+        },
+        {
+          "id": 38,
+          "peso": 5,
+          "origen": 38,
+          "destino": 37
+        },
+        {
+          "id": 39,
+          "peso": 5,
+          "origen": 39,
+          "destino": 38
+        },
+        {
+          "id": 40,
+          "peso": 5,
+          "origen": 40,
+          "destino": 39
+        },
+        {
+          "id": 41,
+          "peso": 5,
+          "origen": 41,
+          "destino": 40
+        },
+        {
+          "id": 327,
+          "peso": 4,
+          "origen": 42,
+          "destino": 41
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "nombre": "Pje. Pujato",
+      "tramos": [
+        {
+          "id": 43,
+          "peso": 5,
+          "origen": 43,
+          "destino": 44
+        },
+        {
+          "id": 44,
+          "peso": 5,
+          "origen": 44,
+          "destino": 43
+        },
+        {
+          "id": 45,
+          "peso": 5,
+          "origen": 45,
+          "destino": 46
+        },
+        {
+          "id": 46,
+          "peso": 5,
+          "origen": 46,
+          "destino": 47
+        },
+        {
+          "id": 47,
+          "peso": 5,
+          "origen": 47,
+          "destino": 46
+        },
+        {
+          "id": 48,
+          "peso": 5,
+          "origen": 46,
+          "destino": 45
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nombre": "J. P. López",
+      "tramos": [
+        {
+          "id": 50,
+          "peso": 5,
+          "origen": 49,
+          "destino": 50
+        },
+        {
+          "id": 51,
+          "peso": 5,
+          "origen": 50,
+          "destino": 51
+        },
+        {
+          "id": 52,
+          "peso": 5,
+          "origen": 51,
+          "destino": 52
+        },
+        {
+          "id": 53,
+          "peso": 5,
+          "origen": 52,
+          "destino": 53
+        },
+        {
+          "id": 54,
+          "peso": 5,
+          "origen": 53,
+          "destino": 54
+        },
+        {
+          "id": 55,
+          "peso": 5,
+          "origen": 54,
+          "destino": 55
+        },
+        {
+          "id": 56,
+          "peso": 5,
+          "origen": 55,
+          "destino": 56
+        },
+        {
+          "id": 214,
+          "peso": 1,
+          "origen": 56,
+          "destino": 57
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "nombre": "Ángel Cassanello",
+      "tramos": [
+        {
+          "id": 59,
+          "peso": 5,
+          "origen": 60,
+          "destino": 59
+        },
+        {
+          "id": 60,
+          "peso": 5,
+          "origen": 61,
+          "destino": 60
+        },
+        {
+          "id": 61,
+          "peso": 5,
+          "origen": 62,
+          "destino": 61
+        },
+        {
+          "id": 62,
+          "peso": 5,
+          "origen": 63,
+          "destino": 62
+        },
+        {
+          "id": 63,
+          "peso": 5,
+          "origen": 64,
+          "destino": 63
+        },
+        {
+          "id": 64,
+          "peso": 5,
+          "origen": 65,
+          "destino": 64
+        },
+        {
+          "id": 215,
+          "peso": 2,
+          "origen": 66,
+          "destino": 65
+        },
+        {
+          "id": 227,
+          "peso": 4,
+          "origen": 59,
+          "destino": 168
+        },
+        {
+          "id": 228,
+          "peso": 2,
+          "origen": 168,
+          "destino": 58
+        },
+        {
+          "id": 371,
+          "peso": 2,
+          "origen": 58,
+          "destino": 168
+        },
+        {
+          "id": 372,
+          "peso": 4,
+          "origen": 168,
+          "destino": 59
+        },
+        {
+          "id": 373,
+          "peso": 5,
+          "origen": 59,
+          "destino": 60
+        },
+        {
+          "id": 374,
+          "peso": 5,
+          "origen": 60,
+          "destino": 61
+        },
+        {
+          "id": 375,
+          "peso": 5,
+          "origen": 61,
+          "destino": 62
+        },
+        {
+          "id": 377,
+          "peso": 5,
+          "origen": 62,
+          "destino": 63
+        },
+        {
+          "id": 378,
+          "peso": 5,
+          "origen": 63,
+          "destino": 64
+        },
+        {
+          "id": 379,
+          "peso": 5,
+          "origen": 64,
+          "destino": 65
+        },
+        {
+          "id": 380,
+          "peso": 2,
+          "origen": 65,
+          "destino": 66
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "nombre": "Ricardo Aldao",
+      "tramos": [
+        {
+          "id": 66,
+          "peso": 5,
+          "origen": 67,
+          "destino": 68
+        },
+        {
+          "id": 67,
+          "peso": 5,
+          "origen": 68,
+          "destino": 69
+        },
+        {
+          "id": 68,
+          "peso": 5,
+          "origen": 69,
+          "destino": 70
+        },
+        {
+          "id": 69,
+          "peso": 5,
+          "origen": 70,
+          "destino": 71
+        },
+        {
+          "id": 70,
+          "peso": 5,
+          "origen": 71,
+          "destino": 72
+        },
+        {
+          "id": 71,
+          "peso": 5,
+          "origen": 72,
+          "destino": 73
+        },
+        {
+          "id": 72,
+          "peso": 5,
+          "origen": 73,
+          "destino": 74
+        },
+        {
+          "id": 73,
+          "peso": 5,
+          "origen": 74,
+          "destino": 75
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nombre": "Pedro de Vega",
+      "tramos": [
+        {
+          "id": 76,
+          "peso": 5,
+          "origen": 77,
+          "destino": 76
+        },
+        {
+          "id": 78,
+          "peso": 5,
+          "origen": 80,
+          "destino": 79
+        },
+        {
+          "id": 79,
+          "peso": 5,
+          "origen": 81,
+          "destino": 80
+        },
+        {
+          "id": 80,
+          "peso": 5,
+          "origen": 82,
+          "destino": 81
+        },
+        {
+          "id": 81,
+          "peso": 5,
+          "origen": 83,
+          "destino": 82
+        },
+        {
+          "id": 82,
+          "peso": 5,
+          "origen": 84,
+          "destino": 83
+        },
+        {
+          "id": 216,
+          "peso": 1,
+          "origen": 85,
+          "destino": 84
+        },
+        {
+          "id": 222,
+          "peso": 3,
+          "origen": 78,
+          "destino": 77
+        },
+        {
+          "id": 394,
+          "peso": 3,
+          "origen": 77,
+          "destino": 78
+        },
+        {
+          "id": 395,
+          "peso": 5,
+          "origen": 76,
+          "destino": 77
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nombre": "Pje. Iturri",
+      "tramos": [
+        {
+          "id": 84,
+          "peso": 5,
+          "origen": 89,
+          "destino": 90
+        },
+        {
+          "id": 85,
+          "peso": 5,
+          "origen": 90,
+          "destino": 91
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "nombre": "Gorostiaga",
+      "tramos": [
+        {
+          "id": 86,
+          "peso": 5,
+          "origen": 96,
+          "destino": 95
+        },
+        {
+          "id": 87,
+          "peso": 5,
+          "origen": 97,
+          "destino": 96
+        },
+        {
+          "id": 88,
+          "peso": 5,
+          "origen": 98,
+          "destino": 97
+        },
+        {
+          "id": 89,
+          "peso": 5,
+          "origen": 92,
+          "destino": 93
+        },
+        {
+          "id": 90,
+          "peso": 5,
+          "origen": 93,
+          "destino": 102
+        },
+        {
+          "id": 219,
+          "peso": 1,
+          "origen": 102,
+          "destino": 103
+        },
+        {
+          "id": 288,
+          "peso": 3,
+          "origen": 87,
+          "destino": 88
+        },
+        {
+          "id": 289,
+          "peso": 3,
+          "origen": 88,
+          "destino": 87
+        },
+        {
+          "id": 290,
+          "peso": 3,
+          "origen": 88,
+          "destino": 167
+        },
+        {
+          "id": 291,
+          "peso": 3,
+          "origen": 167,
+          "destino": 88
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "nombre": "Lavaisse",
+      "tramos": [
+        {
+          "id": 92,
+          "peso": 5,
+          "origen": 101,
+          "destino": 100
+        },
+        {
+          "id": 93,
+          "peso": 5,
+          "origen": 100,
+          "destino": 99
+        },
+        {
+          "id": 94,
+          "peso": 5,
+          "origen": 105,
+          "destino": 106
+        },
+        {
+          "id": 95,
+          "peso": 5,
+          "origen": 106,
+          "destino": 107
+        },
+        {
+          "id": 96,
+          "peso": 5,
+          "origen": 107,
+          "destino": 108
+        },
+        {
+          "id": 241,
+          "peso": 4,
+          "origen": 101,
+          "destino": 102
+        },
+        {
+          "id": 242,
+          "peso": 1,
+          "origen": 102,
+          "destino": 104
+        },
+        {
+          "id": 243,
+          "peso": 5,
+          "origen": 104,
+          "destino": 105
+        },
+        {
+          "id": 244,
+          "peso": 5,
+          "origen": 105,
+          "destino": 104
+        },
+        {
+          "id": 245,
+          "peso": 1,
+          "origen": 104,
+          "destino": 102
+        },
+        {
+          "id": 246,
+          "peso": 4,
+          "origen": 102,
+          "destino": 101
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "nombre": "Llerena",
+      "tramos": [
+        {
+          "id": 97,
+          "peso": 5,
+          "origen": 114,
+          "destino": 115
+        },
+        {
+          "id": 98,
+          "peso": 5,
+          "origen": 115,
+          "destino": 116
+        },
+        {
+          "id": 99,
+          "peso": 5,
+          "origen": 116,
+          "destino": 117
+        },
+        {
+          "id": 100,
+          "peso": 5,
+          "origen": 117,
+          "destino": 127
+        },
+        {
+          "id": 101,
+          "peso": 5,
+          "origen": 118,
+          "destino": 119
+        },
+        {
+          "id": 102,
+          "peso": 5,
+          "origen": 119,
+          "destino": 120
+        },
+        {
+          "id": 103,
+          "peso": 5,
+          "origen": 120,
+          "destino": 121
+        },
+        {
+          "id": 217,
+          "peso": 1,
+          "origen": 121,
+          "destino": 122
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "nombre": "Marco Sastre",
+      "tramos": [
+        {
+          "id": 104,
+          "peso": 5,
+          "origen": 112,
+          "destino": 111
+        },
+        {
+          "id": 105,
+          "peso": 5,
+          "origen": 111,
+          "destino": 110
+        },
+        {
+          "id": 106,
+          "peso": 5,
+          "origen": 110,
+          "destino": 109
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "nombre": "D. Huergo",
+      "tramos": [
+        {
+          "id": 108,
+          "peso": 5,
+          "origen": 131,
+          "destino": 130
+        },
+        {
+          "id": 109,
+          "peso": 5,
+          "origen": 130,
+          "destino": 129
+        },
+        {
+          "id": 110,
+          "peso": 5,
+          "origen": 129,
+          "destino": 128
+        },
+        {
+          "id": 111,
+          "peso": 5,
+          "origen": 127,
+          "destino": 126
+        },
+        {
+          "id": 112,
+          "peso": 5,
+          "origen": 126,
+          "destino": 125
+        },
+        {
+          "id": 270,
+          "peso": 3,
+          "origen": 125,
+          "destino": 124
+        },
+        {
+          "id": 271,
+          "peso": 2,
+          "origen": 124,
+          "destino": 169
+        },
+        {
+          "id": 272,
+          "peso": 5,
+          "origen": 169,
+          "destino": 123
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "nombre": "Ruperto Godoy",
+      "tramos": [
+        {
+          "id": 115,
+          "peso": 5,
+          "origen": 132,
+          "destino": 133
+        },
+        {
+          "id": 116,
+          "peso": 5,
+          "origen": 133,
+          "destino": 134
+        },
+        {
+          "id": 117,
+          "peso": 5,
+          "origen": 134,
+          "destino": 135
+        },
+        {
+          "id": 118,
+          "peso": 5,
+          "origen": 135,
+          "destino": 136
+        },
+        {
+          "id": 119,
+          "peso": 5,
+          "origen": 137,
+          "destino": 138
+        },
+        {
+          "id": 120,
+          "peso": 5,
+          "origen": 138,
+          "destino": 139
+        },
+        {
+          "id": 218,
+          "peso": 1,
+          "origen": 139,
+          "destino": 140
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "nombre": "Santiago Derqui",
+      "tramos": [
+        {
+          "id": 123,
+          "peso": 5,
+          "origen": 143,
+          "destino": 142
+        },
+        {
+          "id": 124,
+          "peso": 5,
+          "origen": 144,
+          "destino": 143
+        },
+        {
+          "id": 125,
+          "peso": 5,
+          "origen": 145,
+          "destino": 144
+        },
+        {
+          "id": 126,
+          "peso": 5,
+          "origen": 146,
+          "destino": 145
+        },
+        {
+          "id": 127,
+          "peso": 5,
+          "origen": 148,
+          "destino": 147
+        },
+        {
+          "id": 128,
+          "peso": 5,
+          "origen": 149,
+          "destino": 148
+        },
+        {
+          "id": 279,
+          "peso": 2,
+          "origen": 142,
+          "destino": 141
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "nombre": "José María Zuviría",
+      "tramos": [
+        {
+          "id": 129,
+          "peso": 5,
+          "origen": 150,
+          "destino": 151
+        },
+        {
+          "id": 130,
+          "peso": 5,
+          "origen": 151,
+          "destino": 152
+        },
+        {
+          "id": 131,
+          "peso": 5,
+          "origen": 152,
+          "destino": 153
+        },
+        {
+          "id": 132,
+          "peso": 5,
+          "origen": 153,
+          "destino": 154
+        },
+        {
+          "id": 133,
+          "peso": 5,
+          "origen": 154,
+          "destino": 155
+        },
+        {
+          "id": 134,
+          "peso": 5,
+          "origen": 156,
+          "destino": 157
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "nombre": "Salvador del Carril",
+      "tramos": [
+        {
+          "id": 135,
+          "peso": 5,
+          "origen": 158,
+          "destino": 159
+        },
+        {
+          "id": 136,
+          "peso": 5,
+          "origen": 159,
+          "destino": 160
+        },
+        {
+          "id": 137,
+          "peso": 5,
+          "origen": 159,
+          "destino": 158
+        },
+        {
+          "id": 138,
+          "peso": 5,
+          "origen": 160,
+          "destino": 159
+        },
+        {
+          "id": 139,
+          "peso": 5,
+          "origen": 160,
+          "destino": 161
+        },
+        {
+          "id": 140,
+          "peso": 5,
+          "origen": 161,
+          "destino": 160
+        },
+        {
+          "id": 141,
+          "peso": 5,
+          "origen": 161,
+          "destino": 162
+        },
+        {
+          "id": 142,
+          "peso": 5,
+          "origen": 162,
+          "destino": 163
+        },
+        {
+          "id": 143,
+          "peso": 5,
+          "origen": 162,
+          "destino": 161
+        },
+        {
+          "id": 144,
+          "peso": 1,
+          "origen": 163,
+          "destino": 164
+        },
+        {
+          "id": 145,
+          "peso": 5,
+          "origen": 163,
+          "destino": 162
+        },
+        {
+          "id": 146,
+          "peso": 1,
+          "origen": 164,
+          "destino": 163
+        },
+        {
+          "id": 147,
+          "peso": 5,
+          "origen": 164,
+          "destino": 165
+        },
+        {
+          "id": 148,
+          "peso": 5,
+          "origen": 165,
+          "destino": 164
+        },
+        {
+          "id": 149,
+          "peso": 5,
+          "origen": 165,
+          "destino": 166
+        },
+        {
+          "id": 150,
+          "peso": 5,
+          "origen": 166,
+          "destino": 165
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "nombre": "Vélez Sársfield",
+      "tramos": [
+        {
+          "id": 181,
+          "peso": 5,
+          "origen": 23,
+          "destino": 12
+        },
+        {
+          "id": 182,
+          "peso": 5,
+          "origen": 34,
+          "destino": 23
+        },
+        {
+          "id": 183,
+          "peso": 5,
+          "origen": 49,
+          "destino": 34
+        },
+        {
+          "id": 184,
+          "peso": 5,
+          "origen": 59,
+          "destino": 49
+        },
+        {
+          "id": 185,
+          "peso": 5,
+          "origen": 69,
+          "destino": 59
+        },
+        {
+          "id": 186,
+          "peso": 5,
+          "origen": 79,
+          "destino": 69
+        },
+        {
+          "id": 187,
+          "peso": 5,
+          "origen": 95,
+          "destino": 79
+        },
+        {
+          "id": 188,
+          "peso": 5,
+          "origen": 105,
+          "destino": 95
+        },
+        {
+          "id": 189,
+          "peso": 5,
+          "origen": 109,
+          "destino": 105
+        },
+        {
+          "id": 190,
+          "peso": 5,
+          "origen": 118,
+          "destino": 109
+        },
+        {
+          "id": 191,
+          "peso": 5,
+          "origen": 128,
+          "destino": 118
+        },
+        {
+          "id": 192,
+          "peso": 5,
+          "origen": 137,
+          "destino": 128
+        },
+        {
+          "id": 193,
+          "peso": 5,
+          "origen": 147,
+          "destino": 137
+        },
+        {
+          "id": 194,
+          "peso": 5,
+          "origen": 156,
+          "destino": 147
+        },
+        {
+          "id": 195,
+          "peso": 5,
+          "origen": 164,
+          "destino": 156
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "nombre": "Dorrego",
+      "tramos": [
+        {
+          "id": 229,
+          "peso": 5,
+          "origen": 168,
+          "destino": 68
+        },
+        {
+          "id": 230,
+          "peso": 5,
+          "origen": 68,
+          "destino": 77
+        },
+        {
+          "id": 231,
+          "peso": 5,
+          "origen": 77,
+          "destino": 88
+        },
+        {
+          "id": 232,
+          "peso": 3,
+          "origen": 88,
+          "destino": 94
+        },
+        {
+          "id": 233,
+          "peso": 2,
+          "origen": 94,
+          "destino": 104
+        },
+        {
+          "id": 234,
+          "peso": 1,
+          "origen": 104,
+          "destino": 103
+        },
+        {
+          "id": 235,
+          "peso": 4,
+          "origen": 103,
+          "destino": 117
+        },
+        {
+          "id": 236,
+          "peso": 5,
+          "origen": 117,
+          "destino": 126
+        },
+        {
+          "id": 237,
+          "peso": 5,
+          "origen": 126,
+          "destino": 135
+        },
+        {
+          "id": 238,
+          "peso": 5,
+          "origen": 135,
+          "destino": 145
+        },
+        {
+          "id": 239,
+          "peso": 5,
+          "origen": 145,
+          "destino": 154
+        },
+        {
+          "id": 240,
+          "peso": 3,
+          "origen": 154,
+          "destino": 162
+        },
+        {
+          "id": 382,
+          "peso": 3,
+          "origen": 162,
+          "destino": 154
+        },
+        {
+          "id": 383,
+          "peso": 5,
+          "origen": 154,
+          "destino": 145
+        },
+        {
+          "id": 384,
+          "peso": 5,
+          "origen": 145,
+          "destino": 135
+        },
+        {
+          "id": 385,
+          "peso": 5,
+          "origen": 135,
+          "destino": 126
+        },
+        {
+          "id": 386,
+          "peso": 5,
+          "origen": 126,
+          "destino": 117
+        },
+        {
+          "id": 387,
+          "peso": 4,
+          "origen": 117,
+          "destino": 103
+        },
+        {
+          "id": 388,
+          "peso": 1,
+          "origen": 103,
+          "destino": 104
+        },
+        {
+          "id": 389,
+          "peso": 2,
+          "origen": 104,
+          "destino": 94
+        },
+        {
+          "id": 390,
+          "peso": 3,
+          "origen": 94,
+          "destino": 88
+        },
+        {
+          "id": 391,
+          "peso": 5,
+          "origen": 88,
+          "destino": 77
+        },
+        {
+          "id": 392,
+          "peso": 5,
+          "origen": 77,
+          "destino": 68
+        },
+        {
+          "id": 393,
+          "peso": 5,
+          "origen": 68,
+          "destino": 168
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "nombre": "Avellaneda",
+      "tramos": [
+        {
+          "id": 261,
+          "peso": 3,
+          "origen": 161,
+          "destino": 153
+        },
+        {
+          "id": 262,
+          "peso": 5,
+          "origen": 153,
+          "destino": 144
+        },
+        {
+          "id": 263,
+          "peso": 5,
+          "origen": 144,
+          "destino": 134
+        },
+        {
+          "id": 264,
+          "peso": 5,
+          "origen": 134,
+          "destino": 125
+        },
+        {
+          "id": 265,
+          "peso": 5,
+          "origen": 125,
+          "destino": 116
+        },
+        {
+          "id": 266,
+          "peso": 5,
+          "origen": 116,
+          "destino": 101
+        },
+        {
+          "id": 267,
+          "peso": 3,
+          "origen": 101,
+          "destino": 93
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "nombre": "Güemes",
+      "tramos": [
+        {
+          "id": 268,
+          "peso": 5,
+          "origen": 100,
+          "destino": 115
+        },
+        {
+          "id": 269,
+          "peso": 5,
+          "origen": 115,
+          "destino": 124
+        },
+        {
+          "id": 273,
+          "peso": 5,
+          "origen": 169,
+          "destino": 133
+        },
+        {
+          "id": 274,
+          "peso": 5,
+          "origen": 133,
+          "destino": 143
+        },
+        {
+          "id": 275,
+          "peso": 5,
+          "origen": 143,
+          "destino": 152
+        },
+        {
+          "id": 276,
+          "peso": 3,
+          "origen": 152,
+          "destino": 160
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "nombre": "Lavalle",
+      "tramos": [
+        {
+          "id": 277,
+          "peso": 3,
+          "origen": 159,
+          "destino": 151
+        },
+        {
+          "id": 278,
+          "peso": 5,
+          "origen": 151,
+          "destino": 142
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "nombre": "Pje. Pizzorino",
+      "tramos": [
+        {
+          "id": 280,
+          "peso": 5,
+          "origen": 127,
+          "destino": 136
+        },
+        {
+          "id": 281,
+          "peso": 5,
+          "origen": 136,
+          "destino": 146
+        },
+        {
+          "id": 282,
+          "peso": 5,
+          "origen": 146,
+          "destino": 155
+        },
+        {
+          "id": 283,
+          "peso": 3,
+          "origen": 155,
+          "destino": 163
+        },
+        {
+          "id": 284,
+          "peso": 3,
+          "origen": 163,
+          "destino": 155
+        },
+        {
+          "id": 285,
+          "peso": 5,
+          "origen": 155,
+          "destino": 146
+        },
+        {
+          "id": 286,
+          "peso": 5,
+          "origen": 146,
+          "destino": 136
+        },
+        {
+          "id": 287,
+          "peso": 5,
+          "origen": 136,
+          "destino": 127
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "nombre": "Calle R. M. Pizzorno",
+      "tramos": [
+        {
+          "id": 293,
+          "peso": 4,
+          "origen": 167,
+          "destino": 78
+        },
+        {
+          "id": 294,
+          "peso": 4,
+          "origen": 78,
+          "destino": 167
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "nombre": "Calle Mosquera",
+      "tramos": [
+        {
+          "id": 295,
+          "peso": 5,
+          "origen": 94,
+          "destino": 87
+        },
+        {
+          "id": 296,
+          "peso": 5,
+          "origen": 87,
+          "destino": 94
+        },
+        {
+          "id": 297,
+          "peso": 5,
+          "origen": 87,
+          "destino": 86
+        },
+        {
+          "id": 298,
+          "peso": 5,
+          "origen": 86,
+          "destino": 87
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "nombre": "Av. Almte Brown",
+      "tramos": [
+        {
+          "id": 299,
+          "peso": 5,
+          "origen": 166,
+          "destino": 149
+        },
+        {
+          "id": 300,
+          "peso": 5,
+          "origen": 149,
+          "destino": 166
+        },
+        {
+          "id": 301,
+          "peso": 5,
+          "origen": 149,
+          "destino": 140
+        },
+        {
+          "id": 302,
+          "peso": 5,
+          "origen": 140,
+          "destino": 149
+        },
+        {
+          "id": 303,
+          "peso": 5,
+          "origen": 140,
+          "destino": 131
+        },
+        {
+          "id": 304,
+          "peso": 5,
+          "origen": 131,
+          "destino": 140
+        },
+        {
+          "id": 305,
+          "peso": 5,
+          "origen": 131,
+          "destino": 122
+        },
+        {
+          "id": 306,
+          "peso": 5,
+          "origen": 122,
+          "destino": 131
+        },
+        {
+          "id": 307,
+          "peso": 5,
+          "origen": 122,
+          "destino": 113
+        },
+        {
+          "id": 308,
+          "peso": 5,
+          "origen": 113,
+          "destino": 122
+        },
+        {
+          "id": 309,
+          "peso": 6,
+          "origen": 113,
+          "destino": 85
+        },
+        {
+          "id": 310,
+          "peso": 6,
+          "origen": 85,
+          "destino": 113
+        },
+        {
+          "id": 311,
+          "peso": 5,
+          "origen": 85,
+          "destino": 75
+        },
+        {
+          "id": 312,
+          "peso": 5,
+          "origen": 75,
+          "destino": 85
+        },
+        {
+          "id": 313,
+          "peso": 5,
+          "origen": 75,
+          "destino": 66
+        },
+        {
+          "id": 314,
+          "peso": 5,
+          "origen": 66,
+          "destino": 75
+        },
+        {
+          "id": 315,
+          "peso": 5,
+          "origen": 66,
+          "destino": 57
+        },
+        {
+          "id": 316,
+          "peso": 5,
+          "origen": 57,
+          "destino": 66
+        },
+        {
+          "id": 317,
+          "peso": 5,
+          "origen": 57,
+          "destino": 42
+        },
+        {
+          "id": 318,
+          "peso": 5,
+          "origen": 42,
+          "destino": 57
+        },
+        {
+          "id": 319,
+          "peso": 5,
+          "origen": 42,
+          "destino": 32
+        },
+        {
+          "id": 321,
+          "peso": 5,
+          "origen": 32,
+          "destino": 42
+        },
+        {
+          "id": 322,
+          "peso": 5,
+          "origen": 32,
+          "destino": 21
+        },
+        {
+          "id": 323,
+          "peso": 5,
+          "origen": 21,
+          "destino": 32
+        },
+        {
+          "id": 324,
+          "peso": 5,
+          "origen": 21,
+          "destino": 10
+        },
+        {
+          "id": 325,
+          "peso": 5,
+          "origen": 10,
+          "destino": 21
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "nombre": "Riobamba",
+      "tramos": [
+        {
+          "id": 326,
+          "peso": 3,
+          "origen": 42,
+          "destino": 31
+        },
+        {
+          "id": 328,
+          "peso": 5,
+          "origen": 31,
+          "destino": 20
+        },
+        {
+          "id": 329,
+          "peso": 5,
+          "origen": 20,
+          "destino": 9
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "nombre": "Defensa",
+      "tramos": [
+        {
+          "id": 330,
+          "peso": 5,
+          "origen": 8,
+          "destino": 19
+        },
+        {
+          "id": 331,
+          "peso": 5,
+          "origen": 19,
+          "destino": 30
+        },
+        {
+          "id": 332,
+          "peso": 5,
+          "origen": 30,
+          "destino": 41
+        },
+        {
+          "id": 333,
+          "peso": 5,
+          "origen": 41,
+          "destino": 56
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "nombre": "Talcahuano",
+      "tramos": [
+        {
+          "id": 334,
+          "peso": 5,
+          "origen": 65,
+          "destino": 55
+        },
+        {
+          "id": 335,
+          "peso": 5,
+          "origen": 55,
+          "destino": 40
+        },
+        {
+          "id": 336,
+          "peso": 5,
+          "origen": 40,
+          "destino": 29
+        },
+        {
+          "id": 337,
+          "peso": 5,
+          "origen": 29,
+          "destino": 18
+        },
+        {
+          "id": 338,
+          "peso": 5,
+          "origen": 18,
+          "destino": 7
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "nombre": "Echagüe",
+      "tramos": [
+        {
+          "id": 339,
+          "peso": 5,
+          "origen": 6,
+          "destino": 17
+        },
+        {
+          "id": 340,
+          "peso": 5,
+          "origen": 17,
+          "destino": 28
+        },
+        {
+          "id": 341,
+          "peso": 5,
+          "origen": 28,
+          "destino": 39
+        },
+        {
+          "id": 342,
+          "peso": 2,
+          "origen": 39,
+          "destino": 47
+        },
+        {
+          "id": 343,
+          "peso": 3,
+          "origen": 47,
+          "destino": 54
+        },
+        {
+          "id": 344,
+          "peso": 5,
+          "origen": 54,
+          "destino": 64
+        },
+        {
+          "id": 345,
+          "peso": 5,
+          "origen": 64,
+          "destino": 74
+        },
+        {
+          "id": 346,
+          "peso": 5,
+          "origen": 74,
+          "destino": 84
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "nombre": "Patricio Cullen",
+      "tramos": [
+        {
+          "id": 347,
+          "peso": 6,
+          "origen": 113,
+          "destino": 83
+        },
+        {
+          "id": 348,
+          "peso": 5,
+          "origen": 83,
+          "destino": 73
+        },
+        {
+          "id": 349,
+          "peso": 5,
+          "origen": 73,
+          "destino": 63
+        },
+        {
+          "id": 350,
+          "peso": 5,
+          "origen": 63,
+          "destino": 53
+        },
+        {
+          "id": 351,
+          "peso": 3,
+          "origen": 53,
+          "destino": 46
+        },
+        {
+          "id": 352,
+          "peso": 2,
+          "origen": 46,
+          "destino": 38
+        },
+        {
+          "id": 353,
+          "peso": 5,
+          "origen": 38,
+          "destino": 27
+        },
+        {
+          "id": 354,
+          "peso": 5,
+          "origen": 27,
+          "destino": 16
+        },
+        {
+          "id": 355,
+          "peso": 5,
+          "origen": 16,
+          "destino": 5
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "nombre": "A Godoy",
+      "tramos": [
+        {
+          "id": 356,
+          "peso": 5,
+          "origen": 4,
+          "destino": 15
+        },
+        {
+          "id": 357,
+          "peso": 5,
+          "origen": 15,
+          "destino": 26
+        },
+        {
+          "id": 358,
+          "peso": 5,
+          "origen": 26,
+          "destino": 37
+        },
+        {
+          "id": 359,
+          "peso": 2,
+          "origen": 37,
+          "destino": 45
+        },
+        {
+          "id": 360,
+          "peso": 3,
+          "origen": 45,
+          "destino": 52
+        },
+        {
+          "id": 361,
+          "peso": 5,
+          "origen": 52,
+          "destino": 62
+        },
+        {
+          "id": 362,
+          "peso": 5,
+          "origen": 62,
+          "destino": 72
+        },
+        {
+          "id": 363,
+          "peso": 5,
+          "origen": 72,
+          "destino": 82
+        },
+        {
+          "id": 364,
+          "peso": 3,
+          "origen": 82,
+          "destino": 91
+        },
+        {
+          "id": 365,
+          "peso": 3,
+          "origen": 91,
+          "destino": 98
+        },
+        {
+          "id": 366,
+          "peso": 3,
+          "origen": 98,
+          "destino": 108
+        },
+        {
+          "id": 367,
+          "peso": 3,
+          "origen": 108,
+          "destino": 112
+        },
+        {
+          "id": 368,
+          "peso": 3,
+          "origen": 112,
+          "destino": 121
+        }
+      ]
+    }
+  ]
+}

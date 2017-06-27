@@ -1,11 +1,22 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import org.apache.commons.io.output.TeeOutputStream;
+
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.GuardianMain;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class VentanaDeComandosController extends ControladorPatrullero {
 
@@ -15,11 +26,44 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 	private TextArea taEntrada;
 
 	@FXML
+	private Button botonDecir;
+
+	@FXML
 	private void tomarEntrada() {
 		AmbienteCiudad ambiente = new AmbienteCiudad();
 		Guardian agente;
 		try{
-			agente = new Guardian();
+			agente = new Guardian() {
+				private Boolean mandado = false;
+
+				@Override
+				protected void mandarPatruIA() {
+					super.mandarPatruIA();
+					if(!mandado){
+						mandado = true;
+						Platform.runLater(() -> {
+							//Inicializar parametros
+							Stage stage = new Stage();
+
+							//Iniciar el stage en el centro de la pantalla
+							stage.centerOnScreen();
+
+							//Setear icono y titulo de aplicacion
+							stage.getIcons().add(new IconoAplicacion());
+							stage.setTitle("Inteligencia Artificial - Sistema PatruIA");
+
+							PilaScene apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(stage, VerSimulacionAutomaticaController.URL_VISTA);
+
+							//Setear acción de cierre
+							stage.setOnCloseRequest((e) -> {
+								if(!apilador.sePuedeSalir()){
+									e.consume();
+								}
+							});
+						});
+					}
+				}
+			};
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return;
@@ -28,7 +72,28 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 
 		ambiente.getEnvironmentState().setFrasesDichas(taEntrada.getText());
 
-		main.start();
+		//Redirigir salida estandar a un archivo
+		try{
+			File archivoSalida = new File("SalidaSimulacionGuardian.txt");
+			if(archivoSalida.exists()){
+				archivoSalida.delete();
+			}
+			archivoSalida.createNewFile();
+			TeeOutputStream tee = new TeeOutputStream(new PrintStream(new FileOutputStream(archivoSalida)), System.out);
+			PrintStream ps = new PrintStream(tee, true); //true - auto-flush after println
+			System.setOut(ps);
+		} catch(Exception e){
+			presentadorVentanas.presentarExcepcionInesperada(e, stage);
+		}
+		new Thread(() -> {
+			main.start();
+			Platform.runLater(() -> {
+				botonDecir.setDisable(false);
+				presentadorVentanas.presentarInformacion("Procesamiento terminado.", "El agente ha terminado de procesar su entrada.", stage);
+			});
+		}).start();
+		botonDecir.setDisable(true);
+		presentadorVentanas.presentarInformacion("Iniciando procesamiento.", "El agente ha empezado a procesar su entrada.", stage);
 	}
 
 	@Override

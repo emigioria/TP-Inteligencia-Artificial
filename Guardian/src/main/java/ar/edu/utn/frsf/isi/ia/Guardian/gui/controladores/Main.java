@@ -43,7 +43,7 @@ public class Main extends Application {
 
 		//Setear icono y titulo de aplicacion
 		primaryStage.getIcons().add(new IconoAplicacion());
-		primaryStage.setTitle("Inteligencia Artificial - Simulación Patrullero");
+		primaryStage.setTitle("Inteligencia Artificial - Sistema GuardIAn");
 
 		//Setear acción de cierre
 		primaryStage.setOnCloseRequest((e) -> {
