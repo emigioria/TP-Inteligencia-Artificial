@@ -12,11 +12,15 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.GuardianMain;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaError;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaInformacion;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class VentanaDeComandosController extends ControladorPatrullero {
 
@@ -27,6 +31,8 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 
 	@FXML
 	private Button botonDecir;
+
+	private Thread ultimaSimulacion;
 
 	@FXML
 	private void tomarEntrada() {
@@ -85,13 +91,14 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 		}
-		new Thread(() -> {
+		ultimaSimulacion = new Thread(() -> {
 			main.start();
 			Platform.runLater(() -> {
 				botonDecir.setDisable(false);
 				presentadorVentanas.presentarInformacion("Procesamiento terminado.", "El agente ha terminado de procesar su entrada.", stage);
 			});
-		}).start();
+		});
+		ultimaSimulacion.start();
 		botonDecir.setDisable(true);
 		presentadorVentanas.presentarInformacion("Iniciando procesamiento.", "El agente ha empezado a procesar su entrada.", stage);
 	}
@@ -101,4 +108,27 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 
 	}
 
+	@Override
+	public Boolean sePuedeSalir() {
+		presentadorVentanas = new PresentadorVentanas() {
+			@Override
+			public VentanaError presentarError(String titulo, String mensaje, Window padre) {
+				return null;
+			}
+
+			@Override
+			public VentanaInformacion presentarInformacion(String titulo, String mensaje, Window padre) {
+				return null;
+			}
+		};
+		cancelar();
+		return true;
+	}
+
+	private void cancelar() {
+		if(ultimaSimulacion == null){
+			return;
+		}
+		ultimaSimulacion.interrupt();
+	}
 }

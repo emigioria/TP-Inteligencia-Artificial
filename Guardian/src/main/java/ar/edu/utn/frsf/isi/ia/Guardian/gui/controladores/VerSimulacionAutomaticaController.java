@@ -108,14 +108,13 @@ public class VerSimulacionAutomaticaController extends ControladorPatrullero {
 	protected void inicializar() {
 		spz.bindScrollPanes(scrollEstadoAmbiente, scrollEstadoPatrullero);
 
-		Platform.runLater(() -> {
-			iniciar();
-		});
+		iniciar();
 	}
 
 	private void iniciar() {
-		cargarDatos();
-		comenzar();
+		Platform.runLater(() -> {
+			cargarDatos();
+		});
 	}
 
 	@FXML
@@ -143,7 +142,9 @@ public class VerSimulacionAutomaticaController extends ControladorPatrullero {
 		spz.createZoomPane(mapaPatrullero, scrollEstadoPatrullero);
 		spz.sincronizeZoom(mapaAmbiente, mapaPatrullero);
 
-		cargarCasoDePrueba();
+		Platform.runLater(() -> {
+			cargarCasoDePrueba();
+		});
 	}
 
 	private void cargarCasoDePrueba() {
@@ -165,6 +166,7 @@ public class VerSimulacionAutomaticaController extends ControladorPatrullero {
 		}
 
 		mapaAmbiente.actualizarObstaculos();
+		comenzar();
 	}
 
 	private Interseccion elementoRandom(List<Interseccion> esquinas) {
@@ -444,23 +446,20 @@ public class VerSimulacionAutomaticaController extends ControladorPatrullero {
 
 	@Override
 	public Boolean sePuedeSalir() {
-		if(presentadorVentanas.presentarConfirmacion("Salir", "Se perderan los datos simulados. No cambie de pantalla si la simulación está corriendo ¿Seguro que desea salir?", stage).acepta()){
-			presentadorVentanas = new PresentadorVentanas() {
-				@Override
-				public VentanaError presentarError(String titulo, String mensaje, Window padre) {
-					return null;
-				}
+		presentadorVentanas = new PresentadorVentanas() {
+			@Override
+			public VentanaError presentarError(String titulo, String mensaje, Window padre) {
+				return null;
+			}
 
-				@Override
-				public VentanaInformacion presentarInformacion(String titulo, String mensaje, Window padre) {
-					return null;
-				}
-			};
-			cancelar();
-			esperarAnimacion.release();
-			esperarPausa.release();
-			return true;
-		}
-		return false;
+			@Override
+			public VentanaInformacion presentarInformacion(String titulo, String mensaje, Window padre) {
+				return null;
+			}
+		};
+		cancelar();
+		esperarAnimacion.release();
+		esperarPausa.release();
+		return true;
 	}
 }
