@@ -7,8 +7,6 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -298,18 +296,6 @@ public class VerSimulacionAutomaticaController extends ControladorPatrullero {
 		pausada.set(false);
 		finalizada.set(false);
 		agentePatrullero.setEstrategia(EstrategiasDeBusqueda.A_ASTERISCO);
-
-		//Redirigir salida estandar a un archivo
-		try{
-			File archivoSalida = new File("SalidaSimulacionBusqueda.txt");
-			if(archivoSalida.exists()){
-				archivoSalida.delete();
-			}
-			archivoSalida.createNewFile();
-			System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
-		} catch(Exception e){
-			presentadorVentanas.presentarExcepcionInesperada(e, stage);
-		}
 
 		//Avisar inicio e iniciar
 		presentadorVentanas.presentarInformacion("Iniciando patrullero", agentePatrullero.getGoalString(), stage);
