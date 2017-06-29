@@ -780,8 +780,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 				String incidente = rm.getHecho(1).get(0).toString();
 				String palabra = rm.getHecho(0).get(0).toString();
 				estadoGuardian.addPredicate("clasificada(" + incidente + "," + palabra + ")");
-				String n = rm.getHecho(0).get(1).toString();
-				estadoGuardian.removePredicate("escuchada(" + palabra + "," + n + ")");
 			}
 		};
 
