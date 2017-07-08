@@ -10,6 +10,8 @@ import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.util.NormalizadorDeTexto;
 
+import edu.stanford.nlp.simple.*;
+
 public class Preprocesador {
 	private NormalizadorDeTexto normalizadorDeTexto;
 	private BaseVerbos baseVerbos;
@@ -25,6 +27,9 @@ public class Preprocesador {
 	
 	public List<List<String>> procesar(GuardianPerception gPerception){
 		List<String> palabras = new ArrayList<>();
+		
+		//TODO: reemplazar el StringTokenizer por un objeto de la clase Sentence del Simple CoreNLP
+		//Sentence frase = new Sentence();
 		
 		StringTokenizer palabrasTokenizer = new StringTokenizer(
 				normalizadorDeTexto.reemplazarCaracteresRaros(gPerception.getPercepcion().toLowerCase()),
