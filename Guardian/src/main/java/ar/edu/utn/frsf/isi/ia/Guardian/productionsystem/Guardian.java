@@ -16,10 +16,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
-import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Predicado;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatcher;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
@@ -41,7 +38,6 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.No
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Riesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Sospecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.TieneRiesgo;
-import ar.edu.utn.frsf.isi.ia.Guardian.util.NormalizadorDeTexto;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.productionsystem.ProductionSystemBasedAgent;
@@ -64,11 +60,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	private List<Rule> listaReglas;
 	private List<Predicado> listaPredicados;
-
-	private Set<String> setPalabrasRelevantes;
-	private BaseVerbos baseVerbos;
-	private NormalizadorDeTexto normalizadorDeTexto;
-	private Sinonimos baseSinonimos;
 
 	public Guardian() throws Exception {
 		// The Agent State
@@ -94,11 +85,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		criterios.add(new Specificity());
 		criterios.add(new Random());
 
-		//Cargar todas las palabras relevantes
-		setPalabrasRelevantes = cargarTodasLasPalabrasRelevantes();
-		baseVerbos = new BaseVerbos();
-		normalizadorDeTexto = new NormalizadorDeTexto();
-		baseSinonimos = new Sinonimos();
+
 	}
 
 	/**
@@ -110,50 +97,18 @@ public class Guardian extends ProductionSystemBasedAgent {
 	@Override
 	public void see(Perception p) {
 		GuardianPerception gPerception = (GuardianPerception) p;
-		List<String> palabras = new ArrayList<>();
-
-		StringTokenizer palabrasTokenizer = new StringTokenizer(
-				normalizadorDeTexto.reemplazarCaracteresRaros(gPerception.getPercepcion().toLowerCase()),
-				" ,()\"\'");
-
-		//Obtenemos las palabras individuales percibidas
-		while(palabrasTokenizer.hasMoreTokens()){
-			palabras.add(palabrasTokenizer.nextToken());
-		}
-
-		if(palabras.isEmpty()){
+		Preprocesador preprocesador;
+		try {
+			preprocesador = new Preprocesador(this.getTodasLasPalabrasRelevantes());
+		} catch (Exception e) {
+			e.printStackTrace();
 			return;
 		}
 
-		baseVerbos.conectar();
-
-		List<String> palabrasProcesadas = palabras.stream()
-				.map(palabra -> {
-					if(palabra.equals("dame")){
-						return "dar";
-					}
-					return baseVerbos.infinitivo(palabra);
-				})
-				.collect(Collectors.toList());
-
-		baseVerbos.desconectar();
-
-		List<String> palabrasProcesadas2 = palabras.stream()
-				.map(palabra -> normalizadorDeTexto.singularizar(palabra))
-				.collect(Collectors.toList());
-
-		List<List<String>> listaDeListasDeSinonimos = palabrasProcesadas
-				.parallelStream()
-				.map(palabra -> sinonimosClavesDe(palabra))
-				.collect(Collectors.toList());
-
-		List<List<String>> listaDeListasDeSinonimos2 = palabrasProcesadas2
-				.parallelStream()
-				.map(palabra -> sinonimosClavesDe(palabra))
-				.collect(Collectors.toList());
-
-		for(int i = 0; i < listaDeListasDeSinonimos.size(); i++){
-			listaDeListasDeSinonimos.get(i).addAll(listaDeListasDeSinonimos2.get(i));
+		List<List<String>> listaDeListasDeSinonimos = preprocesador.procesar(gPerception);
+		
+		if(listaDeListasDeSinonimos.isEmpty()){
+			return;
 		}
 
 		//Agregamos las palabras escuchadas a la memoria de trabajo
@@ -168,22 +123,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		this.getUsedRules().clear();
 	}
 
-	private List<String> sinonimosClavesDe(String palabra) {
-		if(palabra == null){
-			return new ArrayList<>();
-		}
-
-		//Saco los sinónimos
-		List<String> sinonimos = baseSinonimos.sinonimosDe(palabra);
-		sinonimos.add(palabra);
-
-		//De cada lista de sinonimos nos quedamos con las palabras clave
-		sinonimos.retainAll(setPalabrasRelevantes);
-
-		return sinonimos.parallelStream().distinct().collect(Collectors.toList());
-	}
-
-	private Set<String> cargarTodasLasPalabrasRelevantes() {
+	private Set<String> getTodasLasPalabrasRelevantes() {
 		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
 		Set<String> setPalabrasRelevantes = new HashSet<>();
 
