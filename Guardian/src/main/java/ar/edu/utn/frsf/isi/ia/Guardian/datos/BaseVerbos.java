@@ -6,8 +6,6 @@
  */
 package ar.edu.utn.frsf.isi.ia.Guardian.datos;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,23 +14,21 @@ import java.text.Normalizer;
 
 public class BaseVerbos {
 	private Connection conexion;
-	private String ruta;
+	private String USER = "postgres";
+	private String PASSWORD = "postgres";
+	private String URL = "jdbc:postgresql://localhost:5432/postgres";
 
-	public BaseVerbos() throws URISyntaxException {
-		ruta = new URI(BaseVerbos.class.getResource("/db/verbos.db").toString()).getPath();
+	public BaseVerbos() {
 	}
 
 	public void conectar() {
-		try{
-			Class.forName("org.sqlite.JDBC");
-		} catch(ClassNotFoundException e){
-			e.printStackTrace();
+		try {
+			conexion = DriverManager.getConnection(URL, USER, PASSWORD);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		try{
-			conexion = DriverManager.getConnection("jdbc:sqlite:" + ruta);
-		} catch(SQLException e){
-			e.printStackTrace();
-		}
+
 	}
 
 	public void desconectar() {
@@ -67,9 +63,14 @@ public class BaseVerbos {
 				String[] s = (String[]) o;
 				resultado = conexion.createStatement().executeQuery(armarSQL(s[0], s[1], s[2], verbo));
 				try{
-					return resultado.getString(1);
+					if(resultado.getRow()==0) {
+						resultado.next();
+					}
+					if(resultado.getRow()==1) {
+						return resultado.getString(1);
+					}
 				} catch(Exception e){
-
+					e.printStackTrace();
 				}
 			}
 		} catch(SQLException e){
@@ -79,8 +80,8 @@ public class BaseVerbos {
 	}
 
 	private String armarSQL(String columnaSelect, String columnaWhere, String tabla, String verbo) {
-		return "SELECT " + columnaSelect + " FROM " + tabla + " WHERE replace(replace(replace(replace(replace(replace(replace(replace(" +
-				"replace(replace(replace( lower(" + columnaWhere + "), '\u00E1','a'), '\u00E3','a'), '\u00E2','a'), '\u00E9','e'), '\u00EA','e'), '\u00ED','i'), " +
-				"'\u00F3','o') ,'\u00F5','o') ,'\u00F4' ,'o'),'\u00FA','u'), '\u00E7' ,'c') LIKE '" + verbo + "%'";
+		String a = "SELECT " + columnaSelect + " FROM " + tabla + " WHERE lower(" + columnaWhere + ") LIKE '" + verbo + "%'";
+	System.out.println(a);
+	return a;
 	}
 }
