@@ -22,13 +22,12 @@ public class BaseVerbos {
 	}
 
 	public void conectar() {
-		try {
+		try{
 			conexion = DriverManager.getConnection(URL, USER, PASSWORD);
-		} catch (SQLException e1) {
+		} catch(SQLException e1){
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 	}
 
 	public void desconectar() {
@@ -63,10 +62,10 @@ public class BaseVerbos {
 				String[] s = (String[]) o;
 				resultado = conexion.createStatement().executeQuery(armarSQL(s[0], s[1], s[2], verbo));
 				try{
-					if(resultado.getRow()==0) {
+					if(resultado.getRow() == 0){
 						resultado.next();
 					}
-					if(resultado.getRow()==1) {
+					if(resultado.getRow() == 1){
 						return resultado.getString(1);
 					}
 				} catch(Exception e){
@@ -80,8 +79,8 @@ public class BaseVerbos {
 	}
 
 	private String armarSQL(String columnaSelect, String columnaWhere, String tabla, String verbo) {
-		String a = "SELECT " + columnaSelect + " FROM " + tabla + " WHERE lower(" + columnaWhere + ") LIKE '" + verbo + "%'";
-	System.out.println(a);
-	return a;
+		return "SELECT " + columnaSelect + " FROM " + tabla + " WHERE replace(replace(replace(replace(replace(replace(replace(replace(" +
+				"replace(replace(replace( lower(" + columnaWhere + "), '\u00E1','a'), '\u00E3','a'), '\u00E2','a'), '\u00E9','e'), '\u00EA','e'), '\u00ED','i'), " +
+				"'\u00F3','o') ,'\u00F5','o') ,'\u00F4' ,'o'),'\u00FA','u'), '\u00E7' ,'c') LIKE '" + verbo + "'";
 	}
 }

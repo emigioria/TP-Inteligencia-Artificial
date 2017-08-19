@@ -30,9 +30,9 @@ public class AmbienteCiudad extends Environment {
 	@Override
 	public GuardianPerception getPercept() {
 		// Create a new perception to return
-		GuardianPerception perception = new GuardianPerception();
 		String frase = this.getEnvironmentState().getNextFrase();
 		if(frase != null){
+			GuardianPerception perception = new GuardianPerception();
 			perception.setPercepcion(frase);
 			return perception;
 		}

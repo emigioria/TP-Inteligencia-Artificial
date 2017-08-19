@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
+
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.Predicado;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatcher;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.ReteMatches;
@@ -63,7 +63,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	public Guardian() throws Exception {
 		// The Agent State
-		String ruta = new URI(BaseVerbos.class.getResource("/db/init.pl").toString()).getPath();
+		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
 		EstadoGuardian agState = new EstadoGuardian(ruta);
 		this.setAgentState(agState);
 
@@ -85,7 +85,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 		criterios.add(new Specificity());
 		criterios.add(new Random());
 
-
 	}
 
 	/**
@@ -98,15 +97,15 @@ public class Guardian extends ProductionSystemBasedAgent {
 	public void see(Perception p) {
 		GuardianPerception gPerception = (GuardianPerception) p;
 		Preprocesador preprocesador;
-		try {
+		try{
 			preprocesador = new Preprocesador(this.getTodasLasPalabrasRelevantes());
-		} catch (Exception e) {
+		} catch(Exception e){
 			e.printStackTrace();
 			return;
 		}
 
 		List<List<String>> listaDeListasDeSinonimos = preprocesador.procesar(gPerception);
-		
+
 		if(listaDeListasDeSinonimos.isEmpty()){
 			return;
 		}

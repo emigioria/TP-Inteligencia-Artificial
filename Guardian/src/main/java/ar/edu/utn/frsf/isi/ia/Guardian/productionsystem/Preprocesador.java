@@ -11,16 +11,13 @@ import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.util.NormalizadorDeTexto;
 
 public class Preprocesador {
-	private NormalizadorDeTexto normalizadorDeTexto;
-	private BaseVerbos baseVerbos;
-	private Sinonimos baseSinonimos;
+	private NormalizadorDeTexto normalizadorDeTexto = new NormalizadorDeTexto();
+	private BaseVerbos baseVerbos = new BaseVerbos();
+	private Sinonimos baseSinonimos = new Sinonimos();
 	private Set<String> setPalabrasRelevantes;
 
 	public Preprocesador(Set<String> palabrasRelevantes) throws Exception {
-		baseVerbos = new BaseVerbos();
-		normalizadorDeTexto = new NormalizadorDeTexto();
 		setPalabrasRelevantes = palabrasRelevantes;
-		baseSinonimos = new Sinonimos();
 	}
 
 	public List<List<String>> procesar(GuardianPerception gPerception) {
@@ -44,7 +41,7 @@ public class Preprocesador {
 
 		baseVerbos.conectar();
 
-		List<String> palabrasProcesadas = palabras.stream()
+		List<String> palabrasProcesadas = palabras.parallelStream()
 				.map(palabra -> {
 					if(palabra.equals("dame")){
 						return "dar";
@@ -55,7 +52,7 @@ public class Preprocesador {
 
 		baseVerbos.desconectar();
 
-		List<String> palabrasProcesadas2 = palabras.stream()
+		List<String> palabrasProcesadas2 = palabras.parallelStream()
 				.map(palabra -> normalizadorDeTexto.singularizar(palabra))
 				.collect(Collectors.toList());
 
