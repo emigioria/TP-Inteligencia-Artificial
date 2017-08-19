@@ -10,27 +10,25 @@ import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
 import ar.edu.utn.frsf.isi.ia.Guardian.datos.Sinonimos;
 import ar.edu.utn.frsf.isi.ia.Guardian.util.NormalizadorDeTexto;
 
-import edu.stanford.nlp.simple.*;
-
 public class Preprocesador {
 	private NormalizadorDeTexto normalizadorDeTexto;
 	private BaseVerbos baseVerbos;
 	private Sinonimos baseSinonimos;
 	private Set<String> setPalabrasRelevantes;
-	
-	public Preprocesador(Set<String> palabrasRelevantes) throws Exception{
+
+	public Preprocesador(Set<String> palabrasRelevantes) throws Exception {
 		baseVerbos = new BaseVerbos();
 		normalizadorDeTexto = new NormalizadorDeTexto();
 		setPalabrasRelevantes = palabrasRelevantes;
 		baseSinonimos = new Sinonimos();
 	}
-	
-	public List<List<String>> procesar(GuardianPerception gPerception){
+
+	public List<List<String>> procesar(GuardianPerception gPerception) {
 		List<String> palabras = new ArrayList<>();
-		
+
 		//TODO: reemplazar el StringTokenizer por un objeto de la clase Sentence del Simple CoreNLP
 		//Sentence frase = new Sentence();
-		
+
 		StringTokenizer palabrasTokenizer = new StringTokenizer(
 				normalizadorDeTexto.reemplazarCaracteresRaros(gPerception.getPercepcion().toLowerCase()),
 				" ,()\"\'");
@@ -74,10 +72,10 @@ public class Preprocesador {
 		for(int i = 0; i < listaDeListasDeSinonimos.size(); i++){
 			listaDeListasDeSinonimos.get(i).addAll(listaDeListasDeSinonimos2.get(i));
 		}
-		
+
 		return listaDeListasDeSinonimos;
 	}
-	
+
 	private List<String> sinonimosClavesDe(String palabra) {
 		if(palabra == null){
 			return new ArrayList<>();
