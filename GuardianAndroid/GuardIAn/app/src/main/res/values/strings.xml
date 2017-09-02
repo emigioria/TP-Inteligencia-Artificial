@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GuardIAn</string>
+    <string name="speech_prompt">Dí algo&#8230;</string>
+    <string name="google_app_store_msg">Tu dispositivo no tiene una aplicación para reconocimiento de voz.</string>
+    <string name="tap_on_mic">Pulsa el micrófono para hablar</string>
 </resources>
