@@ -122,6 +122,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		this.getUsedRules().clear();
 	}
 
+	/**
+	 * Este método solicita a prolog todas las palabras identificables por Guardian y las retorna.
+	 * 
+	 * @return
+	 */
 	private Set<String> getTodasLasPalabrasRelevantes() {
 		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
 		Set<String> setPalabrasRelevantes = new HashSet<>();
