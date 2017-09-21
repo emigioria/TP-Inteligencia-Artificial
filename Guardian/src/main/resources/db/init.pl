@@ -185,3 +185,30 @@ noSospecho(violenciaDomestica).
 noSospecho(incendio).
 noSospecho(emergenciaMedica).
 noSospecho(explosion).
+
+% Inicialización diccionario de frases
+frase(dar, plata).
+frase(dar, bici).
+frase(dar, moto).
+frase(dar, celu).
+frase(dar, billetera).
+frase(dar, cartera).
+frase(dar, todo).
+frase(dar, mochila).
+frase(dar, joya).
+frase(vaciar, caja).
+frase(poner, todo).
+frase(poner_todo, bolsa).
+frase(esto, ser).
+frase(esto_ser, asalto).
+frase(esto_ser, robo).
+frase(no, golpear).
+frase(no, decir).
+frase(no_decir, nadie).
+frase(cerrar, boca).
+frase(sacar, mano).
+frase(sacar_mano, encima).
+frase(venir, aca).
+frase(llamar, policia).
+frase(llamar, ambulancia).
+frase(llamar, bombero).
