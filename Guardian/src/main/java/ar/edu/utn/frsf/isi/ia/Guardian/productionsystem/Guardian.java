@@ -85,7 +85,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	}
 
-	private void initAgentState() throws Exception {
+	protected void initAgentState() throws Exception {
 		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
 		EstadoGuardian agState = new EstadoGuardian(ruta);
 		this.setAgentState(agState);
