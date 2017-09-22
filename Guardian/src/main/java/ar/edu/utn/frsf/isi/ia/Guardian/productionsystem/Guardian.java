@@ -27,12 +27,12 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.UnirAdapter;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroIgualdad;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroMayorOIgual;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroPalabrasCompuestas;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.FiltroPalabrasCompuestasTriple;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.filtro.Unificar;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Accion;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Clasificada;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Critica;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Escuchada;
+import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Frase;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.LimiteRiesgo;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.NoSospecho;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.rules.rete.predicados.Riesgo;
@@ -63,13 +63,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	public Guardian() throws Exception {
 		// The Agent State
-		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
-		EstadoGuardian agState = new EstadoGuardian(ruta);
-		this.setAgentState(agState);
+		initAgentState();
 
 		//Crear reglas
 		crearPredicadosYReglas();
-		listaPredicados.parallelStream().forEach(p -> p.setRWM(agState));
+		listaPredicados.parallelStream().forEach(p -> p.setRWM(this.getAgentState()));
 
 		//Crear memoria de trabajo
 		ReteProductionMemory productionMemory = new ReteProductionMemory(listaReglas);
@@ -85,6 +83,12 @@ public class Guardian extends ProductionSystemBasedAgent {
 		criterios.add(new Specificity());
 		criterios.add(new Random());
 
+	}
+
+	private void initAgentState() throws Exception {
+		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
+		EstadoGuardian agState = new EstadoGuardian(ruta);
+		this.setAgentState(agState);
 	}
 
 	/**
@@ -124,7 +128,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	/**
 	 * Este método solicita a prolog todas las palabras identificables por Guardian y las retorna.
-	 * 
+	 *
 	 * @return
 	 */
 	private Set<String> getTodasLasPalabrasRelevantes() {
@@ -174,7 +178,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		return false;
 	}
 
-	private void crearPredicadosYReglas() {
+	protected void crearPredicadosYReglas() {
 
 		this.listaReglas = new ArrayList<>();
 		this.listaPredicados = new ArrayList<>();
@@ -191,7 +195,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Grabando audio");
+				mostrarAccion("Grabando audio");
 			}
 		};
 
@@ -203,7 +207,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando a la policia");
+				mostrarAccion("Llamando a la policia");
 			}
 		};
 
@@ -215,7 +219,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar a la policia");
+				mostrarAccion("Enviando audio y lugar a la policia");
 				mandarPatruIA();
 			}
 		};
@@ -223,45 +227,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroDelitoCallejeroAccion.agregarSalida(reglaAccionDelitoCallejeroLlamar);
 		listaReglas.add(reglaAccionDelitoCallejeroLlamar);
 
-		//accion delito callejero - riesgo
-		Riesgo riesgo = new Riesgo();
-		listaPredicados.add(riesgo);
-
-		FiltroIgualdad filtroDelitoCallejeroRiesgo = new FiltroIgualdad(0, "delitoCallejero");
-		riesgo.agregarSalida(filtroDelitoCallejeroRiesgo);
-
-		Unir unionAccionRiesgo1 = new Unir(2);
-		UnirAdapter unirAdapterAccion1 = new UnirAdapter(0, unionAccionRiesgo1);
-		UnirAdapter unirAdapterRiesgo1 = new UnirAdapter(1, unionAccionRiesgo1);
-		filtroDelitoCallejeroAccion.agregarSalida(unirAdapterAccion1);
-		filtroDelitoCallejeroRiesgo.agregarSalida(unirAdapterRiesgo1);
-
-		ReteRule reglaAccionDelitoCallejeroRiesgo = new ReteRule(4, 2, 11) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(delitoCallejero,0)");
-				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(delitoCallejero," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(delitoCallejero)");
-			}
-		};
-
-		unionAccionRiesgo1.agregarSalida(reglaAccionDelitoCallejeroRiesgo);
-		listaReglas.add(reglaAccionDelitoCallejeroRiesgo);
-
 		//DELITO HOGAR
 		//accion delito hogar llamar 911
 		FiltroIgualdad filtroDelitoHogarAccion = new FiltroIgualdad(0, "delitoHogar");
 		accion.agregarSalida(filtroDelitoHogarAccion);
 
-		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(5, 1, 20) {
+		ReteRule reglaAccionDelitoHogarLlamar911 = new ReteRule(4, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando al 911");
+				mostrarAccion("Llamando al 911");
 			}
 		};
 
@@ -269,11 +244,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionDelitoHogarLlamar911);
 
 		//accion delito hogar enviar audio al 911
-		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(6, 1, 19) {
+		ReteRule reglaAccionDelitoHogarEnviarAudio = new ReteRule(5, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar al 911");
+				mostrarAccion("Enviando audio y lugar al 911");
 				mandarPatruIA();
 			}
 		};
@@ -283,11 +258,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar camara de seguridad
 
-		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(7, 1, 18) {
+		ReteRule reglaAccionDelitoHogarActivarCamara = new ReteRule(6, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Activando cámara de seguridad");
+				mostrarAccion("Activando cámara de seguridad");
 			}
 		};
 
@@ -296,53 +271,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion delito hogar activar alarma vecinal
 
-		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(8, 1, 17) {
+		ReteRule reglaAccionDelitoHogarActivarAlarma = new ReteRule(7, 1, 17) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Activando alarma vecinal");
+				mostrarAccion("Activando alarma vecinal");
 			}
 		};
 
 		filtroDelitoHogarAccion.agregarSalida(reglaAccionDelitoHogarActivarAlarma);
 		listaReglas.add(reglaAccionDelitoHogarActivarAlarma);
 
-		//accion delito hogar - riesgo
-		FiltroIgualdad filtroDelitoHogarRiesgo = new FiltroIgualdad(0, "delitoHogar");
-		riesgo.agregarSalida(filtroDelitoHogarRiesgo);
-
-		Unir unionAccionRiesgo2 = new Unir(2);
-		UnirAdapter unirAdapterAccion2 = new UnirAdapter(0, unionAccionRiesgo2);
-		UnirAdapter unirAdapterRiesgo2 = new UnirAdapter(1, unionAccionRiesgo2);
-		filtroDelitoHogarAccion.agregarSalida(unirAdapterAccion2);
-		filtroDelitoHogarRiesgo.agregarSalida(unirAdapterRiesgo2);
-
-		ReteRule reglaAccionDelitoHogarRiesgo = new ReteRule(9, 2, 11) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(delitoHogar,0)");
-				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(delitoHogar," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(delitoHogar)");
-			}
-		};
-
-		unionAccionRiesgo2.agregarSalida(reglaAccionDelitoHogarRiesgo);
-		listaReglas.add(reglaAccionDelitoHogarRiesgo);
-
 		//VIOLENCIA DOMESTICA
 		//accion violencia domestica grabar audio
 		FiltroIgualdad filtroViolenciaDomesticaAccion = new FiltroIgualdad(0, "violenciaDomestica");
 		accion.agregarSalida(filtroViolenciaDomesticaAccion);
 
-		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(10, 1, 20) {
+		ReteRule reglaAccionViolenciaDomesticaGrabarAudio = new ReteRule(8, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Grabando audio");
+				mostrarAccion("Grabando audio");
 			}
 		};
 
@@ -350,11 +299,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaGrabarAudio);
 
 		//accion violencia domestica llamar 911
-		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(11, 1, 19) {
+		ReteRule reglaAccionViolenciaDomesticaLlamar911 = new ReteRule(9, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando al 911");
+				mostrarAccion("Llamando al 911");
 			}
 		};
 
@@ -362,11 +311,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionViolenciaDomesticaLlamar911);
 
 		//accion violencia domestica enviar audio al 911
-		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(12, 1, 18) {
+		ReteRule reglaViolenciaDomesticaEnviarAudio = new ReteRule(10, 1, 18) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar al 911");
+				mostrarAccion("Enviando audio y lugar al 911");
 				mandarPatruIA();
 			}
 		};
@@ -376,53 +325,27 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 		//accion violencia domestica llamar familiar
 
-		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(13, 1, 17) {
+		ReteRule reglaViolenciaDomesticaLlamarFamiliar = new ReteRule(11, 1, 17) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando a un familiar");
+				mostrarAccion("Llamando a un familiar");
 			}
 		};
 
 		filtroViolenciaDomesticaAccion.agregarSalida(reglaViolenciaDomesticaLlamarFamiliar);
 		listaReglas.add(reglaViolenciaDomesticaLlamarFamiliar);
 
-		//accion violencia domestica - riesgo
-		FiltroIgualdad filtroViolenciaDomesticaRiesgo = new FiltroIgualdad(0, "violenciaDomestica");
-		riesgo.agregarSalida(filtroViolenciaDomesticaRiesgo);
-
-		Unir unionAccionRiesgo3 = new Unir(2);
-		UnirAdapter unirAdapterAccion3 = new UnirAdapter(0, unionAccionRiesgo3);
-		UnirAdapter unirAdapterRiesgo3 = new UnirAdapter(1, unionAccionRiesgo3);
-		filtroViolenciaDomesticaAccion.agregarSalida(unirAdapterAccion3);
-		filtroViolenciaDomesticaRiesgo.agregarSalida(unirAdapterRiesgo3);
-
-		ReteRule reglaAccionViolenciaDomesticaRiesgo = new ReteRule(14, 2, 11) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(violenciaDomestica,0)");
-				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(violenciaDomestica," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(violenciaDomestica)");
-			}
-		};
-
-		unionAccionRiesgo3.agregarSalida(reglaAccionViolenciaDomesticaRiesgo);
-		listaReglas.add(reglaAccionViolenciaDomesticaRiesgo);
-
 		//INCENDIO
 		//accion incendio llamar bomberos
 		FiltroIgualdad filtroIncendioAccion = new FiltroIgualdad(0, "incendio");
 		accion.agregarSalida(filtroIncendioAccion);
 
-		ReteRule reglaAccionIncendioLlamar = new ReteRule(15, 1, 20) {
+		ReteRule reglaAccionIncendioLlamar = new ReteRule(12, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando bomberos");
+				mostrarAccion("Llamando bomberos");
 			}
 		};
 
@@ -430,11 +353,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionIncendioLlamar);
 
 		//accion incendio enviar audio a bomberos
-		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(16, 1, 19) {
+		ReteRule reglaAccionIncendioEnviarAudio = new ReteRule(13, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar a bomberos");
+				mostrarAccion("Enviando audio y lugar a bomberos");
 				mandarPatruIA();
 			}
 		};
@@ -442,42 +365,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroIncendioAccion.agregarSalida(reglaAccionIncendioEnviarAudio);
 		listaReglas.add(reglaAccionIncendioEnviarAudio);
 
-		//accion incendio - riesgo
-		FiltroIgualdad filtroIncendioRiesgo = new FiltroIgualdad(0, "incendio");
-		riesgo.agregarSalida(filtroIncendioRiesgo);
-
-		Unir unionAccionRiesgo4 = new Unir(2);
-		UnirAdapter unirAdapterAccion4 = new UnirAdapter(0, unionAccionRiesgo4);
-		UnirAdapter unirAdapterRiesgo4 = new UnirAdapter(1, unionAccionRiesgo4);
-		filtroIncendioAccion.agregarSalida(unirAdapterAccion4);
-		filtroIncendioRiesgo.agregarSalida(unirAdapterRiesgo4);
-
-		ReteRule reglaAccionIncendioRiesgo = new ReteRule(17, 2, 11) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(incendio,0)");
-				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(incendio," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(incendio)");
-			}
-		};
-
-		unionAccionRiesgo4.agregarSalida(reglaAccionIncendioRiesgo);
-		listaReglas.add(reglaAccionIncendioRiesgo);
-
 		//EMERGENCIA MEDICA
 		//accion emergencia medica llamar hospital
 		FiltroIgualdad filtroEmergenciaMedicaAccion = new FiltroIgualdad(0, "emergenciaMedica");
 		accion.agregarSalida(filtroEmergenciaMedicaAccion);
 
-		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(18, 1, 20) {
+		ReteRule reglaAccionEmergenciaMedicaLlamar = new ReteRule(14, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando a hospital");
+				mostrarAccion("Llamando a hospital");
 			}
 		};
 
@@ -485,11 +382,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionEmergenciaMedicaLlamar);
 
 		//accion emergencia medica enviar audio a hospital
-		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(19, 1, 19) {
+		ReteRule reglaAccionEmergenciaMedicaEnviar = new ReteRule(15, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar a hospital");
+				mostrarAccion("Enviando audio y lugar a hospital");
 				mandarPatruIA();
 			}
 		};
@@ -497,42 +394,16 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroEmergenciaMedicaAccion.agregarSalida(reglaAccionEmergenciaMedicaEnviar);
 		listaReglas.add(reglaAccionEmergenciaMedicaEnviar);
 
-		//accion emergencia medica - riesgo
-		FiltroIgualdad filtroEmergenciaMedicaRiesgo = new FiltroIgualdad(0, "emergenciaMedica");
-		riesgo.agregarSalida(filtroEmergenciaMedicaRiesgo);
-
-		Unir unionAccionRiesgo5 = new Unir(2);
-		UnirAdapter unirAdapterAccion5 = new UnirAdapter(0, unionAccionRiesgo5);
-		UnirAdapter unirAdapterRiesgo5 = new UnirAdapter(1, unionAccionRiesgo5);
-		filtroEmergenciaMedicaAccion.agregarSalida(unirAdapterAccion5);
-		filtroEmergenciaMedicaRiesgo.agregarSalida(unirAdapterRiesgo5);
-
-		ReteRule reglaEmergenciaMedicaRiesgo = new ReteRule(20, 2, 11) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(emergenciaMedica,0)");
-				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(emergenciaMedica," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(emergenciaMedica)");
-			}
-		};
-
-		unionAccionRiesgo5.agregarSalida(reglaEmergenciaMedicaRiesgo);
-		listaReglas.add(reglaEmergenciaMedicaRiesgo);
-
 		//EXPLOSION
 		//accion explosion llamar policia
 		FiltroIgualdad filtroexplosionAccion = new FiltroIgualdad(0, "explosion");
 		accion.agregarSalida(filtroexplosionAccion);
 
-		ReteRule reglaAccionExplosionLlamar = new ReteRule(21, 1, 20) {
+		ReteRule reglaAccionExplosionLlamar = new ReteRule(16, 1, 20) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Llamando a policía");
+				mostrarAccion("Llamando a policía");
 			}
 		};
 
@@ -540,11 +411,11 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaAccionExplosionLlamar);
 
 		//accion explosion enviar audio a policia
-		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(22, 1, 19) {
+		ReteRule reglaAccionExplosionEnviarAudio = new ReteRule(17, 1, 19) {
 
 			@Override
 			public void execute(Matches unificaciones) {
-				System.out.println("Enviando audio y lugar a policía");
+				mostrarAccion("Enviando audio y lugar a policía");
 				mandarPatruIA();
 			}
 		};
@@ -552,31 +423,35 @@ public class Guardian extends ProductionSystemBasedAgent {
 		filtroexplosionAccion.agregarSalida(reglaAccionExplosionEnviarAudio);
 		listaReglas.add(reglaAccionExplosionEnviarAudio);
 
-		//accion explosion - riesgo
-		FiltroIgualdad filtroExplosionRiesgo = new FiltroIgualdad(0, "explosion");
-		riesgo.agregarSalida(filtroExplosionRiesgo);
+		//reiniciar riesgos
+		Riesgo riesgo = new Riesgo();
+		listaPredicados.add(riesgo);
 
-		Unir unionAccionRiesgo6 = new Unir(2);
-		UnirAdapter unirAdapterAccion6 = new UnirAdapter(0, unionAccionRiesgo6);
-		UnirAdapter unirAdapterRiesgo6 = new UnirAdapter(1, unionAccionRiesgo6);
-		filtroexplosionAccion.agregarSalida(unirAdapterAccion6);
-		filtroExplosionRiesgo.agregarSalida(unirAdapterRiesgo6);
+		Unir unionAccionRiesgo = new Unir(2);
+		UnirAdapter unirAdapterAccion = new UnirAdapter(0, unionAccionRiesgo);
+		UnirAdapter unirAdapterRiesgo = new UnirAdapter(1, unionAccionRiesgo);
+		accion.agregarSalida(unirAdapterAccion);
+		riesgo.agregarSalida(unirAdapterRiesgo);
 
-		ReteRule reglaAccionExplosionRiesgo = new ReteRule(23, 2, 11) {
+		Unificar unificarAccionRiesgo = new Unificar(0, 0, 1, 0);
+		unionAccionRiesgo.agregarSalida(unificarAccionRiesgo);
+
+		ReteRule reglaReiniciarRiesgos = new ReteRule(18, 2, 11) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				ReteMatches rm = (ReteMatches) unificaciones;
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-				estadoGuardian.addPredicate("riesgo(explosion,0)");
+				String tipoIncidente = rm.getHecho(0).get(0).toString();
+				estadoGuardian.addPredicate("riesgo(" + tipoIncidente + ",0)");
 				String nivelViejo = rm.getHecho(1).get(1).toString();
-				estadoGuardian.removePredicate("riesgo(explosion," + nivelViejo + ")");
-				estadoGuardian.removePredicate("accion(explosion)");
+				estadoGuardian.removePredicate("riesgo(" + tipoIncidente + "," + nivelViejo + ")");
+				estadoGuardian.removePredicate("accion(" + tipoIncidente + ")");
 			}
 		};
 
-		unionAccionRiesgo6.agregarSalida(reglaAccionExplosionRiesgo);
-		listaReglas.add(reglaAccionExplosionRiesgo);
+		unificarAccionRiesgo.agregarSalida(reglaReiniciarRiesgos);
+		listaReglas.add(reglaReiniciarRiesgos);
 
 		//clasificada - tiene riesgo - riesgo
 		Clasificada clasificada = new Clasificada();
@@ -602,7 +477,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar3 = new Unificar(0, 1, 1, 1); //palabra entre clasificada y tiene riesgo
 		unificar2.agregarSalida(unificar3);
 
-		ReteRule reglaClasificadaTieneriesgoRiesgo = new ReteRule(24, 3, 5) {
+		ReteRule reglaClasificadaTieneriesgoRiesgo = new ReteRule(19, 3, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -647,7 +522,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		FiltroMayorOIgual filtroMayorOIgual = new FiltroMayorOIgual();
 		unificar5.agregarSalida(filtroMayorOIgual);
 
-		ReteRule reglaLimiteriesgoRiesgoSospecho = new ReteRule(25, 4, 5) {
+		ReteRule reglaLimiteriesgoRiesgoSospecho = new ReteRule(20, 4, 5) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -688,7 +563,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar7 = new Unificar(1, 0, 2, 0); //incidente entre critica y no sospecho
 		unificar6.agregarSalida(unificar7);
 
-		ReteRule reglaEscuchadaCriticaNosospecho = new ReteRule(26, 3, 3) {
+		ReteRule reglaEscuchadaCriticaNosospecho = new ReteRule(21, 3, 3) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -714,7 +589,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		Unificar unificar8 = new Unificar(0, 0, 1, 1); //palabra entre escuchada y tiene riesgo
 		unionEscuchadaTieneriesgo.agregarSalida(unificar8);
 
-		ReteRule reglaEscuchadaTieneriesgo = new ReteRule(27, 2, 2) {
+		ReteRule reglaEscuchadaTieneriesgo = new ReteRule(22, 2, 2) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -731,7 +606,7 @@ public class Guardian extends ProductionSystemBasedAgent {
 		listaReglas.add(reglaEscuchadaTieneriesgo);
 
 		//escuchada
-		ReteRule reglaEscuchada = new ReteRule(28, 1, 1) {
+		ReteRule reglaEscuchada = new ReteRule(23, 1, 1) {
 
 			@Override
 			public void execute(Matches unificaciones) {
@@ -747,759 +622,50 @@ public class Guardian extends ProductionSystemBasedAgent {
 		escuchada.agregarSalida(reglaEscuchada);
 		listaReglas.add(reglaEscuchada);
 
-		//palabra compuesta dar plata
-		FiltroIgualdad filtroDar = new FiltroIgualdad(0, "dar");
-		escuchada.agregarSalida(filtroDar);
+		//armar frases
+		Frase frase = new Frase();
+		listaPredicados.add(frase);
 
-		FiltroIgualdad filtroPlata = new FiltroIgualdad(0, "plata");
-		escuchada.agregarSalida(filtroPlata);
+		Unir unionArmarFrase = new Unir(3);
+		UnirAdapter unirAdapterFrase = new UnirAdapter(0, unionArmarFrase);
+		UnirAdapter unirAdapterEscuchada1 = new UnirAdapter(1, unionArmarFrase);
+		UnirAdapter unirAdapterEscuchada2 = new UnirAdapter(2, unionArmarFrase);
+		frase.agregarSalida(unirAdapterFrase);
+		escuchada.agregarSalida(unirAdapterEscuchada1);
+		escuchada.agregarSalida(unirAdapterEscuchada2);
 
-		Unir unionEscuchada1 = new Unir(2);
-		UnirAdapter unirAdapterDar1 = new UnirAdapter(0, unionEscuchada1);
-		UnirAdapter unirAdapterPlata = new UnirAdapter(1, unionEscuchada1);
-		filtroDar.agregarSalida(unirAdapterDar1);
-		filtroPlata.agregarSalida(unirAdapterPlata);
+		Unificar unificar9 = new Unificar(0, 0, 1, 0); //palabra entre frase y escuchada1
+		unionArmarFrase.agregarSalida(unificar9);
+
+		Unificar unificar10 = new Unificar(0, 1, 2, 0); //palabra entre frase y escuchada2
+		unificar9.agregarSalida(unificar10);
 
 		FiltroPalabrasCompuestas filtroEscuchada = new FiltroPalabrasCompuestas();
-		unionEscuchada1.agregarSalida(filtroEscuchada);
+		unificar10.agregarSalida(filtroEscuchada);
 
-		ReteRule reglaDarPlata = new ReteRule(29, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada.agregarSalida(reglaDarPlata);
-		listaReglas.add(reglaDarPlata);
-
-		//palabra compuesta dar bici
-		FiltroIgualdad filtroBici = new FiltroIgualdad(0, "bici");
-		escuchada.agregarSalida(filtroBici);
-
-		Unir unionEscuchada2 = new Unir(2);
-		UnirAdapter unirAdapterDar2 = new UnirAdapter(0, unionEscuchada2);
-		UnirAdapter unirAdapterBici = new UnirAdapter(1, unionEscuchada2);
-		filtroDar.agregarSalida(unirAdapterDar2);
-		filtroBici.agregarSalida(unirAdapterBici);
-
-		FiltroPalabrasCompuestas filtroEscuchada2 = new FiltroPalabrasCompuestas();
-		unionEscuchada2.agregarSalida(filtroEscuchada2);
-
-		ReteRule reglaDarBici = new ReteRule(30, 3, 10) {
+		ReteRule reglaArmarFrase = new ReteRule(24, 2, 10) {
 
 			@Override
 			public void execute(Matches unificaciones) {
 				ReteMatches rm = (ReteMatches) unificaciones;
 				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
 
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
+				String palabra1 = rm.getHecho(1).get(0).toString();
+				String n = rm.getHecho(1).get(1).toString();
+				String palabra2 = rm.getHecho(2).get(0).toString();
+				String m = rm.getHecho(2).get(1).toString();
+				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + m + ")");
 				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
 				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
 			}
 		};
 
-		filtroEscuchada2.agregarSalida(reglaDarBici);
-		listaReglas.add(reglaDarBici);
-
-		//palabra compuesta dar moto
-		FiltroIgualdad filtroMoto = new FiltroIgualdad(0, "moto");
-		escuchada.agregarSalida(filtroMoto);
-
-		Unir unionEscuchada3 = new Unir(2);
-		UnirAdapter unirAdapterDar3 = new UnirAdapter(0, unionEscuchada3);
-		UnirAdapter unirAdapterMoto = new UnirAdapter(1, unionEscuchada3);
-		filtroDar.agregarSalida(unirAdapterDar3);
-		filtroMoto.agregarSalida(unirAdapterMoto);
-
-		FiltroPalabrasCompuestas filtroEscuchada3 = new FiltroPalabrasCompuestas();
-		unionEscuchada3.agregarSalida(filtroEscuchada3);
-
-		ReteRule reglaDarMoto = new ReteRule(31, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada3.agregarSalida(reglaDarMoto);
-		listaReglas.add(reglaDarMoto);
-
-		//palabra compuesta dar celu
-		FiltroIgualdad filtroCelu = new FiltroIgualdad(0, "celu");
-		escuchada.agregarSalida(filtroCelu);
-
-		Unir unionEscuchada4 = new Unir(2);
-		UnirAdapter unirAdapterDar4 = new UnirAdapter(0, unionEscuchada4);
-		UnirAdapter unirAdapterCelu = new UnirAdapter(1, unionEscuchada4);
-		filtroDar.agregarSalida(unirAdapterDar4);
-		filtroCelu.agregarSalida(unirAdapterCelu);
-
-		FiltroPalabrasCompuestas filtroEscuchada4 = new FiltroPalabrasCompuestas();
-		unionEscuchada4.agregarSalida(filtroEscuchada4);
-
-		ReteRule reglaDarCelu = new ReteRule(32, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada4.agregarSalida(reglaDarCelu);
-		listaReglas.add(reglaDarCelu);
-
-		//palabra compuesta dar billetera
-		FiltroIgualdad filtroBilletera = new FiltroIgualdad(0, "billetera");
-		escuchada.agregarSalida(filtroBilletera);
-
-		Unir unionEscuchada5 = new Unir(2);
-		UnirAdapter unirAdapterDar5 = new UnirAdapter(0, unionEscuchada5);
-		UnirAdapter unirAdapterBilletera = new UnirAdapter(1, unionEscuchada5);
-		filtroDar.agregarSalida(unirAdapterDar5);
-		filtroBilletera.agregarSalida(unirAdapterBilletera);
-
-		FiltroPalabrasCompuestas filtroEscuchada5 = new FiltroPalabrasCompuestas();
-		unionEscuchada5.agregarSalida(filtroEscuchada5);
-
-		ReteRule reglaDarBilletera = new ReteRule(33, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada5.agregarSalida(reglaDarBilletera);
-		listaReglas.add(reglaDarBilletera);
-
-		//palabra compuesta dar cartera
-		FiltroIgualdad filtroCartera = new FiltroIgualdad(0, "cartera");
-		escuchada.agregarSalida(filtroCartera);
-
-		Unir unionEscuchada6 = new Unir(2);
-		UnirAdapter unirAdapterDar6 = new UnirAdapter(0, unionEscuchada6);
-		UnirAdapter unirAdapterCartera = new UnirAdapter(1, unionEscuchada6);
-		filtroDar.agregarSalida(unirAdapterDar6);
-		filtroCartera.agregarSalida(unirAdapterCartera);
-
-		FiltroPalabrasCompuestas filtroEscuchada6 = new FiltroPalabrasCompuestas();
-		unionEscuchada6.agregarSalida(filtroEscuchada6);
-
-		ReteRule reglaDarCartera = new ReteRule(34, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada6.agregarSalida(reglaDarCartera);
-		listaReglas.add(reglaDarCartera);
-
-		//palabra compuesta dar todo
-		FiltroIgualdad filtroTodo = new FiltroIgualdad(0, "todo");
-		escuchada.agregarSalida(filtroTodo);
-
-		Unir unionEscuchada7 = new Unir(2);
-		UnirAdapter unirAdapterDar7 = new UnirAdapter(0, unionEscuchada7);
-		UnirAdapter unirAdapterTodo = new UnirAdapter(1, unionEscuchada7);
-		filtroDar.agregarSalida(unirAdapterDar7);
-		filtroTodo.agregarSalida(unirAdapterTodo);
-
-		FiltroPalabrasCompuestas filtroEscuchada7 = new FiltroPalabrasCompuestas();
-		unionEscuchada7.agregarSalida(filtroEscuchada7);
-
-		ReteRule relgaDarTodo = new ReteRule(35, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada7.agregarSalida(relgaDarTodo);
-		listaReglas.add(relgaDarTodo);
-
-		//palabra compuesta dar mochila
-		FiltroIgualdad filtroMochila = new FiltroIgualdad(0, "mochila");
-		escuchada.agregarSalida(filtroMochila);
-
-		Unir unionEscuchada8 = new Unir(2);
-		UnirAdapter unirAdapterDar8 = new UnirAdapter(0, unionEscuchada8);
-		UnirAdapter unirAdapterMochila = new UnirAdapter(1, unionEscuchada8);
-		filtroDar.agregarSalida(unirAdapterDar8);
-		filtroMochila.agregarSalida(unirAdapterMochila);
-
-		FiltroPalabrasCompuestas filtroEscuchada8 = new FiltroPalabrasCompuestas();
-		unionEscuchada8.agregarSalida(filtroEscuchada8);
-
-		ReteRule reglaDarMochila = new ReteRule(36, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada8.agregarSalida(reglaDarMochila);
-		listaReglas.add(reglaDarMochila);
-
-		//palabra compuesta dar joya
-		FiltroIgualdad filtroJoya = new FiltroIgualdad(0, "joya");
-		escuchada.agregarSalida(filtroJoya);
-
-		Unir unionEscuchada9 = new Unir(2);
-		UnirAdapter unirAdapterDar9 = new UnirAdapter(0, unionEscuchada9);
-		UnirAdapter unirAdapterJoya = new UnirAdapter(1, unionEscuchada9);
-		filtroDar.agregarSalida(unirAdapterDar9);
-		filtroJoya.agregarSalida(unirAdapterJoya);
-
-		FiltroPalabrasCompuestas filtroEscuchada9 = new FiltroPalabrasCompuestas();
-		unionEscuchada9.agregarSalida(filtroEscuchada9);
-
-		ReteRule reglaDarJoya = new ReteRule(37, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada9.agregarSalida(reglaDarJoya);
-		listaReglas.add(reglaDarJoya);
-
-		//palabra compuesta vaciar caja
-		FiltroIgualdad filtroVaciar = new FiltroIgualdad(0, "vaciar");
-		escuchada.agregarSalida(filtroVaciar);
-
-		FiltroIgualdad filtroCaja = new FiltroIgualdad(0, "caja");
-		escuchada.agregarSalida(filtroCaja);
-
-		Unir unionEscuchada10 = new Unir(2);
-		UnirAdapter unirAdapterVaciar = new UnirAdapter(0, unionEscuchada10);
-		UnirAdapter unirAdapterCaja = new UnirAdapter(1, unionEscuchada10);
-		filtroVaciar.agregarSalida(unirAdapterVaciar);
-		filtroCaja.agregarSalida(unirAdapterCaja);
-
-		FiltroPalabrasCompuestas filtroEscuchada10 = new FiltroPalabrasCompuestas();
-		unionEscuchada10.agregarSalida(filtroEscuchada10);
-
-		ReteRule reglaVaciarCaja = new ReteRule(38, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada10.agregarSalida(reglaVaciarCaja);
-		listaReglas.add(reglaVaciarCaja);
-
-		//palabra compuesta poner todo bolsa
-		FiltroIgualdad filtroPoner = new FiltroIgualdad(0, "poner");
-		escuchada.agregarSalida(filtroPoner);
-
-		FiltroIgualdad filtroBolsa = new FiltroIgualdad(0, "bolsa");
-		escuchada.agregarSalida(filtroBolsa);
-
-		Unir unionEscuchada11 = new Unir(3);
-		UnirAdapter unirAdapterPoner = new UnirAdapter(0, unionEscuchada11);
-		UnirAdapter unirAdapterTodo2 = new UnirAdapter(1, unionEscuchada11);
-		UnirAdapter unirAdapterBolsa = new UnirAdapter(2, unionEscuchada11);
-		filtroPoner.agregarSalida(unirAdapterPoner);
-		filtroTodo.agregarSalida(unirAdapterTodo2);
-		filtroBolsa.agregarSalida(unirAdapterBolsa);
-
-		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple = new FiltroPalabrasCompuestasTriple();
-		unionEscuchada11.agregarSalida(filtroEscuchadaTriple);
-
-		ReteRule reglaPonerTodoBolsa = new ReteRule(39, 4, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				String palabra3 = rm.getHecho(2).get(0).toString();
-				String l = rm.getHecho(2).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
-			}
-		};
-
-		filtroEscuchadaTriple.agregarSalida(reglaPonerTodoBolsa);
-		listaReglas.add(reglaPonerTodoBolsa);
-
-		//palabra compuesta esto ser asalto
-		FiltroIgualdad filtroEsto = new FiltroIgualdad(0, "esto");
-		escuchada.agregarSalida(filtroEsto);
-
-		FiltroIgualdad filtroSer = new FiltroIgualdad(0, "ser");
-		escuchada.agregarSalida(filtroSer);
-
-		FiltroIgualdad filtroAsalto = new FiltroIgualdad(0, "asalto");
-		escuchada.agregarSalida(filtroAsalto);
-
-		Unir unionEscuchada12 = new Unir(3);
-		UnirAdapter unirAdapterEso = new UnirAdapter(0, unionEscuchada12);
-		UnirAdapter unirAdapterSer = new UnirAdapter(1, unionEscuchada12);
-		UnirAdapter unirAdapterAsalto = new UnirAdapter(2, unionEscuchada12);
-		filtroEsto.agregarSalida(unirAdapterEso);
-		filtroSer.agregarSalida(unirAdapterSer);
-		filtroAsalto.agregarSalida(unirAdapterAsalto);
-
-		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple2 = new FiltroPalabrasCompuestasTriple();
-		unionEscuchada12.agregarSalida(filtroEscuchadaTriple2);
-
-		ReteRule reglaEstoSerAsalto = new ReteRule(40, 4, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				String palabra3 = rm.getHecho(2).get(0).toString();
-				String l = rm.getHecho(2).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
-			}
-		};
-
-		filtroEscuchadaTriple2.agregarSalida(reglaEstoSerAsalto);
-		listaReglas.add(reglaEstoSerAsalto);
-
-		//palabra compuesta esto ser robo
-		FiltroIgualdad filtroRobo = new FiltroIgualdad(0, "robo");
-		escuchada.agregarSalida(filtroRobo);
-
-		Unir unionEscuchada13 = new Unir(3);
-		UnirAdapter unirAdapterEsto2 = new UnirAdapter(0, unionEscuchada13);
-		UnirAdapter unirAdapterSer2 = new UnirAdapter(1, unionEscuchada13);
-		UnirAdapter unirAdapterRobo = new UnirAdapter(2, unionEscuchada13);
-		filtroEsto.agregarSalida(unirAdapterEsto2);
-		filtroSer.agregarSalida(unirAdapterSer2);
-		filtroRobo.agregarSalida(unirAdapterRobo);
-
-		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple3 = new FiltroPalabrasCompuestasTriple();
-		unionEscuchada13.agregarSalida(filtroEscuchadaTriple3);
-
-		ReteRule reglaEstoSerRobo = new ReteRule(41, 4, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				String palabra3 = rm.getHecho(2).get(0).toString();
-				String l = rm.getHecho(2).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
-			}
-		};
-
-		filtroEscuchadaTriple3.agregarSalida(reglaEstoSerRobo);
-		listaReglas.add(reglaEstoSerRobo);
-
-		//palabra compuesta no golpear
-		FiltroIgualdad filtroNo = new FiltroIgualdad(0, "no");
-		escuchada.agregarSalida(filtroNo);
-
-		FiltroIgualdad filtroGolpear = new FiltroIgualdad(0, "golpear");
-		escuchada.agregarSalida(filtroGolpear);
-
-		Unir unionEscuchada14 = new Unir(2);
-		UnirAdapter unirAdapterNo = new UnirAdapter(0, unionEscuchada14);
-		UnirAdapter unirAdapterGolpear = new UnirAdapter(1, unionEscuchada14);
-		filtroNo.agregarSalida(unirAdapterNo);
-		filtroGolpear.agregarSalida(unirAdapterGolpear);
-
-		FiltroPalabrasCompuestas filtroEscuchada11 = new FiltroPalabrasCompuestas();
-		unionEscuchada14.agregarSalida(filtroEscuchada11);
-
-		ReteRule reglaNoGolpear = new ReteRule(42, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada11.agregarSalida(reglaNoGolpear);
-		listaReglas.add(reglaNoGolpear);
-
-		//palabra compuesta no decir nadie
-		FiltroIgualdad filtroDecir = new FiltroIgualdad(0, "decir");
-		escuchada.agregarSalida(filtroDecir);
-
-		FiltroIgualdad filtroNadie = new FiltroIgualdad(0, "nadie");
-		escuchada.agregarSalida(filtroNadie);
-
-		Unir unionEscuchada15 = new Unir(3);
-		UnirAdapter unirAdapterNo2 = new UnirAdapter(0, unionEscuchada15);
-		UnirAdapter unirAdapterDecir = new UnirAdapter(1, unionEscuchada15);
-		UnirAdapter unirAdapterNadie = new UnirAdapter(2, unionEscuchada15);
-		filtroNo.agregarSalida(unirAdapterNo2);
-		filtroDecir.agregarSalida(unirAdapterDecir);
-		filtroNadie.agregarSalida(unirAdapterNadie);
-
-		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple4 = new FiltroPalabrasCompuestasTriple();
-		unionEscuchada15.agregarSalida(filtroEscuchadaTriple4);
-
-		ReteRule reglaNoDecirNadie = new ReteRule(43, 4, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				String palabra3 = rm.getHecho(2).get(0).toString();
-				String l = rm.getHecho(2).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
-			}
-		};
-
-		filtroEscuchadaTriple4.agregarSalida(reglaNoDecirNadie);
-		listaReglas.add(reglaNoDecirNadie);
-
-		//palabra compuesta cerrar boca
-		FiltroIgualdad filtroCerrar = new FiltroIgualdad(0, "cerrar");
-		escuchada.agregarSalida(filtroCerrar);
-
-		FiltroIgualdad filtroBoca = new FiltroIgualdad(0, "boca");
-		escuchada.agregarSalida(filtroBoca);
-
-		Unir unionEscuchada16 = new Unir(2);
-		UnirAdapter unirAdapterCerrar = new UnirAdapter(0, unionEscuchada16);
-		UnirAdapter unirAdapterBoca = new UnirAdapter(1, unionEscuchada16);
-		filtroCerrar.agregarSalida(unirAdapterCerrar);
-		filtroBoca.agregarSalida(unirAdapterBoca);
-
-		FiltroPalabrasCompuestas filtroEscuchada12 = new FiltroPalabrasCompuestas();
-		unionEscuchada16.agregarSalida(filtroEscuchada12);
-
-		ReteRule reglaCerrarBoca = new ReteRule(44, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada12.agregarSalida(reglaCerrarBoca);
-		listaReglas.add(reglaCerrarBoca);
-
-		//palabra compuesta sacar mano encima
-		FiltroIgualdad filtroSacar = new FiltroIgualdad(0, "sacar");
-		escuchada.agregarSalida(filtroSacar);
-
-		FiltroIgualdad filtroMano = new FiltroIgualdad(0, "mano");
-		escuchada.agregarSalida(filtroMano);
-
-		FiltroIgualdad filtroEncima = new FiltroIgualdad(0, "encima");
-		escuchada.agregarSalida(filtroEncima);
-
-		Unir unionEscuchada17 = new Unir(3);
-		UnirAdapter unirAdapterSacar = new UnirAdapter(0, unionEscuchada17);
-		UnirAdapter unirAdapterMano = new UnirAdapter(1, unionEscuchada17);
-		UnirAdapter unirAdapterEncima = new UnirAdapter(2, unionEscuchada17);
-		filtroSacar.agregarSalida(unirAdapterSacar);
-		filtroMano.agregarSalida(unirAdapterMano);
-		filtroEncima.agregarSalida(unirAdapterEncima);
-
-		FiltroPalabrasCompuestasTriple filtroEscuchadaTriple5 = new FiltroPalabrasCompuestasTriple();
-		unionEscuchada17.agregarSalida(filtroEscuchadaTriple5);
-
-		ReteRule reglaSacarManoEncima = new ReteRule(45, 4, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				String palabra3 = rm.getHecho(2).get(0).toString();
-				String l = rm.getHecho(2).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "_" + palabra3 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra3 + "," + l + ")");
-			}
-		};
-
-		filtroEscuchadaTriple5.agregarSalida(reglaSacarManoEncima);
-		listaReglas.add(reglaSacarManoEncima);
-
-		//palabra compuesta venir aca
-		FiltroIgualdad filtroVenir = new FiltroIgualdad(0, "venir");
-		escuchada.agregarSalida(filtroVenir);
-
-		FiltroIgualdad filtroAca = new FiltroIgualdad(0, "aca");
-		escuchada.agregarSalida(filtroAca);
-
-		Unir unionEscuchada18 = new Unir(2);
-		UnirAdapter unirAdapterVenir = new UnirAdapter(0, unionEscuchada18);
-		UnirAdapter unirAdapterAca = new UnirAdapter(1, unionEscuchada18);
-		filtroVenir.agregarSalida(unirAdapterVenir);
-		filtroAca.agregarSalida(unirAdapterAca);
-
-		FiltroPalabrasCompuestas filtroEscuchada13 = new FiltroPalabrasCompuestas();
-		unionEscuchada18.agregarSalida(filtroEscuchada13);
-
-		ReteRule reglaVenirAca = new ReteRule(46, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada13.agregarSalida(reglaVenirAca);
-		listaReglas.add(reglaVenirAca);
-
-		//palabra compuesta llamar policia
-		FiltroIgualdad filtroLlamar = new FiltroIgualdad(0, "llamar");
-		escuchada.agregarSalida(filtroLlamar);
-
-		FiltroIgualdad filtroPolicia = new FiltroIgualdad(0, "policia");
-		escuchada.agregarSalida(filtroPolicia);
-
-		Unir unionEscuchada19 = new Unir(2);
-		UnirAdapter unirAdapterLlamar = new UnirAdapter(0, unionEscuchada19);
-		UnirAdapter unirAdapterPolicia = new UnirAdapter(1, unionEscuchada19);
-		filtroLlamar.agregarSalida(unirAdapterLlamar);
-		filtroPolicia.agregarSalida(unirAdapterPolicia);
-
-		FiltroPalabrasCompuestas filtroEscuchada14 = new FiltroPalabrasCompuestas();
-		unionEscuchada19.agregarSalida(filtroEscuchada14);
-
-		ReteRule reglaLlamarPolicia = new ReteRule(47, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada14.agregarSalida(reglaLlamarPolicia);
-		listaReglas.add(reglaLlamarPolicia);
-
-		//palabra compuesta llamar ambulancia
-		FiltroIgualdad filtroAmbulancia = new FiltroIgualdad(0, "ambulancia");
-		escuchada.agregarSalida(filtroAmbulancia);
-
-		Unir unionEscuchada20 = new Unir(2);
-		UnirAdapter unirAdapterLlamar2 = new UnirAdapter(0, unionEscuchada20);
-		UnirAdapter unirAdapterAmbulancia = new UnirAdapter(1, unionEscuchada20);
-		filtroLlamar.agregarSalida(unirAdapterLlamar2);
-		filtroAmbulancia.agregarSalida(unirAdapterAmbulancia);
-
-		FiltroPalabrasCompuestas filtroEscuchada15 = new FiltroPalabrasCompuestas();
-		unionEscuchada20.agregarSalida(filtroEscuchada15);
-
-		ReteRule reglaLlamarAmbulancia = new ReteRule(48, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada15.agregarSalida(reglaLlamarAmbulancia);
-		listaReglas.add(reglaLlamarAmbulancia);
-
-		//palabra compuesta llamar bombero
-		FiltroIgualdad filtroBombero = new FiltroIgualdad(0, "bombero");
-		escuchada.agregarSalida(filtroBombero);
-
-		Unir unionEscuchada21 = new Unir(2);
-		UnirAdapter unirAdapterLlamar3 = new UnirAdapter(0, unionEscuchada21);
-		UnirAdapter unirAdapterBombero = new UnirAdapter(1, unionEscuchada21);
-		filtroLlamar.agregarSalida(unirAdapterLlamar3);
-		filtroBombero.agregarSalida(unirAdapterBombero);
-
-		FiltroPalabrasCompuestas filtroEscuchada16 = new FiltroPalabrasCompuestas();
-		unionEscuchada21.agregarSalida(filtroEscuchada16);
-
-		ReteRule reglaLlamarBombero = new ReteRule(49, 3, 10) {
-
-			@Override
-			public void execute(Matches unificaciones) {
-				ReteMatches rm = (ReteMatches) unificaciones;
-				EstadoGuardian estadoGuardian = Guardian.this.getAgentState();
-
-				String palabra1 = rm.getHecho(0).get(0).toString();
-				String n = rm.getHecho(0).get(1).toString();
-				String palabra2 = rm.getHecho(1).get(0).toString();
-				String m = rm.getHecho(1).get(1).toString();
-				estadoGuardian.addPredicate("escuchada(" + palabra1 + "_" + palabra2 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra1 + "," + n + ")");
-				estadoGuardian.removePredicate("escuchada(" + palabra2 + "," + m + ")");
-			}
-		};
-
-		filtroEscuchada16.agregarSalida(reglaLlamarBombero);
-		listaReglas.add(reglaLlamarBombero);
+		filtroEscuchada.agregarSalida(reglaArmarFrase);
+		listaReglas.add(reglaArmarFrase);
+	}
+
+	protected void mostrarAccion(String accion) {
+		System.out.println(accion);
 	}
 
 	@Override

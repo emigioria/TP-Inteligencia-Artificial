@@ -88,11 +88,7 @@ public class MainActivity extends Activity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    StringBuilder salida = new StringBuilder();
-                    for(String s: result){
-                        salida.append(s + " ");
-                    }
-                    txtSpeechInput.setText(salida.toString());
+                    txtSpeechInput.setText(result.get(0));
                 }
                 break;
             }

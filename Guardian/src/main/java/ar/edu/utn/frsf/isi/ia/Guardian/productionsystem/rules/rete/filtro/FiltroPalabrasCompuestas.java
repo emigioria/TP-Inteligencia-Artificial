@@ -24,8 +24,8 @@ public class FiltroPalabrasCompuestas extends Filtro {
 		return hechos.stream()
 				.map(m -> ((ReteMatches) m))
 				.filter(rm -> {
-					Integer n = new Integer(rm.getHecho(0).get(1).toString());
-					Integer m = new Integer(rm.getHecho(1).get(1).toString());
+					Integer n = new Integer(rm.getHecho(1).get(1).toString());
+					Integer m = new Integer(rm.getHecho(2).get(1).toString());
 					return m == n + 1;
 				})
 				.collect(Collectors.toList());

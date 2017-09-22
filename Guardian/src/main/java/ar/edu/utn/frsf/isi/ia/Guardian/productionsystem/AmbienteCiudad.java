@@ -7,12 +7,18 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
 import frsf.cidisi.faia.environment.Environment;
+import frsf.cidisi.faia.state.EnvironmentState;
 
 public class AmbienteCiudad extends Environment {
 
 	public AmbienteCiudad() {
 		// Create the environment state
 		this.environmentState = new EstadoAmbiente();
+	}
+
+	public AmbienteCiudad(EnvironmentState environmentState) {
+		// Create the environment state
+		this.environmentState = environmentState;
 	}
 
 	@Override
