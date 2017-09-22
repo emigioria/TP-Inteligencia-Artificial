@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txtSpeechInput.setText(result.get(0));
+                    txtSpeechInput.setText(result.get(0)); //TODO enviar al server
                 }
                 break;
             }
