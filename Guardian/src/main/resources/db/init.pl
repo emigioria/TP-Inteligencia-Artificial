@@ -16,6 +16,7 @@
 :- dynamic(noSospecho/1).
 :- dynamic(critica/2).
 :- dynamic(clasificada/2).
+:- dynamic(frase/2).
 
 % Inicialización predicados delitoHogar
 tieneRiesgo(delitoHogar, ayuda, 3).
