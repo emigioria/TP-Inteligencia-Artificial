@@ -304,6 +304,7 @@ public class ConfiguracionValoresController extends ControladorJavaFXApilable {
 		List<AxiomaCritica> listaCritica = tableViewCritica.getItems();
 		List<AxiomaLimiteRiesgo> listaLimiteRiesgo = tableViewLimiteRiesgo.getItems();
 		procesador.guardar(listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo);
+		salir();
 	}
 
 }

@@ -2,14 +2,20 @@ package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.compress.utils.Charsets;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 
@@ -21,7 +27,7 @@ public class Archivador {
 	{
 		try{
 			PATH_IN = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
-			PATH_OUT = new URI(Guardian.class.getResource("/db").toString()).getPath() + "/customInit.pl";
+			PATH_OUT = new URI(Guardian.class.getResource("/db/customInit.pl").toString()).getPath();
 		} catch(URISyntaxException e){
 			e.printStackTrace();
 		}
@@ -31,7 +37,8 @@ public class Archivador {
 		List<String> archivo = new ArrayList<>();
 		File file = new File(PATH_IN);
 
-		try(FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr);){
+		try(Reader reader = new InputStreamReader(new FileInputStream(file), Charsets.UTF_8);
+				BufferedReader br = new BufferedReader(reader)){
 			String linea;
 			archivo.clear();
 			while((linea = br.readLine()) != null){
@@ -54,7 +61,8 @@ public class Archivador {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		try(FileWriter fichero = new FileWriter(file); PrintWriter pw = new PrintWriter(fichero);){
+		try(Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+				PrintWriter pw = new PrintWriter(writer)){
 			archivo.forEach(linea -> pw.println(linea));
 		} catch(Exception e){
 			e.printStackTrace();

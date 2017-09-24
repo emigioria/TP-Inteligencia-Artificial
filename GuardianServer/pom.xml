@@ -8,7 +8,22 @@
 	<packaging>jar</packaging>
 
 	<name>GuardianServer</name>
-	<description>Server for the GuardIAn system</description>
+	<url>http://maven.apache.org</url>
+
+	<developers>
+		<developer>
+			<name>Emiliano Gioria</name>
+			<url>https://github.com/emigioria</url>
+		</developer>
+		<developer>
+			<name>Andres Leonel Rico</name>
+			<url>https://github.com/andresleonelrico</url>
+		</developer>
+		<developer>
+			<name>Esteban Javier Rebechi</name>
+			<url>https://github.com/EstebanRebechi</url>
+		</developer>
+	</developers>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -61,12 +76,6 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.7</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>jquery</artifactId>
-			<version>3.1.0</version>
 		</dependency>
 	</dependencies>
 
