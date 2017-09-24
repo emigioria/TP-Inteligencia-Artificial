@@ -6,34 +6,35 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.GuardianServer;
 import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
 
 @SpringBootApplication
-@Controller
-public class GuardianServerApplication {
+@RestController
+public class GuardianServerController {
 
-	public static void main(String[] args) throws IOException {
-		SpringApplication.run(GuardianServerApplication.class, args);
+	@PostMapping("/palabras")
+	public String palabras(List<String> posiblesFrasesEscuchadas) {
+		return "Hola";
 	}
 
-	public GuardianServerApplication() throws IOException {
+	@RequestMapping("/hello")
+	public String greeting() {
+		return "Hola";
+	}
+
+	public GuardianServerController() throws IOException {
 		AmbienteCiudad ambienteCiudad = new AmbienteCiudad();
 		Guardian agenteGuardian;
 		try{
-			agenteGuardian = new Guardian() {
-				@Override
-				protected void initAgentState() throws Exception {
-					super.initAgentState(); //TODO cambiar por archivo generado
-				}
-			};
+			agenteGuardian = new GuardianServer();
 		} catch(Exception e){
 			e.printStackTrace();
 			return;
@@ -59,11 +60,5 @@ public class GuardianServerApplication {
 		System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
 
 		simulator.start();
-	}
-
-	@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
-	public void greeting(List<String> posiblesFrasesEscuchadas) throws Exception {
-
 	}
 }

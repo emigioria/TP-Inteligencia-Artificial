@@ -7,7 +7,7 @@ import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaCritica;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaLimiteRiesgo;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaTieneRiesgo;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.Incidente;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,7 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class ConfiguracionValoresController extends ControladorJavaFXApilable {
+public class ConfiguracionValoresController extends ControladorDialogo {
 
 	public static final String URL_VISTA = "vistas/ConfiguracionValores.fxml";
 

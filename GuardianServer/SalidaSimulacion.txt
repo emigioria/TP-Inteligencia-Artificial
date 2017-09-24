@@ -1,0 +1,4691 @@
+----------------------------------------------------
+--------- Production System Based Simulator --------
+----------------------------------------------------
+
+Agent: GuardIAn
+------------------------------------
+Sending perception to agent...
+
+Perception: Voy caminando por la calle, mientras pienso en voz alta
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 1)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 0)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 0)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+{escuchada(pegar, 0), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(pegar, 0)}
+{escuchada(venir, 0)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(pegar, 0)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 3)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, piso), tieneRiesgo(delitoHogar, piso, 1), riesgo(delitoHogar, 1)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(piso, 1), tieneRiesgo(delitoHogar, piso, 1)}
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(piso, 1)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 5)}
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 5)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 5)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 5)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+{escuchada(venir, 0)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(venir, 0)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 7)}
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 7)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 7)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, callar), tieneRiesgo(violenciaDomestica, callar, 2), riesgo(violenciaDomestica, 7)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(callar, 1), tieneRiesgo(violenciaDomestica, callar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(callar, 1)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception: Eameo, tenés hora
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 0)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 0)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 2), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(eameo, 2)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception: Eh, no
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 23
+Activa con: 
+{escuchada(no, 3)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception: Che eameo pará un toque
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 1)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 1)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 2)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 2)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 2)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 2)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 3)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 9)}
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(violenciaDomestica, pegar), tieneRiesgo(violenciaDomestica, pegar, 1), riesgo(violenciaDomestica, 9)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(pegar, 5), tieneRiesgo(violenciaDomestica, pegar, 1)}
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(pegar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(pegar, 5)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 4)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 4)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 4)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 4)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 5)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 5)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 5)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, rayar), tieneRiesgo(delitoCallejero, rayar, 2), riesgo(delitoCallejero, 5)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 4)}
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 4)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 4)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, rayar), tieneRiesgo(delitoHogar, rayar, 2), riesgo(delitoHogar, 4)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(rayar, 5), tieneRiesgo(delitoHogar, rayar, 2)}
+{escuchada(rayar, 5), tieneRiesgo(delitoCallejero, rayar, 2)}
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(rayar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(rayar, 5)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 7)}
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 7)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 7)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 7)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(golpear, 5)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 8)}
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 8)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 8)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, eameo), tieneRiesgo(delitoCallejero, eameo, 1), riesgo(delitoCallejero, 8)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(eameo, 4), tieneRiesgo(delitoCallejero, eameo, 1)}
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+{escuchada(eameo, 4)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(eameo, 4)}
+
+Rule to execute: 23
+-----------------------
+
+Regla: 23
+Activa con: 
+{escuchada(llamar, 5)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception: Ayuda
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(emergenciaMedica, ayuda), noSospecho(emergenciaMedica)}
+
+Rule to execute: 21
+-----------------------
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Rule to execute: 21
+-----------------------
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Rule to execute: 21
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 6)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 6)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 6)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 6)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 9)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 9)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoCallejero, 10), riesgo(delitoCallejero, 12), sospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoCallejero, 10), riesgo(delitoCallejero, 12), sospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoCallejero, 10), riesgo(delitoCallejero, 12), sospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoCallejero, 10), riesgo(delitoCallejero, 12), sospecho(delitoCallejero)}
+
+Rule to execute: 20
+-----------------------
+
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Rule to execute: 1
+Grabando audio
+-----------------------
+
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Rule to execute: 2
+Llamando a la policia
+-----------------------
+
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Rule to execute: 3
+Enviando audio y lugar a la policia
+Mandando móvil con el sistema PatruIA
+-----------------------
+
+Regla: 1
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 2
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 3
+Activa con: 
+{accion(delitoCallejero)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoCallejero), riesgo(delitoCallejero, 12)}
+
+Rule to execute: 18
+-----------------------
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 6), critica(delitoCallejero, ayuda), noSospecho(delitoCallejero)}
+
+Rule to execute: 21
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 6), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 6), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 6)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception:  
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...
+
+Perception: Socorro
+Agent State: Working Memory
+Environment: Estado ambiente.
+Asking the agent that start the learning process...
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(incendio, ayuda), tieneRiesgo(incendio, ayuda, 3), riesgo(incendio, 3)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(emergenciaMedica, ayuda), tieneRiesgo(emergenciaMedica, ayuda, 3), riesgo(emergenciaMedica, 3)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 0)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoCallejero, ayuda), tieneRiesgo(delitoCallejero, ayuda, 3), riesgo(delitoCallejero, 0)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Specificity (Especificidad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Criterio:Random (Aleatorio)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 3)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(explosion, ayuda), tieneRiesgo(explosion, ayuda, 3), riesgo(explosion, 3)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+
+Rule to execute: 22
+-----------------------
+
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 9)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 9)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 19
+Activa con: 
+{clasificada(delitoHogar, ayuda), tieneRiesgo(delitoHogar, ayuda, 3), riesgo(delitoHogar, 9)}
+
+Rule to execute: 19
+-----------------------
+
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoHogar, 10), riesgo(delitoHogar, 12), sospecho(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoHogar, 10), riesgo(delitoHogar, 12), sospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoHogar, 10), riesgo(delitoHogar, 12), sospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 20
+Activa con: 
+{limiteRiesgo(delitoHogar, 10), riesgo(delitoHogar, 12), sospecho(delitoHogar)}
+
+Rule to execute: 20
+-----------------------
+
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Rule to execute: 4
+Llamando al 911
+-----------------------
+
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Rule to execute: 5
+Enviando audio y lugar al 911
+Mandando móvil con el sistema PatruIA
+-----------------------
+
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Rule to execute: 6
+Activando cámara de seguridad
+-----------------------
+
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Rule to execute: 7
+Activando alarma vecinal
+-----------------------
+
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 4
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 5
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 6
+Activa con: 
+{accion(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Regla: 7
+Activa con: 
+{accion(delitoHogar)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 18
+Activa con: 
+{accion(delitoHogar), riesgo(delitoHogar, 12)}
+
+Rule to execute: 18
+-----------------------
+
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Novelty (Novedad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:Priority (Prioridad)
+Conflict set: 
+Regla: 21
+Activa con: 
+{escuchada(ayuda, 7), critica(delitoHogar, ayuda), noSospecho(delitoHogar)}
+
+Rule to execute: 21
+-----------------------
+
+Regla: 22
+Activa con: 
+{escuchada(ayuda, 7), tieneRiesgo(delitoHogar, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(delitoCallejero, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(emergenciaMedica, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(incendio, ayuda, 3)}
+{escuchada(ayuda, 7), tieneRiesgo(explosion, ayuda, 3)}
+
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Criterio:No Duplication (No duplicación)
+Conflict set: 
+Regla: 23
+Activa con: 
+{escuchada(ayuda, 7)}
+
+Rule to execute: 23
+-----------------------
+
+The agent doesn't have any more to learn.
+------------------------------------
+Sending perception to agent...

@@ -26,7 +26,7 @@ public class Procesador {
 
 	private void procesarFila(String fila, List<Incidente> listaIncidente, List<AxiomaTieneRiesgo> listaTieneRiesgo,
 			List<AxiomaCritica> listaCritica, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
-		if(fila.startsWith("tieneRiesgo")) {
+		if(fila.startsWith("tieneRiesgo")){
 			int primerComa = fila.indexOf(",");
 			int ultimaComa = fila.lastIndexOf(",");
 			int parentesisAbre = fila.indexOf("(");
@@ -41,7 +41,7 @@ public class Procesador {
 			listaTieneRiesgo.add(tieneRiesgo);
 		}
 
-		if(fila.startsWith("critica")) {
+		if(fila.startsWith("critica")){
 			int primerComa = fila.indexOf(",");
 			int parentesisAbre = fila.indexOf("(");
 			int parentesisCierra = fila.indexOf(")");
@@ -54,7 +54,7 @@ public class Procesador {
 			listaCritica.add(critica);
 		}
 
-		if(fila.startsWith("limiteRiesgo")) {
+		if(fila.startsWith("limiteRiesgo")){
 			int primerComa = fila.indexOf(",");
 			int parentesisAbre = fila.indexOf("(");
 			int parentesisCierra = fila.indexOf(")");
@@ -71,12 +71,12 @@ public class Procesador {
 	private Incidente obtenerIncidente(String nombreIncidente, List<Incidente> listaIncidente) {
 		Incidente incidente = null;
 
-		for(Incidente i : listaIncidente) {
-			if(i.getNombre().equals(nombreIncidente)) {
+		for(Incidente i: listaIncidente){
+			if(i.getNombre().equals(nombreIncidente)){
 				incidente = i;
 			}
 		}
-		if(incidente == null) {
+		if(incidente == null){
 			incidente = new Incidente(nombreIncidente);
 			listaIncidente.add(incidente);
 		}
@@ -87,7 +87,7 @@ public class Procesador {
 	public void guardar(List<Incidente> listaIncidente, List<AxiomaTieneRiesgo> listaTieneRiesgo,
 			List<AxiomaCritica> listaCritica, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
 
-		List<String> archivo = new ArrayList<String>();
+		List<String> archivo = new ArrayList<>();
 
 		añadirEncabezado(archivo);
 		añadirTieneRiesgo(archivo, listaTieneRiesgo);
@@ -120,13 +120,14 @@ public class Procesador {
 		archivo.add(":- dynamic(noSospecho/1).");
 		archivo.add(":- dynamic(critica/2).");
 		archivo.add(":- dynamic(clasificada/2).");
+		archivo.add(":- dynamic(frase/2).");
 		archivo.add("");
 
 	}
 
 	private void añadirTieneRiesgo(List<String> archivo, List<AxiomaTieneRiesgo> listaTieneRiesgo) {
 		archivo.add("% Inicialización tieneRiesgo");
-		for(AxiomaTieneRiesgo a : listaTieneRiesgo) {
+		for(AxiomaTieneRiesgo a: listaTieneRiesgo){
 			archivo.add(a.toString() + ".");
 		}
 		archivo.add("");
@@ -134,7 +135,7 @@ public class Procesador {
 
 	private void añadirCritica(List<String> archivo, List<AxiomaCritica> listaCritica) {
 		archivo.add("% Inicialización critica");
-		for(AxiomaCritica a : listaCritica) {
+		for(AxiomaCritica a: listaCritica){
 			archivo.add(a.toString() + ".");
 		}
 		archivo.add("");
@@ -142,7 +143,7 @@ public class Procesador {
 
 	private void añadirLimiteRiesgo(List<String> archivo, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
 		archivo.add("% Inicialización limiteRiesgo");
-		for(AxiomaLimiteRiesgo a : listaLimiteRiesgo) {
+		for(AxiomaLimiteRiesgo a: listaLimiteRiesgo){
 			archivo.add(a.toString() + ".");
 		}
 		archivo.add("");
@@ -150,13 +151,13 @@ public class Procesador {
 
 	private void añadirInicializacionIncidentes(List<String> archivo, List<Incidente> listaIncidente) {
 		archivo.add("% Inicialización contadores de riesgo");
-		for(Incidente i : listaIncidente) {
+		for(Incidente i: listaIncidente){
 			archivo.add("riesgo(" + i.getNombre() + ", 0).");
 		}
 		archivo.add("");
 
 		archivo.add("% Inicialización del estado de los incidentes");
-		for(Incidente i : listaIncidente) {
+		for(Incidente i: listaIncidente){
 			archivo.add("noSospecho(" + i.getNombre() + ").");
 		}
 		archivo.add("");

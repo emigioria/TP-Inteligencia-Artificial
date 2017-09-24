@@ -4,13 +4,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues;
+package ar.edu.utn.frsf.isi.ia.GuardianServer;
 
+import java.io.IOException;
 import java.util.List;
 
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
+import org.springframework.boot.SpringApplication;
+
+import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.ConfiguracionValoresController;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,6 +22,7 @@ public class Main extends Application {
 
 	private Stage primaryStage;
 	private PilaScene apilador;
+	private List<String> args;
 
 	public static void main(String[] args) {
 		//Ocultar logs
@@ -31,9 +36,10 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws IOException {
 		//Analizar parámetros de entrada
-		verParametros(getParameters().getRaw());
+		args = getParameters().getRaw();
+		verParametros(args);
 
 		//Inicializar parametros
 		this.primaryStage = primaryStage;
@@ -52,11 +58,16 @@ public class Main extends Application {
 			}
 		});
 
-		iniciar();
+		mostrarPantallaConfiguracionInicial();
+		iniciarServidor();
 	}
 
-	private void iniciar() {
-		apilador = ControladorJavaFXApilable.crearYMostrarPrimeraVentana(primaryStage, ConfiguracionValoresController.URL_VISTA);
+	private void iniciarServidor() {
+		SpringApplication.run(GuardianServerController.class, args.toArray(new String[0]));
+	}
+
+	private void mostrarPantallaConfiguracionInicial() {
+		new PresentadorVentanas().presentarVentanaPersonalizada(ConfiguracionValoresController.URL_VISTA, primaryStage).showAndWait();
 	}
 
 	private void verParametros(List<String> raw) {

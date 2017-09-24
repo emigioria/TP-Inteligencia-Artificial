@@ -21,13 +21,13 @@ import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 
 public class Archivador {
 
-	private static String PATH_IN;
-	private static String PATH_OUT;
+	public static String INIT_PL;
+	public static String CUSTOM_PL;
 
 	{
 		try{
-			PATH_IN = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
-			PATH_OUT = new URI(Guardian.class.getResource("/db/customInit.pl").toString()).getPath();
+			INIT_PL = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
+			CUSTOM_PL = new URI(Guardian.class.getResource("/db/customInit.pl").toString()).getPath();
 		} catch(URISyntaxException e){
 			e.printStackTrace();
 		}
@@ -35,7 +35,7 @@ public class Archivador {
 
 	public List<String> leerArchivo() {
 		List<String> archivo = new ArrayList<>();
-		File file = new File(PATH_IN);
+		File file = new File(INIT_PL);
 
 		try(Reader reader = new InputStreamReader(new FileInputStream(file), Charsets.UTF_8);
 				BufferedReader br = new BufferedReader(reader)){
@@ -52,7 +52,7 @@ public class Archivador {
 	}
 
 	public void escribirArchivo(List<String> archivo) {
-		File file = new File(PATH_OUT);
+		File file = new File(CUSTOM_PL);
 		if(file.exists()){
 			file.delete();
 		}
