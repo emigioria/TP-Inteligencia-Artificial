@@ -6,7 +6,7 @@
  */
 package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaPane;
 import javafx.collections.ListChangeListener.Change;
 import javafx.event.EventHandler;
@@ -17,7 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class MenuAdministracionController extends ControladorPatrullero {
+public class MenuAdministracionController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/MenuAdministracion.fxml";
 
@@ -118,7 +118,7 @@ public class MenuAdministracionController extends ControladorPatrullero {
 	}
 
 	@Override
-	protected ControladorPatrullero nuevaScene(String URLVista) {
+	protected ControladorJavaFXApilable nuevaScene(String URLVista) {
 		if(backgroundApilador == null || backgroundApilador.sePuedeSalir()){
 			backgroundApilador = new PilaPane(background, this);
 			return nuevaCambiarScene(URLVista, backgroundApilador, false);
@@ -127,7 +127,7 @@ public class MenuAdministracionController extends ControladorPatrullero {
 	}
 
 	@Override
-	protected ControladorPatrullero cambiarScene(String URLVista) {
+	protected ControladorJavaFXApilable cambiarScene(String URLVista) {
 		throw new RuntimeException();
 	}
 

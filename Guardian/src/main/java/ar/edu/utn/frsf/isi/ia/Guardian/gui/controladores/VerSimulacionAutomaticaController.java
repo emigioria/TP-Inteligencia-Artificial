@@ -14,7 +14,7 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ScrollPaneZoomer;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaError;
@@ -49,7 +49,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-public class VerSimulacionAutomaticaController extends ControladorPatrullero {
+public class VerSimulacionAutomaticaController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/VerSimulacionAutomatica.fxml";
 

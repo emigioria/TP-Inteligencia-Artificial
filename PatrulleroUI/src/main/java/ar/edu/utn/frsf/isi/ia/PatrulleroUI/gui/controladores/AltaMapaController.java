@@ -9,7 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 import java.io.File;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.MouseGesturesAdder;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
@@ -31,7 +31,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.util.converter.IntegerStringConverter;
 
-public class AltaMapaController extends ControladorPatrullero {
+public class AltaMapaController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/AltaMapa.fxml";
 

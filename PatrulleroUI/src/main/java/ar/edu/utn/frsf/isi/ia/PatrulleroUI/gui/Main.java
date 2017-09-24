@@ -55,7 +55,7 @@ public class Main extends Application {
 	}
 
 	private void iniciar() {
-		apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(primaryStage, MenuAdministracionController.URL_VISTA);
+		apilador = ControladorJavaFXApilable.crearYMostrarPrimeraVentana(primaryStage, MenuAdministracionController.URL_VISTA);
 	}
 
 	private void verParametros(List<String> raw) {

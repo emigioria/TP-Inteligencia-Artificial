@@ -9,7 +9,7 @@ package ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.controladores;
 import java.io.File;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ScrollPaneZoomer;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.VentanaPersonalizada;
@@ -26,7 +26,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-public class AltaCasoDePruebaController extends ControladorPatrullero {
+public class AltaCasoDePruebaController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/AltaCasoDePrueba.fxml";
 

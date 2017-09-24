@@ -15,7 +15,7 @@ import org.apache.commons.io.output.TeeOutputStream;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.GuardianMain;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
@@ -28,7 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class VentanaDeComandosController extends ControladorPatrullero {
+public class VentanaDeComandosController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/ventanaDeComandos.fxml";
 
@@ -64,7 +64,7 @@ public class VentanaDeComandosController extends ControladorPatrullero {
 							stage.getIcons().add(new IconoAplicacion());
 							stage.setTitle("Inteligencia Artificial - Sistema PatruIA");
 
-							PilaScene apilador = ControladorPatrullero.crearYMostrarPrimeraVentana(stage, VerSimulacionAutomaticaController.URL_VISTA);
+							PilaScene apilador = ControladorJavaFXApilable.crearYMostrarPrimeraVentana(stage, VerSimulacionAutomaticaController.URL_VISTA);
 
 							//Setear acción de cierre
 							stage.setOnCloseRequest((e) -> {

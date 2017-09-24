@@ -16,7 +16,7 @@ import java.util.concurrent.Semaphore;
 import org.apache.commons.io.output.TeeOutputStream;
 
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.comun.ManejadorArchivos;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorPatrullero;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.FiltroArchivos;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ScrollPaneZoomer;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
@@ -54,7 +54,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-public class VerSimulacionController extends ControladorPatrullero {
+public class VerSimulacionController extends ControladorJavaFXApilable {
 
 	public static final String URL_VISTA = "vistas/VerSimulacion.fxml";
 
