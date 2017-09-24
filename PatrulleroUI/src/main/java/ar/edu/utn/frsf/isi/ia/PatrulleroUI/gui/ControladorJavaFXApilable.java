@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public abstract class ControladorPatrullero extends ControladorJavaFX implements ControladorApilable {
+public abstract class ControladorJavaFXApilable extends ControladorJavaFX implements ControladorApilable {
 
 	private PilaJavaFX apilador;
 
@@ -26,15 +26,15 @@ public abstract class ControladorPatrullero extends ControladorJavaFX implements
 		this.apilador = apilador;
 	}
 
-	protected ControladorPatrullero nuevaScene(String URLVista) {
+	protected ControladorJavaFXApilable nuevaScene(String URLVista) {
 		return nuevaCambiarScene(URLVista, apilador, false);
 	}
 
-	protected ControladorPatrullero cambiarScene(String URLVista) {
+	protected ControladorJavaFXApilable cambiarScene(String URLVista) {
 		return nuevaCambiarScene(URLVista, apilador, true);
 	}
 
-	protected ControladorPatrullero nuevaCambiarScene(String URLVista, PilaJavaFX apilador, Boolean cambiar) {
+	protected ControladorJavaFXApilable nuevaCambiarScene(String URLVista, PilaJavaFX apilador, Boolean cambiar) {
 		try{
 			//Crear el cargador de la pantalla
 			FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource(URLVista));
@@ -43,7 +43,7 @@ public abstract class ControladorPatrullero extends ControladorJavaFX implements
 			Parent pantallaSiguiente = (Parent) loader.load();
 
 			//Cargar controlador
-			ControladorPatrullero controlador = loader.getController();
+			ControladorJavaFXApilable controlador = loader.getController();
 
 			//Setear estilo si no tiene
 			if(pantallaSiguiente.getStylesheets().isEmpty()){
@@ -90,7 +90,7 @@ public abstract class ControladorPatrullero extends ControladorJavaFX implements
 		Scene primaryScene = new Scene(new Pane());
 		primaryStage.setScene(primaryScene);
 		PilaScene apilador = new PilaScene(primaryScene);
-		ControladorPatrullero pantallaMock = new ControladorPatrullero() {
+		ControladorJavaFXApilable pantallaMock = new ControladorJavaFXApilable() {
 			@Override
 			public void actualizar() {
 			}

@@ -7,6 +7,7 @@ import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaCritica;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaLimiteRiesgo;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaTieneRiesgo;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.Incidente;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,9 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class ConfiguracionValoresController {
+public class ConfiguracionValoresController extends ControladorJavaFXApilable {
 
-	public static final String URLVista = "/src/main/resources/ConfiguracionValores.fxml";
+	public static final String URL_VISTA = "vistas/ConfiguracionValores.fxml";
 
 	@FXML
 	private TextField textFieldNombreIncidente;
@@ -66,8 +67,9 @@ public class ConfiguracionValoresController {
 
 	private Procesador procesador;
 
+	@Override
 	@FXML
-	private void initialize() {
+	protected void inicializar() {
 		procesador = new Procesador(new Archivador());
 
 		inicializarDatos();
@@ -111,33 +113,37 @@ public class ConfiguracionValoresController {
 	}
 
 	private void habilitarBotonesIncidente(Incidente incidente) {
-		if(incidente == null) {
+		if(incidente == null){
 			buttonQuitarIncidente.setDisable(true);
-		} else {
+		}
+		else{
 			buttonQuitarIncidente.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesTieneRiesgo(AxiomaTieneRiesgo axioma) {
-		if(axioma == null) {
+		if(axioma == null){
 			buttonQuitarTieneRiesgo.setDisable(true);
-		} else {
+		}
+		else{
 			buttonQuitarTieneRiesgo.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesCritica(AxiomaCritica axioma) {
-		if(axioma == null) {
+		if(axioma == null){
 			buttonQuitarCritica.setDisable(true);
-		} else {
+		}
+		else{
 			buttonQuitarCritica.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesLimiteRiesgo(AxiomaLimiteRiesgo axioma) {
-		if(axioma == null) {
+		if(axioma == null){
 			buttonQuitarLimiteRiesgo.setDisable(true);
-		} else {
+		}
+		else{
 			buttonQuitarLimiteRiesgo.setDisable(false);
 		}
 	}
@@ -158,15 +164,17 @@ public class ConfiguracionValoresController {
 	private void agregarIncidente() {
 		String nombreIncidente = textFieldNombreIncidente.getText().trim();
 
-		if(nombreIncidente.isEmpty()) {
+		if(nombreIncidente.isEmpty()){
 			// TODO mostrar alerta. No se ingresó ningun nombre
-		} else {
+		}
+		else{
 			nombreIncidente = nombreIncidente.replaceAll("\\s", "");
 			String primerLetra = nombreIncidente.substring(0, 1);
 			nombreIncidente = primerLetra.toLowerCase() + nombreIncidente.substring(1);
-			if(existeIncidenteConNombre(nombreIncidente)) {
+			if(existeIncidenteConNombre(nombreIncidente)){
 				// TODO mostrar alerta. Ya existe un incidente con ese nombre
-			} else {
+			}
+			else{
 				Incidente incidente = new Incidente(nombreIncidente);
 				tableViewIncidente.getItems().add(incidente);
 				tieneRiesgo_comboBox_tipoIncidente.getItems().add(incidente);
@@ -178,8 +186,8 @@ public class ConfiguracionValoresController {
 
 	private boolean existeIncidenteConNombre(String nombreIncidente) {
 		boolean existe = false;
-		for(Incidente i : tableViewIncidente.getItems()) {
-			if(i.getNombre().equals(nombreIncidente)) {
+		for(Incidente i: tableViewIncidente.getItems()){
+			if(i.getNombre().equals(nombreIncidente)){
 				existe = true;
 			}
 		}
@@ -197,24 +205,24 @@ public class ConfiguracionValoresController {
 
 		// quito los axiomas relacionados a ese incidente
 		List<AxiomaTieneRiesgo> tieneRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaTieneRiesgo a : tableViewTieneRiesgo.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
+		for(AxiomaTieneRiesgo a: tableViewTieneRiesgo.getItems()){
+			if(a.equals(incidenteSeleccionado)){
 				tieneRiesgoRelacionados.add(a);
 			}
 		}
 		tableViewTieneRiesgo.getItems().removeAll(tieneRiesgoRelacionados);
 
 		List<AxiomaCritica> criticaRelacionados = new ArrayList<>();
-		for(AxiomaCritica a : tableViewCritica.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
+		for(AxiomaCritica a: tableViewCritica.getItems()){
+			if(a.equals(incidenteSeleccionado)){
 				criticaRelacionados.add(a);
 			}
 		}
 		tableViewCritica.getItems().removeAll(criticaRelacionados);
 
 		List<AxiomaLimiteRiesgo> limiteRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaLimiteRiesgo a : tableViewLimiteRiesgo.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
+		for(AxiomaLimiteRiesgo a: tableViewLimiteRiesgo.getItems()){
+			if(a.equals(incidenteSeleccionado)){
 				limiteRiesgoRelacionados.add(a);
 			}
 		}
@@ -232,9 +240,10 @@ public class ConfiguracionValoresController {
 		// todo eso
 		int valorInt = tieneRiesgo_spinner_valor.getValue();
 
-		if(incidente == null || palabra.isEmpty()) {
+		if(incidente == null || palabra.isEmpty()){
 			// TODO mostrar alerta
-		} else {
+		}
+		else{
 			AxiomaTieneRiesgo axioma = new AxiomaTieneRiesgo(incidente, palabra, valorInt);
 			tableViewTieneRiesgo.getItems().add(axioma);
 		}
@@ -253,9 +262,10 @@ public class ConfiguracionValoresController {
 		// TODO ver cuando es una frase....... palabra.replaceAll("\\s", "") y
 		// todo eso
 
-		if(incidente == null || palabra.isEmpty()) {
+		if(incidente == null || palabra.isEmpty()){
 			// TODO mostrar alerta
-		} else {
+		}
+		else{
 			AxiomaCritica axioma = new AxiomaCritica(incidente, palabra);
 			tableViewCritica.getItems().add(axioma);
 		}
@@ -272,9 +282,10 @@ public class ConfiguracionValoresController {
 		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
 		int valorInt = tieneRiesgo_spinner_valor.getValue();
 
-		if(incidente == null) {
+		if(incidente == null){
 			// TODO mostrar alerta
-		} else {
+		}
+		else{
 			AxiomaLimiteRiesgo axioma = new AxiomaLimiteRiesgo(incidente, valorInt);
 			tableViewLimiteRiesgo.getItems().add(axioma);
 		}
@@ -294,4 +305,5 @@ public class ConfiguracionValoresController {
 		List<AxiomaLimiteRiesgo> listaLimiteRiesgo = tableViewLimiteRiesgo.getItems();
 		procesador.guardar(listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo);
 	}
+
 }

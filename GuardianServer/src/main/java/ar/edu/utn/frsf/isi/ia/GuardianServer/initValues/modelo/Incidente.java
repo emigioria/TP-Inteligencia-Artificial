@@ -1,41 +1,50 @@
 package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Incidente {
 
-	private String nombre;
+	private StringProperty nombre = new SimpleStringProperty();
 
 	public Incidente(String nombre) {
 		super();
-		this.nombre = nombre;
+		this.nombre.set(nombre);
 	}
 
 	public String getNombre() {
-		return nombre;
+		return nombre.get();
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre.set(nombre);
 	}
 
 	@Override
 	public String toString() {
-		return nombre;
+		return nombre.get();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if(this == obj){
 			return true;
-		if(obj == null)
+		}
+		if(obj == null){
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Incidente other = (Incidente) obj;
-		if(nombre == null) {
-			if(other.nombre != null)
+		if(nombre == null){
+			if(other.nombre != null){
 				return false;
-		} else if(!nombre.equals(other.nombre))
+			}
+		}
+		else if(!nombre.equals(other.nombre)){
 			return false;
+		}
 		return true;
 	}
 
