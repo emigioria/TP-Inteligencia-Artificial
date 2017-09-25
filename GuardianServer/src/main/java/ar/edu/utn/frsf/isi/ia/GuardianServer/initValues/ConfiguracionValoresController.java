@@ -113,37 +113,33 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	}
 
 	private void habilitarBotonesIncidente(Incidente incidente) {
-		if(incidente == null){
+		if(incidente == null) {
 			buttonQuitarIncidente.setDisable(true);
-		}
-		else{
+		} else {
 			buttonQuitarIncidente.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesTieneRiesgo(AxiomaTieneRiesgo axioma) {
-		if(axioma == null){
+		if(axioma == null) {
 			buttonQuitarTieneRiesgo.setDisable(true);
-		}
-		else{
+		} else {
 			buttonQuitarTieneRiesgo.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesCritica(AxiomaCritica axioma) {
-		if(axioma == null){
+		if(axioma == null) {
 			buttonQuitarCritica.setDisable(true);
-		}
-		else{
+		} else {
 			buttonQuitarCritica.setDisable(false);
 		}
 	}
 
 	private void habilitarBotonesLimiteRiesgo(AxiomaLimiteRiesgo axioma) {
-		if(axioma == null){
+		if(axioma == null) {
 			buttonQuitarLimiteRiesgo.setDisable(true);
-		}
-		else{
+		} else {
 			buttonQuitarLimiteRiesgo.setDisable(false);
 		}
 	}
@@ -164,17 +160,15 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	private void agregarIncidente() {
 		String nombreIncidente = textFieldNombreIncidente.getText().trim();
 
-		if(nombreIncidente.isEmpty()){
+		if(nombreIncidente.isEmpty()) {
 			// TODO mostrar alerta. No se ingresó ningun nombre
-		}
-		else{
+		} else {
 			nombreIncidente = nombreIncidente.replaceAll("\\s", "");
 			String primerLetra = nombreIncidente.substring(0, 1);
 			nombreIncidente = primerLetra.toLowerCase() + nombreIncidente.substring(1);
-			if(existeIncidenteConNombre(nombreIncidente)){
+			if(existeIncidenteConNombre(nombreIncidente)) {
 				// TODO mostrar alerta. Ya existe un incidente con ese nombre
-			}
-			else{
+			} else {
 				Incidente incidente = new Incidente(nombreIncidente);
 				tableViewIncidente.getItems().add(incidente);
 				tieneRiesgo_comboBox_tipoIncidente.getItems().add(incidente);
@@ -186,8 +180,8 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 
 	private boolean existeIncidenteConNombre(String nombreIncidente) {
 		boolean existe = false;
-		for(Incidente i: tableViewIncidente.getItems()){
-			if(i.getNombre().equals(nombreIncidente)){
+		for(Incidente i : tableViewIncidente.getItems()) {
+			if(i.getNombre().equals(nombreIncidente)) {
 				existe = true;
 			}
 		}
@@ -205,24 +199,24 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 
 		// quito los axiomas relacionados a ese incidente
 		List<AxiomaTieneRiesgo> tieneRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaTieneRiesgo a: tableViewTieneRiesgo.getItems()){
-			if(a.equals(incidenteSeleccionado)){
+		for(AxiomaTieneRiesgo a : tableViewTieneRiesgo.getItems()) {
+			if(a.equals(incidenteSeleccionado)) {
 				tieneRiesgoRelacionados.add(a);
 			}
 		}
 		tableViewTieneRiesgo.getItems().removeAll(tieneRiesgoRelacionados);
 
 		List<AxiomaCritica> criticaRelacionados = new ArrayList<>();
-		for(AxiomaCritica a: tableViewCritica.getItems()){
-			if(a.equals(incidenteSeleccionado)){
+		for(AxiomaCritica a : tableViewCritica.getItems()) {
+			if(a.equals(incidenteSeleccionado)) {
 				criticaRelacionados.add(a);
 			}
 		}
 		tableViewCritica.getItems().removeAll(criticaRelacionados);
 
 		List<AxiomaLimiteRiesgo> limiteRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaLimiteRiesgo a: tableViewLimiteRiesgo.getItems()){
-			if(a.equals(incidenteSeleccionado)){
+		for(AxiomaLimiteRiesgo a : tableViewLimiteRiesgo.getItems()) {
+			if(a.equals(incidenteSeleccionado)) {
 				limiteRiesgoRelacionados.add(a);
 			}
 		}
@@ -236,14 +230,12 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	private void agregarTieneRiesgo() {
 		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
 		String palabra = tieneRiesgo_textField_palabra.getText().trim().toLowerCase();
-		// TODO ver cuando es una frase....... palabra.replaceAll("\\s", "") y
-		// todo eso
+		palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
 		int valorInt = tieneRiesgo_spinner_valor.getValue();
 
-		if(incidente == null || palabra.isEmpty()){
+		if(incidente == null || palabra.isEmpty()) {
 			// TODO mostrar alerta
-		}
-		else{
+		} else {
 			AxiomaTieneRiesgo axioma = new AxiomaTieneRiesgo(incidente, palabra, valorInt);
 			tableViewTieneRiesgo.getItems().add(axioma);
 		}
@@ -259,13 +251,11 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	private void agregarCritica() {
 		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
 		String palabra = tieneRiesgo_textField_palabra.getText().trim().toLowerCase();
-		// TODO ver cuando es una frase....... palabra.replaceAll("\\s", "") y
-		// todo eso
+		palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
 
-		if(incidente == null || palabra.isEmpty()){
+		if(incidente == null || palabra.isEmpty()) {
 			// TODO mostrar alerta
-		}
-		else{
+		} else {
 			AxiomaCritica axioma = new AxiomaCritica(incidente, palabra);
 			tableViewCritica.getItems().add(axioma);
 		}
@@ -282,10 +272,9 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
 		int valorInt = tieneRiesgo_spinner_valor.getValue();
 
-		if(incidente == null){
+		if(incidente == null) {
 			// TODO mostrar alerta
-		}
-		else{
+		} else {
 			AxiomaLimiteRiesgo axioma = new AxiomaLimiteRiesgo(incidente, valorInt);
 			tableViewLimiteRiesgo.getItems().add(axioma);
 		}
