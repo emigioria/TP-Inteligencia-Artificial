@@ -6,45 +6,36 @@
  */
 package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class AxiomaTieneRiesgo extends Axioma {
 
-	private StringProperty palabra = new SimpleStringProperty();
+	private String palabra;
 
-	private StringProperty valor = new SimpleStringProperty();
+	private String valor;
 
 	public AxiomaTieneRiesgo(Incidente incidente, String palabra, String valor) {
 		super(incidente);
-		this.palabra.set(palabra);
-		this.valor.set(valor);
-	}
-
-	public AxiomaTieneRiesgo(Incidente incidente, String palabra, int valorInt) {
-		super(incidente);
-		this.palabra.set(palabra);
-		this.valor.set(Integer.toString(valorInt));
+		this.palabra = palabra;
+		this.valor = valor;
 	}
 
 	public String getPalabra() {
-		return palabra.get();
+		return palabra;
 	}
 
 	public void setPalabra(String palabra) {
-		this.palabra.set(palabra);
+		this.palabra = palabra;
 	}
 
 	public String getValor() {
-		return valor.get();
+		return valor;
 	}
 
 	public void setValor(String valor) {
-		this.valor.set(valor);
+		this.valor = valor;
 	}
 
 	@Override
 	public String toString() {
-		return "tieneRiesgo(" + this.getIncidente() + ", " + palabra.get() + ", " + valor.get() + ")";
+		return "tieneRiesgo(" + this.getIncidente() + ", " + palabra + ", " + valor + ")";
 	}
 }

@@ -19,20 +19,24 @@ public class Procesador {
 
 	private Archivador archivador;
 
-	public Procesador(Archivador archivador) {
+	public Procesador() {
 		super();
-		this.archivador = archivador;
+		this.archivador = new Archivador();
 	}
 
 	public void leer(List<Incidente> listaIncidente, List<AxiomaTieneRiesgo> listaTieneRiesgo,
 			List<AxiomaCritica> listaCritica, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
 
+		// leo el archivo y proceso fila a fila
 		List<String> archivo = archivador.leerArchivo();
 		archivo.forEach(fila -> procesarFila(fila, listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo));
 	}
 
 	private void procesarFila(String fila, List<Incidente> listaIncidente, List<AxiomaTieneRiesgo> listaTieneRiesgo,
 			List<AxiomaCritica> listaCritica, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
+
+		// se procesa la linea y, si corresponde a alguno de los axiomas
+		// deseados, se crea el objeto correspondiente
 		if(fila.startsWith("tieneRiesgo")) {
 			int primerComa = fila.indexOf(",");
 			int ultimaComa = fila.lastIndexOf(",");
@@ -78,11 +82,14 @@ public class Procesador {
 	private Incidente obtenerIncidente(String nombreIncidente, List<Incidente> listaIncidente) {
 		Incidente incidente = null;
 
+		// se busca el incidente deseado en la lista de incidentes
 		for(Incidente i : listaIncidente) {
 			if(i.getNombre().equals(nombreIncidente)) {
 				incidente = i;
 			}
 		}
+		// si no existe en la lista se crea un Incidente nuevo y se lo agrega a
+		// la lista
 		if(incidente == null) {
 			incidente = new Incidente(nombreIncidente);
 			listaIncidente.add(incidente);
@@ -101,30 +108,32 @@ public class Procesador {
 		añadirCritica(archivo, listaCritica);
 		añadirLimiteRiesgo(archivo, listaLimiteRiesgo);
 		añadirInicializacionIncidentes(archivo, listaIncidente);
-		List<AxiomaFrase> listaFrase = crearFrases(listaTieneRiesgo, listaCritica);
+		List<AxiomaFrase> listaFrase = crearFrases(listaTieneRiesgo);
 		añadirFrase(archivo, listaFrase);
 
 		archivador.escribirArchivo(archivo);
 	}
 
-	private List<AxiomaFrase> crearFrases(List<AxiomaTieneRiesgo> listaTieneRiesgo, List<AxiomaCritica> listaCritica) {
+	private List<AxiomaFrase> crearFrases(List<AxiomaTieneRiesgo> listaTieneRiesgo) {
+		// se crea la lista de axiomas frase, según las palabras de los axiomas
+		// tieneRiesgo
 		List<AxiomaFrase> listaFrase = new ArrayList<>();
 		for(AxiomaTieneRiesgo a : listaTieneRiesgo) {
+			// si el atributo palabra contiene un "_" significa que es una frase
 			if(a.getPalabra().contains("_")) {
 				obtenerAxiomasFrase(a.getPalabra(), listaFrase);
 			}
 		}
-
-		for(AxiomaCritica a : listaCritica) {
-			if(a.getPalabra().contains("_")) {
-				obtenerAxiomasFrase(a.getPalabra(), listaFrase);
-			}
-		}
-
 		return listaFrase;
 	}
 
 	private void obtenerAxiomasFrase(String frase, List<AxiomaFrase> listaFrase) {
+		// EJEMPLO
+		// proceso una frase del estilo "hola_nuevo_mundo" (cantidad de palabras
+		// variable)
+		// y se añaden a la lista de AxiomaFrase los axiomas equivalentes a:
+		// frase(hola,nuevo)
+		// frase(hola_nuevo,mundo)
 		List<String> listaPalabras = new ArrayList<>();
 		String palabra = "";
 		for(int i = 0; i < frase.length(); i++) {

@@ -8,297 +8,239 @@ package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaCritica;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaLimiteRiesgo;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.AxiomaTieneRiesgo;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.Fila;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo.Incidente;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorDialogo;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.layout.VBox;
 
 public class ConfiguracionValoresController extends ControladorDialogo {
 
 	public static final String URL_VISTA = "vistas/ConfiguracionValores.fxml";
 
 	@FXML
-	private TextField textFieldNombreIncidente;
-	@FXML
-	private Button buttonQuitarIncidente;
-	@FXML
-	private TableView<Incidente> tableViewIncidente;
-	@FXML
-	private TableColumn<Incidente, String> tableColumnNombreIncidente;
+	private ComboBox<Incidente> comboBoxIncidente;
 
 	@FXML
-	private ComboBox<Incidente> tieneRiesgo_comboBox_tipoIncidente;
-	@FXML
-	private Spinner<Integer> tieneRiesgo_spinner_valor;
-	@FXML
-	private TextField tieneRiesgo_textField_palabra;
-	@FXML
-	private TableView<AxiomaTieneRiesgo> tableViewTieneRiesgo;
-	@FXML
-	private TableColumn<AxiomaTieneRiesgo, String> tableColumnTieneRiesgo;
-	@FXML
-	private Button buttonQuitarTieneRiesgo;
+	private Label labelIncidente;
 
 	@FXML
-	private ComboBox<Incidente> critica_comboBox_tipoIncidente;
-	@FXML
-	private TextField critica_textField_palabra;
-	@FXML
-	private TableView<AxiomaCritica> tableViewCritica;
-	@FXML
-	private TableColumn<AxiomaCritica, String> tableColumnCritica;
-	@FXML
-	private Button buttonQuitarCritica;
+	private VBox vBoxContenidoIncidente;
 
 	@FXML
-	private ComboBox<Incidente> limiteRiesgo_comboBox_tipoIncidente;
+	private Label labelLimite;
 	@FXML
-	private Spinner<Integer> limiteRiesgo_spinner_valor;
-	@FXML
-	private TableView<AxiomaLimiteRiesgo> tableViewLimiteRiesgo;
-	@FXML
-	private TableColumn<AxiomaLimiteRiesgo, String> tableColumnLimiteRiesgo;
-	@FXML
-	private Button buttonQuitarLimiteRiesgo;
+	private Spinner<Integer> spinner_limite;
 
-	private Procesador procesador;
+	@FXML
+	private TextField textField_palabra;
+	@FXML
+	private Spinner<Integer> spinner_valor;
+	@FXML
+	private CheckBox checkBoxCritica;
+	@FXML
+	private TableView<Fila> tableView;
+	@FXML
+	private TableColumn<Fila, String> tableColumnPalabra;
+	@FXML
+	private TableColumn<Fila, String> tableColumnValor;
+	@FXML
+	private TableColumn<Fila, Boolean> tableColumnCritica;
+	@FXML
+	private Button buttonQuitar;
+
+	private Adaptador adaptador;
+
+	private List<Fila> listaFilas;
+	private List<Incidente> listaIncidentes;
+	private List<AxiomaLimiteRiesgo> listaLimiteRiesgo;
 
 	@Override
 	@FXML
 	protected void inicializar() {
-		procesador = new Procesador(new Archivador());
-
 		inicializarDatos();
 		setearDatoColumnas();
-
-		habilitarBotonesIncidente(null);
-		habilitarBotonesTieneRiesgo(null);
-		habilitarBotonesCritica(null);
-		habilitarBotonesLimiteRiesgo(null);
-
+		habilitarBotones(null);
 		setearListeners();
+		setearSpinnerValueFactory();
+		vBoxContenidoIncidente.setVisible(false);
 	}
 
 	private void inicializarDatos() {
-		List<Incidente> listaIncidente = new ArrayList<>();
-		List<AxiomaTieneRiesgo> listaTieneRiesgo = new ArrayList<>();
-		List<AxiomaCritica> listaCritica = new ArrayList<>();
-		List<AxiomaLimiteRiesgo> listaLimiteRiesgo = new ArrayList<>();
+		listaFilas = new ArrayList<>();
+		listaIncidentes = new ArrayList<>();
+		listaLimiteRiesgo = new ArrayList<>();
+		adaptador = new Adaptador();
+		adaptador.obtenerDatos(listaFilas, listaIncidentes, listaLimiteRiesgo);
 
-		procesador.leer(listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo);
-
-		tableViewIncidente.getItems().addAll(listaIncidente);
-		tableViewTieneRiesgo.getItems().addAll(listaTieneRiesgo);
-		tableViewCritica.getItems().addAll(listaCritica);
-		tableViewLimiteRiesgo.getItems().addAll(listaLimiteRiesgo);
-
-		tieneRiesgo_comboBox_tipoIncidente.getItems().addAll(listaIncidente);
-		critica_comboBox_tipoIncidente.getItems().addAll(listaIncidente);
-		limiteRiesgo_comboBox_tipoIncidente.getItems().addAll(listaIncidente);
+		comboBoxIncidente.getItems().addAll(listaIncidentes);
 	}
 
 	private void setearDatoColumnas() {
-		tableColumnNombreIncidente
-				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
-		tableColumnTieneRiesgo
-				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
-		tableColumnCritica.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
-		tableColumnLimiteRiesgo
-				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
+		tableColumnPalabra.setCellValueFactory(cellData -> cellData.getValue().getPalabra());
+		tableColumnValor.setCellValueFactory(cellData -> cellData.getValue().getValor());
+		tableColumnCritica.setCellValueFactory(cellData -> cellData.getValue().getCritica());
+		tableColumnCritica.setCellFactory(cell -> new CheckBoxTableCell<>());
 
 	}
 
-	private void habilitarBotonesIncidente(Incidente incidente) {
-		if(incidente == null) {
-			buttonQuitarIncidente.setDisable(true);
+	private void habilitarBotones(Fila fila) {
+		if(fila == null) {
+			buttonQuitar.setDisable(true);
 		} else {
-			buttonQuitarIncidente.setDisable(false);
-		}
-	}
-
-	private void habilitarBotonesTieneRiesgo(AxiomaTieneRiesgo axioma) {
-		if(axioma == null) {
-			buttonQuitarTieneRiesgo.setDisable(true);
-		} else {
-			buttonQuitarTieneRiesgo.setDisable(false);
-		}
-	}
-
-	private void habilitarBotonesCritica(AxiomaCritica axioma) {
-		if(axioma == null) {
-			buttonQuitarCritica.setDisable(true);
-		} else {
-			buttonQuitarCritica.setDisable(false);
-		}
-	}
-
-	private void habilitarBotonesLimiteRiesgo(AxiomaLimiteRiesgo axioma) {
-		if(axioma == null) {
-			buttonQuitarLimiteRiesgo.setDisable(true);
-		} else {
-			buttonQuitarLimiteRiesgo.setDisable(false);
+			buttonQuitar.setDisable(false);
 		}
 	}
 
 	private void setearListeners() {
-		tableViewIncidente.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> habilitarBotonesIncidente(newValue));
-		tableViewTieneRiesgo.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> habilitarBotonesTieneRiesgo(newValue));
-		tableViewCritica.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> habilitarBotonesCritica(newValue));
-		tableViewLimiteRiesgo.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> habilitarBotonesLimiteRiesgo(newValue));
+		// cuando se selecciona una fila de la tabla, se habilitan/deshabilitan
+		// botones asociados
+		tableView.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> habilitarBotones(newValue));
+		// cuando cambia el incidente elegido se actualiza todo el contenido
+		comboBoxIncidente.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> actualizarContenido(newValue));
+	}
 
+	private void setearSpinnerValueFactory() {
+		int minLimite = 1; // valor mínimo para el spinner
+		int maxLimite = 30; // valor máximo
+		int initLimite = 10; // valor inicial
+		SpinnerValueFactory<Integer> valueFactoryLimite = new SpinnerValueFactory.IntegerSpinnerValueFactory(minLimite,
+				maxLimite, initLimite);
+		spinner_limite.setValueFactory(valueFactoryLimite);
+
+		int minValor = 1; // valor mínimo para el spinner
+		int maxValor = 10; // valor máximo
+		int initValor = 1; // valor inicial
+		SpinnerValueFactory<Integer> valueFactoryValor = new SpinnerValueFactory.IntegerSpinnerValueFactory(minValor,
+				maxValor, initValor);
+		spinner_valor.setValueFactory(valueFactoryValor);
+	}
+
+	private void actualizarContenido(Incidente incidente) {
+		tableView.getItems().clear();
+		if(incidente != null) {
+			// se filtran las filas asociadas al incidente seleccionado y se las
+			// añade a la tabla
+			List<Fila> nuevaLista = listaFilas.stream().filter(f -> {
+				return f.getIncidente().equals(incidente);
+			}).collect(Collectors.toList());
+			tableView.getItems().addAll(nuevaLista);
+
+			// actualizo limite
+			labelLimite.setText(obtenerAxiomaLimite(incidente).getValor());
+
+			// actualizo label
+			labelIncidente.setText(incidente.getNombre());
+
+			// habilito la visualización del contenido
+			vBoxContenidoIncidente.setVisible(true);
+		} else {
+			vBoxContenidoIncidente.setVisible(false);
+		}
+	}
+
+	private AxiomaLimiteRiesgo obtenerAxiomaLimite(Incidente incidente) {
+		AxiomaLimiteRiesgo axioma = null;
+
+		for(AxiomaLimiteRiesgo a : listaLimiteRiesgo) {
+			if(a.getIncidente().equals(incidente)) {
+				axioma = a;
+				break;
+			}
+		}
+
+		return axioma;
 	}
 
 	@FXML
-	private void agregarIncidente() {
-		String nombreIncidente = textFieldNombreIncidente.getText().trim();
+	private void cambiarLimite() {
+		Incidente incidenteSeleccionado = comboBoxIncidente.getSelectionModel().getSelectedItem();
+		String valor = spinner_limite.getValue().toString();
+		obtenerAxiomaLimite(incidenteSeleccionado).setValor(valor);
+		labelLimite.setText(valor);
+	}
 
-		if(nombreIncidente.isEmpty()) {
-			// TODO mostrar alerta. No se ingresó ningun nombre
+	@FXML
+	private void agregar() {
+		// obtengo datos ingresados por el usuario
+		Incidente incidente = comboBoxIncidente.getValue();
+		String palabra = textField_palabra.getText().trim().toLowerCase();
+		int valorInt = spinner_valor.getValue();
+		boolean critica = checkBoxCritica.isSelected();
+
+		String error = error(palabra, incidente);
+		if(error != null) {
+			// si hay errores se lo muestro al usuario
+			mostrarError(error);
 		} else {
-			nombreIncidente = nombreIncidente.replaceAll("\\s", "");
-			String primerLetra = nombreIncidente.substring(0, 1);
-			nombreIncidente = primerLetra.toLowerCase() + nombreIncidente.substring(1);
-			if(existeIncidenteConNombre(nombreIncidente)) {
-				// TODO mostrar alerta. Ya existe un incidente con ese nombre
-			} else {
-				Incidente incidente = new Incidente(nombreIncidente);
-				tableViewIncidente.getItems().add(incidente);
-				tieneRiesgo_comboBox_tipoIncidente.getItems().add(incidente);
-				critica_comboBox_tipoIncidente.getItems().add(incidente);
-				limiteRiesgo_comboBox_tipoIncidente.getItems().add(incidente);
-			}
+			// si los datos son válidos creo la nueva fila
+			palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
+			Fila fila = new Fila(incidente, palabra, valorInt, critica);
+			listaFilas.add(fila);
+			actualizarContenido(incidente);
 		}
 	}
 
-	private boolean existeIncidenteConNombre(String nombreIncidente) {
+	private void mostrarError(String mensajeError) {
+		// TODO mostrar al usuario el mensaje de error
+
+	}
+
+	private String error(String palabra, Incidente incidente) {
+		if(palabra.isEmpty()) {
+			return "No ha ingresado nignuna palabra/frase.";
+		}
+		if(!esValidoFormato(palabra)) {
+			return "La palabra/frase no puede contener caracteres especiales.";
+		}
+		if(yaExistePalabra(palabra.replace("\\s", "_"), incidente)) {
+			return "La palabra/frase ya está asociada al incidente.";
+		}
+		return null;
+	}
+
+	private boolean esValidoFormato(String palabra) {
+		Pattern pat = Pattern.compile("[0-9a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
+		return pat.matcher(palabra).matches();
+	}
+
+	private boolean yaExistePalabra(String palabra, Incidente incidente) {
 		boolean existe = false;
-		for(Incidente i : tableViewIncidente.getItems()) {
-			if(i.getNombre().equals(nombreIncidente)) {
+
+		for(Fila f : listaFilas) {
+			if(f.getIncidente().equals(incidente) && f.getPalabraStr().equals(palabra)) {
 				existe = true;
 			}
 		}
+
 		return existe;
 	}
 
 	@FXML
-	private void quitarIncidente() {
-		Incidente incidenteSeleccionado = tableViewIncidente.getSelectionModel().getSelectedItem();
-
-		// lo quito de los combo box
-		tieneRiesgo_comboBox_tipoIncidente.getItems().remove(incidenteSeleccionado);
-		critica_comboBox_tipoIncidente.getItems().remove(incidenteSeleccionado);
-		limiteRiesgo_comboBox_tipoIncidente.getItems().remove(incidenteSeleccionado);
-
-		// quito los axiomas relacionados a ese incidente
-		List<AxiomaTieneRiesgo> tieneRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaTieneRiesgo a : tableViewTieneRiesgo.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
-				tieneRiesgoRelacionados.add(a);
-			}
-		}
-		tableViewTieneRiesgo.getItems().removeAll(tieneRiesgoRelacionados);
-
-		List<AxiomaCritica> criticaRelacionados = new ArrayList<>();
-		for(AxiomaCritica a : tableViewCritica.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
-				criticaRelacionados.add(a);
-			}
-		}
-		tableViewCritica.getItems().removeAll(criticaRelacionados);
-
-		List<AxiomaLimiteRiesgo> limiteRiesgoRelacionados = new ArrayList<>();
-		for(AxiomaLimiteRiesgo a : tableViewLimiteRiesgo.getItems()) {
-			if(a.equals(incidenteSeleccionado)) {
-				limiteRiesgoRelacionados.add(a);
-			}
-		}
-		tableViewLimiteRiesgo.getItems().removeAll(limiteRiesgoRelacionados);
-
-		// lo quito de la tabla de incidentes donde se lo seleccionó
-		tableViewIncidente.getItems().remove(incidenteSeleccionado);
-	}
-
-	@FXML
-	private void agregarTieneRiesgo() {
-		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
-		String palabra = tieneRiesgo_textField_palabra.getText().trim().toLowerCase();
-		palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
-		int valorInt = tieneRiesgo_spinner_valor.getValue();
-
-		if(incidente == null || palabra.isEmpty()) {
-			// TODO mostrar alerta
-		} else {
-			AxiomaTieneRiesgo axioma = new AxiomaTieneRiesgo(incidente, palabra, valorInt);
-			tableViewTieneRiesgo.getItems().add(axioma);
-		}
-	}
-
-	@FXML
-	private void quitarTieneRiesgo() {
-		AxiomaTieneRiesgo axiomaSeleccionado = tableViewTieneRiesgo.getSelectionModel().getSelectedItem();
-		tableViewTieneRiesgo.getItems().remove(axiomaSeleccionado);
-	}
-
-	@FXML
-	private void agregarCritica() {
-		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
-		String palabra = tieneRiesgo_textField_palabra.getText().trim().toLowerCase();
-		palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
-
-		if(incidente == null || palabra.isEmpty()) {
-			// TODO mostrar alerta
-		} else {
-			AxiomaCritica axioma = new AxiomaCritica(incidente, palabra);
-			tableViewCritica.getItems().add(axioma);
-		}
-	}
-
-	@FXML
-	private void quitarCritica() {
-		AxiomaCritica axiomaSeleccionado = tableViewCritica.getSelectionModel().getSelectedItem();
-		tableViewCritica.getItems().remove(axiomaSeleccionado);
-	}
-
-	@FXML
-	private void agregarLimiteRiesgo() {
-		Incidente incidente = tieneRiesgo_comboBox_tipoIncidente.getValue();
-		int valorInt = tieneRiesgo_spinner_valor.getValue();
-
-		if(incidente == null) {
-			// TODO mostrar alerta
-		} else {
-			AxiomaLimiteRiesgo axioma = new AxiomaLimiteRiesgo(incidente, valorInt);
-			tableViewLimiteRiesgo.getItems().add(axioma);
-		}
-	}
-
-	@FXML
-	private void quitarLimiteRiesgo() {
-		AxiomaLimiteRiesgo axiomaSeleccionado = tableViewLimiteRiesgo.getSelectionModel().getSelectedItem();
-		tableViewLimiteRiesgo.getItems().remove(axiomaSeleccionado);
+	private void quitar() {
+		Fila filaSeleccionada = tableView.getSelectionModel().getSelectedItem();
+		tableView.getItems().remove(filaSeleccionada);
 	}
 
 	@FXML
 	private void guardarConfiguracion() {
-		List<Incidente> listaIncidente = tableViewIncidente.getItems();
-		List<AxiomaTieneRiesgo> listaTieneRiesgo = tableViewTieneRiesgo.getItems();
-		List<AxiomaCritica> listaCritica = tableViewCritica.getItems();
-		List<AxiomaLimiteRiesgo> listaLimiteRiesgo = tableViewLimiteRiesgo.getItems();
-		procesador.guardar(listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo);
+		adaptador.guardarDatos(listaFilas, listaIncidentes, listaLimiteRiesgo);
 		salir();
 	}
 

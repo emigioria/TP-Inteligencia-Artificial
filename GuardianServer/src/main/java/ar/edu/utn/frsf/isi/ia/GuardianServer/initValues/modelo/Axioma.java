@@ -6,23 +6,20 @@
  */
 package ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.modelo;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 public abstract class Axioma {
 
-	private ObjectProperty<Incidente> incidente = new SimpleObjectProperty<>();
+	private Incidente incidente;
 
 	public Axioma(Incidente incidente) {
-		this.incidente.set(incidente);
+		this.incidente = incidente;
 	}
 
 	public Incidente getIncidente() {
-		return incidente.get();
+		return incidente;
 	}
 
 	public void setIncidente(Incidente incidente) {
-		this.incidente.set(incidente);
+		this.incidente = incidente;
 	}
 
 }
