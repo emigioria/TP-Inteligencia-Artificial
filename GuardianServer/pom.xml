@@ -54,6 +54,34 @@
 
 	<build>
 		<plugins>
+			<!-- Adding header to file -->
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>3.0</version>
+
+				<configuration>
+					<header>header.txt</header>
+					<mapping>
+						<fxml>XML_STYLE</fxml>
+						<pl>PERCENT_STYLE</pl>
+					</mapping>
+					<properties>
+						<owner>Emiliano Gioria - Andres Leonel Rico - Esteban Javier Rebechi</owner>
+						<inceptionYear>2017</inceptionYear>
+					</properties>
+					<basedir>src</basedir>
+				</configuration>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
