@@ -1,8 +1,5 @@
 package ar.edu.utn.frsf.guardian;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,12 +8,17 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.java_websocket.WebSocket;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.client.StompClient;
 
 public class MainActivity extends Activity {
 
@@ -30,6 +32,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         inicializarComponentes();
+
+        conectar();
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -88,11 +92,31 @@ public class MainActivity extends Activity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txtSpeechInput.setText(result.get(0)); //TODO enviar al server
+                    enviarMensaje(result.get(0));
                 }
                 break;
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mStompClient.disconnect();
+        super.onDestroy();
+    }
+
+    private StompClient mStompClient;
+
+    private void conectar() {
+        mStompClient = Stomp.over(WebSocket.class, "ws://192.168.0.4:8080/guardian");
+        mStompClient.topic("/topic/accion").subscribe(topicMessage -> {
+            runOnUiThread(() -> txtSpeechInput.setText(txtSpeechInput.getText() + "\n" + topicMessage.getPayload()));
+        });
+        mStompClient.connect();
+    }
+
+    private void enviarMensaje(String mensaje){
+        mStompClient.send("/app/fraseEscuchada", mensaje).subscribe();
     }
 }

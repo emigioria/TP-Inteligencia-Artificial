@@ -12,10 +12,9 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.compress.utils.Charsets;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 
@@ -37,7 +36,7 @@ public class Archivador {
 		List<String> archivo = new ArrayList<>();
 		File file = new File(INIT_PL);
 
-		try(Reader reader = new InputStreamReader(new FileInputStream(file), Charsets.UTF_8);
+		try(Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
 				BufferedReader br = new BufferedReader(reader)){
 			String linea;
 			archivo.clear();
@@ -61,7 +60,7 @@ public class Archivador {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		try(Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+		try(Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
 				PrintWriter pw = new PrintWriter(writer)){
 			archivo.forEach(linea -> pw.println(linea));
 		} catch(Exception e){
