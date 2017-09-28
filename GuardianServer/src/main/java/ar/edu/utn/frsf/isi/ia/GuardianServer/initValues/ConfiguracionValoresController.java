@@ -221,15 +221,8 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	}
 
 	private boolean yaExistePalabra(String palabra, Incidente incidente) {
-		boolean existe = false;
-
-		for(Fila f : listaFilas) {
-			if(f.getIncidente().equals(incidente) && f.getPalabraStr().equals(palabra)) {
-				existe = true;
-			}
-		}
-
-		return existe;
+		return listaFilas.stream()
+				.anyMatch(f -> f.getIncidente().equals(incidente) && f.getPalabraStr().equals(palabra));
 	}
 
 	@FXML

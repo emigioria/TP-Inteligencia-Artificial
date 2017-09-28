@@ -118,12 +118,12 @@ public class Procesador {
 		// se crea la lista de axiomas frase, según las palabras de los axiomas
 		// tieneRiesgo
 		List<AxiomaFrase> listaFrase = new ArrayList<>();
-		for(AxiomaTieneRiesgo a : listaTieneRiesgo) {
+		listaTieneRiesgo.forEach(axioma -> {
 			// si el atributo palabra contiene un "_" significa que es una frase
-			if(a.getPalabra().contains("_")) {
-				obtenerAxiomasFrase(a.getPalabra(), listaFrase);
+			if(axioma.getPalabra().contains("_")) {
+				obtenerAxiomasFrase(axioma.getPalabra(), listaFrase);
 			}
-		}
+		});
 		return listaFrase;
 	}
 
@@ -182,47 +182,35 @@ public class Procesador {
 
 	private void añadirTieneRiesgo(List<String> archivo, List<AxiomaTieneRiesgo> listaTieneRiesgo) {
 		archivo.add("% Inicialización tieneRiesgo");
-		for(AxiomaTieneRiesgo a : listaTieneRiesgo) {
-			archivo.add(a.toString() + ".");
-		}
+		listaTieneRiesgo.forEach(axioma -> archivo.add(axioma.toString() + "."));
 		archivo.add("");
 	}
 
 	private void añadirCritica(List<String> archivo, List<AxiomaCritica> listaCritica) {
 		archivo.add("% Inicialización critica");
-		for(AxiomaCritica a : listaCritica) {
-			archivo.add(a.toString() + ".");
-		}
+		listaCritica.forEach(axioma -> archivo.add(axioma.toString() + "."));
 		archivo.add("");
 	}
 
 	private void añadirLimiteRiesgo(List<String> archivo, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
 		archivo.add("% Inicialización limiteRiesgo");
-		for(AxiomaLimiteRiesgo a : listaLimiteRiesgo) {
-			archivo.add(a.toString() + ".");
-		}
+		listaLimiteRiesgo.forEach(axioma -> archivo.add(axioma.toString() + "."));
 		archivo.add("");
 	}
 
 	private void añadirInicializacionIncidentes(List<String> archivo, List<Incidente> listaIncidente) {
 		archivo.add("% Inicialización contadores de riesgo");
-		for(Incidente i : listaIncidente) {
-			archivo.add("riesgo(" + i.getNombre() + ", 0).");
-		}
+		listaIncidente.forEach(inc -> archivo.add("riesgo(" + inc.getNombre() + ", 0)."));
 		archivo.add("");
 
 		archivo.add("% Inicialización del estado de los incidentes");
-		for(Incidente i : listaIncidente) {
-			archivo.add("noSospecho(" + i.getNombre() + ").");
-		}
+		listaIncidente.forEach(inc -> archivo.add("noSospecho(" + inc.getNombre() + ")."));
 		archivo.add("");
 	}
 
 	private void añadirFrase(List<String> archivo, List<AxiomaFrase> listaFrase) {
 		archivo.add("% Inicialización diccionario de frases");
-		for(AxiomaFrase a : listaFrase) {
-			archivo.add(a.toString() + ".");
-		}
+		listaFrase.forEach(axioma -> archivo.add(axioma.toString() + "."));
 		archivo.add("");
 	}
 }
