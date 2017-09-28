@@ -3,4 +3,10 @@
     <string name="speech_prompt">Dí algo&#8230;</string>
     <string name="google_app_store_msg">Tu dispositivo no tiene una aplicación para reconocimiento de voz.</string>
     <string name="tap_on_mic">Pulsa el micrófono para hablar</string>
+    <string name="boton_para_hablar">Botón para hablar</string>
+    <string name="conectar">Conectar</string>
+    <string name="ingrese_la_ip_del_servidor">Ingrese la IP del servidor</string>
+    <string name="error_conexion">Error al conectar al servidor</string>
+    <string name="preferenciasHablar">preferenciasHablar</string>
+    <string name="key_last_hablar_ip_server">lastHablarIPServer</string>
 </resources>
