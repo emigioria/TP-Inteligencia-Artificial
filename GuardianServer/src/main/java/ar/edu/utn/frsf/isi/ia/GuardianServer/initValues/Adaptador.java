@@ -28,14 +28,10 @@ public class Adaptador {
 
 		// creo una fila para cada axioma tieneRiesgo
 		// por defecto, le asigno a la fila ninguna palabra es crítica
-		for(AxiomaTieneRiesgo a : listaTieneRiesgo) {
-			listaFilas.add(new Fila(a.getIncidente(), a.getPalabra(), a.getValor(), false));
-		}
+		listaTieneRiesgo.forEach(a -> listaFilas.add(new Fila(a.getIncidente(), a.getPalabra(), a.getValor(), false)));
 
 		// para cada axioma critica seteo en true las filas correspondientes
-		for(AxiomaCritica a : listaCritica) {
-			obtenerFilaConIncidente(a.getIncidente(), listaFilas).setCritica(true);
-		}
+		listaCritica.forEach(a -> obtenerFilaConIncidente(a.getIncidente(), listaFilas).setCritica(true));
 	}
 
 	private Fila obtenerFilaConIncidente(Incidente incidente, List<Fila> listaFilas) {
@@ -58,12 +54,12 @@ public class Adaptador {
 
 		// para cada fila creo un axioma tieneRiesgo
 		// si la palabra de la fila es crítica, creo el axioma critica asociado
-		for(Fila f : listaFilas) {
+		listaFilas.forEach(f -> {
 			listaTieneRiesgo.add(new AxiomaTieneRiesgo(f.getIncidente(), f.getPalabraStr(), f.getValorStr()));
 			if(f.getCriticaBool()) {
 				listaCritica.add(new AxiomaCritica(f.getIncidente(), f.getPalabraStr()));
 			}
-		}
+		});
 
 		procesador.guardar(listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo);
 	}
