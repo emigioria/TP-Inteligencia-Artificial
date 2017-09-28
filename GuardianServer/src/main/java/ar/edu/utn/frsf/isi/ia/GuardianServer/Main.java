@@ -13,16 +13,15 @@ import org.springframework.boot.SpringApplication;
 
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.ConfiguracionValoresController;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.GuardianServerController;
-import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
 	private Stage primaryStage;
-	private PilaScene apilador;
 	private List<String> args;
 
 	public static void main(String[] args) {
@@ -53,14 +52,13 @@ public class Main extends Application {
 		primaryStage.setTitle("Inteligencia Artificial - Servidor GuardIAn");
 
 		//Setear acción de cierre
-		primaryStage.setOnCloseRequest((e) -> {
-			if(!apilador.sePuedeSalir()){
-				e.consume();
-			}
-		});
+		//		primaryStage.setOnCloseRequest((e) -> {
+		//		});
 
 		mostrarPantallaConfiguracionInicial();
-		iniciarServidor();
+		new Thread(() -> iniciarServidor()).start();
+
+		Platform.setImplicitExit(false);
 	}
 
 	private void iniciarServidor() {

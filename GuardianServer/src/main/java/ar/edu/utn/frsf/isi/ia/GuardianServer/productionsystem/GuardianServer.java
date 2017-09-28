@@ -10,9 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores.VerSimulacionAutomaticaController;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.EstadoGuardian;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.Archivador;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
+import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 
 @Controller
 public class GuardianServer extends Guardian {
@@ -40,4 +46,28 @@ public class GuardianServer extends Guardian {
 		this.enviarAccion(accion);
 	}
 
+	@Override
+	protected void mandarPatruIA() {
+		super.mandarPatruIA();
+		Platform.runLater(() -> {
+			//Inicializar parametros
+			Stage stage = new Stage();
+
+			//Iniciar el stage en el centro de la pantalla
+			stage.centerOnScreen();
+
+			//Setear icono y titulo de aplicacion
+			stage.getIcons().add(new IconoAplicacion());
+			stage.setTitle("Inteligencia Artificial - Sistema PatruIA");
+
+			PilaScene apilador = ControladorJavaFXApilable.crearYMostrarPrimeraVentana(stage, VerSimulacionAutomaticaController.URL_VISTA);
+
+			//Setear acción de cierre
+			stage.setOnCloseRequest((e) -> {
+				if(!apilador.sePuedeSalir()){
+					e.consume();
+				}
+			});
+		});
+	}
 }
