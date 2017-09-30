@@ -63,8 +63,21 @@ public class Guardian extends ProductionSystemBasedAgent {
 
 	public Guardian() throws Exception {
 		// The Agent State
-		initAgentState();
+		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
+		EstadoGuardian agState = new EstadoGuardian(ruta);
+		this.setAgentState(agState);
 
+		inicializarGuardian();
+	}
+
+	public Guardian(EstadoGuardian estadoGuardian) {
+		// The Agent State
+		this.setAgentState(estadoGuardian);
+
+		inicializarGuardian();
+	}
+
+	private void inicializarGuardian() {
 		//Crear reglas
 		crearPredicadosYReglas();
 		listaPredicados.parallelStream().forEach(p -> p.setRWM(this.getAgentState()));
@@ -82,13 +95,6 @@ public class Guardian extends ProductionSystemBasedAgent {
 		criterios.add(new Priority());
 		criterios.add(new Specificity());
 		criterios.add(new Random());
-
-	}
-
-	protected void initAgentState() throws Exception {
-		String ruta = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
-		EstadoGuardian agState = new EstadoGuardian(ruta);
-		this.setAgentState(agState);
 	}
 
 	/**

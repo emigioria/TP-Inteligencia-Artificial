@@ -37,7 +37,7 @@ public class Procesador {
 
 		// se procesa la linea y, si corresponde a alguno de los axiomas
 		// deseados, se crea el objeto correspondiente
-		if(fila.startsWith("tieneRiesgo")) {
+		if(fila.startsWith("tieneRiesgo")){
 			int primerComa = fila.indexOf(",");
 			int ultimaComa = fila.lastIndexOf(",");
 			int parentesisAbre = fila.indexOf("(");
@@ -52,7 +52,7 @@ public class Procesador {
 			listaTieneRiesgo.add(tieneRiesgo);
 		}
 
-		if(fila.startsWith("critica")) {
+		if(fila.startsWith("critica")){
 			int primerComa = fila.indexOf(",");
 			int parentesisAbre = fila.indexOf("(");
 			int parentesisCierra = fila.indexOf(")");
@@ -65,7 +65,7 @@ public class Procesador {
 			listaCritica.add(critica);
 		}
 
-		if(fila.startsWith("limiteRiesgo")) {
+		if(fila.startsWith("limiteRiesgo")){
 			int primerComa = fila.indexOf(",");
 			int parentesisAbre = fila.indexOf("(");
 			int parentesisCierra = fila.indexOf(")");
@@ -83,14 +83,14 @@ public class Procesador {
 		Incidente incidente = null;
 
 		// se busca el incidente deseado en la lista de incidentes
-		for(Incidente i : listaIncidente) {
-			if(i.getNombre().equals(nombreIncidente)) {
+		for(Incidente i: listaIncidente){
+			if(i.getNombre().equals(nombreIncidente)){
 				incidente = i;
 			}
 		}
 		// si no existe en la lista se crea un Incidente nuevo y se lo agrega a
 		// la lista
-		if(incidente == null) {
+		if(incidente == null){
 			incidente = new Incidente(nombreIncidente);
 			listaIncidente.add(incidente);
 		}
@@ -120,7 +120,7 @@ public class Procesador {
 		List<AxiomaFrase> listaFrase = new ArrayList<>();
 		listaTieneRiesgo.forEach(axioma -> {
 			// si el atributo palabra contiene un "_" significa que es una frase
-			if(axioma.getPalabra().contains("_")) {
+			if(axioma.getPalabra().contains("_")){
 				obtenerAxiomasFrase(axioma.getPalabra(), listaFrase);
 			}
 		});
@@ -136,18 +136,20 @@ public class Procesador {
 		// frase(hola_nuevo,mundo)
 		List<String> listaPalabras = new ArrayList<>();
 		String palabra = "";
-		for(int i = 0; i < frase.length(); i++) {
-			if(frase.charAt(i) == '_') {
+		for(int i = 0; i < frase.length(); i++){
+			if(frase.charAt(i) == '_'){
 				listaPalabras.add(palabra);
 				palabra = "";
-			} else {
+			}
+			else{
 				palabra += frase.charAt(i);
 			}
 		}
 		String acumulador = "";
-		for(int i = 0; i < listaPalabras.size() - 1; i++) {
-			if(i != 0)
+		for(int i = 0; i < listaPalabras.size() - 1; i++){
+			if(i != 0){
 				acumulador += "_";
+			}
 			acumulador += listaPalabras.get(i);
 			listaFrase.add(new AxiomaFrase(acumulador, listaPalabras.get(i + 1)));
 		}
@@ -164,20 +166,6 @@ public class Procesador {
 		archivo.add("% Autor: Rico Andrés, Rebechi Esteban, Gioria Emiliano.");
 		archivo.add("% Fecha: 24/06/2017");
 		archivo.add("");
-		// predicados
-		archivo.add("% Predicados");
-		archivo.add(":- dynamic(tieneRiesgo/3).");
-		archivo.add(":- dynamic(escuchada/2).");
-		archivo.add(":- dynamic(riesgo/2).");
-		archivo.add(":- dynamic(limiteRiesgo/2).");
-		archivo.add(":- dynamic(accion/1).");
-		archivo.add(":- dynamic(sospecho/1).");
-		archivo.add(":- dynamic(noSospecho/1).");
-		archivo.add(":- dynamic(critica/2).");
-		archivo.add(":- dynamic(clasificada/2).");
-		archivo.add(":- dynamic(frase/2).");
-		archivo.add("");
-
 	}
 
 	private void añadirTieneRiesgo(List<String> archivo, List<AxiomaTieneRiesgo> listaTieneRiesgo) {

@@ -36,6 +36,11 @@ public class EstadoGuardian extends ProductionSystemBasedAgentState implements R
 		this.initState();
 	}
 
+	public EstadoGuardian(PrologConnector prologConnector) throws PrologConnectorException {
+		plc = prologConnector;
+		this.initState();
+	}
+
 	/**
 	 * This method is optional, and sets the initial state of the agent.
 	 */

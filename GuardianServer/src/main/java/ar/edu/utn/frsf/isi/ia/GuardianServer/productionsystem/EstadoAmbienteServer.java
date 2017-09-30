@@ -7,29 +7,24 @@
 package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Controller;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.EstadoAmbiente;
 
 /**
  * This class represents the real world state.
  */
-@Controller
 public class EstadoAmbienteServer extends EstadoAmbiente {
 
-	private BlockingQueue<String> frasesEscuchadas = new LinkedBlockingQueue<>();
-
-	@MessageMapping("/fraseEscuchada")
-	public void receiveGreeting(String message) throws Exception {
-		frasesEscuchadas.put(message);
-	}
+	private BlockingQueue<String> frasesEscuchadas;
 
 	public EstadoAmbienteServer() {
 		super();
 		this.initState();
+	}
+
+	public EstadoAmbienteServer(BlockingQueue<String> frasesEscuchadas) {
+		this();
+		this.frasesEscuchadas = frasesEscuchadas;
 	}
 
 	@Override
@@ -52,6 +47,10 @@ public class EstadoAmbienteServer extends EstadoAmbiente {
 	@Override
 	public void setFrasesDichas(String frases) {
 		throw new RuntimeException();
+	}
+
+	public void setFrasesEscuchadas(BlockingQueue<String> frasesEscuchadas) {
+		this.frasesEscuchadas = frasesEscuchadas;
 	}
 
 	@Override

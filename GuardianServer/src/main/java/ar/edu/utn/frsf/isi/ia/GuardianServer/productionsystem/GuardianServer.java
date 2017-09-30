@@ -6,38 +6,20 @@
  */
 package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
-
 import ar.edu.utn.frsf.isi.ia.Guardian.gui.controladores.VerSimulacionAutomaticaController;
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.EstadoGuardian;
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.Guardian;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.Archivador;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.ControladorJavaFXApilable;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.PilaScene;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-@Controller
-public class GuardianServer extends Guardian {
+public abstract class GuardianServer extends Guardian {
 
-	@Autowired
-	private SimpMessagingTemplate simpTemplate;
+	public abstract void enviarAccion(String message);
 
-	public void enviarAccion(String message) {
-		simpTemplate.convertAndSend("/topic/accion", message);
-	}
-
-	public GuardianServer() throws Exception {
-		super();
-	}
-
-	@Override
-	protected void initAgentState() throws Exception {
-		EstadoGuardian agState = new EstadoGuardian(Archivador.CUSTOM_PL);
-		this.setAgentState(agState);
+	public GuardianServer(Long agentId) throws Exception {
+		super(new EstadoGuardianServer(agentId));
 	}
 
 	@Override

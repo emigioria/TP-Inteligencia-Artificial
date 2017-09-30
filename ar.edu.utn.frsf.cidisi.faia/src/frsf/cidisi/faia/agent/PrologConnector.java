@@ -32,15 +32,19 @@ import frsf.cidisi.faia.exceptions.PrologConnectorException;
  */
 public class PrologConnector {
 
+	public PrologConnector() {
+
+	}
+
 	/**
-	 * The knowledge base file written by the user.
+	 * @param prologFile
+	 *            The knowledge base file written by the user.
 	 */
-	private String prologFile;
-
 	public PrologConnector(String prologFile) throws PrologConnectorException {
+		initWithFile(prologFile);
+	}
 
-		this.prologFile = prologFile;
-
+	public void initWithFile(String prologFile) throws PrologConnectorException {
 		/* Set some JPL options */
 		try{
 			JPL.setDefaultInitArgs(new String[] {
@@ -59,16 +63,12 @@ public class PrologConnector {
 		}
 
 		// Load the knowledge base
-		Query prologQuery;
-		prologQuery = new Query("consult('" + this.prologFile + "')");
-
 		try{
 			new Query("style_check(-discontiguous)").hasSolution();
 
-			prologQuery.hasSolution();
+			new Query("consult('" + prologFile + "')").hasSolution();
 		} catch(PrologException e){
-			throw new PrologConnectorException("Load of prolog file failed ('" +
-					this.prologFile + "').", e);
+			throw new PrologConnectorException("Load of prolog file failed ('" + prologFile + "').", e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class PrologConnector {
 		queryHasSolution(query);
 	}
 
-	private String preparePredicate(String predicate) {
+	protected String preparePredicate(String predicate) {
 		String procesedPredicate = predicate;
 		if(predicate.endsWith(".")){
 			procesedPredicate = predicate.substring(0, predicate.length() - 1);

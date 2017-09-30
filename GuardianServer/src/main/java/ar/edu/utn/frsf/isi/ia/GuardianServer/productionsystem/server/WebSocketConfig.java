@@ -4,7 +4,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem;
+package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.server;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

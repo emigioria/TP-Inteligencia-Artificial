@@ -28,16 +28,18 @@ public class Archivador {
 
 	public static String INIT_PL;
 	public static String CUSTOM_PL;
+	public static String MODULE_PL;
 
 	public Archivador() {
 		super();
 	}
 
 	{
-		try {
+		try{
 			INIT_PL = new URI(Guardian.class.getResource("/db/init.pl").toString()).getPath();
 			CUSTOM_PL = new URI(Guardian.class.getResource("/db/customInit.pl").toString()).getPath();
-		} catch(URISyntaxException e) {
+			MODULE_PL = new URI(Guardian.class.getResource("/db/moduleMaker.pl").toString()).getPath();
+		} catch(URISyntaxException e){
 			e.printStackTrace();
 		}
 	}
@@ -47,13 +49,13 @@ public class Archivador {
 		File file = new File(INIT_PL);
 
 		try(Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-				BufferedReader br = new BufferedReader(reader)) {
+				BufferedReader br = new BufferedReader(reader)){
 			String linea;
 			archivo.clear();
-			while((linea = br.readLine()) != null) {
+			while((linea = br.readLine()) != null){
 				archivo.add(linea);
 			}
-		} catch(Exception e) {
+		} catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -62,18 +64,18 @@ public class Archivador {
 
 	public void escribirArchivo(List<String> archivo) {
 		File file = new File(CUSTOM_PL);
-		if(file.exists()) {
+		if(file.exists()){
 			file.delete();
 		}
-		try {
+		try{
 			file.createNewFile();
-		} catch(IOException e) {
+		} catch(IOException e){
 			e.printStackTrace();
 		}
 		try(Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-				PrintWriter pw = new PrintWriter(writer)) {
+				PrintWriter pw = new PrintWriter(writer)){
 			archivo.forEach(linea -> pw.println(linea));
-		} catch(Exception e) {
+		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}

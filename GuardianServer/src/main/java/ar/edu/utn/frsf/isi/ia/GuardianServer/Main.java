@@ -11,10 +11,14 @@ import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 
+import ar.edu.utn.frsf.isi.ia.Guardian.datos.BaseVerbos;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.Archivador;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.ConfiguracionValoresController;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.GuardianServerController;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.MultiUserPrologConnector;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.server.GuardianServerApplication;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
+import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -62,7 +66,18 @@ public class Main extends Application {
 	}
 
 	private void iniciarServidor() {
-		SpringApplication.run(GuardianServerController.class, args.toArray(new String[0]));
+		//Iniciar Prolog
+		try{
+			MultiUserPrologConnector.iniciarProlog(Archivador.MODULE_PL);
+		} catch(PrologConnectorException e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		//Iniciar base de verbos
+		new BaseVerbos().conectar();
+
+		SpringApplication.run(GuardianServerApplication.class, args.toArray(new String[0]));
 	}
 
 	private void mostrarPantallaConfiguracionInicial() {
