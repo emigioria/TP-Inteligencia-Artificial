@@ -19,6 +19,10 @@ public class ConectarActivity extends Activity {
         setContentView(R.layout.activity_conectar);
         inicializarComponentes();
 
+        SharedPreferences preferencias = getApplicationContext().getSharedPreferences(getString(R.string.preferenciasHablar), Context.MODE_PRIVATE);
+        String ip = preferencias.getString(getString(R.string.key_last_hablar_ip_server),"");
+        etIPServidor.setText(ip);
+
         btnConectar.setOnClickListener(v -> {
             conectar();
         });
