@@ -23,9 +23,6 @@ public class Preprocesador {
 	public List<List<String>> procesar(GuardianPerception gPerception) {
 		List<String> palabras = new ArrayList<>();
 
-		//TODO: reemplazar el StringTokenizer por un objeto de la clase Sentence del Simple CoreNLP
-		//Sentence frase = new Sentence();
-
 		StringTokenizer palabrasTokenizer = new StringTokenizer(
 				normalizadorDeTexto.reemplazarCaracteresRaros(gPerception.getPercepcion().toLowerCase()),
 				" ,()\"\'");

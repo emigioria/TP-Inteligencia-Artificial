@@ -15,7 +15,7 @@ import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
 
 public class GuardianMain {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		AmbienteCiudad ambiente = new AmbienteCiudad();
 		Guardian agente;
 		try{
@@ -37,12 +37,17 @@ public class GuardianMain {
 				"\nMe robaron, ayuda" +
 				"\nEstas arrestado ladrón!");
 
-		File archivoSalida = new File("SalidaSimulacion.txt");
-		if(archivoSalida.exists()){
-			archivoSalida.delete();
+		try{
+			File archivoSalida = new File("SalidaSimulacion.txt");
+			if(archivoSalida.exists()){
+				archivoSalida.delete();
+			}
+			archivoSalida.createNewFile();
+			System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
+		} catch(IOException e){
+			e.printStackTrace();
+			System.out.println("No se guardará la ejecución");
 		}
-		archivoSalida.createNewFile();
-		System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
 
 		main.start();
 	}

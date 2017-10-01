@@ -8,10 +8,14 @@ package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import org.jpl7.Term;
 
@@ -29,7 +33,11 @@ public class EstadoGuardian extends ProductionSystemBasedAgentState implements R
 
 	public PrologConnector plc;
 
-	public List<ReteWorkingMemoryChangeListener> suscriptores = new ArrayList<>();
+	public List<ReteWorkingMemoryChangeListener> suscriptores = new Vector<>();
+
+	private Integer proximoIndice = 0;
+
+	private Set<String> palabrasRelevantes = new HashSet<>();
 
 	public EstadoGuardian(String prologFile) throws PrologConnectorException {
 		plc = new PrologConnector(prologFile);
@@ -46,7 +54,7 @@ public class EstadoGuardian extends ProductionSystemBasedAgentState implements R
 	 */
 	@Override
 	public void initState() {
-
+		setPalabrasRelevantes();
 	}
 
 	/**
@@ -55,7 +63,45 @@ public class EstadoGuardian extends ProductionSystemBasedAgentState implements R
 	 */
 	@Override
 	public void updateState(Perception p) {
+		GuardianPerception gPerception = (GuardianPerception) p;
+		Preprocesador preprocesador;
+		try{
+			preprocesador = new Preprocesador(this.palabrasRelevantes);
+		} catch(Exception e){
+			e.printStackTrace();
+			return;
+		}
 
+		List<List<String>> listaDeListasDeSinonimos = preprocesador.procesar(gPerception);
+
+		if(listaDeListasDeSinonimos.isEmpty()){
+			return;
+		}
+
+		//Agregamos las palabras escuchadas a la memoria de trabajo
+		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
+			listaDeSinonimos.forEach(palabra -> this.addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
+			if(!listaDeSinonimos.isEmpty()){
+				proximoIndice++;
+			}
+		});
+	}
+
+	/**
+	 * Este método solicita a prolog todas las palabras identificables por Guardian y las retorna.
+	 *
+	 * @return
+	 */
+	private void setPalabrasRelevantes() {
+		Collection<Map<String, String>> resultado = this.query("tieneRiesgo(Incidente, Palabra, Valor)");
+
+		resultado.parallelStream().forEach(mapa -> {
+			//El valor asociado a la clave "Palabra" es una palabra o un simbolo con formato palabra_palabra_palabra
+			StringTokenizer fraseTokenizer = new StringTokenizer(mapa.get("Palabra"), "_");
+			while(fraseTokenizer.hasMoreTokens()){
+				palabrasRelevantes.add(fraseTokenizer.nextToken());
+			}
+		});
 	}
 
 	@Override

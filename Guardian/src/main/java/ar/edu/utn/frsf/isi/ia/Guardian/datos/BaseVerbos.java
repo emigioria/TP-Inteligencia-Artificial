@@ -25,7 +25,6 @@ public class BaseVerbos {
 		try{
 			conexion = DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch(SQLException e1){
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

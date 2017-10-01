@@ -8,12 +8,7 @@ package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,8 +51,6 @@ import frsf.cidisi.faia.solver.productionsystem.criterias.Specificity;
 public class Guardian extends ProductionSystemBasedAgent {
 
 	private List<Criteria> criterios;
-	private Integer proximoIndice = 0;
-
 	private List<Rule> listaReglas;
 	private List<Predicado> listaPredicados;
 
@@ -105,51 +98,10 @@ public class Guardian extends ProductionSystemBasedAgent {
 	 */
 	@Override
 	public void see(Perception p) {
-		GuardianPerception gPerception = (GuardianPerception) p;
-		Preprocesador preprocesador;
-		try{
-			preprocesador = new Preprocesador(this.getTodasLasPalabrasRelevantes());
-		} catch(Exception e){
-			e.printStackTrace();
-			return;
-		}
-
-		List<List<String>> listaDeListasDeSinonimos = preprocesador.procesar(gPerception);
-
-		if(listaDeListasDeSinonimos.isEmpty()){
-			return;
-		}
-
-		//Agregamos las palabras escuchadas a la memoria de trabajo
-		listaDeListasDeSinonimos.forEach(listaDeSinonimos -> {
-			listaDeSinonimos.forEach(palabra -> this.getAgentState().addPredicate("escuchada(" + palabra + "," + proximoIndice + ")"));
-			if(!listaDeSinonimos.isEmpty()){
-				proximoIndice++;
-			}
-		});
+		this.getAgentState().updateState(p);
 
 		//Borramos las reglas usadas previamente.
 		this.getUsedRules().clear();
-	}
-
-	/**
-	 * Este método solicita a prolog todas las palabras identificables por Guardian y las retorna.
-	 *
-	 * @return
-	 */
-	private Set<String> getTodasLasPalabrasRelevantes() {
-		Collection<Map<String, String>> resultado = this.getAgentState().query("tieneRiesgo(Incidente, Palabra, Valor)");
-		Set<String> setPalabrasRelevantes = new HashSet<>();
-
-		resultado.parallelStream().forEach(mapa -> {
-			//El valor asociado a la clave "Palabra" es una palabra o un simbolo con formato palabra_palabra_palabra
-			StringTokenizer fraseTokenizer = new StringTokenizer(mapa.get("Palabra"), "_");
-			while(fraseTokenizer.hasMoreTokens()){
-				setPalabrasRelevantes.add(fraseTokenizer.nextToken());
-			}
-		});
-
-		return setPalabrasRelevantes;
 	}
 
 	@Override
