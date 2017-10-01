@@ -99,9 +99,10 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	}
 
 	private void habilitarBotones(Fila fila) {
-		if(fila == null) {
+		if(fila == null){
 			buttonQuitar.setDisable(true);
-		} else {
+		}
+		else{
 			buttonQuitar.setDisable(false);
 		}
 	}
@@ -134,7 +135,7 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 
 	private void actualizarContenido(Incidente incidente) {
 		tableView.getItems().clear();
-		if(incidente != null) {
+		if(incidente != null){
 			// se filtran las filas asociadas al incidente seleccionado y se las
 			// añade a la tabla
 			List<Fila> nuevaLista = listaFilas.stream().filter(f -> {
@@ -150,7 +151,8 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 
 			// habilito la visualización del contenido
 			vBoxContenidoIncidente.setVisible(true);
-		} else {
+		}
+		else{
 			vBoxContenidoIncidente.setVisible(false);
 		}
 	}
@@ -158,8 +160,8 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	private AxiomaLimiteRiesgo obtenerAxiomaLimite(Incidente incidente) {
 		AxiomaLimiteRiesgo axioma = null;
 
-		for(AxiomaLimiteRiesgo a : listaLimiteRiesgo) {
-			if(a.getIncidente().equals(incidente)) {
+		for(AxiomaLimiteRiesgo a: listaLimiteRiesgo){
+			if(a.getIncidente().equals(incidente)){
 				axioma = a;
 				break;
 			}
@@ -185,10 +187,11 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 		boolean critica = checkBoxCritica.isSelected();
 
 		String error = error(palabra, incidente);
-		if(error != null) {
+		if(error != null){
 			// si hay errores se lo muestro al usuario
 			mostrarError(error);
-		} else {
+		}
+		else{
 			// si los datos son válidos creo la nueva fila
 			palabra = palabra.replace("\\s", "_"); // reemplazo espacios con "_"
 			Fila fila = new Fila(incidente, palabra, valorInt, critica);
@@ -198,18 +201,17 @@ public class ConfiguracionValoresController extends ControladorDialogo {
 	}
 
 	private void mostrarError(String mensajeError) {
-		// TODO mostrar al usuario el mensaje de error
-
+		presentadorVentanas.presentarError("Error de configuración", mensajeError, stage);
 	}
 
 	private String error(String palabra, Incidente incidente) {
-		if(palabra.isEmpty()) {
+		if(palabra.isEmpty()){
 			return "No ha ingresado nignuna palabra/frase.";
 		}
-		if(!esValidoFormato(palabra)) {
+		if(!esValidoFormato(palabra)){
 			return "La palabra/frase no puede contener caracteres especiales.";
 		}
-		if(yaExistePalabra(palabra.replace("\\s", "_"), incidente)) {
+		if(yaExistePalabra(palabra.replace("\\s", "_"), incidente)){
 			return "La palabra/frase ya está asociada al incidente.";
 		}
 		return null;

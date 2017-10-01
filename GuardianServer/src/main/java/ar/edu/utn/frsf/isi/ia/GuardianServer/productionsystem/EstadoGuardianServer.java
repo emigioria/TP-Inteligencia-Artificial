@@ -12,8 +12,8 @@ import frsf.cidisi.faia.exceptions.PrologConnectorException;
 
 public class EstadoGuardianServer extends EstadoGuardian {
 
-	public EstadoGuardianServer(Long agentId) throws PrologConnectorException {
-		super(new MultiUserPrologConnector(agentId.toString(), Archivador.CUSTOM_PL));
+	public EstadoGuardianServer(String agentId) throws PrologConnectorException {
+		super(new MultiUserPrologConnector(agentId, Archivador.CUSTOM_PL));
 	}
 
 }

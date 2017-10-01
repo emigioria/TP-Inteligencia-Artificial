@@ -18,7 +18,7 @@ public abstract class GuardianServer extends Guardian {
 
 	public abstract void enviarAccion(String message);
 
-	public GuardianServer(Long agentId) throws Exception {
+	public GuardianServer(String agentId) throws Exception {
 		super(new EstadoGuardianServer(agentId));
 	}
 

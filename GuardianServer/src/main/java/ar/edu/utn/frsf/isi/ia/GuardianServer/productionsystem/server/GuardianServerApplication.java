@@ -36,7 +36,7 @@ public class GuardianServerApplication {
 		frasesEscuchadas.put(message);
 	}
 
-	public void enviarMensaje(Long agentId, String mensaje) {
+	public void enviarMensaje(String user, String mensaje) {
 		simpTemplate.convertAndSend("/topic/accion", mensaje);
 	}
 
@@ -45,7 +45,7 @@ public class GuardianServerApplication {
 		new Thread(() -> {
 			GuardianServer agenteGuardian;
 			try{
-				Long agentId = Thread.currentThread().getId();
+				String agentId = Thread.currentThread().getId() + "";
 				agenteGuardian = new GuardianServer(agentId) {
 
 					@Override
