@@ -44,10 +44,17 @@ public class Archivador {
 		}
 	}
 
-	public List<String> leerArchivo() {
-		List<String> archivo = new ArrayList<>();
-		File file = new File(INIT_PL);
+	public List<String> leerArchivoInitPl() {
+		try{
+			return leerArchivo(new File(INIT_PL));
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
 
+	public List<String> leerArchivo(File file) throws IOException {
+		List<String> archivo = new ArrayList<>();
 		try(Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
 				BufferedReader br = new BufferedReader(reader)){
 			String linea;
@@ -55,14 +62,12 @@ public class Archivador {
 			while((linea = br.readLine()) != null){
 				archivo.add(linea);
 			}
-		} catch(Exception e){
-			e.printStackTrace();
 		}
 
 		return archivo;
 	}
 
-	public void escribirArchivo(List<String> archivo) {
+	public void escribirArchivoCustomPl(List<String> archivo) {
 		File file = new File(CUSTOM_PL);
 		if(file.exists()){
 			file.delete();
@@ -72,11 +77,17 @@ public class Archivador {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+		try{
+			escribirAArchivo(archivo, file);
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void escribirAArchivo(List<String> archivo, File file) throws IOException {
 		try(Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
 				PrintWriter pw = new PrintWriter(writer)){
 			archivo.forEach(linea -> pw.println(linea));
-		} catch(Exception e){
-			e.printStackTrace();
 		}
 	}
 }

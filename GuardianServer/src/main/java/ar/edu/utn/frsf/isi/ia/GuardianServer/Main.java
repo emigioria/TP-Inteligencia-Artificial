@@ -18,7 +18,6 @@ import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.MultiUserPrologCon
 import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.server.GuardianServerApplication;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.IconoAplicacion;
 import ar.edu.utn.frsf.isi.ia.PatrulleroUI.gui.componentes.ventanas.PresentadorVentanas;
-import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -66,16 +65,18 @@ public class Main extends Application {
 	}
 
 	private void iniciarServidor() {
-		//Iniciar Prolog
 		try{
+			//Iniciar Prolog
 			MultiUserPrologConnector.iniciarProlog(Archivador.MODULE_PL);
-		} catch(PrologConnectorException e){
+
+			//Iniciar base de verbos
+			BaseVerbos baseVerbos = new BaseVerbos();
+			baseVerbos.conectar();
+			baseVerbos.desconectar();
+		} catch(Exception e){
 			e.printStackTrace();
 			System.exit(1);
 		}
-
-		//Iniciar base de verbos
-		new BaseVerbos().conectar();
 
 		SpringApplication.run(GuardianServerApplication.class, args.toArray(new String[0]));
 	}

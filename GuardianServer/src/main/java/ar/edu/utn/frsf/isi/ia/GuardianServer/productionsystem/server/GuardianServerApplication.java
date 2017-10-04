@@ -6,11 +6,8 @@
  */
 package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.server;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,63 +15,26 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.EstadoAmbienteServer;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.GuardianServer;
-import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
-
 @SpringBootApplication
 @Controller
-public class GuardianServerApplication {
+public class GuardianServerApplication implements SendMessageListener {
 
 	@Autowired
 	private SimpMessagingTemplate simpTemplate;
-	private LinkedBlockingDeque<String> frasesEscuchadas = new LinkedBlockingDeque<>();
+	private Map<String, GuardianExecutionInstance> guardianes = new HashMap<>();
 
 	@MessageMapping("/fraseEscuchada")
-	public void receiveGreeting(String message) throws Exception {
-		frasesEscuchadas.put(message);
+	public void receiveGreeting(Mensaje message) throws Exception {
+		String id = message.getId();
+		if(!guardianes.containsKey(id)){
+			guardianes.put(id, new GuardianExecutionInstance(id, this));
+		}
+		guardianes.get(id).escuchar(message.getMensaje());
 	}
 
-	public void enviarMensaje(String user, String mensaje) {
-		simpTemplate.convertAndSend("/topic/accion", mensaje);
+	@Override
+	public void enviarMensaje(Mensaje mensaje) {
+		simpTemplate.convertAndSend("/topic/accion-" + mensaje.getId(), mensaje.getMensaje());
 	}
 
-	@Autowired
-	public GuardianServerApplication() throws IOException {
-		new Thread(() -> {
-			GuardianServer agenteGuardian;
-			try{
-				String agentId = Thread.currentThread().getId() + "";
-				agenteGuardian = new GuardianServer(agentId) {
-
-					@Override
-					public void enviarAccion(String message) {
-						GuardianServerApplication.this.enviarMensaje(agentId, message);
-					}
-				};
-			} catch(Exception e1){
-				e1.printStackTrace();
-				return;
-			}
-
-			EstadoAmbienteServer estadoAmbienteServer = new EstadoAmbienteServer(frasesEscuchadas);
-			AmbienteCiudad ambienteCiudad = new AmbienteCiudad(estadoAmbienteServer);
-			ProductionSystemBasedAgentSimulator simulator = new ProductionSystemBasedAgentSimulator(ambienteCiudad, agenteGuardian);
-
-			try{
-				File archivoSalida = new File("SalidaSimulacion.txt");
-				if(archivoSalida.exists()){
-					archivoSalida.delete();
-				}
-				archivoSalida.createNewFile();
-				System.setOut(new PrintStream(new FileOutputStream(archivoSalida)));
-			} catch(Exception e){
-				e.printStackTrace();
-				System.out.println("No se guardará la ejecución");
-			}
-
-			simulator.start();
-		}).start();
-	}
 }

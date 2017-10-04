@@ -21,12 +21,8 @@ public class BaseVerbos {
 	public BaseVerbos() {
 	}
 
-	public void conectar() {
-		try{
-			conexion = DriverManager.getConnection(URL, USER, PASSWORD);
-		} catch(SQLException e1){
-			e1.printStackTrace();
-		}
+	public void conectar() throws SQLException {
+		conexion = DriverManager.getConnection(URL, USER, PASSWORD);
 	}
 
 	public void desconectar() {
@@ -38,6 +34,9 @@ public class BaseVerbos {
 	}
 
 	public String infinitivo(String verbo) {
+		if(conexion == null){
+			return null;
+		}
 		ResultSet resultado;
 
 		//Normalizar verbo

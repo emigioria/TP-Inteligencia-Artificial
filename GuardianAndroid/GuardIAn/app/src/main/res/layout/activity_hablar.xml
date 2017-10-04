@@ -8,53 +8,73 @@
     android:padding="10dp"
     tools:context="ar.edu.utn.frsf.guardian.HablarActivity">
 
-    <ScrollView
+    <ProgressBar
+        android:id="@+id/esperaBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout">
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/hablarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtAccionRecibida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="26sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnSpeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/boton_para_hablar"
+                android:src="@android:drawable/ic_btn_speak_now" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/tap_on_mic"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/txtSpeechInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="20dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="26sp"
+                android:textSize="15sp"
                 android:textStyle="normal" />
         </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:id="@+id/btnSpeak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:contentDescription="@string/boton_para_hablar"
-            android:src="@android:drawable/ic_btn_speak_now" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/tap_on_mic"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

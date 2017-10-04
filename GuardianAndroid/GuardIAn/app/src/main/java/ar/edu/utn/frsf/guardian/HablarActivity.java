@@ -7,30 +7,47 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.java_websocket.WebSocket;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompHeader;
 import ua.naiksoftware.stomp.client.StompClient;
 
 public class HablarActivity extends AppCompatActivity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private StompClient mStompClient;
+    private Gson gson = new Gson();
+    private String appId;
 
     private RelativeLayout mainView;
-    private TextView txtSpeechInput;
+    private TextView txtAccionRecibida;
     private ImageButton btnSpeak;
+    private ProgressBar esperaBar;
+    private RelativeLayout hablarLayout;
+    private TextView txtSpeechInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +56,30 @@ public class HablarActivity extends AppCompatActivity {
         inicializarComponentes();
 
         if (savedInstanceState != null) {
-            txtSpeechInput.setText(savedInstanceState.getString("speechInput"));
+            txtAccionRecibida.setText(savedInstanceState.getString("speechInput"));
         }
-        String ip = getIntent().getExtras().getString("ipServer");
-        conectar(ip);
-
         btnSpeak.setOnClickListener(v -> promptSpeechInput());
+
+        String ip = getIntent().getExtras().getString("ipServer");
+        new Thread(() -> conectar(ip)).start();
+
+        esperar(true);
+    }
+
+    private void esperar(boolean esperar) {
+        if (esperar) {
+            esperaBar.setVisibility(View.VISIBLE);
+            hablarLayout.setVisibility(View.GONE);
+        } else {
+            esperaBar.setVisibility(View.GONE);
+            hablarLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("speechInput", txtSpeechInput.getText().toString());
+        outState.putString("speechInput", txtAccionRecibida.getText().toString());
     }
 
     @Override
@@ -60,8 +89,11 @@ public class HablarActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         mainView = findViewById(R.id.mainView);
-        txtSpeechInput = findViewById(R.id.txtSpeechInput);
+        txtAccionRecibida = findViewById(R.id.txtAccionRecibida);
         btnSpeak = findViewById(R.id.btnSpeak);
+        esperaBar = findViewById(R.id.esperaBar);
+        hablarLayout = findViewById(R.id.hablarLayout);
+        txtSpeechInput = findViewById(R.id.txtSpeechInput);
     }
 
     /**
@@ -102,9 +134,10 @@ public class HablarActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    enviarMensaje(result.get(0));
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String escuchado = "Escuchado: " + result.get(0);
+                    runOnUiThread(() -> txtSpeechInput.setText(escuchado));
+                    enviarMensaje(new Mensaje(appId, result.get(0)));
                 }
                 break;
             }
@@ -122,8 +155,20 @@ public class HablarActivity extends AppCompatActivity {
 
     private void conectar(String ipServer) {
         mStompClient = Stomp.over(WebSocket.class, "ws://" + ipServer + "/guardian");
-        mStompClient.topic("/topic/accion").subscribe(topicMessage -> runOnUiThread(() ->
-                txtSpeechInput.setText(txtSpeechInput.getText() + "\n" + topicMessage.getPayload())));
+
+        appId = this.getAppIdPreferences();
+        if (appId == null) {
+            try {
+                this.getAppIdApi(ipServer);
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorConexion();
+            }
+            return;
+        }
+
+        mStompClient.topic("/topic/accion-" + appId).subscribe(topicMessage -> runOnUiThread(() ->
+                txtAccionRecibida.setText(txtAccionRecibida.getText() + "\n" + topicMessage.getPayload())));
 
         mStompClient.lifecycle().subscribe(lifecycleEvent -> runOnUiThread(() -> {
             switch (lifecycleEvent.getType()) {
@@ -132,10 +177,11 @@ public class HablarActivity extends AppCompatActivity {
                     SharedPreferences.Editor editorPreferencias = preferencias.edit();
                     editorPreferencias.putString(getString(R.string.key_last_hablar_ip_server), ipServer);
                     editorPreferencias.apply();
+
+                    esperar(false);
                     break;
                 case ERROR:
-                    Toast.makeText(this, R.string.error_conexion, Toast.LENGTH_SHORT).show();
-                    finish();
+                    errorConexion();
                     break;
                 case CLOSED:
                     finish();
@@ -143,13 +189,51 @@ public class HablarActivity extends AppCompatActivity {
             }
         }));
         try {
-            mStompClient.connect();
+            mStompClient.connect(Collections.singletonList(new StompHeader(StompHeader.ID, appId)));
         } catch (Exception e) {
             finish();
         }
     }
 
-    private void enviarMensaje(String mensaje) {
-        mStompClient.send("/app/fraseEscuchada", mensaje).subscribe();
+    private void errorConexion() {
+        Toast.makeText(this, R.string.error_conexion, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void enviarMensaje(Mensaje mensaje) {
+        mStompClient.send("/app/fraseEscuchada", gson.toJson(mensaje)).subscribe();
+    }
+
+    private String getAppIdPreferences() {
+        SharedPreferences preferencias = getApplicationContext().getSharedPreferences(getString(R.string.preferenciasHablar), Context.MODE_PRIVATE);
+        return preferencias.getString(getString(R.string.key_id), null);
+    }
+
+    private void getAppIdApi(String ipServer) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + ipServer)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        api.getId().enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                String id = response.body();
+
+                SharedPreferences preferencias = getApplicationContext().getSharedPreferences(getString(R.string.preferenciasHablar), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorPreferencias = preferencias.edit();
+                editorPreferencias.putString(getString(R.string.key_id), id);
+                editorPreferencias.apply();
+
+                HablarActivity.this.conectar(ipServer);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                errorConexion();
+            }
+
+        });
     }
 }

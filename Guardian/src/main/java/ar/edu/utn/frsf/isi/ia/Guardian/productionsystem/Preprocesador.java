@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.isi.ia.Guardian.productionsystem;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,18 +37,25 @@ public class Preprocesador {
 			return new ArrayList<>();
 		}
 
-		baseVerbos.conectar();
+		List<String> palabrasProcesadas;
+		try{
+			baseVerbos.conectar();
 
-		List<String> palabrasProcesadas = palabras.parallelStream()
-				.map(palabra -> {
-					if(palabra.equals("dame")){
-						return "dar";
-					}
-					return baseVerbos.infinitivo(palabra);
-				})
-				.collect(Collectors.toList());
+			palabrasProcesadas = palabras.parallelStream()
+					.map(palabra -> {
+						if(palabra.equals("dame")){
+							return "dar";
+						}
+						return baseVerbos.infinitivo(palabra);
+					})
+					.collect(Collectors.toList());
 
-		baseVerbos.desconectar();
+			baseVerbos.desconectar();
+		} catch(SQLException e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			palabrasProcesadas = new ArrayList<>();
+		}
 
 		List<String> palabrasProcesadas2 = palabras.parallelStream()
 				.map(palabra -> normalizadorDeTexto.singularizar(palabra))

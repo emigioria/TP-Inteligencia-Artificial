@@ -28,7 +28,7 @@ public class Procesador {
 			List<AxiomaCritica> listaCritica, List<AxiomaLimiteRiesgo> listaLimiteRiesgo) {
 
 		// leo el archivo y proceso fila a fila
-		List<String> archivo = archivador.leerArchivo();
+		List<String> archivo = archivador.leerArchivoInitPl();
 		archivo.forEach(fila -> procesarFila(fila, listaIncidente, listaTieneRiesgo, listaCritica, listaLimiteRiesgo));
 	}
 
@@ -111,7 +111,7 @@ public class Procesador {
 		List<AxiomaFrase> listaFrase = crearFrases(listaTieneRiesgo);
 		añadirFrase(archivo, listaFrase);
 
-		archivador.escribirArchivo(archivo);
+		archivador.escribirArchivoCustomPl(archivo);
 	}
 
 	private List<AxiomaFrase> crearFrases(List<AxiomaTieneRiesgo> listaTieneRiesgo) {
