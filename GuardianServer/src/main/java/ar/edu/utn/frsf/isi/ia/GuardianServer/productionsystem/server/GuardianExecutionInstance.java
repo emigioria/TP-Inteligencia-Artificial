@@ -9,6 +9,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.AmbienteCiudad;
+import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.Archivador;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.EstadoAmbienteServer;
 import ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem.GuardianServer;
 import frsf.cidisi.faia.simulator.ProductionSystemBasedAgentSimulator;
@@ -20,6 +21,7 @@ public class GuardianExecutionInstance {
 	private LinkedBlockingDeque<String> frasesEscuchadas;
 	private Thread thread;
 
+	private Boolean primerInicio = true;
 	private Boolean iniciado = false;
 	private Semaphore semEstado = new Semaphore(1);
 	private ScheduledThreadPoolExecutor scheduledPool;
@@ -28,12 +30,22 @@ public class GuardianExecutionInstance {
 	private Runnable crearGuardIAn = () -> {
 		GuardianServer agenteGuardian;
 		try{
-			agenteGuardian = new GuardianServer(id) {
-				@Override
-				public void enviarAccion(String message) {
-					sml.enviarMensaje(new Mensaje(id, message));
-				}
-			};
+			if(primerInicio){
+				agenteGuardian = new GuardianServer(id, Archivador.CUSTOM_PL) {
+					@Override
+					public void enviarAccion(String message) {
+						sml.enviarMensaje(new Mensaje(id, message));
+					}
+				};
+			}
+			else{
+				agenteGuardian = new GuardianServer(id) {
+					@Override
+					public void enviarAccion(String message) {
+						sml.enviarMensaje(new Mensaje(id, message));
+					}
+				};
+			}
 		} catch(Exception e1){
 			e1.printStackTrace();
 			return;

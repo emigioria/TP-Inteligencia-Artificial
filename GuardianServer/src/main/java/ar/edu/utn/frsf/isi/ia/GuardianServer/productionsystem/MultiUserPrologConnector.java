@@ -50,6 +50,11 @@ public class MultiUserPrologConnector extends PrologConnector {
 		this.agentId = "'" + agentId + "':";
 	}
 
+	public MultiUserPrologConnector(String agentId) {
+		super();
+		this.agentId = "'" + agentId + "':";
+	}
+
 	@Override
 	public void initWithFile(String prologFile) {
 		// Load the knowledge base

@@ -22,6 +22,10 @@ public abstract class GuardianServer extends Guardian {
 		super(new EstadoGuardianServer(agentId));
 	}
 
+	public GuardianServer(String agentId, String archivoPl) throws Exception {
+		super(new EstadoGuardianServer(agentId, archivoPl));
+	}
+
 	@Override
 	protected void mostrarAccion(String accion) {
 		super.mostrarAccion(accion);

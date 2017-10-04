@@ -7,13 +7,16 @@
 package ar.edu.utn.frsf.isi.ia.GuardianServer.productionsystem;
 
 import ar.edu.utn.frsf.isi.ia.Guardian.productionsystem.EstadoGuardian;
-import ar.edu.utn.frsf.isi.ia.GuardianServer.initValues.Archivador;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 
 public class EstadoGuardianServer extends EstadoGuardian {
 
 	public EstadoGuardianServer(String agentId) throws PrologConnectorException {
-		super(new MultiUserPrologConnector(agentId, Archivador.CUSTOM_PL));
+		super(new MultiUserPrologConnector(agentId));
+	}
+
+	public EstadoGuardianServer(String agentId, String archivoPl) throws PrologConnectorException {
+		super(new MultiUserPrologConnector(agentId, archivoPl));
 	}
 
 }
